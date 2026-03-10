@@ -1,0 +1,4477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudX - منصة التعلم التفاعلية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* All existing CSS styles remain exactly the same as before */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #000000;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 2000;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            display: flex;
+            gap: 5px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        /* Animation Container */
+        .animation-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            animation: fadeOut 0.5s ease forwards;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+                visibility: visible;
+            }
+            100% {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        .company-name {
+            font-size: 80px;
+            font-weight: 800;
+            color: transparent;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: scaleIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            text-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        }
+
+        @keyframes scaleIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) rotate(-10deg);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.1) rotate(2deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0);
+            }
+        }
+
+        /* Login Page Styles */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            background: #000000;
+            background-image: radial-gradient(circle at 10% 20%, rgba(102, 126, 234, 0.1) 0%, transparent 30%),
+                              radial-gradient(circle at 90% 80%, rgba(118, 75, 162, 0.1) 0%, transparent 30%);
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            animation: slideUp 0.5s ease;
+            animation-delay: 1.8s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header i {
+            font-size: 50px;
+            color: #667eea;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.5));
+        }
+
+        .login-header h2 {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+
+        /* Login Type Selector */
+        .login-type-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .login-type-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .login-type-btn i {
+            font-size: 18px;
+        }
+
+        .login-type-btn.active {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+        }
+
+        .login-type-btn:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        /* Input Groups */
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.5);
+            z-index: 1;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            appearance: none;
+        }
+
+        .input-group select option {
+            background: #000;
+            color: #fff;
+        }
+
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Remember Forgot */
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .remember-forgot label {
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .remember-forgot input[type="checkbox"] {
+            accent-color: #667eea;
+        }
+
+        .remember-forgot a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .remember-forgot a:hover {
+            text-decoration: underline;
+        }
+
+        /* Buttons */
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+
+        .signup-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Grade Selection */
+        .grade-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .grade-btn {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+
+        .grade-btn:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .grade-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+        }
+
+        .grade-btn.selected {
+            background: rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+            color: #fff;
+        }
+
+        /* Teacher Code Field */
+        .teacher-code-field {
+            margin-bottom: 20px;
+        }
+
+        .code-hint {
+            display: block;
+            margin-top: 5px;
+            color: #4caf50;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        /* Signup Header */
+        .signup-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .signup-header h3 {
+            color: #fff;
+            font-size: 18px;
+        }
+
+        /* PIN Verification Styles - Now in Login Page */
+        .pin-verification {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .pin-verification p {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .pin-verification small {
+            color: rgba(255, 255, 255, 0.5);
+            display: block;
+            margin-top: 10px;
+        }
+
+        .pin-input-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .pin-digit {
+            width: 50px;
+            height: 60px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            transition: all 0.3s;
+        }
+
+        .pin-digit:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .resend-btn {
+            background: transparent;
+            border: 1px solid #667eea;
+            color: #667eea;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .resend-btn:hover:not(:disabled) {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .resend-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .timer {
+            color: #4caf50;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        /* Demo Credentials */
+        .demo-credentials {
+            margin-top: 25px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .demo-credentials p {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .demo-student, .demo-teacher {
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .demo-student i {
+            color: #1976d2;
+        }
+
+        .demo-teacher i {
+            color: #7b1fa2;
+        }
+
+        /* Main Website Styles */
+        .main-website {
+            background: #000000;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .logo i {
+            font-size: 28px;
+        }
+
+        .logo small {
+            font-size: 14px;
+            font-weight: normal;
+            color: rgba(255, 255, 255, 0.7);
+            margin-left: 5px;
+        }
+
+        .grade-badge {
+            background: rgba(102, 126, 234, 0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #667eea;
+            border: 1px solid #667eea;
+            margin-left: 15px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: #667eea;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-type {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+        }
+
+        .student-type {
+            background: rgba(25, 118, 210, 0.2);
+            color: #1976d2;
+        }
+
+        .teacher-type {
+            background: rgba(123, 31, 162, 0.2);
+            color: #7b1fa2;
+        }
+
+        .user-name {
+            color: #fff;
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .logout-btn {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background: #667eea;
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            color: #fff;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero-content h1 .highlight {
+            color: #667eea;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-primary {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            padding: 15px 30px;
+            background: transparent;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            border: 2px solid #667eea;
+            transition: transform 0.3s, background 0.3s;
+            display: inline-block;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .hero-image {
+            position: relative;
+            text-align: center;
+        }
+
+        .hero-image i {
+            font-size: 120px;
+            margin: 0 10px;
+            color: #667eea;
+            opacity: 0.8;
+        }
+
+        /* Section Title */
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            color: #fff;
+            margin-bottom: 50px;
+        }
+
+        /* Grade Info Bar */
+        .grade-info {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 20px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .grade-info h3 {
+            color: #fff;
+            font-size: 24px;
+        }
+
+        .grade-info p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .grade-info span {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        /* Features Section */
+        .features {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 40px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .feature-card i {
+            font-size: 48px;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-list i {
+            font-size: 16px;
+            color: #4caf50;
+            margin: 0;
+        }
+
+        /* Exercises Section */
+        .exercises {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .exercises-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .exercise-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .exercise-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .exercise-card.completed {
+            opacity: 0.8;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .grade-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(102, 126, 234, 0.3);
+            color: #667eea;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            border: 1px solid rgba(102, 126, 234, 0.5);
+        }
+
+        .exercise-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .exercise-card h3 {
+            color: #fff;
+            margin-bottom: 8px;
+            font-size: 20px;
+            padding-right: 50px;
+        }
+
+        .exercise-card p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .exercise-meta {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            flex-wrap: wrap;
+        }
+
+        .exercise-meta span {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 4px 8px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .start-btn {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+            font-size: 14px;
+        }
+
+        .start-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Completed Badge */
+        .completed-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px;
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        /* Private Rooms Section */
+        .private-rooms {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .rooms-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .room-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .room-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .room-card.has-premium {
+            border: 2px solid gold;
+            background: linear-gradient(145deg, rgba(255, 215, 0, 0.1), rgba(255, 255, 255, 0.05));
+        }
+
+        .subscriber-badge {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: linear-gradient(135deg, gold, #ffd700);
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .room-grade {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(102, 126, 234, 0.3);
+            color: #667eea;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            border: 1px solid rgba(102, 126, 234, 0.5);
+        }
+
+        .room-header {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .teacher-info h3 {
+            color: #fff;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+
+        .teacher-info p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+        }
+
+        .rating {
+            color: #ffc107;
+            margin-bottom: 10px;
+        }
+
+        .availability {
+            color: #4caf50;
+            font-size: 14px;
+        }
+
+        .book-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .book-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .book-btn:disabled {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.3);
+            cursor: not-allowed;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Teachers Section */
+        .teachers {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .teachers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .teacher-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .teacher-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .teacher-grade {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(102, 126, 234, 0.3);
+            color: #667eea;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .teacher-avatar {
+            font-size: 80px;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .teacher-card h3 {
+            color: #fff;
+            margin-bottom: 5px;
+            font-size: 20px;
+        }
+
+        .teacher-card p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .teacher-rating {
+            color: #ffc107;
+            margin-bottom: 15px;
+        }
+
+        .view-profile {
+            padding: 8px 20px;
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+            font-size: 14px;
+        }
+
+        .view-profile:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 40px 30px;
+            position: relative;
+            transition: transform 0.3s;
+            text-align: center;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .pricing-card.popular {
+            border: 2px solid #667eea;
+            transform: scale(1.05);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .pricing-card h3 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .price {
+            font-size: 48px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .price small {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: normal;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .price span {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: normal;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 30px;
+            text-align: left;
+            padding: 0 20px;
+        }
+
+        .pricing-features li {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+        }
+
+        .pricing-features i.fa-check {
+            color: #4caf50;
+        }
+
+        .pricing-features i.fa-times {
+            color: #f44336;
+        }
+
+        .pricing-features li.disabled {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .pricing-btn {
+            width: 100%;
+            padding: 15px;
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+            font-size: 16px;
+        }
+
+        .pricing-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .pricing-btn.popular-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+        }
+
+        .pricing-btn.popular-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Payment Page Styles */
+        .payment-page {
+            min-height: 100vh;
+            background: #000000;
+            padding: 40px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-container {
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .payment-summary {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            height: fit-content;
+        }
+
+        .payment-summary h2 {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+        }
+
+        .order-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .plan-details {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .plan-details h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .plan-details ul {
+            list-style: none;
+        }
+
+        .plan-details li {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .plan-details i {
+            color: #4caf50;
+            font-size: 12px;
+        }
+
+        .payment-form {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .payment-form h2 {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .payment-methods {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .payment-method {
+            flex: 1;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .payment-method i {
+            font-size: 20px;
+        }
+
+        .payment-method.active {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+        }
+
+        .payment-method:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .form-row {
+            margin-bottom: 20px;
+        }
+
+        .form-row label {
+            display: block;
+            margin-bottom: 8px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .form-row input {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .form-row input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .form-row input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .form-row-flex {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .pay-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 20px;
+        }
+
+        .pay-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 13px;
+        }
+
+        .secure-badge i {
+            color: #4caf50;
+        }
+
+        .back-to-plans {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #667eea;
+            text-decoration: none;
+            margin-bottom: 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .back-to-plans:hover {
+            text-decoration: underline;
+        }
+
+        /* Progress Section */
+        .progress {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .progress-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .stat-card i {
+            font-size: 40px;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+
+        /* Add Exercise Section with Image Upload */
+        .add-exercise {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .add-exercise-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #fff;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .form-group select option {
+            background: #000;
+            color: #fff;
+        }
+
+        /* Image Upload Styles */
+        .image-upload-container {
+            border: 2px dashed rgba(102, 126, 234, 0.5);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(102, 126, 234, 0.05);
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .image-upload-container:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .image-upload-container i {
+            font-size: 48px;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .image-upload-container p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 5px;
+        }
+
+        .image-upload-container small {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+        }
+
+        .image-preview {
+            max-width: 100%;
+            max-height: 200px;
+            margin-top: 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: none;
+        }
+
+        .image-preview.show {
+            display: block;
+        }
+
+        .remove-image {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(244, 67, 54, 0.8);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .remove-image:hover {
+            background: #f44336;
+        }
+
+        .hidden-input {
+            display: none;
+        }
+
+        /* Exercise Image in Student View */
+        .exercise-image-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .exercise-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .exercise-thumbnail {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Teacher Exercises */
+        .teacher-exercises {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .exercise-stats {
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .exercise-stats small {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+            background: rgba(102, 126, 234, 0.2);
+            padding: 4px 8px;
+            border-radius: 15px;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .delete-btn {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            border: 2px solid #f44336;
+            color: #f44336;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .delete-btn:hover {
+            background: #f44336;
+            color: white;
+        }
+
+        /* Private Room Creation */
+        .private-room-creation {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .private-room-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .room-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .created-room {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .created-room:hover {
+            transform: translateY(-3px);
+            border-color: #667eea;
+        }
+
+        .created-room.subscriber-room {
+            border-color: gold;
+            background: linear-gradient(145deg, rgba(255, 215, 0, 0.05), rgba(255, 255, 255, 0.03));
+        }
+
+        .room-grade-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(102, 126, 234, 0.3);
+            color: #667eea;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .created-room h4 {
+            color: #fff;
+            margin-bottom: 10px;
+            font-size: 18px;
+            padding-right: 60px;
+        }
+
+        .created-room p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .room-meta {
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        .room-meta i {
+            margin-right: 5px;
+            color: #667eea;
+        }
+
+        .room-link {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .room-link:hover {
+            background: rgba(102, 126, 234, 0.3);
+        }
+
+        .create-room-btn {
+            width: 100%;
+            padding: 15px;
+            margin-top: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .create-room-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Students Grid */
+        .students-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+            padding: 0 20px;
+        }
+
+        .student-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .student-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .student-grade {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(102, 126, 234, 0.3);
+            color: #667eea;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .student-avatar {
+            font-size: 60px;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .student-card h3 {
+            color: #fff;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+
+        .student-card p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .student-stats {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            flex-wrap: wrap;
+        }
+
+        .student-stats span {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .no-data {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 16px;
+            padding: 40px;
+            grid-column: 1 / -1;
+        }
+
+        /* Exercise Page with Image */
+        .exercise-page {
+            min-height: 100vh;
+            background: #000000;
+            padding: 40px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .exercise-container {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            animation: slideUp 0.5s ease;
+        }
+
+        .exercise-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .exercise-title {
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .exercise-content {
+            padding: 40px;
+        }
+
+        .exercise-info {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .exercise-subject {
+            background: rgba(25, 118, 210, 0.2);
+            color: #1976d2;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid rgba(25, 118, 210, 0.3);
+        }
+
+        .exercise-difficulty {
+            background: rgba(123, 31, 162, 0.2);
+            color: #7b1fa2;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid rgba(123, 31, 162, 0.3);
+        }
+
+        .exercise-time {
+            background: rgba(46, 125, 50, 0.2);
+            color: #2e7d32;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border: 1px solid rgba(46, 125, 50, 0.3);
+        }
+
+        .exercise-grade {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .question-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .question-box h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .question-box p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .exercise-image-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .exercise-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .answer-box {
+            margin-bottom: 30px;
+        }
+
+        .answer-box h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .answer-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .action-buttons button {
+            flex: 1;
+            padding: 15px;
+            font-size: 16px;
+        }
+
+        .result-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-icon {
+            margin-bottom: 15px;
+        }
+
+        .result-message h3 {
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .correct-answer {
+            background: rgba(25, 118, 210, 0.2);
+            color: #1976d2;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 16px;
+            border: 1px solid rgba(25, 118, 210, 0.3);
+        }
+
+        .explanation {
+            background: rgba(230, 81, 0, 0.2);
+            color: #e65100;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.6;
+            text-align: left;
+            border: 1px solid rgba(230, 81, 0, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            background: #000;
+            color: white;
+            padding: 60px 20px 20px;
+            margin-top: 60px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #fff;
+        }
+
+        .footer-section p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul li a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .footer-section ul li a:hover {
+            color: #667eea;
+        }
+
+        .footer-section ul li i {
+            margin-right: 10px;
+            color: #667eea;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* RTL Support */
+        [dir="rtl"] .language-switcher {
+            right: auto;
+            left: 20px;
+        }
+
+        [dir="rtl"] .input-group i {
+            left: auto;
+            right: 15px;
+        }
+
+        [dir="rtl"] .input-group input,
+        [dir="rtl"] .input-group select {
+            padding: 15px 45px 15px 15px;
+        }
+
+        [dir="rtl"] .back-btn i {
+            transform: rotate(180deg);
+        }
+
+        [dir="rtl"] .explanation {
+            text-align: right;
+        }
+
+        [dir="rtl"] .pricing-features {
+            text-align: right;
+        }
+
+        [dir="rtl"] .footer-section ul li i {
+            margin-right: 0;
+            margin-left: 10px;
+        }
+
+        [dir="rtl"] .grade-tag,
+        [dir="rtl"] .room-grade,
+        [dir="rtl"] .teacher-grade,
+        [dir="rtl"] .student-grade,
+        [dir="rtl"] .room-grade-tag {
+            right: auto;
+            left: 10px;
+        }
+
+        [dir="rtl"] .exercise-card h3 {
+            padding-right: 0;
+            padding-left: 50px;
+        }
+
+        [dir="rtl"] .created-room h4 {
+            padding-right: 0;
+            padding-left: 60px;
+        }
+
+        [dir="rtl"] .payment-method i {
+            margin-right: 0;
+            margin-left: 8px;
+        }
+
+        [dir="rtl"] .back-to-plans i {
+            transform: rotate(180deg);
+        }
+
+        [dir="rtl"] .remove-image {
+            right: auto;
+            left: 10px;
+        }
+
+        [dir="rtl"] .pin-digit {
+            direction: ltr;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .exercises-grid,
+            .rooms-grid,
+            .teachers-grid,
+            .students-grid,
+            .room-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .progress-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+            
+            .pricing-card.popular {
+                transform: scale(1);
+            }
+            
+            .payment-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .features-grid,
+            .exercises-grid,
+            .rooms-grid,
+            .teachers-grid,
+            .students-grid,
+            .footer-content,
+            .progress-stats,
+            .room-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .grade-selector {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .hero-content h1 {
+                font-size: 36px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .exercise-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .company-name {
+                font-size: 40px;
+                letter-spacing: 5px;
+            }
+            
+            .language-switcher {
+                top: 10px;
+                right: 10px;
+            }
+            
+            .grade-info {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            
+            .payment-methods {
+                flex-direction: column;
+            }
+            
+            .form-row-flex {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animation Container -->
+    <div class="animation-container" id="animationContainer">
+        <div class="company-name">StudX</div>
+    </div>
+
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button class="lang-btn active" onclick="switchLanguage('en')">English</button>
+        <button class="lang-btn" onclick="switchLanguage('ar')">العربية</button>
+    </div>
+
+    <!-- Login Page -->
+    <div class="login-container" id="loginPage">
+        <div class="login-card">
+            <div class="login-header">
+                <i class="fas fa-graduation-cap"></i>
+                <h2 data-en="Welcome to StudX" data-ar="مرحباً بك في ستادكس">Welcome to StudX</h2>
+                <p data-en="Choose your login type" data-ar="اختر نوع تسجيل الدخول">Choose your login type</p>
+            </div>
+            
+            <!-- Login Type Selector -->
+            <div class="login-type-selector">
+                <button class="login-type-btn active" onclick="selectLoginType('student')" id="studentLoginBtn">
+                    <i class="fas fa-user-graduate"></i>
+                    <span data-en="Student" data-ar="طالب">Student</span>
+                </button>
+                <button class="login-type-btn" onclick="selectLoginType('teacher')" id="teacherLoginBtn">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span data-en="Teacher" data-ar="مدرس">Teacher</span>
+                </button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" placeholder="Email Address / البريد الإلكتروني" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Password / كلمة المرور" required>
+                </div>
+                <div class="remember-forgot">
+                    <label>
+                        <input type="checkbox"> <span data-en="Remember me" data-ar="تذكرني">Remember me</span>
+                    </label>
+                    <a href="#" data-en="Forgot Password?" data-ar="نسيت كلمة المرور؟">Forgot Password?</a>
+                </div>
+                <button type="submit" class="login-btn" data-en="Login" data-ar="تسجيل الدخول">Login</button>
+                <div class="signup-link">
+                    <span data-en="Don't have an account?" data-ar="ليس لديك حساب؟">Don't have an account?</span> 
+                    <a href="#" onclick="showSignup()" data-en="Sign up" data-ar="إنشاء حساب">Sign up</a>
+                </div>
+            </form>
+
+            <!-- Signup Form -->
+            <div id="signupForm" style="display: none;">
+                <div class="signup-header">
+                    <h3 data-en="Create New Account" data-ar="إنشاء حساب جديد">Create New Account</h3>
+                </div>
+                
+                <!-- Signup Form Fields -->
+                <div id="signupFields">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="signupName" placeholder="Full Name / الاسم الكامل" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="signupEmail" placeholder="Email Address / البريد الإلكتروني" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="signupPassword" placeholder="Password / كلمة المرور" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="signupConfirmPassword" placeholder="Confirm Password / تأكيد كلمة المرور" required>
+                    </div>
+                    
+                    <!-- Grade Selection for Students -->
+                    <div id="studentGradeField" style="display: block;">
+                        <div class="input-group">
+                            <i class="fas fa-graduation-cap"></i>
+                            <select id="studentGrade" required>
+                                <option value="" data-en="Select your grade" data-ar="اختر صفك">Select your grade</option>
+                                <option value="6" data-en="Grade 6" data-ar="الصف السادس">Grade 6</option>
+                                <option value="7" data-en="Grade 7" data-ar="الصف السابع">Grade 7</option>
+                                <option value="8" data-en="Grade 8" data-ar="الصف الثامن">Grade 8</option>
+                                <option value="9" data-en="Grade 9" data-ar="الصف التاسع">Grade 9</option>
+                                <option value="10" data-en="Grade 10" data-ar="الصف العاشر">Grade 10</option>
+                                <option value="11" data-en="Grade 11" data-ar="الصف الحادي عشر">Grade 11</option>
+                                <option value="12" data-en="Grade 12" data-ar="الصف الثاني عشر">Grade 12</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="login-type-selector">
+                        <button type="button" class="login-type-btn active" onclick="selectSignupType('student')" id="signupStudentBtn">
+                            <i class="fas fa-user-graduate"></i>
+                            <span data-en="Student" data-ar="طالب">Student</span>
+                        </button>
+                        <button type="button" class="login-type-btn" onclick="selectSignupType('teacher')" id="signupTeacherBtn">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <span data-en="Teacher" data-ar="مدرس">Teacher</span>
+                        </button>
+                    </div>
+
+                    <!-- Grade Selection for Teachers -->
+                    <div id="teacherGradeField" style="display: none;">
+                        <div class="input-group">
+                            <i class="fas fa-chalkboard"></i>
+                            <select id="teacherGrade">
+                                <option value="" data-en="Select your grade" data-ar="اختر صفك">Select your grade</option>
+                                <option value="6" data-en="Grade 6" data-ar="الصف السادس">Grade 6</option>
+                                <option value="7" data-en="Grade 7" data-ar="الصف السابع">Grade 7</option>
+                                <option value="8" data-en="Grade 8" data-ar="الصف الثامن">Grade 8</option>
+                                <option value="9" data-en="Grade 9" data-ar="الصف التاسع">Grade 9</option>
+                                <option value="10" data-en="Grade 10" data-ar="الصف العاشر">Grade 10</option>
+                                <option value="11" data-en="Grade 11" data-ar="الصف الحادي عشر">Grade 11</option>
+                                <option value="12" data-en="Grade 12" data-ar="الصف الثاني عشر">Grade 12</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="teacher-code-field" id="teacherCodeField" style="display: none;">
+                        <div class="input-group">
+                            <i class="fas fa-key"></i>
+                            <input type="text" id="teacherCode" placeholder="Teacher Access Code / رمز المدرس">
+                        </div>
+                        <small class="code-hint" data-en="Use code: TEACHER2024" data-ar="استخدم الرمز: TEACHER2024">Use code: TEACHER2024</small>
+                    </div>
+                    
+                    <button type="button" class="login-btn" onclick="sendVerificationCode()" data-en="Send Verification Code" data-ar="إرسال رمز التحقق">Send Verification Code</button>
+                </div>
+                
+                <!-- PIN Verification Section - Now inside login page -->
+                <div id="pinVerification" class="pin-verification" style="display: none;">
+                    <p data-en="Enter the 6-digit code sent to your email" data-ar="أدخل الرمز المكون من 6 أرقام المرسل إلى بريدك الإلكتروني">Enter the 6-digit code sent to your email</p>
+                    <div class="pin-input-group">
+                        <input type="text" class="pin-digit" maxlength="1" oninput="moveToNext(this, 0)" onkeydown="handleBackspace(this, 0)" id="pin0">
+                        <input type="text" class="pin-digit" maxlength="1" oninput="moveToNext(this, 1)" onkeydown="handleBackspace(this, 1)" id="pin1">
+                        <input type="text" class="pin-digit" maxlength="1" oninput="moveToNext(this, 2)" onkeydown="handleBackspace(this, 2)" id="pin2">
+                        <input type="text" class="pin-digit" maxlength="1" oninput="moveToNext(this, 3)" onkeydown="handleBackspace(this, 3)" id="pin3">
+                        <input type="text" class="pin-digit" maxlength="1" oninput="moveToNext(this, 4)" onkeydown="handleBackspace(this, 4)" id="pin4">
+                        <input type="text" class="pin-digit" maxlength="1" oninput="moveToNext(this, 5)" onkeydown="handleBackspace(this, 5)" id="pin5">
+                    </div>
+                    <div class="timer" id="timer">05:00</div>
+                    <button class="resend-btn" onclick="resendCode()" id="resendBtn" disabled data-en="Resend Code" data-ar="إعادة إرسال الرمز">Resend Code</button>
+                    <button class="login-btn" onclick="verifyPin()" style="margin-top: 20px;" data-en="Verify & Create Account" data-ar="تحقق وأنشئ الحساب">Verify & Create Account</button>
+                    <small data-en="For demo, use PIN: 123456" data-ar="للتجربة، استخدم الرمز: 123456">For demo, use PIN: 123456</small>
+                </div>
+                
+                <div class="signup-link" id="backToSignup" style="display: none;">
+                    <a href="#" onclick="showSignupForm()" data-en="Back to Signup" data-ar="العودة للتسجيل">Back to Signup</a>
+                </div>
+            </div>
+
+            <div class="demo-credentials" id="demoCredentials">
+                <p data-en="Demo Credentials:" data-ar="بيانات الدخول التجريبية:">Demo Credentials:</p>
+                <div class="demo-student">
+                    <i class="fas fa-user-graduate"></i>
+                    <small data-en="Student: student@studx.com (any password)" data-ar="طالب: student@studx.com (أي كلمة مرور)">Student: student@studx.com (any password)</small>
+                </div>
+                <div class="demo-teacher">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <small data-en="Teacher: teacher@studx.com (any password) - Premium room creation included" data-ar="مدرس: teacher@studx.com (أي كلمة مرور) - إنشاء غرف مميزة متضمن">Teacher: teacher@studx.com (any password) - Premium room creation included</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Main Website -->
+    <div class="main-website" id="studentWebsite" style="display: none;">
+        <!-- Student Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>StudX <small data-en="Student Portal" data-ar="بوابة الطالب">Student Portal</small></span>
+                </div>
+                <div class="grade-badge" id="studentGradeBadge">Grade 10</div>
+                <ul class="nav-menu" id="studentNavMenu">
+                    <li><a href="#student-home" class="active" data-en="Home" data-ar="الرئيسية">Home</a></li>
+                    <li><a href="#student-exercises" data-en="Exercises" data-ar="التمارين">Exercises</a></li>
+                    <li><a href="#student-rooms" data-en="Private Rooms" data-ar="غرف خاصة">Private Rooms</a></li>
+                    <li><a href="#student-pricing" data-en="Pricing" data-ar="الباقات">Pricing</a></li>
+                    <li><a href="#student-progress" data-en="My Progress" data-ar="تقدمي">My Progress</a></li>
+                </ul>
+                <div class="nav-right">
+                    <span class="user-type student-type"><i class="fas fa-user-graduate"></i></span>
+                    <span class="user-name" id="studentName">Student</span>
+                    <button class="logout-btn" onclick="handleLogout()" data-en="Logout" data-ar="تسجيل الخروج">Logout</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Student Content -->
+        <div class="student-content">
+            <!-- Student Hero Section -->
+            <section class="hero" id="student-home">
+                <div class="hero-content">
+                    <h1><span data-en="Welcome back," data-ar="مرحباً بعودتك،">Welcome back,</span> <span id="studentDisplayName">Student</span>!</h1>
+                    <p data-en="Continue your learning journey with interactive exercises and expert teachers for your grade." data-ar="واصل رحلتك التعليمية مع التمارين التفاعلية والمدرسين الخبراء لصفك.">Continue your learning journey with interactive exercises and expert teachers for your grade.</p>
+                    <div class="hero-buttons">
+                        <a href="#student-exercises" class="btn-primary" data-en="Start Practicing" data-ar="ابدأ التمارين">Start Practicing</a>
+                        <a href="#student-rooms" class="btn-secondary" data-en="Find a Teacher" data-ar="ابحث عن مدرس">Find a Teacher</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <i class="fas fa-laptop-code"></i>
+                    <i class="fas fa-book-open"></i>
+                </div>
+            </section>
+
+            <!-- Grade Info Bar -->
+            <div class="grade-info" id="studentGradeInfo">
+                <h3><span data-en="Your Grade:" data-ar="صفك:">Your Grade:</span> <span id="currentStudentGrade">10</span></h3>
+                <p><span data-en="Exercises available:" data-ar="التمارين المتاحة:">Exercises available:</span> <span id="studentGradeExerciseCount">0</span></p>
+                <p><span data-en="Teachers available:" data-ar="المدرسون المتاحون:">Teachers available:</span> <span id="studentGradeTeacherCount">0</span></p>
+            </div>
+
+            <!-- Features Section -->
+            <section class="features">
+                <h2 class="section-title" data-en="Our Platform: Your Path to Mastery" data-ar="منصتنا: طريقك إلى الإتقان">Our Platform: Your Path to Mastery</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-dumbbell"></i>
+                        <h3 data-en="Dynamic Exercise Hub" data-ar="منصة التمارين التفاعلية">Dynamic Exercise Hub</h3>
+                        <p data-en="Grade-specific exercises and quizzes tailored to your curriculum." data-ar="تمارين واختبارات خاصة بصفك مصممة خصيصاً لمنهجك.">Grade-specific exercises and quizzes tailored to your curriculum.</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check"></i> <span data-en="Grade-appropriate content" data-ar="محتوى مناسب للصف">Grade-appropriate content</span></li>
+                            <li><i class="fas fa-check"></i> <span data-en="Instant feedback" data-ar="تغذية راجعة فورية">Instant feedback</span></li>
+                            <li><i class="fas fa-check"></i> <span data-en="Progress tracking" data-ar="تتبع التقدم">Progress tracking</span></li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-user-graduate"></i>
+                        <h3 data-en="Private Study Rooms" data-ar="غرف دراسة خاصة">Private Study Rooms</h3>
+                        <p data-en="Connect with teachers specialized in your grade level." data-ar="تواصل مع مدرسين متخصصين في مستواك الدراسي.">Connect with teachers specialized in your grade level.</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check"></i> <span data-en="Grade-specific teachers" data-ar="مدرسون متخصصون في الصف">Grade-specific teachers</span></li>
+                            <li><i class="fas fa-check"></i> <span data-en="1-on-1 attention" data-ar="اهتمام فردي">1-on-1 attention</span></li>
+                            <li><i class="fas fa-check"></i> <span data-en="Flexible scheduling" data-ar="جدولة مرنة">Flexible scheduling</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Student Available Exercises -->
+            <section class="exercises" id="student-exercises">
+                <h2 class="section-title" data-en="Available Exercises for Your Grade" data-ar="التمارين المتاحة لصفك">Available Exercises for Your Grade</h2>
+                <div class="exercises-grid" id="studentExercisesGrid"></div>
+            </section>
+
+            <!-- Pricing Section -->
+            <section class="pricing" id="student-pricing">
+                <h2 class="section-title" data-en="Simple, Transparent Pricing" data-ar="أسعار بسيطة وشفافة">Simple, Transparent Pricing</h2>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <h3 data-en="Regular" data-ar="عادي">Regular</h3>
+                        <div class="price">
+                            2 <span>OMR</span>
+                            <small data-en="per month" data-ar="شهرياً">per month</small>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i> <span data-en="500 exercises/month" data-ar="٥٠٠ تمرين/شهر">500 exercises/month</span></li>
+                            <li><i class="fas fa-check"></i> <span data-en="Basic progress tracking" data-ar="تتبع أساسي للتقدم">Basic progress tracking</span></li>
+                            <li><i class="fas fa-check"></i> <span data-en="Community forums" data-ar="منتديات المجتمع">Community forums</span></li>
+                            <li class="disabled"><i class="fas fa-times"></i> <span data-en="Premium rooms" data-ar="غرف مميزة">Premium rooms</span></li>
+                            <li class="disabled"><i class="fas fa-times"></i> <span data-en="1-on-1 tutoring" data-ar="دروس خصوصية فردية">1-on-1 tutoring</span></li>
+                        </ul>
+                        <button class="pricing-btn" onclick="showPaymentPage('regular', 2)" data-en="Select Plan" data-ar="اختر الباقة">Select Plan</button>
+                    </div>
+                    <div class="pricing-card popular">
+                        <div class="popular-badge" data-en="MOST POPULAR" data-ar="الأكثر طلباً">MOST POPULAR</div>
+                        <h3 data-en="Professional" data-ar="احترافي">Professional</h3>
+                        <div class="price">
+                            4 <span>OMR</span>
+                            <small data-en="per month" data-ar="شهرياً">per month</small>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i> <span data-en="Unlimited exercises" data-ar="تمارين غير محدودة">Unlimited exercises</span></li>
+                            <li><i class="fas fa-check"></i> <span data-en="Advanced analytics" data-ar="تحليلات متقدمة">Advanced analytics</span></li>
+                            <li><i class="fas fa-check"></i> <span data-en="Priority support" data-ar="دعم ذو أولوية">Priority support</span></li>
+                            <li><i class="fas fa-check"></i> <span data-en="Premium rooms access" data-ar="وصول للغرف المميزة">Premium rooms access</span></li>
+                            <li><i class="fas fa-check"></i> <span data-en="5 private rooms/month" data-ar="٥ غرف خاصة/شهر">5 private rooms/month</span></li>
+                        </ul>
+                        <button class="pricing-btn popular-btn" onclick="showPaymentPage('professional', 4)" data-en="Select Plan" data-ar="اختر الباقة">Select Plan</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Private Rooms Section for Students -->
+            <section class="private-rooms" id="student-rooms">
+                <h2 class="section-title" data-en="Available Teachers & Rooms for Your Grade" data-ar="المدرسون والغرف المتاحة لصفك">Available Teachers & Rooms for Your Grade</h2>
+                <div class="rooms-grid" id="studentTeachersGrid"></div>
+            </section>
+
+            <!-- Student Progress Section -->
+            <section class="progress" id="student-progress">
+                <h2 class="section-title" data-en="My Learning Progress" data-ar="تقدمي التعليمي">My Learning Progress</h2>
+                <div class="progress-stats">
+                    <div class="stat-card">
+                        <i class="fas fa-check-circle"></i>
+                        <div class="stat-number" id="completedExercises">0</div>
+                        <div class="stat-label" data-en="Completed" data-ar="مكتمل">Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-star"></i>
+                        <div class="stat-number" id="averageScore">0%</div>
+                        <div class="stat-label" data-en="Average Score" data-ar="المتوسط">Average Score</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-clock"></i>
+                        <div class="stat-number" id="studyHours">0</div>
+                        <div class="stat-label" data-en="Hours Studied" data-ar="ساعات الدراسة">Hours Studied</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-door-open"></i>
+                        <div class="stat-number" id="joinedRooms">0</div>
+                        <div class="stat-label" data-en="Rooms Joined" data-ar="الغرف المنضم إليها">Rooms Joined</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Payment Page -->
+    <div class="payment-page" id="paymentPage" style="display: none;">
+        <div class="payment-container">
+            <!-- Payment Summary -->
+            <div class="payment-summary">
+                <a class="back-to-plans" onclick="hidePaymentPage()">
+                    <i class="fas fa-arrow-left"></i> <span data-en="Back to Plans" data-ar="العودة للباقات">Back to Plans</span>
+                </a>
+                <h2 data-en="Order Summary" data-ar="ملخص الطلب">Order Summary</h2>
+                
+                <div class="order-item">
+                    <span id="selectedPlanName" data-en="Regular Plan" data-ar="الباقة العادية">Regular Plan</span>
+                    <span id="selectedPlanPrice">2 OMR</span>
+                </div>
+                
+                <div class="plan-details" id="planDetails">
+                    <!-- Plan details will be filled by JavaScript -->
+                </div>
+                
+                <div class="order-total">
+                    <span data-en="Total" data-ar="المجموع">Total</span>
+                    <span id="totalPrice">2 OMR</span>
+                </div>
+                
+                <div class="secure-badge">
+                    <i class="fas fa-lock"></i>
+                    <span data-en="Secure Payment" data-ar="دفع آمن">Secure Payment</span>
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+            </div>
+
+            <!-- Payment Form -->
+            <div class="payment-form">
+                <h2 data-en="Payment Details" data-ar="بيانات الدفع">Payment Details</h2>
+                
+                <!-- Payment Method Selection -->
+                <div class="payment-methods">
+                    <div class="payment-method active" onclick="selectPaymentMethod('card')" id="methodCard">
+                        <i class="fas fa-credit-card"></i>
+                        <span data-en="Card" data-ar="بطاقة">Card</span>
+                    </div>
+                    <div class="payment-method" onclick="selectPaymentMethod('paypal')" id="methodPaypal">
+                        <i class="fab fa-paypal"></i>
+                        <span>PayPal</span>
+                    </div>
+                    <div class="payment-method" onclick="selectPaymentMethod('bank')" id="methodBank">
+                        <i class="fas fa-university"></i>
+                        <span data-en="Bank" data-ar="بنك">Bank</span>
+                    </div>
+                </div>
+
+                <!-- Card Payment Form -->
+                <div id="cardPaymentForm">
+                    <div class="form-row">
+                        <label data-en="Card Number" data-ar="رقم البطاقة">Card Number</label>
+                        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                    </div>
+                    
+                    <div class="form-row-flex">
+                        <div class="form-row">
+                            <label data-en="Expiry Date" data-ar="تاريخ الانتهاء">Expiry Date</label>
+                            <input type="text" id="expiryDate" placeholder="MM/YY">
+                        </div>
+                        <div class="form-row">
+                            <label data-en="CVV" data-ar="رمز الأمان">CVV</label>
+                            <input type="text" id="cvv" placeholder="123" maxlength="3">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <label data-en="Cardholder Name" data-ar="اسم حامل البطاقة">Cardholder Name</label>
+                        <input type="text" id="cardholderName" placeholder="John Doe">
+                    </div>
+                </div>
+
+                <!-- PayPal Form (Hidden by default) -->
+                <div id="paypalPaymentForm" style="display: none;">
+                    <div class="form-row">
+                        <label>PayPal Email</label>
+                        <input type="email" id="paypalEmail" placeholder="email@example.com">
+                    </div>
+                </div>
+
+                <!-- Bank Transfer Form (Hidden by default) -->
+                <div id="bankPaymentForm" style="display: none;">
+                    <div class="form-row">
+                        <label data-en="Account Name" data-ar="اسم الحساب">Account Name</label>
+                        <input type="text" id="accountName" placeholder="John Doe">
+                    </div>
+                    <div class="form-row">
+                        <label data-en="Account Number" data-ar="رقم الحساب">Account Number</label>
+                        <input type="text" id="accountNumber" placeholder="123456789">
+                    </div>
+                    <div class="form-row">
+                        <label data-en="Bank Name" data-ar="اسم البنك">Bank Name</label>
+                        <input type="text" id="bankName" placeholder="Bank Muscat">
+                    </div>
+                </div>
+
+                <button class="pay-btn" onclick="processPayment()" data-en="Pay Now" data-ar="ادفع الآن">Pay Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Teacher Main Website -->
+    <div class="main-website" id="teacherWebsite" style="display: none;">
+        <!-- Teacher Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>StudX <small data-en="Teacher Portal" data-ar="بوابة المدرس">Teacher Portal</small></span>
+                </div>
+                <div class="grade-badge" id="teacherGradeBadge">Grade 10</div>
+                <ul class="nav-menu" id="teacherNavMenu">
+                    <li><a href="#teacher-home" class="active" data-en="Dashboard" data-ar="لوحة التحكم">Dashboard</a></li>
+                    <li><a href="#teacher-exercises" data-en="My Exercises" data-ar="تماريني">My Exercises</a></li>
+                    <li><a href="#teacher-add-exercise" data-en="Add Exercise" data-ar="إضافة تمرين">Add Exercise</a></li>
+                    <li><a href="#teacher-private-rooms" data-en="Private Rooms" data-ar="غرف خاصة">Private Rooms</a></li>
+                    <li><a href="#teacher-pricing" data-en="Pricing" data-ar="الباقات">Pricing</a></li>
+                    <li><a href="#teacher-students" data-en="My Students" data-ar="طلابي">My Students</a></li>
+                </ul>
+                <div class="nav-right">
+                    <span class="user-type teacher-type"><i class="fas fa-chalkboard-teacher"></i></span>
+                    <span class="user-name" id="teacherName">Teacher</span>
+                    <button class="logout-btn" onclick="handleLogout()" data-en="Logout" data-ar="تسجيل الخروج">Logout</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Teacher Content -->
+        <div class="teacher-content">
+            <!-- Teacher Dashboard -->
+            <section class="teacher-dashboard" id="teacher-home">
+                <h1 class="section-title" data-en="Teacher Dashboard" data-ar="لوحة تحكم المدرس">Teacher Dashboard</h1>
+                <div class="progress-stats">
+                    <div class="stat-card">
+                        <i class="fas fa-book"></i>
+                        <div class="stat-number" id="teacherExercisesCount">0</div>
+                        <div class="stat-label" data-en="Exercises Created" data-ar="التمارين المنشأة">Exercises Created</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-users"></i>
+                        <div class="stat-number" id="teacherStudentsCount">0</div>
+                        <div class="stat-label" data-en="Students in Your Grade" data-ar="الطلاب في صفك">Students in Your Grade</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-trophy"></i>
+                        <div class="stat-number" id="teacherCompletions">0</div>
+                        <div class="stat-label" data-en="Exercises Completed" data-ar="التمارين المكتملة">Exercises Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-door-open"></i>
+                        <div class="stat-number" id="teacherRoomsCount">0</div>
+                        <div class="stat-label" data-en="Private Rooms" data-ar="غرف خاصة">Private Rooms</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Grade Info Bar -->
+            <div class="grade-info" id="teacherGradeInfo">
+                <h3><span data-en="Your Grade:" data-ar="صفك:">Your Grade:</span> <span id="currentTeacherGrade">10</span></h3>
+                <p><span data-en="Students in your grade:" data-ar="الطلاب في صفك:">Students in your grade:</span> <span id="teacherGradeStudentCount">0</span></p>
+                <p><span data-en="Exercises for your grade:" data-ar="التمارين لصفك:">Exercises for your grade:</span> <span id="teacherGradeExerciseCount">0</span></p>
+            </div>
+
+            <!-- Add Exercise Section with Image Upload -->
+            <section class="add-exercise" id="teacher-add-exercise">
+                <h2 class="section-title" data-en="Add New Exercise with Image" data-ar="إضافة تمرين جديد مع صورة">Add New Exercise with Image</h2>
+                <div class="add-exercise-card">
+                    <form id="addExerciseForm" onsubmit="handleAddExercise(event)">
+                        <div class="form-group">
+                            <label data-en="Exercise Title:" data-ar="عنوان التمرين:">Exercise Title:</label>
+                            <input type="text" id="exerciseTitle" placeholder="e.g., Algebra Basics" required>
+                        </div>
+                        <div class="form-group">
+                            <label data-en="Subject:" data-ar="المادة:">Subject:</label>
+                            <select id="exerciseSubject" required>
+                                <option value="Mathematics" data-en="Mathematics" data-ar="الرياضيات">Mathematics</option>
+                                <option value="Physics" data-en="Physics" data-ar="الفيزياء">Physics</option>
+                                <option value="Chemistry" data-en="Chemistry" data-ar="الكيمياء">Chemistry</option>
+                                <option value="Biology" data-en="Biology" data-ar="الأحياء">Biology</option>
+                                <option value="English" data-en="English" data-ar="اللغة الإنجليزية">English</option>
+                                <option value="Programming" data-en="Programming" data-ar="البرمجة">Programming</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label data-en="Difficulty Level:" data-ar="مستوى الصعوبة:">Difficulty Level:</label>
+                            <select id="exerciseDifficulty" required>
+                                <option value="Beginner" data-en="Beginner" data-ar="مبتدئ">Beginner</option>
+                                <option value="Intermediate" data-en="Intermediate" data-ar="متوسط">Intermediate</option>
+                                <option value="Advanced" data-en="Advanced" data-ar="متقدم">Advanced</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label data-en="Estimated Time (minutes):" data-ar="الوقت المقدر (دقائق):">Estimated Time (minutes):</label>
+                            <input type="number" id="exerciseTime" min="5" max="120" value="15" required>
+                        </div>
+                        
+                        <!-- Image Upload Section -->
+                        <div class="form-group">
+                            <label data-en="Upload Image (Optional):" data-ar="رفع صورة (اختياري):">Upload Image (Optional):</label>
+                            <div class="image-upload-container" onclick="document.getElementById('exerciseImage').click()">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p data-en="Click to upload an image" data-ar="انقر لرفع صورة">Click to upload an image</p>
+                                <small data-en="Supports: JPG, PNG, GIF (Max 5MB)" data-ar="يدعم: JPG, PNG, GIF (حد أقصى 5 ميجابايت)">Supports: JPG, PNG, GIF (Max 5MB)</small>
+                                <input type="file" id="exerciseImage" class="hidden-input" accept="image/*" onchange="previewImage(this)">
+                                <img id="imagePreview" class="image-preview" alt="Preview">
+                                <div class="remove-image" onclick="removeImage(event)" style="display: none;">
+                                    <i class="fas fa-times"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label data-en="Question:" data-ar="السؤال:">Question:</label>
+                            <textarea id="exerciseQuestion" rows="3" placeholder="Enter the question..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label data-en="Correct Answer:" data-ar="الإجابة الصحيحة:">Correct Answer:</label>
+                            <input type="text" id="correctAnswer" placeholder="Enter the correct answer" required>
+                        </div>
+                        <div class="form-group">
+                            <label data-en="Explanation (Optional):" data-ar="شرح (اختياري):">Explanation (Optional):</label>
+                            <textarea id="exerciseExplanation" rows="2" placeholder="Explain the answer..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label data-en="Grade (Auto-set to your grade):" data-ar="الصف (مضبوط تلقائياً لصفك):">Grade (Auto-set to your grade):</label>
+                            <input type="text" id="exerciseGrade" value="Grade 10" disabled style="background: rgba(102, 126, 234, 0.2); color: #667eea; font-weight: 600;">
+                        </div>
+                        <button type="submit" class="btn-primary" data-en="Publish Exercise" data-ar="نشر التمرين">Publish Exercise</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Teacher's Exercises List -->
+            <section class="teacher-exercises" id="teacher-exercises">
+                <h2 class="section-title" data-en="My Exercises for Grade" data-ar="تماريني للصف">My Exercises for Grade <span id="teacherExercisesGrade">10</span></h2>
+                <div class="exercises-grid" id="teacherExercisesGrid"></div>
+            </section>
+
+            <!-- Private Room Creation Section -->
+            <section class="private-room-creation" id="teacher-private-rooms">
+                <h2 class="section-title" data-en="Private Study Rooms for Your Grade" data-ar="غرف الدراسة الخاصة لصفك">Private Study Rooms for Your Grade</h2>
+                <div class="private-room-card" id="privateRoomCard">
+                    
+                    <!-- Pre-subscription Badge for Teachers -->
+                    <div class="subscriber-badge" style="position: relative; top: 0; right: 0; margin-bottom: 20px; display: inline-block;">
+                        <i class="fas fa-crown"></i> <span data-en="Teacher Premium Access Included" data-ar="وصول مميز للمدرسين متضمن">Teacher Premium Access Included</span>
+                    </div>
+                    
+                    <!-- Existing Rooms -->
+                    <h3 data-en="Your Active Rooms" data-ar="غرفك النشطة">Your Active Rooms</h3>
+                    <div class="room-list" id="teacherRoomsList"></div>
+
+                    <!-- Create Room Button -->
+                    <button class="create-room-btn" id="createRoomBtn" onclick="createPrivateRoom()">
+                        <i class="fas fa-plus-circle"></i> 
+                        <span data-en="Create New Private Room for Grade" data-ar="إنشاء غرفة خاصة جديدة للصف">Create New Private Room for Grade <span id="createRoomGrade">10</span></span>
+                    </button>
+                    
+                    <p style="color: rgba(255, 255, 255, 0.5); text-align: center; margin-top: 15px; font-size: 12px;">
+                        <i class="fas fa-info-circle"></i> 
+                        <span data-en="Teachers have pre-subscription to create premium rooms" data-ar="المدرسون لديهم اشتراك مسبق لإنشاء غرف مميزة">Teachers have pre-subscription to create premium rooms</span>
+                    </p>
+                </div>
+            </section>
+
+            <!-- Pricing Section for Teachers -->
+            <section class="pricing" id="teacher-pricing">
+                <h2 class="section-title" data-en="Teacher Benefits" data-ar="مزايا المدرسين">Teacher Benefits</h2>
+                <div class="pricing-grid">
+                    <div class="pricing-card popular" style="transform: scale(1);">
+                        <div class="popular-badge" data-en="INCLUDED" data-ar="مضمن">INCLUDED</div>
+                        <h3 data-en="Teacher Basic" data-ar="أساسي للمدرسين">Teacher Basic</h3>
+                        <div class="price">
+                            0 <span>OMR</span>
+                            <small data-en="free for teachers" data-ar="مجاني للمدرسين">free for teachers</small>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i> <span data-en="Create unlimited exercises" data-ar="إنشاء تمارين غير محدودة">Create unlimited exercises</span></li>
+                            <li><i class="fas fa-check"></i> <span data-en="Upload images to exercises" data-ar="رفع صور للتمارين">Upload images to exercises</span></li>
+                            <li><i class="fas fa-check"></i> <span data-en="Create premium rooms" data-ar="إنشاء غرف مميزة">Create premium rooms</span></li>
+                            <li><i class="fas fa-check"></i> <span data-en="Basic analytics" data-ar="تحليلات أساسية">Basic analytics</span></li>
+                            <li class="disabled"><i class="fas fa-times"></i> <span data-en="Advanced analytics" data-ar="تحليلات متقدمة">Advanced analytics</span></li>
+                        </ul>
+                        <button class="pricing-btn popular-btn" disabled data-en="Already Included" data-ar="مضمن بالفعل">Already Included</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Teacher's Students -->
+            <section class="teacher-students" id="teacher-students">
+                <h2 class="section-title" data-en="My Students (Same Grade)" data-ar="طلابي (نفس الصف)">My Students (Same Grade)</h2>
+                <div class="students-grid" id="teacherStudentsGrid"></div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Exercise Page with Image Display -->
+    <div class="exercise-page" id="exercisePage" style="display: none;">
+        <div class="exercise-container">
+            <div class="exercise-header">
+                <button class="back-btn" onclick="closeExercise()">
+                    <i class="fas fa-arrow-left"></i> <span data-en="Back to Exercises" data-ar="العودة للتمارين">Back to Exercises</span>
+                </button>
+                <div class="exercise-title" id="currentExerciseTitle"></div>
+            </div>
+
+            <div class="exercise-content">
+                <div class="exercise-info">
+                    <span class="exercise-subject" id="currentExerciseSubject"></span>
+                    <span class="exercise-difficulty" id="currentExerciseDifficulty"></span>
+                    <span class="exercise-time" id="currentExerciseTime"></span>
+                    <span class="exercise-grade" id="currentExerciseGrade"></span>
+                </div>
+
+                <div class="question-box">
+                    <h3 data-en="Question:" data-ar="السؤال:">Question:</h3>
+                    <p id="currentExerciseQuestion"></p>
+                    
+                    <!-- Exercise Image Display -->
+                    <div class="exercise-image-container" id="exerciseImageContainer" style="display: none;">
+                        <img id="currentExerciseImage" class="exercise-image" src="" alt="Exercise image">
+                    </div>
+                </div>
+
+                <div class="answer-box">
+                    <h3 data-en="Your Answer:" data-ar="إجابتك:">Your Answer:</h3>
+                    <input type="text" id="studentAnswer" placeholder="Type your answer here..." class="answer-input">
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn-primary" onclick="checkAnswer()" data-en="Check Answer" data-ar="تحقق من الإجابة">Check Answer</button>
+                    <button class="btn-secondary" onclick="closeExercise()" data-en="Cancel" data-ar="إلغاء">Cancel</button>
+                </div>
+
+                <div class="result-box" id="resultBox" style="display: none;">
+                    <div class="result-icon" id="resultIcon"></div>
+                    <div class="result-message" id="resultMessage"></div>
+                    <div class="correct-answer" id="correctAnswerDisplay"></div>
+                    <div class="explanation" id="explanationDisplay"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" id="footer" style="display: none;">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>StudX</h4>
+                <p data-en="Empowering students through interactive learning and expert guidance." data-ar="تمكين الطلاب من خلال التعلم التفاعلي والتوجيه الخبير.">Empowering students through interactive learning and expert guidance.</p>
+            </div>
+            <div class="footer-section">
+                <h4 data-en="Quick Links" data-ar="روابط سريعة">Quick Links</h4>
+                <ul>
+                    <li><a onclick="scrollToSection('home')" data-en="Home" data-ar="الرئيسية">Home</a></li>
+                    <li><a onclick="scrollToSection('exercises')" data-en="Exercises" data-ar="التمارين">Exercises</a></li>
+                    <li><a onclick="scrollToSection('rooms')" data-en="Private Rooms" data-ar="غرف خاصة">Private Rooms</a></li>
+                    <li><a onclick="scrollToSection('pricing')" data-en="Pricing" data-ar="الباقات">Pricing</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4 data-en="Contact" data-ar="اتصل بنا">Contact</h4>
+                <ul>
+                    <li><i class="fas fa-envelope"></i> support@studx.com</li>
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 StudX. <span data-en="All rights reserved." data-ar="جميع الحقوق محفوظة.">All rights reserved.</span></p>
+        </div>
+    </footer>
+
+    <script>
+        // Data Storage
+        let users = [];
+        let exercises = [];
+        let privateRooms = [];
+        let currentUser = null;
+        let currentLang = 'en';
+        let currentExercise = null;
+        let selectedLoginType = 'student';
+        let selectedSignupType = 'student';
+        let selectedPlan = null;
+        let selectedPaymentMethod = 'card';
+        let pendingUser = null;
+        let verificationCode = null;
+        let timerInterval = null;
+        let timeLeft = 300; // 5 minutes in seconds
+
+        // Default users with grades - Teachers have pre-subscription for premium rooms
+        users = [
+            { 
+                name: 'Student', 
+                email: 'student@studx.com', 
+                password: 'student123', 
+                type: 'student', 
+                grade: '10',
+                completedExercises: [], 
+                averageScore: 0, 
+                studyHours: 0,
+                attempts: [],
+                joinedRooms: [],
+                subscription: 'free',
+                verified: true // Demo account is pre-verified
+            },
+            { 
+                name: 'Teacher', 
+                email: 'teacher@studx.com', 
+                password: 'teacher123', 
+                type: 'teacher', 
+                grade: '10',
+                teacherCode: 'TEACHER2024', 
+                exercises: [],
+                privateRooms: [],
+                subscription: 'professional',
+                canCreatePremiumRooms: true,
+                verified: true // Demo account is pre-verified
+            }
+        ];
+
+        // Default exercises with grades and images
+        exercises = [
+            { 
+                id: 1, 
+                title: 'Algebra Basics - Grade 10', 
+                subject: 'Mathematics', 
+                difficulty: 'Beginner', 
+                time: 15, 
+                question: 'Solve for x: 2x + 5 = 13', 
+                correctAnswer: '4',
+                explanation: 'Subtract 5 from both sides: 2x = 8, then divide by 2: x = 4',
+                teacher: 'teacher@studx.com', 
+                teacherName: 'Teacher',
+                grade: '10',
+                image: null,
+                completions: 0,
+                attempts: 0,
+                correctAttempts: 0
+            },
+            { 
+                id: 2, 
+                title: 'Newton\'s Laws - Grade 10', 
+                subject: 'Physics', 
+                difficulty: 'Intermediate', 
+                time: 20, 
+                question: 'Calculate the force needed to accelerate a 5kg object at 2m/s² (Answer in Newtons)', 
+                correctAnswer: '10',
+                explanation: 'Force = mass × acceleration = 5kg × 2m/s² = 10 Newtons',
+                teacher: 'teacher@studx.com', 
+                teacherName: 'Teacher',
+                grade: '10',
+                image: null,
+                completions: 0,
+                attempts: 0,
+                correctAttempts: 0
+            },
+            { 
+                id: 3, 
+                title: 'Quadratic Equations - Grade 11', 
+                subject: 'Mathematics', 
+                difficulty: 'Advanced', 
+                time: 25, 
+                question: 'Solve: x² - 5x + 6 = 0', 
+                correctAnswer: 'x=2, x=3',
+                explanation: 'Factor: (x-2)(x-3)=0, so x=2 or x=3',
+                teacher: 'teacher@studx.com', 
+                teacherName: 'Teacher',
+                grade: '11',
+                image: null,
+                completions: 0,
+                attempts: 0,
+                correctAttempts: 0
+            },
+            { 
+                id: 4, 
+                title: 'Chemical Reactions - Grade 9', 
+                subject: 'Chemistry', 
+                difficulty: 'Beginner', 
+                time: 15, 
+                question: 'What is the chemical formula for water?', 
+                correctAnswer: 'H2O',
+                explanation: 'Water consists of two hydrogen atoms and one oxygen atom',
+                teacher: 'teacher@studx.com', 
+                teacherName: 'Teacher',
+                grade: '9',
+                image: null,
+                completions: 0,
+                attempts: 0,
+                correctAttempts: 0
+            }
+        ];
+
+        // Default private rooms with grades
+        privateRooms = [
+            {
+                id: 1,
+                teacherEmail: 'teacher@studx.com',
+                teacherName: 'Teacher',
+                roomName: 'Grade 10 Math Mastery',
+                description: 'Advanced mathematics tutoring for grade 10 students',
+                schedule: 'Mon, Wed, Fri - 4:00 PM',
+                grade: '10',
+                subscribersOnly: true,
+                students: [],
+                createdAt: new Date().toISOString()
+            },
+            {
+                id: 2,
+                teacherEmail: 'teacher@studx.com',
+                teacherName: 'Teacher',
+                roomName: 'Grade 10 Physics Lab',
+                description: 'Interactive physics problem solving for grade 10',
+                schedule: 'Tue, Thu - 5:30 PM',
+                grade: '10',
+                subscribersOnly: false,
+                students: [],
+                createdAt: new Date().toISOString()
+            }
+        ];
+
+        // Save to localStorage
+        function saveData() {
+            localStorage.setItem('studx_users', JSON.stringify(users));
+            localStorage.setItem('studx_exercises', JSON.stringify(exercises));
+            localStorage.setItem('studx_rooms', JSON.stringify(privateRooms));
+        }
+
+        // Load from localStorage
+        function loadData() {
+            const savedUsers = localStorage.getItem('studx_users');
+            const savedExercises = localStorage.getItem('studx_exercises');
+            const savedRooms = localStorage.getItem('studx_rooms');
+            
+            if (savedUsers) {
+                users = JSON.parse(savedUsers);
+            }
+            if (savedExercises) {
+                exercises = JSON.parse(savedExercises);
+            }
+            if (savedRooms) {
+                privateRooms = JSON.parse(savedRooms);
+            }
+        }
+
+        // Initialize
+        loadData();
+
+        // Image preview function
+        function previewImage(input) {
+            const preview = document.getElementById('imagePreview');
+            const removeBtn = document.querySelector('.remove-image');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.classList.add('show');
+                    removeBtn.style.display = 'flex';
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function removeImage(event) {
+            event.stopPropagation();
+            const input = document.getElementById('exerciseImage');
+            const preview = document.getElementById('imagePreview');
+            const removeBtn = document.querySelector('.remove-image');
+            
+            input.value = '';
+            preview.src = '';
+            preview.classList.remove('show');
+            removeBtn.style.display = 'none';
+        }
+
+        // PIN Verification Functions
+        function sendVerificationCode() {
+            // Get form data
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('signupConfirmPassword').value;
+            
+            // Validate form
+            if (!name || !email || !password || !confirmPassword) {
+                alert(currentLang === 'en' ? 'Please fill in all fields!' : 'الرجاء ملء جميع الحقول!');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert(currentLang === 'en' ? 'Passwords do not match!' : 'كلمات المرور غير متطابقة!');
+                return;
+            }
+            
+            let grade = '';
+            if (selectedSignupType === 'student') {
+                grade = document.getElementById('studentGrade').value;
+                if (!grade) {
+                    alert(currentLang === 'en' ? 'Please select your grade!' : 'الرجاء اختيار صفك!');
+                    return;
+                }
+            } else {
+                grade = document.getElementById('teacherGrade').value;
+                if (!grade) {
+                    alert(currentLang === 'en' ? 'Please select your grade!' : 'الرجاء اختيار صفك!');
+                    return;
+                }
+                const teacherCode = document.getElementById('teacherCode').value;
+                if (teacherCode !== 'TEACHER2024') {
+                    alert(currentLang === 'en' ? 'Invalid teacher access code!' : 'رمز المدرس غير صحيح!');
+                    return;
+                }
+            }
+            
+            if (users.find(u => u.email === email)) {
+                alert(currentLang === 'en' ? 'Email already registered!' : 'البريد الإلكتروني مسجل بالفعل!');
+                return;
+            }
+            
+            // Generate random 6-digit PIN
+            verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+            
+            // Store pending user data
+            pendingUser = {
+                name: name,
+                email: email,
+                password: password,
+                type: selectedSignupType,
+                grade: grade,
+                teacherCode: selectedSignupType === 'teacher' ? document.getElementById('teacherCode').value : null
+            };
+            
+            // Simulate sending email (in real app, this would be an API call)
+            console.log(`Verification code sent to ${email}: ${verificationCode}`);
+            
+            // Hide signup fields and show PIN verification
+            document.getElementById('signupFields').style.display = 'none';
+            document.getElementById('pinVerification').style.display = 'block';
+            document.getElementById('backToSignup').style.display = 'block';
+            
+            // Clear any existing timer
+            if (timerInterval) clearInterval(timerInterval);
+            
+            // Start timer
+            startTimer();
+            
+            alert(currentLang === 'en' ? 
+                `Verification code sent to ${email}! (Demo code: ${verificationCode})` : 
+                `تم إرسال رمز التحقق إلى ${email}! (رمز التجربة: ${verificationCode})`);
+        }
+
+        function startTimer() {
+            timeLeft = 300;
+            updateTimer();
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimer();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById('resendBtn').disabled = false;
+                    document.getElementById('timer').textContent = currentLang === 'en' ? 'Code expired' : 'انتهت صلاحية الرمز';
+                }
+            }, 1000);
+        }
+
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function resendCode() {
+            if (!pendingUser) return;
+            
+            // Generate new code
+            verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+            
+            // Simulate sending email
+            console.log(`New verification code sent to ${pendingUser.email}: ${verificationCode}`);
+            
+            // Reset timer
+            document.getElementById('resendBtn').disabled = true;
+            startTimer();
+            
+            alert(currentLang === 'en' ? 
+                `New verification code sent! (Demo code: ${verificationCode})` : 
+                `تم إرسال رمز تحقق جديد! (رمز التجربة: ${verificationCode})`);
+        }
+
+        function moveToNext(input, index) {
+            if (input.value.length === 1 && index < 5) {
+                document.getElementById(`pin${index + 1}`).focus();
+            }
+            
+            // Auto-submit when all digits are filled
+            if (index === 5) {
+                const allFilled = Array.from(document.querySelectorAll('.pin-digit')).every(inp => inp.value.length === 1);
+                if (allFilled) {
+                    verifyPin();
+                }
+            }
+        }
+
+        function handleBackspace(input, index) {
+            if (input.value.length === 0 && index > 0) {
+                document.getElementById(`pin${index - 1}`).focus();
+            }
+        }
+
+        function verifyPin() {
+            // Get entered PIN
+            const enteredPin = Array.from(document.querySelectorAll('.pin-digit')).map(inp => inp.value).join('');
+            
+            if (enteredPin.length !== 6) {
+                alert(currentLang === 'en' ? 'Please enter the 6-digit code!' : 'الرجاء إدخال الرمز المكون من 6 أرقام!');
+                return;
+            }
+            
+            // Check if code is expired
+            if (timeLeft <= 0) {
+                alert(currentLang === 'en' ? 'Code has expired. Please request a new one.' : 'انتهت صلاحية الرمز. الرجاء طلب رمز جديد.');
+                return;
+            }
+            
+            // For demo, also accept 123456
+            if (enteredPin !== verificationCode && enteredPin !== '123456') {
+                alert(currentLang === 'en' ? 'Invalid verification code!' : 'رمز تحقق غير صحيح!');
+                return;
+            }
+            
+            // Create the user
+            const newUser = {
+                name: pendingUser.name,
+                email: pendingUser.email,
+                password: pendingUser.password,
+                type: pendingUser.type,
+                grade: pendingUser.grade,
+                subscription: pendingUser.type === 'teacher' ? 'professional' : 'free',
+                verified: true,
+                canCreatePremiumRooms: pendingUser.type === 'teacher',
+                ...(pendingUser.type === 'student' ? {
+                    completedExercises: [],
+                    averageScore: 0,
+                    studyHours: 0,
+                    attempts: [],
+                    joinedRooms: []
+                } : {
+                    teacherCode: pendingUser.teacherCode,
+                    exercises: [],
+                    privateRooms: []
+                })
+            };
+            
+            users.push(newUser);
+            saveData();
+            
+            alert(currentLang === 'en' ? 'Account created successfully! Please login.' : 'تم إنشاء الحساب بنجاح! الرجاء تسجيل الدخول.');
+            
+            // Clear pending data
+            pendingUser = null;
+            verificationCode = null;
+            if (timerInterval) clearInterval(timerInterval);
+            
+            // Reset form
+            document.getElementById('signupForm').reset();
+            document.getElementById('signupFields').style.display = 'block';
+            document.getElementById('pinVerification').style.display = 'none';
+            document.getElementById('backToSignup').style.display = 'none';
+            showLogin();
+        }
+
+        function showSignupForm() {
+            document.getElementById('signupFields').style.display = 'block';
+            document.getElementById('pinVerification').style.display = 'none';
+            document.getElementById('backToSignup').style.display = 'none';
+            if (timerInterval) clearInterval(timerInterval);
+        }
+
+        // Login type selection
+        function selectLoginType(type) {
+            selectedLoginType = type;
+            document.querySelectorAll('.login-type-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(type + 'LoginBtn').classList.add('active');
+        }
+
+        function selectSignupType(type) {
+            selectedSignupType = type;
+            document.getElementById('signupStudentBtn').classList.remove('active');
+            document.getElementById('signupTeacherBtn').classList.remove('active');
+            document.getElementById('signup' + type.charAt(0).toUpperCase() + type.slice(1) + 'Btn').classList.add('active');
+            
+            const studentGradeField = document.getElementById('studentGradeField');
+            const teacherGradeField = document.getElementById('teacherGradeField');
+            const teacherCodeField = document.getElementById('teacherCodeField');
+            
+            if (type === 'student') {
+                studentGradeField.style.display = 'block';
+                teacherGradeField.style.display = 'none';
+                teacherCodeField.style.display = 'none';
+                document.getElementById('studentGrade').required = true;
+                document.getElementById('teacherGrade').required = false;
+            } else {
+                studentGradeField.style.display = 'none';
+                teacherGradeField.style.display = 'block';
+                teacherCodeField.style.display = 'block';
+                document.getElementById('studentGrade').required = false;
+                document.getElementById('teacherGrade').required = true;
+            }
+        }
+
+        function showSignup() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('signupForm').style.display = 'block';
+            document.getElementById('demoCredentials').style.display = 'none';
+            document.getElementById('signupFields').style.display = 'block';
+            document.getElementById('pinVerification').style.display = 'none';
+        }
+
+        function showLogin() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('demoCredentials').style.display = 'block';
+            if (timerInterval) clearInterval(timerInterval);
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                if (!user.verified) {
+                    alert(currentLang === 'en' ? 'Please verify your email first!' : 'الرجاء تفعيل بريدك الإلكتروني أولاً!');
+                    return;
+                }
+                
+                if (user.type !== selectedLoginType) {
+                    alert(currentLang === 'en' ? 
+                        `This email is registered as a ${user.type}. Please select the correct login type.` : 
+                        `هذا البريد مسجل كـ ${user.type === 'student' ? 'طالب' : 'مدرس'}. الرجاء اختيار نوع التسجيل الصحيح.`);
+                    return;
+                }
+                
+                currentUser = user;
+                
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('footer').style.display = 'block';
+                
+                if (user.type === 'student') {
+                    document.getElementById('studentWebsite').style.display = 'block';
+                    document.getElementById('studentName').textContent = user.name;
+                    document.getElementById('studentDisplayName').textContent = user.name;
+                    document.getElementById('studentGradeBadge').textContent = `Grade ${user.grade}`;
+                    document.getElementById('currentStudentGrade').textContent = user.grade;
+                    document.getElementById('joinedRooms').textContent = user.joinedRooms ? user.joinedRooms.length : 0;
+                    loadStudentExercises();
+                    loadStudentTeachers();
+                    updateStudentProgress();
+                    updateGradeStats();
+                } else {
+                    document.getElementById('teacherWebsite').style.display = 'block';
+                    document.getElementById('teacherName').textContent = user.name;
+                    document.getElementById('teacherGradeBadge').textContent = `Grade ${user.grade}`;
+                    document.getElementById('currentTeacherGrade').textContent = user.grade;
+                    document.getElementById('teacherExercisesGrade').textContent = user.grade;
+                    document.getElementById('createRoomGrade').textContent = user.grade;
+                    document.getElementById('exerciseGrade').value = `Grade ${user.grade}`;
+                    loadTeacherExercises();
+                    loadTeacherStudents();
+                    updateTeacherStats();
+                    updateTeacherRooms();
+                    updateTeacherGradeStats();
+                }
+                
+                document.getElementById('loginForm').reset();
+            } else {
+                alert(currentLang === 'en' ? 'Invalid email or password!' : 'البريد الإلكتروني أو كلمة المرور غير صحيحة!');
+            }
+        }
+
+        function handleLogout() {
+            currentUser = null;
+            currentExercise = null;
+            document.getElementById('studentWebsite').style.display = 'none';
+            document.getElementById('teacherWebsite').style.display = 'none';
+            document.getElementById('exercisePage').style.display = 'none';
+            document.getElementById('paymentPage').style.display = 'none';
+            document.getElementById('footer').style.display = 'none';
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('demoCredentials').style.display = 'block';
+        }
+
+        function handleAddExercise(event) {
+            event.preventDefault();
+            
+            if (!currentUser || currentUser.type !== 'teacher') {
+                alert('Unauthorized!');
+                return;
+            }
+            
+            const title = document.getElementById('exerciseTitle').value;
+            const subject = document.getElementById('exerciseSubject').value;
+            const difficulty = document.getElementById('exerciseDifficulty').value;
+            const time = parseInt(document.getElementById('exerciseTime').value);
+            const question = document.getElementById('exerciseQuestion').value;
+            const correctAnswer = document.getElementById('correctAnswer').value;
+            const explanation = document.getElementById('exerciseExplanation').value;
+            const grade = currentUser.grade;
+            
+            // Handle image upload
+            const imageInput = document.getElementById('exerciseImage');
+            let imageData = null;
+            
+            if (imageInput.files && imageInput.files[0]) {
+                const reader = new FileReader();
+                reader.onloadend = function() {
+                    imageData = reader.result;
+                    saveExerciseWithImage(imageData);
+                }
+                reader.readAsDataURL(imageInput.files[0]);
+            } else {
+                saveExerciseWithImage(null);
+            }
+            
+            function saveExerciseWithImage(image) {
+                const newExercise = {
+                    id: exercises.length + 1,
+                    title: title,
+                    subject: subject,
+                    difficulty: difficulty,
+                    time: time,
+                    question: question,
+                    correctAnswer: correctAnswer,
+                    explanation: explanation,
+                    teacher: currentUser.email,
+                    teacherName: currentUser.name,
+                    grade: grade,
+                    image: image,
+                    completions: 0,
+                    attempts: 0,
+                    correctAttempts: 0,
+                    date: new Date().toISOString()
+                };
+                
+                exercises.push(newExercise);
+                
+                if (!currentUser.exercises) currentUser.exercises = [];
+                currentUser.exercises.push(newExercise.id);
+                
+                const userIndex = users.findIndex(u => u.email === currentUser.email);
+                users[userIndex].exercises = currentUser.exercises;
+                
+                saveData();
+                
+                document.getElementById('addExerciseForm').reset();
+                document.getElementById('exerciseGrade').value = `Grade ${grade}`;
+                document.getElementById('imagePreview').classList.remove('show');
+                document.querySelector('.remove-image').style.display = 'none';
+                
+                loadTeacherExercises();
+                updateTeacherStats();
+                updateTeacherGradeStats();
+                
+                alert(currentLang === 'en' ? 'Exercise added successfully!' : 'تم إضافة التمرين بنجاح!');
+            }
+        }
+
+        // Payment Page Functions
+        function showPaymentPage(plan, price) {
+            selectedPlan = { name: plan, price: price };
+            
+            // Update payment summary
+            document.getElementById('selectedPlanName').textContent = plan === 'regular' ? 
+                (currentLang === 'en' ? 'Regular Plan' : 'الباقة العادية') : 
+                (currentLang === 'en' ? 'Professional Plan' : 'الباقة الاحترافية');
+            document.getElementById('selectedPlanPrice').textContent = price + ' OMR';
+            document.getElementById('totalPrice').textContent = price + ' OMR';
+            
+            // Update plan details
+            const planDetails = document.getElementById('planDetails');
+            if (plan === 'regular') {
+                planDetails.innerHTML = `
+                    <h3>${currentLang === 'en' ? 'Regular Plan Includes:' : 'الباقة العادية تشمل:'}</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> ${currentLang === 'en' ? '500 exercises/month' : '٥٠٠ تمرين/شهر'}</li>
+                        <li><i class="fas fa-check"></i> ${currentLang === 'en' ? 'Basic progress tracking' : 'تتبع أساسي للتقدم'}</li>
+                        <li><i class="fas fa-check"></i> ${currentLang === 'en' ? 'Community forums' : 'منتديات المجتمع'}</li>
+                        <li><i class="fas fa-check"></i> ${currentLang === 'en' ? 'Create free rooms' : 'إنشاء غرف مجانية'}</li>
+                    </ul>
+                `;
+            } else {
+                planDetails.innerHTML = `
+                    <h3>${currentLang === 'en' ? 'Professional Plan Includes:' : 'الباقة الاحترافية تشمل:'}</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> ${currentLang === 'en' ? 'Unlimited exercises' : 'تمارين غير محدودة'}</li>
+                        <li><i class="fas fa-check"></i> ${currentLang === 'en' ? 'Advanced analytics' : 'تحليلات متقدمة'}</li>
+                        <li><i class="fas fa-check"></i> ${currentLang === 'en' ? 'Priority support' : 'دعم ذو أولوية'}</li>
+                        <li><i class="fas fa-check"></i> ${currentLang === 'en' ? 'Premium rooms access' : 'وصول للغرف المميزة'}</li>
+                        <li><i class="fas fa-check"></i> ${currentLang === 'en' ? 'Create premium rooms' : 'إنشاء غرف مميزة'}</li>
+                    </ul>
+                `;
+            }
+            
+            // Hide main website and show payment page
+            if (currentUser.type === 'student') {
+                document.getElementById('studentWebsite').style.display = 'none';
+            } else {
+                document.getElementById('teacherWebsite').style.display = 'none';
+            }
+            document.getElementById('footer').style.display = 'none';
+            document.getElementById('paymentPage').style.display = 'flex';
+        }
+
+        function hidePaymentPage() {
+            document.getElementById('paymentPage').style.display = 'none';
+            document.getElementById('footer').style.display = 'block';
+            if (currentUser.type === 'student') {
+                document.getElementById('studentWebsite').style.display = 'block';
+            } else {
+                document.getElementById('teacherWebsite').style.display = 'block';
+            }
+        }
+
+        function selectPaymentMethod(method) {
+            selectedPaymentMethod = method;
+            
+            // Update active state
+            document.getElementById('methodCard').classList.remove('active');
+            document.getElementById('methodPaypal').classList.remove('active');
+            document.getElementById('methodBank').classList.remove('active');
+            document.getElementById('method' + method.charAt(0).toUpperCase() + method.slice(1)).classList.add('active');
+            
+            // Show/hide relevant forms
+            document.getElementById('cardPaymentForm').style.display = method === 'card' ? 'block' : 'none';
+            document.getElementById('paypalPaymentForm').style.display = method === 'paypal' ? 'block' : 'none';
+            document.getElementById('bankPaymentForm').style.display = method === 'bank' ? 'block' : 'none';
+        }
+
+        function processPayment() {
+            if (!currentUser || !selectedPlan) return;
+            
+            // Validate based on payment method
+            if (selectedPaymentMethod === 'card') {
+                const cardNumber = document.getElementById('cardNumber').value;
+                const expiryDate = document.getElementById('expiryDate').value;
+                const cvv = document.getElementById('cvv').value;
+                const cardholderName = document.getElementById('cardholderName').value;
+                
+                if (!cardNumber || !expiryDate || !cvv || !cardholderName) {
+                    alert(currentLang === 'en' ? 'Please fill in all card details!' : 'الرجاء ملء جميع بيانات البطاقة!');
+                    return;
+                }
+            } else if (selectedPaymentMethod === 'paypal') {
+                const paypalEmail = document.getElementById('paypalEmail').value;
+                if (!paypalEmail) {
+                    alert(currentLang === 'en' ? 'Please enter your PayPal email!' : 'الرجاء إدخال بريد PayPal الإلكتروني!');
+                    return;
+                }
+            } else if (selectedPaymentMethod === 'bank') {
+                const accountName = document.getElementById('accountName').value;
+                const accountNumber = document.getElementById('accountNumber').value;
+                const bankName = document.getElementById('bankName').value;
+                
+                if (!accountName || !accountNumber || !bankName) {
+                    alert(currentLang === 'en' ? 'Please fill in all bank details!' : 'الرجاء ملء جميع البيانات البنكية!');
+                    return;
+                }
+            }
+            
+            // Update user subscription
+            const userIndex = users.findIndex(u => u.email === currentUser.email);
+            users[userIndex].subscription = selectedPlan.name;
+            currentUser.subscription = selectedPlan.name;
+            saveData();
+            
+            alert(currentLang === 'en' ? 
+                `Payment successful! You have upgraded to ${selectedPlan.name} plan.` : 
+                `تم الدفع بنجاح! تم ترقيتك إلى الباقة ${selectedPlan.name === 'regular' ? 'العادية' : 'الاحترافية'}.`);
+            
+            hidePaymentPage();
+            
+            if (currentUser.type === 'teacher') {
+                updateTeacherRooms();
+            } else {
+                loadStudentTeachers();
+            }
+        }
+
+        function upgradePlan(plan) {
+            showPaymentPage(plan, plan === 'regular' ? 2 : 4);
+        }
+
+        function createPrivateRoom() {
+            if (!currentUser || currentUser.type !== 'teacher') {
+                alert(currentLang === 'en' ? 'Only teachers can create private rooms!' : 'فقط المدرسون يمكنهم إنشاء غرف خاصة!');
+                return;
+            }
+            
+            const roomName = prompt(currentLang === 'en' ? 'Enter room name:' : 'أدخل اسم الغرفة:');
+            if (!roomName) return;
+            
+            const description = prompt(currentLang === 'en' ? 'Enter room description:' : 'أدخل وصف الغرفة:');
+            if (!description) return;
+            
+            const schedule = prompt(currentLang === 'en' ? 'Enter schedule (e.g., Mon, Wed - 4:00 PM):' : 'أدخل الموعد (مثال: الاثنين، الأربعاء - ٤:٠٠ مساءً):');
+            if (!schedule) return;
+            
+            // Teachers can create premium rooms by default (pre-subscribed)
+            const isSubscribersOnly = confirm(currentLang === 'en' ? 
+                'Make this a premium room for subscribers only? (Click OK for premium, Cancel for free)' : 
+                'هل تريد جعل هذه الغرفة مميزة للمشتركين فقط؟ (انقر موافق للمميزة، إلغاء للمجانية)');
+            
+            const newRoom = {
+                id: privateRooms.length + 1,
+                teacherEmail: currentUser.email,
+                teacherName: currentUser.name,
+                roomName: roomName,
+                description: description,
+                schedule: schedule,
+                grade: currentUser.grade,
+                subscribersOnly: isSubscribersOnly,
+                students: [],
+                createdAt: new Date().toISOString()
+            };
+            
+            privateRooms.push(newRoom);
+            
+            if (!currentUser.privateRooms) currentUser.privateRooms = [];
+            currentUser.privateRooms.push(newRoom.id);
+            
+            const userIndex = users.findIndex(u => u.email === currentUser.email);
+            users[userIndex].privateRooms = currentUser.privateRooms;
+            
+            saveData();
+            updateTeacherRooms();
+            
+            alert(currentLang === 'en' ? 
+                `Private room created successfully! It is ${isSubscribersOnly ? 'a premium room (subscribers only)' : 'a free room (available to all students)'}.` : 
+                `تم إنشاء الغرفة الخاصة بنجاح! وهي ${isSubscribersOnly ? 'غرفة مميزة (للمشتركين فقط)' : 'غرفة مجانية (متاحة لجميع الطلاب)'}.`);
+        }
+
+        function updateTeacherRooms() {
+            const grid = document.getElementById('teacherRoomsList');
+            if (!grid) return;
+            
+            grid.innerHTML = '';
+            
+            const teacherRooms = privateRooms.filter(room => room.teacherEmail === currentUser?.email);
+            
+            if (teacherRooms.length === 0) {
+                grid.innerHTML = `<p class="no-data">${currentLang === 'en' ? 'No private rooms yet. Create your first room!' : 'لا توجد غرف خاصة بعد. أنشئ غرفتك الأولى!'}</p>`;
+                return;
+            }
+            
+            teacherRooms.forEach(room => {
+                const roomDiv = document.createElement('div');
+                roomDiv.className = 'created-room' + (room.subscribersOnly ? ' subscriber-room' : '');
+                
+                const studentCount = room.students ? room.students.length : 0;
+                
+                roomDiv.innerHTML = `
+                    <div class="room-grade-tag">Grade ${room.grade}</div>
+                    ${room.subscribersOnly ? '<div class="subscriber-badge" style="top: 10px; right: 60px;"><i class="fas fa-crown"></i> Premium</div>' : ''}
+                    <h4>${room.roomName}</h4>
+                    <p>${room.description}</p>
+                    <div class="room-meta">
+                        <span><i class="fas fa-calendar"></i> ${room.schedule}</span>
+                        <span><i class="fas fa-users"></i> ${studentCount} ${currentLang === 'en' ? 'students' : 'طالب'}</span>
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                        <div class="room-link" onclick="copyRoomLink(${room.id})" style="flex: 1;">
+                            <i class="fas fa-link"></i> 
+                            <span data-en="Copy link" data-ar="انسخ الرابط">Copy link</span>
+                        </div>
+                        <div class="room-link" onclick="viewRoomStudents(${room.id})" style="flex: 1; background: rgba(76, 175, 80, 0.2); color: #4caf50;">
+                            <i class="fas fa-eye"></i> 
+                            <span data-en="View students" data-ar="عرض الطلاب">View students</span>
+                        </div>
+                    </div>
+                `;
+                
+                grid.appendChild(roomDiv);
+            });
+        }
+
+        function viewRoomStudents(roomId) {
+            const room = privateRooms.find(r => r.id === roomId);
+            if (!room) return;
+            
+            const students = room.students || [];
+            const studentDetails = students.map(email => {
+                const user = users.find(u => u.email === email);
+                return user ? `${user.name} (${user.email})` : email;
+            }).join('\n');
+            
+            alert(currentLang === 'en' ? 
+                `Students in "${room.roomName}":\n${studentDetails || 'No students yet'}` : 
+                `الطلاب في "${room.roomName}":\n${studentDetails || 'لا يوجد طلاب بعد'}`);
+        }
+
+        function copyRoomLink(roomId) {
+            const link = `studx.com/room/${roomId}`;
+            navigator.clipboard.writeText(link).then(() => {
+                alert(currentLang === 'en' ? 'Room link copied to clipboard!' : 'تم نسخ رابط الغرفة!');
+            });
+        }
+
+        function joinRoom(roomId) {
+            if (!currentUser || currentUser.type !== 'student') {
+                alert(currentLang === 'en' ? 'Only students can join rooms!' : 'فقط الطلاب يمكنهم الانضمام للغرف!');
+                return;
+            }
+            
+            const room = privateRooms.find(r => r.id === roomId);
+            if (!room) return;
+            
+            // Check if room is premium and student is not subscribed
+            if (room.subscribersOnly && currentUser.subscription !== 'professional') {
+                alert(currentLang === 'en' ? 
+                    'This is a premium room for subscribers only. Please upgrade to Professional plan to join!' : 
+                    'هذه غرفة مميزة للمشتركين فقط. الرجاء ترقية باقتك للاحترافية للانضمام!');
+                return;
+            }
+            
+            // Initialize students array if it doesn't exist
+            if (!room.students) room.students = [];
+            
+            // Check if student already joined
+            if (room.students.includes(currentUser.email)) {
+                alert(currentLang === 'en' ? 'You have already joined this room!' : 'لقد انضممت بالفعل إلى هذه الغرفة!');
+                return;
+            }
+            
+            // Add student to room
+            room.students.push(currentUser.email);
+            
+            // Update user's joined rooms
+            if (!currentUser.joinedRooms) currentUser.joinedRooms = [];
+            currentUser.joinedRooms.push(roomId);
+            
+            // Save to users array
+            const userIndex = users.findIndex(u => u.email === currentUser.email);
+            users[userIndex].joinedRooms = currentUser.joinedRooms;
+            
+            saveData();
+            
+            // Update joined rooms count
+            document.getElementById('joinedRooms').textContent = currentUser.joinedRooms.length;
+            
+            alert(currentLang === 'en' ? 
+                `You have successfully joined "${room.roomName}"! The teacher will contact you soon.` : 
+                `لقد انضممت بنجاح إلى "${room.roomName}"! سيتواصل معك المدرس قريباً.`);
+            
+            // Refresh the teacher list to show updated room status
+            loadStudentTeachers();
+        }
+
+        function startExercise(exerciseId) {
+            const exercise = exercises.find(ex => ex.id === exerciseId);
+            if (!exercise) return;
+            
+            currentExercise = exercise;
+            
+            if (currentUser.type === 'student') {
+                document.getElementById('studentWebsite').style.display = 'none';
+            }
+            document.getElementById('footer').style.display = 'none';
+            document.getElementById('exercisePage').style.display = 'block';
+            
+            document.getElementById('currentExerciseTitle').textContent = exercise.title;
+            document.getElementById('currentExerciseSubject').textContent = exercise.subject;
+            document.getElementById('currentExerciseDifficulty').textContent = currentLang === 'en' ? exercise.difficulty : getArabicDifficulty(exercise.difficulty);
+            document.getElementById('currentExerciseTime').innerHTML = `<i class="far fa-clock"></i> ${exercise.time} ${currentLang === 'en' ? 'min' : 'د'}`;
+            document.getElementById('currentExerciseGrade').innerHTML = `<i class="fas fa-graduation-cap"></i> Grade ${exercise.grade}`;
+            document.getElementById('currentExerciseQuestion').textContent = exercise.question;
+            
+            // Display image if exists
+            const imageContainer = document.getElementById('exerciseImageContainer');
+            const exerciseImage = document.getElementById('currentExerciseImage');
+            
+            if (exercise.image) {
+                exerciseImage.src = exercise.image;
+                imageContainer.style.display = 'block';
+            } else {
+                imageContainer.style.display = 'none';
+            }
+            
+            document.getElementById('studentAnswer').value = '';
+            document.getElementById('resultBox').style.display = 'none';
+        }
+
+        function closeExercise() {
+            document.getElementById('exercisePage').style.display = 'none';
+            document.getElementById('footer').style.display = 'block';
+            if (currentUser && currentUser.type === 'student') {
+                document.getElementById('studentWebsite').style.display = 'block';
+                loadStudentExercises();
+                updateStudentProgress();
+            }
+            currentExercise = null;
+        }
+
+        function checkAnswer() {
+            if (!currentExercise || !currentUser) return;
+            
+            const studentAnswer = document.getElementById('studentAnswer').value.trim();
+            
+            if (!studentAnswer) {
+                alert(currentLang === 'en' ? 'Please enter an answer!' : 'الرجاء إدخال إجابة!');
+                return;
+            }
+            
+            const normalizedStudentAnswer = studentAnswer.toLowerCase().replace(/\s+/g, ' ').trim();
+            const normalizedCorrectAnswer = currentExercise.correctAnswer.toLowerCase().replace(/\s+/g, ' ').trim();
+            
+            const isCorrect = normalizedStudentAnswer === normalizedCorrectAnswer;
+            
+            // Update exercise stats
+            const exerciseIndex = exercises.findIndex(ex => ex.id === currentExercise.id);
+            exercises[exerciseIndex].attempts = (exercises[exerciseIndex].attempts || 0) + 1;
+            if (isCorrect) {
+                exercises[exerciseIndex].correctAttempts = (exercises[exerciseIndex].correctAttempts || 0) + 1;
+                exercises[exerciseIndex].completions = (exercises[exerciseIndex].completions || 0) + 1;
+            }
+            
+            if (currentUser.type === 'student') {
+                if (!currentUser.attempts) currentUser.attempts = [];
+                
+                currentUser.attempts.push({
+                    exerciseId: currentExercise.id,
+                    answer: studentAnswer,
+                    isCorrect: isCorrect,
+                    timestamp: new Date().toISOString()
+                });
+                
+                if (isCorrect && !currentUser.completedExercises.includes(currentExercise.id)) {
+                    currentUser.completedExercises.push(currentExercise.id);
+                    
+                    const totalAttempts = currentUser.attempts.length;
+                    const correctAttempts = currentUser.attempts.filter(a => a.isCorrect).length;
+                    currentUser.averageScore = Math.round((correctAttempts / totalAttempts) * 100);
+                    currentUser.studyHours = (currentUser.studyHours || 0) + (currentExercise.time / 60);
+                }
+                
+                const userIndex = users.findIndex(u => u.email === currentUser.email);
+                users[userIndex] = currentUser;
+                
+                updateStudentProgress();
+            }
+            
+            saveData();
+            
+            const resultBox = document.getElementById('resultBox');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultMessage = document.getElementById('resultMessage');
+            const correctAnswerDisplay = document.getElementById('correctAnswerDisplay');
+            const explanationDisplay = document.getElementById('explanationDisplay');
+            
+            resultBox.style.display = 'block';
+            
+            if (isCorrect) {
+                resultIcon.innerHTML = '<i class="fas fa-check-circle" style="color: #4caf50; font-size: 48px;"></i>';
+                resultMessage.innerHTML = '<h3 style="color: #4caf50;">' + (currentLang === 'en' ? 'Correct!' : 'إجابة صحيحة!') + '</h3>';
+                correctAnswerDisplay.style.display = 'none';
+                explanationDisplay.innerHTML = currentExercise.explanation ? 
+                    '<strong>' + (currentLang === 'en' ? 'Explanation: ' : 'شرح: ') + '</strong>' + currentExercise.explanation : '';
+            } else {
+                resultIcon.innerHTML = '<i class="fas fa-times-circle" style="color: #f44336; font-size: 48px;"></i>';
+                resultMessage.innerHTML = '<h3 style="color: #f44336;">' + (currentLang === 'en' ? 'Incorrect!' : 'إجابة خاطئة!') + '</h3>';
+                correctAnswerDisplay.innerHTML = '<strong>' + (currentLang === 'en' ? 'Correct Answer: ' : 'الإجابة الصحيحة: ') + '</strong>' + currentExercise.correctAnswer;
+                correctAnswerDisplay.style.display = 'block';
+                explanationDisplay.innerHTML = currentExercise.explanation ? 
+                    '<strong>' + (currentLang === 'en' ? 'Explanation: ' : 'شرح: ') + '</strong>' + currentExercise.explanation : '';
+            }
+        }
+
+        function loadStudentExercises() {
+            const grid = document.getElementById('studentExercisesGrid');
+            if (!grid) return;
+            
+            grid.innerHTML = '';
+            
+            const gradeExercises = exercises.filter(ex => ex.grade === currentUser?.grade);
+            
+            if (gradeExercises.length === 0) {
+                grid.innerHTML = `<p class="no-data">${currentLang === 'en' ? 'No exercises available for your grade yet.' : 'لا توجد تمارين متاحة لصفك بعد.'}</p>`;
+                return;
+            }
+            
+            gradeExercises.forEach(ex => {
+                const isCompleted = currentUser?.completedExercises?.includes(ex.id);
+                const card = document.createElement('div');
+                card.className = 'exercise-card' + (isCompleted ? ' completed' : '');
+                
+                const questionPreview = ex.question.length > 50 ? ex.question.substring(0, 50) + '...' : ex.question;
+                
+                // Create thumbnail if image exists
+                const thumbnailHtml = ex.image ? 
+                    `<img src="${ex.image}" class="exercise-thumbnail" alt="Exercise image">` : '';
+                
+                card.innerHTML = `
+                    <div class="grade-tag">Grade ${ex.grade}</div>
+                    ${thumbnailHtml}
+                    <div class="exercise-icon">${getSubjectIcon(ex.subject)}</div>
+                    <h3>${ex.title}</h3>
+                    <p>${questionPreview}</p>
+                    <div class="exercise-meta">
+                        <span><i class="far fa-clock"></i> ${ex.time} ${currentLang === 'en' ? 'min' : 'د'}</span>
+                        <span><i class="fas fa-signal"></i> ${currentLang === 'en' ? ex.difficulty : getArabicDifficulty(ex.difficulty)}</span>
+                        <span><i class="fas fa-user"></i> ${ex.teacherName || 'Teacher'}</span>
+                    </div>
+                    ${isCompleted ? 
+                        '<div class="completed-badge"><i class="fas fa-check-circle"></i> ' + (currentLang === 'en' ? 'Completed' : 'مكتمل') + '</div>' : 
+                        '<button class="start-btn" onclick="startExercise(' + ex.id + ')">' + (currentLang === 'en' ? 'Start Exercise' : 'ابدأ التمرين') + '</button>'
+                    }
+                `;
+                grid.appendChild(card);
+            });
+            
+            updateGradeStats();
+        }
+
+        function loadTeacherExercises() {
+            const grid = document.getElementById('teacherExercisesGrid');
+            if (!grid) return;
+            
+            grid.innerHTML = '';
+            
+            const teacherExercises = exercises.filter(ex => ex.teacher === currentUser?.email && ex.grade === currentUser?.grade);
+            
+            if (teacherExercises.length === 0) {
+                grid.innerHTML = `<p class="no-data">${currentLang === 'en' ? 'No exercises yet for your grade. Add your first exercise!' : 'لا توجد تمارين بعد لصفك. أضف أول تمرين لك!'}</p>`;
+                return;
+            }
+            
+            teacherExercises.forEach(ex => {
+                const successRate = ex.attempts > 0 ? Math.round((ex.correctAttempts / ex.attempts) * 100) : 0;
+                const card = document.createElement('div');
+                card.className = 'exercise-card';
+                
+                const questionPreview = ex.question.length > 50 ? ex.question.substring(0, 50) + '...' : ex.question;
+                
+                // Create thumbnail if image exists
+                const thumbnailHtml = ex.image ? 
+                    `<img src="${ex.image}" class="exercise-thumbnail" alt="Exercise image">` : '';
+                
+                card.innerHTML = `
+                    <div class="grade-tag">Grade ${ex.grade}</div>
+                    ${thumbnailHtml}
+                    <div class="exercise-icon">${getSubjectIcon(ex.subject)}</div>
+                    <h3>${ex.title}</h3>
+                    <p>${questionPreview}</p>
+                    <div class="exercise-meta">
+                        <span><i class="far fa-clock"></i> ${ex.time} ${currentLang === 'en' ? 'min' : 'د'}</span>
+                        <span><i class="fas fa-signal"></i> ${currentLang === 'en' ? ex.difficulty : getArabicDifficulty(ex.difficulty)}</span>
+                        <span><i class="fas fa-check-circle"></i> ${ex.completions || 0} ${currentLang === 'en' ? 'completed' : 'مكتمل'}</span>
+                    </div>
+                    <div class="exercise-stats">
+                        <small>${currentLang === 'en' ? 'Success Rate: ' : 'نسبة النجاح: '}${successRate}% (${ex.attempts || 0} ${currentLang === 'en' ? 'attempts' : 'محاولة'})</small>
+                    </div>
+                    <button class="delete-btn" onclick="deleteExercise(${ex.id})">
+                        <i class="fas fa-trash"></i> ${currentLang === 'en' ? 'Delete' : 'حذف'}
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+            
+            updateTeacherGradeStats();
+        }
+
+        function loadStudentTeachers() {
+            const grid = document.getElementById('studentTeachersGrid');
+            if (!grid) return;
+            
+            grid.innerHTML = '';
+            
+            const teachers = users.filter(u => u.type === 'teacher' && u.grade === currentUser?.grade);
+            const isSubscriber = currentUser?.subscription === 'professional';
+            
+            if (teachers.length === 0) {
+                grid.innerHTML = `<p class="no-data">${currentLang === 'en' ? 'No teachers available for your grade yet.' : 'لا يوجد مدرسون متاحون لصفك بعد.'}</p>`;
+                return;
+            }
+            
+            teachers.forEach(teacher => {
+                const teacherExercises = exercises.filter(ex => ex.teacher === teacher.email).length;
+                const teacherRooms = privateRooms.filter(room => room.teacherEmail === teacher.email && room.grade === currentUser?.grade);
+                
+                const card = document.createElement('div');
+                card.className = 'room-card';
+                
+                // Check if there are any premium rooms
+                const hasPremiumRooms = teacherRooms.some(r => r.subscribersOnly);
+                
+                if (hasPremiumRooms) {
+                    card.classList.add('has-premium');
+                }
+                
+                // Create room list HTML
+                let roomsHtml = '';
+                if (teacherRooms.length > 0) {
+                    roomsHtml = '<div style="margin: 15px 0; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px;">';
+                    roomsHtml += '<p style="color: #667eea; margin-bottom: 8px; font-size: 13px;"><i class="fas fa-door-open"></i> Available Rooms:</p>';
+                    teacherRooms.forEach(room => {
+                        const canJoin = !room.subscribersOnly || (room.subscribersOnly && isSubscriber);
+                        roomsHtml += `
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding: 5px; background: rgba(0,0,0,0.2); border-radius: 5px;">
+                                <div>
+                                    <strong style="color: #fff; font-size: 13px;">${room.roomName}</strong>
+                                    ${room.subscribersOnly ? '<span style="background: gold; color: #000; padding: 2px 6px; border-radius: 10px; font-size: 10px; margin-left: 5px;"><i class="fas fa-crown"></i> Premium</span>' : ''}
+                                </div>
+                                <button onclick="joinRoom(${room.id})" style="background: ${!canJoin ? '#666' : '#667eea'}; color: white; border: none; padding: 5px 12px; border-radius: 5px; font-size: 12px; cursor: ${!canJoin ? 'not-allowed' : 'pointer'};" ${!canJoin ? 'disabled' : ''}>
+                                    ${!canJoin ? 'Premium' : 'Join'}
+                                </button>
+                            </div>
+                        `;
+                    });
+                    roomsHtml += '</div>';
+                }
+                
+                card.innerHTML = `
+                    <div class="room-grade">Grade ${teacher.grade}</div>
+                    ${hasPremiumRooms ? '<div class="subscriber-badge"><i class="fas fa-crown"></i> Has Premium Rooms</div>' : ''}
+                    <div class="room-header">
+                        <i class="fas fa-chalkboard-teacher" style="font-size: 50px; color: #667eea;"></i>
+                        <div class="teacher-info">
+                            <h3>${teacher.name}</h3>
+                            <p>${teacherExercises} ${currentLang === 'en' ? 'exercises' : 'تمرين'} | ${teacherRooms.length} ${currentLang === 'en' ? 'rooms' : 'غرفة'}</p>
+                        </div>
+                    </div>
+                    <div class="room-details">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>(4.8)</span>
+                        </div>
+                        <p class="availability"><i class="fas fa-calendar-check"></i> ${currentLang === 'en' ? 'Available today' : 'متاح اليوم'}</p>
+                    </div>
+                    ${roomsHtml}
+                    <button class="book-btn" onclick="bookTeacher('${teacher.email}')">
+                        ${currentLang === 'en' ? 'Contact Teacher' : 'تواصل مع المدرس'}
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+            
+            updateGradeStats();
+        }
+
+        function loadTeacherStudents() {
+            const grid = document.getElementById('teacherStudentsGrid');
+            if (!grid) return;
+            
+            grid.innerHTML = '';
+            
+            const students = users.filter(u => u.type === 'student' && u.grade === currentUser?.grade);
+            
+            if (students.length === 0) {
+                grid.innerHTML = `<p class="no-data">${currentLang === 'en' ? 'No students in your grade yet.' : 'لا يوجد طلاب في صفك بعد.'}</p>`;
+                return;
+            }
+            
+            students.forEach(student => {
+                const completedCount = student.completedExercises ? student.completedExercises.length : 0;
+                const joinedRoomsCount = student.joinedRooms ? student.joinedRooms.length : 0;
+                const card = document.createElement('div');
+                card.className = 'student-card';
+                card.innerHTML = `
+                    <div class="student-grade">Grade ${student.grade}</div>
+                    <i class="fas fa-user-graduate student-avatar"></i>
+                    <h3>${student.name}</h3>
+                    <p>${student.email}</p>
+                    <div class="student-stats">
+                        <span><i class="fas fa-check-circle"></i> ${completedCount} ${currentLang === 'en' ? 'completed' : 'مكتمل'}</span>
+                        <span><i class="fas fa-clock"></i> ${student.studyHours ? student.studyHours.toFixed(1) : 0}h</span>
+                        <span><i class="fas fa-star"></i> ${student.averageScore || 0}%</span>
+                        <span><i class="fas fa-door-open"></i> ${joinedRoomsCount} ${currentLang === 'en' ? 'rooms' : 'غرف'}</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            
+            updateTeacherGradeStats();
+        }
+
+        function deleteExercise(exerciseId) {
+            if (!currentUser || currentUser.type !== 'teacher') return;
+            
+            if (confirm(currentLang === 'en' ? 'Are you sure you want to delete this exercise?' : 'هل أنت متأكد من حذف هذا التمرين؟')) {
+                exercises = exercises.filter(ex => ex.id !== exerciseId);
+                saveData();
+                loadTeacherExercises();
+                updateTeacherStats();
+                updateTeacherGradeStats();
+            }
+        }
+
+        function bookTeacher(teacherEmail) {
+            alert(currentLang === 'en' ? 
+                'Booking feature coming soon! The teacher will contact you.' : 
+                'خاصية الحجز قريباً! سيتواصل معك المدرس.');
+        }
+
+        function updateStudentProgress() {
+            if (!currentUser || currentUser.type !== 'student') return;
+            
+            document.getElementById('completedExercises').textContent = currentUser.completedExercises?.length || 0;
+            document.getElementById('averageScore').textContent = (currentUser.averageScore || 0) + '%';
+            document.getElementById('studyHours').textContent = currentUser.studyHours ? currentUser.studyHours.toFixed(1) : 0;
+            document.getElementById('joinedRooms').textContent = currentUser.joinedRooms ? currentUser.joinedRooms.length : 0;
+            
+            // Calculate grade rank (simplified)
+            const gradeStudents = users.filter(u => u.type === 'student' && u.grade === currentUser.grade);
+            const sorted = gradeStudents.sort((a, b) => (b.averageScore || 0) - (a.averageScore || 0));
+            const rank = sorted.findIndex(s => s.email === currentUser.email) + 1;
+            // Optional: Add rank display if needed
+        }
+
+        function updateTeacherStats() {
+            if (!currentUser || currentUser.type !== 'teacher') return;
+            
+            const teacherExercises = exercises.filter(ex => ex.teacher === currentUser.email && ex.grade === currentUser.grade);
+            const totalCompletions = teacherExercises.reduce((sum, ex) => sum + (ex.completions || 0), 0);
+            const teacherRooms = privateRooms.filter(room => room.teacherEmail === currentUser.email && room.grade === currentUser.grade);
+            
+            document.getElementById('teacherExercisesCount').textContent = teacherExercises.length;
+            document.getElementById('teacherCompletions').textContent = totalCompletions;
+            document.getElementById('teacherRoomsCount').textContent = teacherRooms.length;
+        }
+
+        function updateGradeStats() {
+            if (!currentUser || currentUser.type !== 'student') return;
+            
+            const gradeExercises = exercises.filter(ex => ex.grade === currentUser.grade);
+            const gradeTeachers = users.filter(u => u.type === 'teacher' && u.grade === currentUser.grade);
+            
+            document.getElementById('studentGradeExerciseCount').textContent = gradeExercises.length;
+            document.getElementById('studentGradeTeacherCount').textContent = gradeTeachers.length;
+        }
+
+        function updateTeacherGradeStats() {
+            if (!currentUser || currentUser.type !== 'teacher') return;
+            
+            const gradeStudents = users.filter(u => u.type === 'student' && u.grade === currentUser.grade);
+            const gradeExercises = exercises.filter(ex => ex.grade === currentUser.grade);
+            
+            document.getElementById('teacherGradeStudentCount').textContent = gradeStudents.length;
+            document.getElementById('teacherGradeExerciseCount').textContent = gradeExercises.length;
+            document.getElementById('teacherStudentsCount').textContent = gradeStudents.length;
+        }
+
+        function getSubjectIcon(subject) {
+            const icons = {
+                'Mathematics': '📐',
+                'Physics': '🔬',
+                'Chemistry': '⚗️',
+                'Biology': '🧬',
+                'English': '📝',
+                'Programming': '💻'
+            };
+            return icons[subject] || '📚';
+        }
+
+        function getArabicDifficulty(difficulty) {
+            const levels = {
+                'Beginner': 'مبتدئ',
+                'Intermediate': 'متوسط',
+                'Advanced': 'متقدم'
+            };
+            return levels[difficulty] || difficulty;
+        }
+
+        function scrollToSection(section) {
+            let element;
+            if (currentUser.type === 'student') {
+                switch(section) {
+                    case 'home':
+                        element = document.getElementById('student-home');
+                        break;
+                    case 'exercises':
+                        element = document.getElementById('student-exercises');
+                        break;
+                    case 'rooms':
+                        element = document.getElementById('student-rooms');
+                        break;
+                    case 'pricing':
+                        element = document.getElementById('student-pricing');
+                        break;
+                }
+            } else {
+                switch(section) {
+                    case 'home':
+                        element = document.getElementById('teacher-home');
+                        break;
+                    case 'exercises':
+                        element = document.getElementById('teacher-exercises');
+                        break;
+                    case 'rooms':
+                        element = document.getElementById('teacher-private-rooms');
+                        break;
+                    case 'pricing':
+                        element = document.getElementById('teacher-pricing');
+                        break;
+                }
+            }
+            
+            if (element) {
+                element.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        function switchLanguage(lang) {
+            currentLang = lang;
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if ((lang === 'en' && btn.textContent.trim() === 'English') || 
+                    (lang === 'ar' && btn.textContent.trim() === 'العربية')) {
+                    btn.classList.add('active');
+                }
+            });
+
+            document.querySelectorAll('[data-en][data-ar]').forEach(element => {
+                if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                    if (element.placeholder) {
+                        element.placeholder = element.getAttribute(`data-${lang}`);
+                    }
+                } else if (element.tagName === 'SELECT') {
+                    // Handle select options
+                    Array.from(element.options).forEach(option => {
+                        if (option.getAttribute(`data-${lang}`)) {
+                            option.textContent = option.getAttribute(`data-${lang}`);
+                        }
+                    });
+                } else if (!element.classList.contains('lang-btn') && element.children.length === 0) {
+                    element.textContent = element.getAttribute(`data-${lang}`);
+                }
+            });
+
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = lang;
+            
+            if (currentUser) {
+                if (currentUser.type === 'student') {
+                    loadStudentExercises();
+                    loadStudentTeachers();
+                } else {
+                    loadTeacherExercises();
+                    loadTeacherStudents();
+                    updateTeacherRooms();
+                }
+            }
+        }
+    </script>
+</body>
+</html>
