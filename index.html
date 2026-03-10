@@ -6,7 +6,7 @@
     <title>StudX - منصة التعلم التفاعلية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* All existing CSS styles remain the same */
+        /* All CSS styles remain exactly the same */
         * {
             margin: 0;
             padding: 0;
@@ -431,6 +431,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
         }
 
         .profile-container {
@@ -704,6 +705,34 @@
             font-size: 50px;
             color: #667eea;
             line-height: 100px;
+        }
+
+        /* Back Button Styles */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .back-button i {
+            font-size: 14px;
         }
 
         /* Demo Credentials */
@@ -2610,6 +2639,15 @@
             left: 10px;
         }
 
+        [dir="rtl"] .back-button {
+            left: auto;
+            right: 20px;
+        }
+
+        [dir="rtl"] .back-button i {
+            transform: rotate(180deg);
+        }
+
         /* Responsive */
         @media (max-width: 992px) {
             .hero {
@@ -2880,6 +2918,9 @@
 
     <!-- Profile Page -->
     <div class="profile-page" id="profilePage" style="display: none;">
+        <div class="back-button" onclick="goBackFromProfile()">
+            <i class="fas fa-arrow-left"></i> <span data-en="Back to Dashboard" data-ar="العودة للوحة التحكم">Back to Dashboard</span>
+        </div>
         <div class="profile-container">
             <div class="profile-header">
                 <div class="profile-avatar" id="profileAvatar">
@@ -3507,7 +3548,23 @@
         let selectedPlan = null;
         let selectedPaymentMethod = 'card';
 
-        // Default users with grades - Teachers have pre-subscription for premium rooms
+        // Check for saved login on page load
+        function checkSavedLogin() {
+            const savedUserEmail = localStorage.getItem('currentUserEmail');
+            const savedUserPassword = localStorage.getItem('currentUserPassword');
+            
+            if (savedUserEmail && savedUserPassword) {
+                const user = users.find(u => u.email === savedUserEmail && u.password === savedUserPassword);
+                if (user) {
+                    // Auto login
+                    setTimeout(() => {
+                        performLogin(user);
+                    }, 2000);
+                }
+            }
+        }
+
+        // Default users with grades
         users = [
             { 
                 name: 'Student', 
@@ -3522,8 +3579,7 @@
                 studyHours: 0,
                 attempts: [],
                 joinedRooms: [],
-                subscription: 'free',
-                verified: true
+                subscription: 'free'
             },
             { 
                 name: 'Teacher', 
@@ -3537,8 +3593,7 @@
                 exercises: [],
                 privateRooms: [],
                 subscription: 'professional',
-                canCreatePremiumRooms: true,
-                verified: true
+                canCreatePremiumRooms: true
             }
         ];
 
@@ -3669,6 +3724,11 @@
         // Initialize
         loadData();
 
+        // Check for saved login after data is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            checkSavedLogin();
+        });
+
         // Profile Image Preview Functions
         function previewProfileImage(input) {
             const preview = document.getElementById('profilePreview');
@@ -3708,14 +3768,12 @@
         function showProfile() {
             if (!currentUser) return;
             
-            // Update profile page with user data
             document.getElementById('profileName').textContent = currentUser.name;
             document.getElementById('profileType').textContent = currentUser.type === 'student' ? 
                 `Student • Grade ${currentUser.grade}` : `Teacher • Grade ${currentUser.grade}`;
             document.getElementById('profileEmail').textContent = currentUser.email;
             document.getElementById('profileBio').textContent = currentUser.bio || 'No bio yet. Click edit to add a bio.';
             
-            // Update profile avatar
             const profileAvatar = document.getElementById('profileAvatar');
             const avatarImg = document.getElementById('profileAvatarImg');
             const avatarIcon = profileAvatar.querySelector('i');
@@ -3729,7 +3787,6 @@
                 avatarIcon.style.display = 'block';
             }
             
-            // Update stats
             const statsGrid = document.getElementById('profileStats');
             if (currentUser.type === 'student') {
                 statsGrid.innerHTML = `
@@ -3763,7 +3820,6 @@
                 `;
             }
             
-            // Hide main website and show profile page
             if (currentUser.type === 'student') {
                 document.getElementById('studentWebsite').style.display = 'none';
             } else {
@@ -3773,12 +3829,19 @@
             document.getElementById('profilePage').style.display = 'block';
         }
 
+        function goBackFromProfile() {
+            document.getElementById('profilePage').style.display = 'none';
+            document.getElementById('footer').style.display = 'block';
+            if (currentUser.type === 'student') {
+                document.getElementById('studentWebsite').style.display = 'block';
+            } else {
+                document.getElementById('teacherWebsite').style.display = 'block';
+            }
+        }
+
         function openEditProfile() {
-            // Populate edit form with current data
             document.getElementById('editName').value = currentUser.name;
             document.getElementById('editBio').value = currentUser.bio || '';
-            
-            // Show edit modal
             document.getElementById('editProfileModal').classList.add('active');
         }
 
@@ -3796,11 +3859,9 @@
                 return;
             }
             
-            // Update user data
             currentUser.name = newName;
             currentUser.bio = newBio;
             
-            // Handle image upload
             if (imageInput.files && imageInput.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
@@ -3814,11 +3875,9 @@
         }
 
         function finishSaveProfile() {
-            // Update user in users array
             const userIndex = users.findIndex(u => u.email === currentUser.email);
             users[userIndex] = currentUser;
             
-            // Update navigation display
             if (currentUser.type === 'student') {
                 document.getElementById('navStudentName').textContent = currentUser.name;
                 document.getElementById('studentName').textContent = currentUser.name;
@@ -3850,14 +3909,11 @@
             
             saveData();
             closeEditProfile();
-            
-            // Refresh profile page
             showProfile();
             
             alert(currentLang === 'en' ? 'Profile updated successfully!' : 'تم تحديث الملف الشخصي بنجاح!');
         }
 
-        // Image preview function for exercises
         function previewImage(input) {
             const preview = document.getElementById('imagePreview');
             const removeBtn = document.querySelector('.remove-image');
@@ -3887,7 +3943,6 @@
             removeBtn.style.display = 'none';
         }
 
-        // Login type selection
         function selectLoginType(type) {
             selectedLoginType = type;
             document.querySelectorAll('.login-type-btn').forEach(btn => {
@@ -3975,7 +4030,6 @@
                 return;
             }
             
-            // Handle profile image
             const imageInput = document.getElementById('profileImage');
             let profileImage = null;
             
@@ -4000,7 +4054,6 @@
                     bio: bio,
                     profileImage: image,
                     subscription: selectedSignupType === 'teacher' ? 'professional' : 'free',
-                    verified: true,
                     canCreatePremiumRooms: selectedSignupType === 'teacher',
                     ...(selectedSignupType === 'student' ? {
                         completedExercises: [],
@@ -4020,7 +4073,6 @@
                 
                 alert(currentLang === 'en' ? 'Account created successfully! Please login.' : 'تم إنشاء الحساب بنجاح! الرجاء تسجيل الدخول.');
                 
-                // Reset form
                 document.getElementById('signupForm').reset();
                 document.getElementById('profilePreview').style.display = 'none';
                 document.getElementById('profileIcon').style.display = 'block';
@@ -4028,19 +4080,82 @@
             }
         }
 
+        function performLogin(user) {
+            currentUser = user;
+            
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('footer').style.display = 'block';
+            
+            if (user.type === 'student') {
+                document.getElementById('studentWebsite').style.display = 'block';
+                document.getElementById('studentName').textContent = user.name;
+                document.getElementById('studentDisplayName').textContent = user.name;
+                document.getElementById('navStudentName').textContent = user.name;
+                document.getElementById('studentGradeBadge').textContent = `Grade ${user.grade}`;
+                document.getElementById('currentStudentGrade').textContent = user.grade;
+                document.getElementById('joinedRooms').textContent = user.joinedRooms ? user.joinedRooms.length : 0;
+                
+                const navAvatar = document.getElementById('navStudentAvatar');
+                const navImg = document.getElementById('navStudentAvatarImg');
+                const navIcon = navAvatar.querySelector('i');
+                
+                if (user.profileImage) {
+                    navImg.src = user.profileImage;
+                    navImg.style.display = 'block';
+                    navIcon.style.display = 'none';
+                } else {
+                    navImg.style.display = 'none';
+                    navIcon.style.display = 'block';
+                }
+                
+                loadStudentExercises();
+                loadStudentTeachers();
+                updateStudentProgress();
+                updateGradeStats();
+            } else {
+                document.getElementById('teacherWebsite').style.display = 'block';
+                document.getElementById('teacherName').textContent = user.name;
+                document.getElementById('navTeacherName').textContent = user.name;
+                document.getElementById('teacherGradeBadge').textContent = `Grade ${user.grade}`;
+                document.getElementById('currentTeacherGrade').textContent = user.grade;
+                document.getElementById('teacherExercisesGrade').textContent = user.grade;
+                document.getElementById('createRoomGrade').textContent = user.grade;
+                document.getElementById('exerciseGrade').value = `Grade ${user.grade}`;
+                
+                const navAvatar = document.getElementById('navTeacherAvatar');
+                const navImg = document.getElementById('navTeacherAvatarImg');
+                const navIcon = navAvatar.querySelector('i');
+                
+                if (user.profileImage) {
+                    navImg.src = user.profileImage;
+                    navImg.style.display = 'block';
+                    navIcon.style.display = 'none';
+                } else {
+                    navImg.style.display = 'none';
+                    navIcon.style.display = 'block';
+                }
+                
+                loadTeacherExercises();
+                loadTeacherStudents();
+                updateTeacherStats();
+                updateTeacherRooms();
+                updateTeacherGradeStats();
+            }
+            
+            document.getElementById('loginForm').reset();
+        }
+
         function handleLogin(event) {
             event.preventDefault();
             
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            const rememberMe = document.querySelector('#loginForm input[type="checkbox"]').checked;
             
             const user = users.find(u => u.email === email && u.password === password);
             
             if (user) {
-                if (!user.verified) {
-                    alert(currentLang === 'en' ? 'Please verify your email first!' : 'الرجاء تفعيل بريدك الإلكتروني أولاً!');
-                    return;
-                }
+                // No verification check - users can login immediately
                 
                 if (user.type !== selectedLoginType) {
                     alert(currentLang === 'en' ? 
@@ -4049,76 +4164,21 @@
                     return;
                 }
                 
-                currentUser = user;
-                
-                document.getElementById('loginPage').style.display = 'none';
-                document.getElementById('footer').style.display = 'block';
-                
-                if (user.type === 'student') {
-                    document.getElementById('studentWebsite').style.display = 'block';
-                    document.getElementById('studentName').textContent = user.name;
-                    document.getElementById('studentDisplayName').textContent = user.name;
-                    document.getElementById('navStudentName').textContent = user.name;
-                    document.getElementById('studentGradeBadge').textContent = `Grade ${user.grade}`;
-                    document.getElementById('currentStudentGrade').textContent = user.grade;
-                    document.getElementById('joinedRooms').textContent = user.joinedRooms ? user.joinedRooms.length : 0;
-                    
-                    // Update student avatar in nav
-                    const navAvatar = document.getElementById('navStudentAvatar');
-                    const navImg = document.getElementById('navStudentAvatarImg');
-                    const navIcon = navAvatar.querySelector('i');
-                    
-                    if (user.profileImage) {
-                        navImg.src = user.profileImage;
-                        navImg.style.display = 'block';
-                        navIcon.style.display = 'none';
-                    } else {
-                        navImg.style.display = 'none';
-                        navIcon.style.display = 'block';
-                    }
-                    
-                    loadStudentExercises();
-                    loadStudentTeachers();
-                    updateStudentProgress();
-                    updateGradeStats();
-                } else {
-                    document.getElementById('teacherWebsite').style.display = 'block';
-                    document.getElementById('teacherName').textContent = user.name;
-                    document.getElementById('navTeacherName').textContent = user.name;
-                    document.getElementById('teacherGradeBadge').textContent = `Grade ${user.grade}`;
-                    document.getElementById('currentTeacherGrade').textContent = user.grade;
-                    document.getElementById('teacherExercisesGrade').textContent = user.grade;
-                    document.getElementById('createRoomGrade').textContent = user.grade;
-                    document.getElementById('exerciseGrade').value = `Grade ${user.grade}`;
-                    
-                    // Update teacher avatar in nav
-                    const navAvatar = document.getElementById('navTeacherAvatar');
-                    const navImg = document.getElementById('navTeacherAvatarImg');
-                    const navIcon = navAvatar.querySelector('i');
-                    
-                    if (user.profileImage) {
-                        navImg.src = user.profileImage;
-                        navImg.style.display = 'block';
-                        navIcon.style.display = 'none';
-                    } else {
-                        navImg.style.display = 'none';
-                        navIcon.style.display = 'block';
-                    }
-                    
-                    loadTeacherExercises();
-                    loadTeacherStudents();
-                    updateTeacherStats();
-                    updateTeacherRooms();
-                    updateTeacherGradeStats();
+                if (rememberMe) {
+                    localStorage.setItem('currentUserEmail', user.email);
+                    localStorage.setItem('currentUserPassword', user.password);
                 }
                 
-                document.getElementById('loginForm').reset();
+                performLogin(user);
             } else {
                 alert(currentLang === 'en' ? 'Invalid email or password!' : 'البريد الإلكتروني أو كلمة المرور غير صحيحة!');
             }
         }
 
         function handleLogout() {
+            localStorage.removeItem('currentUserEmail');
+            localStorage.removeItem('currentUserPassword');
+            
             currentUser = null;
             currentExercise = null;
             document.getElementById('studentWebsite').style.display = 'none';
@@ -4151,7 +4211,6 @@
             const explanation = document.getElementById('exerciseExplanation').value;
             const grade = currentUser.grade;
             
-            // Handle image upload
             const imageInput = document.getElementById('exerciseImage');
             let imageData = null;
             
@@ -4209,18 +4268,15 @@
             }
         }
 
-        // Payment Page Functions
         function showPaymentPage(plan, price) {
             selectedPlan = { name: plan, price: price };
             
-            // Update payment summary
             document.getElementById('selectedPlanName').textContent = plan === 'regular' ? 
                 (currentLang === 'en' ? 'Regular Plan' : 'الباقة العادية') : 
                 (currentLang === 'en' ? 'Professional Plan' : 'الباقة الاحترافية');
             document.getElementById('selectedPlanPrice').textContent = price + ' OMR';
             document.getElementById('totalPrice').textContent = price + ' OMR';
             
-            // Update plan details
             const planDetails = document.getElementById('planDetails');
             if (plan === 'regular') {
                 planDetails.innerHTML = `
@@ -4245,7 +4301,6 @@
                 `;
             }
             
-            // Hide main website and show payment page
             if (currentUser.type === 'student') {
                 document.getElementById('studentWebsite').style.display = 'none';
             } else {
@@ -4268,13 +4323,11 @@
         function selectPaymentMethod(method) {
             selectedPaymentMethod = method;
             
-            // Update active state
             document.getElementById('methodCard').classList.remove('active');
             document.getElementById('methodPaypal').classList.remove('active');
             document.getElementById('methodBank').classList.remove('active');
             document.getElementById('method' + method.charAt(0).toUpperCase() + method.slice(1)).classList.add('active');
             
-            // Show/hide relevant forms
             document.getElementById('cardPaymentForm').style.display = method === 'card' ? 'block' : 'none';
             document.getElementById('paypalPaymentForm').style.display = method === 'paypal' ? 'block' : 'none';
             document.getElementById('bankPaymentForm').style.display = method === 'bank' ? 'block' : 'none';
@@ -4283,7 +4336,6 @@
         function processPayment() {
             if (!currentUser || !selectedPlan) return;
             
-            // Validate based on payment method
             if (selectedPaymentMethod === 'card') {
                 const cardNumber = document.getElementById('cardNumber').value;
                 const expiryDate = document.getElementById('expiryDate').value;
@@ -4311,7 +4363,6 @@
                 }
             }
             
-            // Update user subscription
             const userIndex = users.findIndex(u => u.email === currentUser.email);
             users[userIndex].subscription = selectedPlan.name;
             currentUser.subscription = selectedPlan.name;
@@ -4349,7 +4400,6 @@
             const schedule = prompt(currentLang === 'en' ? 'Enter schedule (e.g., Mon, Wed - 4:00 PM):' : 'أدخل الموعد (مثال: الاثنين، الأربعاء - ٤:٠٠ مساءً):');
             if (!schedule) return;
             
-            // Teachers can create premium rooms by default (pre-subscribed)
             const isSubscribersOnly = confirm(currentLang === 'en' ? 
                 'Make this a premium room for subscribers only? (Click OK for premium, Cancel for free)' : 
                 'هل تريد جعل هذه الغرفة مميزة للمشتركين فقط؟ (انقر موافق للمميزة، إلغاء للمجانية)');
@@ -4458,7 +4508,6 @@
             const room = privateRooms.find(r => r.id === roomId);
             if (!room) return;
             
-            // Check if room is premium and student is not subscribed
             if (room.subscribersOnly && currentUser.subscription !== 'professional') {
                 alert(currentLang === 'en' ? 
                     'This is a premium room for subscribers only. Please upgrade to Professional plan to join!' : 
@@ -4466,36 +4515,29 @@
                 return;
             }
             
-            // Initialize students array if it doesn't exist
             if (!room.students) room.students = [];
             
-            // Check if student already joined
             if (room.students.includes(currentUser.email)) {
                 alert(currentLang === 'en' ? 'You have already joined this room!' : 'لقد انضممت بالفعل إلى هذه الغرفة!');
                 return;
             }
             
-            // Add student to room
             room.students.push(currentUser.email);
             
-            // Update user's joined rooms
             if (!currentUser.joinedRooms) currentUser.joinedRooms = [];
             currentUser.joinedRooms.push(roomId);
             
-            // Save to users array
             const userIndex = users.findIndex(u => u.email === currentUser.email);
             users[userIndex].joinedRooms = currentUser.joinedRooms;
             
             saveData();
             
-            // Update joined rooms count
             document.getElementById('joinedRooms').textContent = currentUser.joinedRooms.length;
             
             alert(currentLang === 'en' ? 
                 `You have successfully joined "${room.roomName}"! The teacher will contact you soon.` : 
                 `لقد انضممت بنجاح إلى "${room.roomName}"! سيتواصل معك المدرس قريباً.`);
             
-            // Refresh the teacher list to show updated room status
             loadStudentTeachers();
         }
 
@@ -4518,7 +4560,6 @@
             document.getElementById('currentExerciseGrade').innerHTML = `<i class="fas fa-graduation-cap"></i> Grade ${exercise.grade}`;
             document.getElementById('currentExerciseQuestion').textContent = exercise.question;
             
-            // Display image if exists
             const imageContainer = document.getElementById('exerciseImageContainer');
             const exerciseImage = document.getElementById('currentExerciseImage');
             
@@ -4559,7 +4600,6 @@
             
             const isCorrect = normalizedStudentAnswer === normalizedCorrectAnswer;
             
-            // Update exercise stats
             const exerciseIndex = exercises.findIndex(ex => ex.id === currentExercise.id);
             exercises[exerciseIndex].attempts = (exercises[exerciseIndex].attempts || 0) + 1;
             if (isCorrect) {
@@ -4638,7 +4678,6 @@
                 
                 const questionPreview = ex.question.length > 50 ? ex.question.substring(0, 50) + '...' : ex.question;
                 
-                // Create thumbnail if image exists
                 const thumbnailHtml = ex.image ? 
                     `<img src="${ex.image}" class="exercise-thumbnail" alt="Exercise image">` : '';
                 
@@ -4684,7 +4723,6 @@
                 
                 const questionPreview = ex.question.length > 50 ? ex.question.substring(0, 50) + '...' : ex.question;
                 
-                // Create thumbnail if image exists
                 const thumbnailHtml = ex.image ? 
                     `<img src="${ex.image}" class="exercise-thumbnail" alt="Exercise image">` : '';
                 
@@ -4733,14 +4771,12 @@
                 const card = document.createElement('div');
                 card.className = 'room-card';
                 
-                // Check if there are any premium rooms
                 const hasPremiumRooms = teacherRooms.some(r => r.subscribersOnly);
                 
                 if (hasPremiumRooms) {
                     card.classList.add('has-premium');
                 }
                 
-                // Create room list HTML
                 let roomsHtml = '';
                 if (teacherRooms.length > 0) {
                     roomsHtml = '<div style="margin: 15px 0; padding: 10px; background: rgba(255,255,255,0.05); border-radius: 8px;">';
@@ -4813,7 +4849,6 @@
                 const card = document.createElement('div');
                 card.className = 'student-card';
                 
-                // Create avatar HTML
                 const avatarHtml = student.profileImage ? 
                     `<img src="${student.profileImage}" class="student-avatar" alt="Profile">` : 
                     `<i class="fas fa-user-graduate student-avatar"></i>`;
@@ -4862,12 +4897,6 @@
             document.getElementById('averageScore').textContent = (currentUser.averageScore || 0) + '%';
             document.getElementById('studyHours').textContent = currentUser.studyHours ? currentUser.studyHours.toFixed(1) : 0;
             document.getElementById('joinedRooms').textContent = currentUser.joinedRooms ? currentUser.joinedRooms.length : 0;
-            
-            // Calculate grade rank (simplified)
-            const gradeStudents = users.filter(u => u.type === 'student' && u.grade === currentUser.grade);
-            const sorted = gradeStudents.sort((a, b) => (b.averageScore || 0) - (a.averageScore || 0));
-            const rank = sorted.findIndex(s => s.email === currentUser.email) + 1;
-            // Optional: Add rank display if needed
         }
 
         function updateTeacherStats() {
@@ -4982,7 +5011,6 @@
                         element.placeholder = element.getAttribute(`data-${lang}`);
                     }
                 } else if (element.tagName === 'SELECT') {
-                    // Handle select options
                     Array.from(element.options).forEach(option => {
                         if (option.getAttribute(`data-${lang}`)) {
                             option.textContent = option.getAttribute(`data-${lang}`);
