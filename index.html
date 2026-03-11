@@ -2746,6 +2746,629 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            background: rgba(20, 20, 20, 0.95);
+            border-left: 4px solid #667eea;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 5000;
+            animation: slideIn 0.3s ease;
+            max-width: 350px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .notification.success {
+            border-left-color: #4caf50;
+        }
+
+        .notification.success i {
+            color: #4caf50;
+        }
+
+        .notification.error {
+            border-left-color: #f44336;
+        }
+
+        .notification.error i {
+            color: #f44336;
+        }
+
+        .notification.info {
+            border-left-color: #2196f3;
+        }
+
+        .notification.info i {
+            color: #2196f3;
+        }
+
+        .notification.warning {
+            border-left-color: #ff9800;
+        }
+
+        .notification.warning i {
+            color: #ff9800;
+        }
+
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .notification-content i {
+            font-size: 20px;
+        }
+
+        .notification-content span {
+            color: #fff;
+            font-size: 14px;
+            line-height: 1.4;
+            flex: 1;
+        }
+
+        .notification-close {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .notification-close:hover {
+            color: #fff;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        /* Error Lock Styles */
+        .error-lock {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(5px);
+            z-index: 6000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .error-lock-content {
+            background: rgba(20, 20, 20, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 400px;
+            text-align: center;
+            animation: scaleIn 0.3s ease;
+        }
+
+        .error-lock-icon {
+            font-size: 80px;
+            color: #f44336;
+            margin-bottom: 20px;
+            animation: shake 0.5s ease;
+        }
+
+        .error-lock-title {
+            color: #fff;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .error-lock-message {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .error-lock-details {
+            background: rgba(244, 67, 54, 0.1);
+            border: 1px solid rgba(244, 67, 54, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: #f44336;
+            font-size: 13px;
+            text-align: left;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .error-lock-details ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        .error-lock-details li {
+            margin-bottom: 5px;
+            position: relative;
+        }
+
+        .error-lock-details li:before {
+            content: "•";
+            color: #f44336;
+            position: absolute;
+            left: -15px;
+        }
+
+        .error-lock-button {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .error-lock-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        /* Groups Section */
+        .groups-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .groups-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+        }
+
+        .groups-sidebar {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .groups-sidebar h3 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .groups-sidebar h3 i {
+            color: #667eea;
+        }
+
+        .friend-requests {
+            margin-bottom: 30px;
+        }
+
+        .request-item {
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .request-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .request-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .request-avatar i {
+            font-size: 20px;
+            color: #667eea;
+        }
+
+        .request-details {
+            flex: 1;
+        }
+
+        .request-name {
+            color: #fff;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .request-nickname {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .request-accept {
+            padding: 5px 12px;
+            background: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .request-accept:hover {
+            background: #45a049;
+        }
+
+        .request-reject {
+            padding: 5px 12px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .request-reject:hover {
+            background: #da190b;
+        }
+
+        .friends-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .friend-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background 0.3s;
+        }
+
+        .friend-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .friend-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .friend-avatar i {
+            font-size: 20px;
+            color: #667eea;
+        }
+
+        .friend-info {
+            flex: 1;
+        }
+
+        .friend-name {
+            color: #fff;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .friend-nickname {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+        }
+
+        .friend-status {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4caf50;
+        }
+
+        .groups-main {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .groups-main h3 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .groups-main h3 i {
+            color: #667eea;
+        }
+
+        .add-friend-form {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .add-friend-form h4 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .friend-search {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .friend-search input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .friend-search input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .friend-search button {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .friend-search button:hover {
+            transform: translateY(-2px);
+        }
+
+        .search-results {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .search-result-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .search-result-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-result-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-result-avatar i {
+            font-size: 18px;
+            color: #667eea;
+        }
+
+        .search-result-details {
+            flex: 1;
+        }
+
+        .search-result-name {
+            color: #fff;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .search-result-nickname {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 11px;
+        }
+
+        .send-request-btn {
+            padding: 5px 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .send-request-btn:hover:not(:disabled) {
+            background: #5a6fd8;
+        }
+
+        .send-request-btn:disabled {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.3);
+            cursor: not-allowed;
+        }
+
+        .groups-list {
+            margin-top: 20px;
+        }
+
+        .group-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .group-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .group-header h4 {
+            color: #fff;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .group-header h4 i {
+            color: #667eea;
+        }
+
+        .group-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .group-actions button {
+            padding: 5px 10px;
+            background: transparent;
+            border: 1px solid #667eea;
+            color: #667eea;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .group-actions button:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .group-members {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .group-member {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .group-member i {
+            color: #667eea;
+            font-size: 12px;
+        }
+
+        .group-member span {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .group-owner-badge {
+            background: gold;
+            color: #000;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 10px;
+            margin-left: 5px;
+        }
+
+        .create-group-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .create-group-btn:hover {
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
@@ -2837,6 +3460,20 @@
                     <div class="input-group">
                         <i class="fas fa-lock"></i>
                         <input type="password" id="signupConfirmPassword" placeholder="Confirm Password / تأكيد كلمة المرور" required>
+                    </div>
+                    
+                    <!-- Account Name Field (Unique) -->
+                    <div class="input-group">
+                        <i class="fas fa-id-card"></i>
+                        <input type="text" id="signupAccountName" placeholder="Account Name (Unique) / اسم الحساب (فريد)" required>
+                        <small style="color: rgba(255,255,255,0.5); display: block; margin-top: 5px;" data-en="This name must be unique and will be used to find friends" data-ar="هذا الاسم يجب أن يكون فريداً وسيستخدم للعثور على الأصدقاء">This name must be unique and will be used to find friends</small>
+                    </div>
+                    
+                    <!-- Nickname Field (Can be duplicated) -->
+                    <div class="input-group">
+                        <i class="fas fa-tag"></i>
+                        <input type="text" id="signupNickname" placeholder="Nickname (Optional) / اسم مستعار (اختياري)">
+                        <small style="color: rgba(255,255,255,0.5); display: block; margin-top: 5px;" data-en="This can be the same as other users" data-ar="يمكن أن يكون نفس اسم مستخدم آخر">This can be the same as other users</small>
                     </div>
                     
                     <!-- Grade Selection for Students -->
@@ -2992,6 +3629,10 @@
                     <input type="text" id="editName" placeholder="Your name">
                 </div>
                 <div class="form-group">
+                    <label data-en="Nickname:" data-ar="الاسم المستعار:">Nickname:</label>
+                    <input type="text" id="editNickname" placeholder="Your nickname">
+                </div>
+                <div class="form-group">
                     <label data-en="Bio:" data-ar="نبذة:">Bio:</label>
                     <textarea id="editBio" rows="4" placeholder="Tell us about yourself..."></textarea>
                 </div>
@@ -3017,6 +3658,7 @@
                     <li><a href="#student-home" class="active" data-en="Home" data-ar="الرئيسية">Home</a></li>
                     <li><a href="#student-exercises" data-en="Exercises" data-ar="التمارين">Exercises</a></li>
                     <li><a href="#student-rooms" data-en="Private Rooms" data-ar="غرف خاصة">Private Rooms</a></li>
+                    <li><a href="#student-groups" data-en="Groups" data-ar="المجموعات">Groups</a></li>
                     <li><a href="#student-pricing" data-en="Pricing" data-ar="الباقات">Pricing</a></li>
                     <li><a href="#student-progress" data-en="My Progress" data-ar="تقدمي">My Progress</a></li>
                 </ul>
@@ -3090,6 +3732,44 @@
             <section class="exercises" id="student-exercises">
                 <h2 class="section-title" data-en="Available Exercises for Your Grade" data-ar="التمارين المتاحة لصفك">Available Exercises for Your Grade</h2>
                 <div class="exercises-grid" id="studentExercisesGrid"></div>
+            </section>
+
+            <!-- Groups Section -->
+            <section class="groups-section" id="student-groups">
+                <h2 class="section-title" data-en="Study Groups & Friends" data-ar="مجموعات الدراسة والأصدقاء">Study Groups & Friends</h2>
+                <div class="groups-container">
+                    <div class="groups-sidebar">
+                        <h3><i class="fas fa-user-friends"></i> <span data-en="Friends" data-ar="الأصدقاء">Friends</span></h3>
+                        
+                        <!-- Friend Requests -->
+                        <div class="friend-requests" id="friendRequests"></div>
+                        
+                        <!-- Friends List -->
+                        <div class="friends-list" id="friendsList"></div>
+                    </div>
+                    
+                    <div class="groups-main">
+                        <h3><i class="fas fa-users"></i> <span data-en="Groups" data-ar="المجموعات">Groups</span></h3>
+                        
+                        <!-- Add Friend Form -->
+                        <div class="add-friend-form">
+                            <h4 data-en="Add Friend" data-ar="إضافة صديق">Add Friend</h4>
+                            <div class="friend-search">
+                                <input type="text" id="friendSearchInput" placeholder="Search by account name or nickname...">
+                                <button onclick="searchFriends()" data-en="Search" data-ar="بحث">Search</button>
+                            </div>
+                            <div class="search-results" id="friendSearchResults"></div>
+                        </div>
+                        
+                        <!-- Groups List -->
+                        <div class="groups-list" id="groupsList"></div>
+                        
+                        <!-- Create Group Button -->
+                        <button class="create-group-btn" onclick="createGroup()">
+                            <i class="fas fa-plus-circle"></i> <span data-en="Create New Group" data-ar="إنشاء مجموعة جديدة">Create New Group</span>
+                        </button>
+                    </div>
+                </div>
             </section>
 
             <!-- Pricing Section -->
@@ -3552,6 +4232,8 @@
         let users = [];
         let exercises = [];
         let privateRooms = [];
+        let groups = [];
+        let friendRequests = [];
         let currentUser = null;
         let currentLang = 'en';
         let currentExercise = null;
@@ -3559,6 +4241,67 @@
         let selectedSignupType = 'student';
         let selectedPlan = null;
         let selectedPaymentMethod = 'card';
+
+        // Notification System
+        function showNotification(message, type = 'info', duration = 3000) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            const icon = {
+                'success': 'fas fa-check-circle',
+                'error': 'fas fa-exclamation-circle',
+                'warning': 'fas fa-exclamation-triangle',
+                'info': 'fas fa-info-circle'
+            }[type] || 'fas fa-info-circle';
+            
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <i class="${icon}"></i>
+                    <span>${message}</span>
+                    <button class="notification-close" onclick="this.parentElement.parentElement.remove()">×</button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease forwards';
+                setTimeout(() => notification.remove(), 300);
+            }, duration);
+        }
+
+        // Error Lock System
+        function showErrorLock(title, message, details = []) {
+            const errorLock = document.createElement('div');
+            errorLock.className = 'error-lock';
+            
+            let detailsHtml = '';
+            if (details.length > 0) {
+                detailsHtml = `
+                    <div class="error-lock-details">
+                        <ul>
+                            ${details.map(d => `<li>${d}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            errorLock.innerHTML = `
+                <div class="error-lock-content">
+                    <div class="error-lock-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3 class="error-lock-title">${title}</h3>
+                    <p class="error-lock-message">${message}</p>
+                    ${detailsHtml}
+                    <button class="error-lock-button" onclick="this.closest('.error-lock').remove()">
+                        ${currentLang === 'en' ? 'Understood' : 'فهمت'}
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(errorLock);
+        }
 
         // Check for saved login on page load
         function checkSavedLogin() {
@@ -3576,10 +4319,12 @@
             }
         }
 
-        // Default users with grades
+        // Default users with grades and social features
         users = [
             { 
                 name: 'Student', 
+                accountName: 'student123',
+                nickname: 'studious',
                 email: 'student@studx.com', 
                 password: 'student123', 
                 type: 'student', 
@@ -3591,10 +4336,15 @@
                 studyHours: 0,
                 attempts: [],
                 joinedRooms: [],
-                subscription: 'free'
+                subscription: 'free',
+                friends: [],
+                groups: [],
+                friendRequests: []
             },
             { 
                 name: 'Teacher', 
+                accountName: 'teacher123',
+                nickname: 'professor',
                 email: 'teacher@studx.com', 
                 password: 'teacher123', 
                 type: 'teacher', 
@@ -3605,7 +4355,22 @@
                 exercises: [],
                 privateRooms: [],
                 subscription: 'professional',
-                canCreatePremiumRooms: true
+                canCreatePremiumRooms: true,
+                friends: [],
+                groups: [],
+                friendRequests: []
+            }
+        ];
+
+        // Default groups
+        groups = [
+            {
+                id: 1,
+                name: 'Math Study Group',
+                description: 'Group for discussing math problems and solutions',
+                owner: 'student@studx.com',
+                members: ['student@studx.com'],
+                createdAt: new Date().toISOString()
             }
         ];
 
@@ -3714,6 +4479,8 @@
             localStorage.setItem('studx_users', JSON.stringify(users));
             localStorage.setItem('studx_exercises', JSON.stringify(exercises));
             localStorage.setItem('studx_rooms', JSON.stringify(privateRooms));
+            localStorage.setItem('studx_groups', JSON.stringify(groups));
+            localStorage.setItem('studx_friend_requests', JSON.stringify(friendRequests));
         }
 
         // Load from localStorage
@@ -3721,6 +4488,8 @@
             const savedUsers = localStorage.getItem('studx_users');
             const savedExercises = localStorage.getItem('studx_exercises');
             const savedRooms = localStorage.getItem('studx_rooms');
+            const savedGroups = localStorage.getItem('studx_groups');
+            const savedFriendRequests = localStorage.getItem('studx_friend_requests');
             
             if (savedUsers) {
                 users = JSON.parse(savedUsers);
@@ -3730,6 +4499,12 @@
             }
             if (savedRooms) {
                 privateRooms = JSON.parse(savedRooms);
+            }
+            if (savedGroups) {
+                groups = JSON.parse(savedGroups);
+            }
+            if (savedFriendRequests) {
+                friendRequests = JSON.parse(savedFriendRequests);
             }
         }
 
@@ -3846,6 +4621,7 @@
             document.getElementById('footer').style.display = 'block';
             if (currentUser.type === 'student') {
                 document.getElementById('studentWebsite').style.display = 'block';
+                loadGroups();
             } else {
                 document.getElementById('teacherWebsite').style.display = 'block';
             }
@@ -3853,6 +4629,7 @@
 
         function openEditProfile() {
             document.getElementById('editName').value = currentUser.name;
+            document.getElementById('editNickname').value = currentUser.nickname || '';
             document.getElementById('editBio').value = currentUser.bio || '';
             document.getElementById('editProfileModal').classList.add('active');
         }
@@ -3863,15 +4640,17 @@
 
         function saveProfile() {
             const newName = document.getElementById('editName').value;
+            const newNickname = document.getElementById('editNickname').value;
             const newBio = document.getElementById('editBio').value;
             const imageInput = document.getElementById('editProfileImage');
             
             if (!newName) {
-                alert(currentLang === 'en' ? 'Name cannot be empty!' : 'الاسم لا يمكن أن يكون فارغاً!');
+                showNotification(currentLang === 'en' ? 'Name cannot be empty!' : 'الاسم لا يمكن أن يكون فارغاً!', 'error');
                 return;
             }
             
             currentUser.name = newName;
+            currentUser.nickname = newNickname || newName;
             currentUser.bio = newBio;
             
             if (imageInput.files && imageInput.files[0]) {
@@ -3921,7 +4700,7 @@
             closeEditProfile();
             showProfile();
             
-            alert(currentLang === 'en' ? 'Profile updated successfully!' : 'تم تحديث الملف الشخصي بنجاح!');
+            showNotification(currentLang === 'en' ? 'Profile updated successfully!' : 'تم تحديث الملف الشخصي بنجاح!', 'success');
         }
 
         function previewImage(input) {
@@ -4000,43 +4779,57 @@
 
         function handleSignup() {
             const name = document.getElementById('signupName').value;
+            const accountName = document.getElementById('signupAccountName').value;
+            const nickname = document.getElementById('signupNickname').value || name;
             const email = document.getElementById('signupEmail').value;
             const password = document.getElementById('signupPassword').value;
             const confirmPassword = document.getElementById('signupConfirmPassword').value;
             const bio = document.getElementById('signupBio').value;
             
-            if (!name || !email || !password || !confirmPassword) {
-                alert(currentLang === 'en' ? 'Please fill in all fields!' : 'الرجاء ملء جميع الحقول!');
-                return;
+            // Validation
+            const errors = [];
+            
+            if (!name || !accountName || !email || !password || !confirmPassword) {
+                errors.push(currentLang === 'en' ? 'Please fill in all required fields!' : 'الرجاء ملء جميع الحقول المطلوبة!');
             }
             
             if (password !== confirmPassword) {
-                alert(currentLang === 'en' ? 'Passwords do not match!' : 'كلمات المرور غير متطابقة!');
-                return;
+                errors.push(currentLang === 'en' ? 'Passwords do not match!' : 'كلمات المرور غير متطابقة!');
+            }
+            
+            // Check if account name is unique
+            if (accountName && users.find(u => u.accountName === accountName)) {
+                errors.push(currentLang === 'en' ? 'Account name already exists! Please choose another one.' : 'اسم الحساب موجود بالفعل! الرجاء اختيار اسم آخر.');
             }
             
             let grade = '';
             if (selectedSignupType === 'student') {
                 grade = document.getElementById('studentGrade').value;
                 if (!grade) {
-                    alert(currentLang === 'en' ? 'Please select your grade!' : 'الرجاء اختيار صفك!');
-                    return;
+                    errors.push(currentLang === 'en' ? 'Please select your grade!' : 'الرجاء اختيار صفك!');
                 }
             } else {
                 grade = document.getElementById('teacherGrade').value;
                 if (!grade) {
-                    alert(currentLang === 'en' ? 'Please select your grade!' : 'الرجاء اختيار صفك!');
-                    return;
+                    errors.push(currentLang === 'en' ? 'Please select your grade!' : 'الرجاء اختيار صفك!');
                 }
                 const teacherCode = document.getElementById('teacherCode').value;
                 if (teacherCode !== 'TEACHER2024') {
-                    alert(currentLang === 'en' ? 'Invalid teacher access code!' : 'رمز المدرس غير صحيح!');
-                    return;
+                    errors.push(currentLang === 'en' ? 'Invalid teacher access code!' : 'رمز المدرس غير صحيح!');
                 }
             }
             
             if (users.find(u => u.email === email)) {
-                alert(currentLang === 'en' ? 'Email already registered!' : 'البريد الإلكتروني مسجل بالفعل!');
+                errors.push(currentLang === 'en' ? 'Email already registered!' : 'البريد الإلكتروني مسجل بالفعل!');
+            }
+            
+            // If there are errors, show error lock
+            if (errors.length > 0) {
+                showErrorLock(
+                    currentLang === 'en' ? 'Account Creation Failed' : 'فشل إنشاء الحساب',
+                    currentLang === 'en' ? 'Please fix the following errors:' : 'الرجاء إصلاح الأخطاء التالية:',
+                    errors
+                );
                 return;
             }
             
@@ -4057,6 +4850,8 @@
             function createUserWithImage(image) {
                 const newUser = {
                     name: name,
+                    accountName: accountName,
+                    nickname: nickname,
                     email: email,
                     password: password,
                     type: selectedSignupType,
@@ -4065,6 +4860,9 @@
                     profileImage: image,
                     subscription: selectedSignupType === 'teacher' ? 'professional' : 'free',
                     canCreatePremiumRooms: selectedSignupType === 'teacher',
+                    friends: [],
+                    groups: [],
+                    friendRequests: [],
                     ...(selectedSignupType === 'student' ? {
                         completedExercises: [],
                         averageScore: 0,
@@ -4081,7 +4879,10 @@
                 users.push(newUser);
                 saveData();
                 
-                alert(currentLang === 'en' ? 'Account created successfully! Please login.' : 'تم إنشاء الحساب بنجاح! الرجاء تسجيل الدخول.');
+                showNotification(
+                    currentLang === 'en' ? 'Account created successfully! Please login.' : 'تم إنشاء الحساب بنجاح! الرجاء تسجيل الدخول.',
+                    'success'
+                );
                 
                 document.getElementById('signupForm').reset();
                 document.getElementById('profilePreview').style.display = 'none';
@@ -4098,8 +4899,8 @@
             
             if (user.type === 'student') {
                 document.getElementById('studentWebsite').style.display = 'block';
-                document.getElementById('studentDisplayName').textContent = user.name;
-                document.getElementById('navStudentName').textContent = user.name;
+                document.getElementById('studentDisplayName').textContent = user.nickname || user.name;
+                document.getElementById('navStudentName').textContent = user.nickname || user.name;
                 document.getElementById('studentGradeBadge').textContent = `Grade ${user.grade}`;
                 document.getElementById('currentStudentGrade').textContent = user.grade;
                 document.getElementById('joinedRooms').textContent = user.joinedRooms ? user.joinedRooms.length : 0;
@@ -4122,6 +4923,12 @@
                 loadStudentTeachers();
                 updateStudentProgress();
                 updateGradeStats();
+                loadGroups();
+                
+                showNotification(
+                    currentLang === 'en' ? `Welcome back, ${user.nickname || user.name}!` : `مرحباً بعودتك، ${user.nickname || user.name}!`,
+                    'success'
+                );
             } else {
                 document.getElementById('teacherWebsite').style.display = 'block';
                 document.getElementById('navTeacherName').textContent = user.name;
@@ -4150,6 +4957,11 @@
                 updateTeacherStats();
                 updateTeacherRooms();
                 updateTeacherGradeStats();
+                
+                showNotification(
+                    currentLang === 'en' ? `Welcome back, ${user.name}!` : `مرحباً بعودتك، ${user.name}!`,
+                    'success'
+                );
             }
             
             document.getElementById('loginForm').reset();
@@ -4166,9 +4978,12 @@
             
             if (user) {
                 if (user.type !== selectedLoginType) {
-                    alert(currentLang === 'en' ? 
-                        `This email is registered as a ${user.type}. Please select the correct login type.` : 
-                        `هذا البريد مسجل كـ ${user.type === 'student' ? 'طالب' : 'مدرس'}. الرجاء اختيار نوع التسجيل الصحيح.`);
+                    showErrorLock(
+                        currentLang === 'en' ? 'Login Type Mismatch' : 'خطأ في نوع تسجيل الدخول',
+                        currentLang === 'en' ? 
+                            `This email is registered as a ${user.type}. Please select the correct login type.` : 
+                            `هذا البريد مسجل كـ ${user.type === 'student' ? 'طالب' : 'مدرس'}. الرجاء اختيار نوع التسجيل الصحيح.`
+                    );
                     return;
                 }
                 
@@ -4179,13 +4994,21 @@
                 
                 performLogin(user);
             } else {
-                alert(currentLang === 'en' ? 'Invalid email or password!' : 'البريد الإلكتروني أو كلمة المرور غير صحيحة!');
+                showErrorLock(
+                    currentLang === 'en' ? 'Login Failed' : 'فشل تسجيل الدخول',
+                    currentLang === 'en' ? 'Invalid email or password!' : 'البريد الإلكتروني أو كلمة المرور غير صحيحة!'
+                );
             }
         }
 
         function handleLogout() {
             localStorage.removeItem('currentUserEmail');
             localStorage.removeItem('currentUserPassword');
+            
+            showNotification(
+                currentLang === 'en' ? 'Logged out successfully!' : 'تم تسجيل الخروج بنجاح!',
+                'info'
+            );
             
             currentUser = null;
             currentExercise = null;
@@ -4206,7 +5029,10 @@
             event.preventDefault();
             
             if (!currentUser || currentUser.type !== 'teacher') {
-                alert('Unauthorized!');
+                showErrorLock(
+                    currentLang === 'en' ? 'Unauthorized' : 'غير مصرح',
+                    currentLang === 'en' ? 'You are not authorized to add exercises!' : 'ليس لديك صلاحية لإضافة تمارين!'
+                );
                 return;
             }
             
@@ -4272,7 +5098,10 @@
                 updateTeacherStats();
                 updateTeacherGradeStats();
                 
-                alert(currentLang === 'en' ? 'Exercise added successfully!' : 'تم إضافة التمرين بنجاح!');
+                showNotification(
+                    currentLang === 'en' ? 'Exercise added successfully!' : 'تم إضافة التمرين بنجاح!',
+                    'success'
+                );
             }
         }
 
@@ -4344,6 +5173,8 @@
         function processPayment() {
             if (!currentUser || !selectedPlan) return;
             
+            const errors = [];
+            
             if (selectedPaymentMethod === 'card') {
                 const cardNumber = document.getElementById('cardNumber').value;
                 const expiryDate = document.getElementById('expiryDate').value;
@@ -4351,14 +5182,12 @@
                 const cardholderName = document.getElementById('cardholderName').value;
                 
                 if (!cardNumber || !expiryDate || !cvv || !cardholderName) {
-                    alert(currentLang === 'en' ? 'Please fill in all card details!' : 'الرجاء ملء جميع بيانات البطاقة!');
-                    return;
+                    errors.push(currentLang === 'en' ? 'Please fill in all card details!' : 'الرجاء ملء جميع بيانات البطاقة!');
                 }
             } else if (selectedPaymentMethod === 'paypal') {
                 const paypalEmail = document.getElementById('paypalEmail').value;
                 if (!paypalEmail) {
-                    alert(currentLang === 'en' ? 'Please enter your PayPal email!' : 'الرجاء إدخال بريد PayPal الإلكتروني!');
-                    return;
+                    errors.push(currentLang === 'en' ? 'Please enter your PayPal email!' : 'الرجاء إدخال بريد PayPal الإلكتروني!');
                 }
             } else if (selectedPaymentMethod === 'bank') {
                 const accountName = document.getElementById('accountName').value;
@@ -4366,9 +5195,17 @@
                 const bankName = document.getElementById('bankName').value;
                 
                 if (!accountName || !accountNumber || !bankName) {
-                    alert(currentLang === 'en' ? 'Please fill in all bank details!' : 'الرجاء ملء جميع البيانات البنكية!');
-                    return;
+                    errors.push(currentLang === 'en' ? 'Please fill in all bank details!' : 'الرجاء ملء جميع البيانات البنكية!');
                 }
+            }
+            
+            if (errors.length > 0) {
+                showErrorLock(
+                    currentLang === 'en' ? 'Payment Failed' : 'فشل الدفع',
+                    currentLang === 'en' ? 'Please fix the following errors:' : 'الرجاء إصلاح الأخطاء التالية:',
+                    errors
+                );
+                return;
             }
             
             const userIndex = users.findIndex(u => u.email === currentUser.email);
@@ -4376,9 +5213,12 @@
             currentUser.subscription = selectedPlan.name;
             saveData();
             
-            alert(currentLang === 'en' ? 
-                `Payment successful! You have upgraded to ${selectedPlan.name} plan.` : 
-                `تم الدفع بنجاح! تم ترقيتك إلى الباقة ${selectedPlan.name === 'regular' ? 'العادية' : 'الاحترافية'}.`);
+            showNotification(
+                currentLang === 'en' ? 
+                    `Payment successful! You have upgraded to ${selectedPlan.name} plan.` : 
+                    `تم الدفع بنجاح! تم ترقيتك إلى الباقة ${selectedPlan.name === 'regular' ? 'العادية' : 'الاحترافية'}.`,
+                'success'
+            );
             
             hidePaymentPage();
             
@@ -4395,7 +5235,10 @@
 
         function createPrivateRoom() {
             if (!currentUser || currentUser.type !== 'teacher') {
-                alert(currentLang === 'en' ? 'Only teachers can create private rooms!' : 'فقط المدرسون يمكنهم إنشاء غرف خاصة!');
+                showErrorLock(
+                    currentLang === 'en' ? 'Unauthorized' : 'غير مصرح',
+                    currentLang === 'en' ? 'Only teachers can create private rooms!' : 'فقط المدرسون يمكنهم إنشاء غرف خاصة!'
+                );
                 return;
             }
             
@@ -4436,9 +5279,12 @@
             saveData();
             updateTeacherRooms();
             
-            alert(currentLang === 'en' ? 
-                `Private room created successfully! It is ${isSubscribersOnly ? 'a premium room (subscribers only)' : 'a free room (available to all students)'}.` : 
-                `تم إنشاء الغرفة الخاصة بنجاح! وهي ${isSubscribersOnly ? 'غرفة مميزة (للمشتركين فقط)' : 'غرفة مجانية (متاحة لجميع الطلاب)'}.`);
+            showNotification(
+                currentLang === 'en' ? 
+                    `Private room created successfully! It is ${isSubscribersOnly ? 'a premium room (subscribers only)' : 'a free room (available to all students)'}.` : 
+                    `تم إنشاء الغرفة الخاصة بنجاح! وهي ${isSubscribersOnly ? 'غرفة مميزة (للمشتركين فقط)' : 'غرفة مجانية (متاحة لجميع الطلاب)'}.`,
+                'success'
+            );
         }
 
         function updateTeacherRooms() {
@@ -4503,13 +5349,19 @@
         function copyRoomLink(roomId) {
             const link = `studx.com/room/${roomId}`;
             navigator.clipboard.writeText(link).then(() => {
-                alert(currentLang === 'en' ? 'Room link copied to clipboard!' : 'تم نسخ رابط الغرفة!');
+                showNotification(
+                    currentLang === 'en' ? 'Room link copied to clipboard!' : 'تم نسخ رابط الغرفة!',
+                    'success'
+                );
             });
         }
 
         function joinRoom(roomId) {
             if (!currentUser || currentUser.type !== 'student') {
-                alert(currentLang === 'en' ? 'Only students can join rooms!' : 'فقط الطلاب يمكنهم الانضمام للغرف!');
+                showErrorLock(
+                    currentLang === 'en' ? 'Unauthorized' : 'غير مصرح',
+                    currentLang === 'en' ? 'Only students can join rooms!' : 'فقط الطلاب يمكنهم الانضمام للغرف!'
+                );
                 return;
             }
             
@@ -4517,16 +5369,22 @@
             if (!room) return;
             
             if (room.subscribersOnly && currentUser.subscription !== 'professional') {
-                alert(currentLang === 'en' ? 
-                    'This is a premium room for subscribers only. Please upgrade to Professional plan to join!' : 
-                    'هذه غرفة مميزة للمشتركين فقط. الرجاء ترقية باقتك للاحترافية للانضمام!');
+                showErrorLock(
+                    currentLang === 'en' ? 'Premium Room' : 'غرفة مميزة',
+                    currentLang === 'en' ? 
+                        'This is a premium room for subscribers only. Please upgrade to Professional plan to join!' : 
+                        'هذه غرفة مميزة للمشتركين فقط. الرجاء ترقية باقتك للاحترافية للانضمام!'
+                );
                 return;
             }
             
             if (!room.students) room.students = [];
             
             if (room.students.includes(currentUser.email)) {
-                alert(currentLang === 'en' ? 'You have already joined this room!' : 'لقد انضممت بالفعل إلى هذه الغرفة!');
+                showNotification(
+                    currentLang === 'en' ? 'You have already joined this room!' : 'لقد انضممت بالفعل إلى هذه الغرفة!',
+                    'warning'
+                );
                 return;
             }
             
@@ -4542,9 +5400,12 @@
             
             document.getElementById('joinedRooms').textContent = currentUser.joinedRooms.length;
             
-            alert(currentLang === 'en' ? 
-                `You have successfully joined "${room.roomName}"! The teacher will contact you soon.` : 
-                `لقد انضممت بنجاح إلى "${room.roomName}"! سيتواصل معك المدرس قريباً.`);
+            showNotification(
+                currentLang === 'en' ? 
+                    `You have successfully joined "${room.roomName}"! The teacher will contact you soon.` : 
+                    `لقد انضممت بنجاح إلى "${room.roomName}"! سيتواصل معك المدرس قريباً.`,
+                'success'
+            );
             
             loadStudentTeachers();
         }
@@ -4599,7 +5460,10 @@
             const studentAnswer = document.getElementById('studentAnswer').value.trim();
             
             if (!studentAnswer) {
-                alert(currentLang === 'en' ? 'Please enter an answer!' : 'الرجاء إدخال إجابة!');
+                showNotification(
+                    currentLang === 'en' ? 'Please enter an answer!' : 'الرجاء إدخال إجابة!',
+                    'warning'
+                );
                 return;
             }
             
@@ -4656,6 +5520,11 @@
                 correctAnswerDisplay.style.display = 'none';
                 explanationDisplay.innerHTML = currentExercise.explanation ? 
                     '<strong>' + (currentLang === 'en' ? 'Explanation: ' : 'شرح: ') + '</strong>' + currentExercise.explanation : '';
+                
+                showNotification(
+                    currentLang === 'en' ? 'Correct answer! Great job!' : 'إجابة صحيحة! أحسنت!',
+                    'success'
+                );
             } else {
                 resultIcon.innerHTML = '<i class="fas fa-times-circle" style="color: #f44336; font-size: 48px;"></i>';
                 resultMessage.innerHTML = '<h3 style="color: #f44336;">' + (currentLang === 'en' ? 'Incorrect!' : 'إجابة خاطئة!') + '</h3>';
@@ -4663,6 +5532,11 @@
                 correctAnswerDisplay.style.display = 'block';
                 explanationDisplay.innerHTML = currentExercise.explanation ? 
                     '<strong>' + (currentLang === 'en' ? 'Explanation: ' : 'شرح: ') + '</strong>' + currentExercise.explanation : '';
+                
+                showNotification(
+                    currentLang === 'en' ? 'Incorrect answer. Try again!' : 'إجابة خاطئة. حاول مرة أخرى!',
+                    'error'
+                );
             }
         }
 
@@ -4864,7 +5738,7 @@
                 card.innerHTML = `
                     <div class="student-grade">Grade ${student.grade}</div>
                     ${avatarHtml}
-                    <h3>${student.name}</h3>
+                    <h3>${student.nickname || student.name}</h3>
                     <p>${student.email}</p>
                     <div class="student-bio">${student.bio ? student.bio.substring(0, 50) + (student.bio.length > 50 ? '...' : '') : ''}</div>
                     <div class="student-stats">
@@ -4889,13 +5763,21 @@
                 loadTeacherExercises();
                 updateTeacherStats();
                 updateTeacherGradeStats();
+                
+                showNotification(
+                    currentLang === 'en' ? 'Exercise deleted successfully!' : 'تم حذف التمرين بنجاح!',
+                    'success'
+                );
             }
         }
 
         function bookTeacher(teacherEmail) {
-            alert(currentLang === 'en' ? 
-                'Booking feature coming soon! The teacher will contact you.' : 
-                'خاصية الحجز قريباً! سيتواصل معك المدرس.');
+            showNotification(
+                currentLang === 'en' ? 
+                    'Booking feature coming soon! The teacher will contact you.' : 
+                    'خاصية الحجز قريباً! سيتواصل معك المدرس.',
+                'info'
+            );
         }
 
         function updateStudentProgress() {
@@ -5036,12 +5918,411 @@
                 if (currentUser.type === 'student') {
                     loadStudentExercises();
                     loadStudentTeachers();
+                    loadGroups();
                 } else {
                     loadTeacherExercises();
                     loadTeacherStudents();
                     updateTeacherRooms();
                 }
             }
+        }
+
+        // Friend System Functions
+        function searchFriends() {
+            const searchTerm = document.getElementById('friendSearchInput').value.toLowerCase();
+            if (!searchTerm) {
+                showNotification(
+                    currentLang === 'en' ? 'Please enter a search term' : 'الرجاء إدخال كلمة بحث',
+                    'warning'
+                );
+                return;
+            }
+            
+            const results = users.filter(u => 
+                u.email !== currentUser.email && 
+                u.type === 'student' &&
+                (u.accountName.toLowerCase().includes(searchTerm) || 
+                 (u.nickname && u.nickname.toLowerCase().includes(searchTerm)))
+            );
+            
+            const resultsDiv = document.getElementById('friendSearchResults');
+            resultsDiv.innerHTML = '';
+            
+            if (results.length === 0) {
+                resultsDiv.innerHTML = `<p class="no-data">${currentLang === 'en' ? 'No users found' : 'لا يوجد مستخدمين'}</p>`;
+                return;
+            }
+            
+            results.forEach(user => {
+                const isFriend = currentUser.friends?.includes(user.email);
+                const hasRequestSent = friendRequests.some(r => 
+                    r.from === currentUser.email && r.to === user.email && r.status === 'pending'
+                );
+                const hasRequestReceived = friendRequests.some(r => 
+                    r.from === user.email && r.to === currentUser.email && r.status === 'pending'
+                );
+                
+                const resultDiv = document.createElement('div');
+                resultDiv.className = 'search-result-item';
+                
+                const avatarHtml = user.profileImage ? 
+                    `<img src="${user.profileImage}" style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover;">` : 
+                    `<i class="fas fa-user-graduate" style="font-size: 20px; color: #667eea;"></i>`;
+                
+                resultDiv.innerHTML = `
+                    <div class="search-result-info">
+                        <div class="search-result-avatar">
+                            ${avatarHtml}
+                        </div>
+                        <div class="search-result-details">
+                            <div class="search-result-name">${user.nickname || user.name}</div>
+                            <div class="search-result-nickname">@${user.accountName}</div>
+                        </div>
+                    </div>
+                    <button class="send-request-btn" onclick="sendFriendRequest('${user.email}')" 
+                        ${isFriend ? 'disabled' : (hasRequestSent ? 'disabled' : (hasRequestReceived ? 'disabled' : ''))}>
+                        ${isFriend ? (currentLang === 'en' ? 'Friends' : 'أصدقاء') : 
+                          (hasRequestSent ? (currentLang === 'en' ? 'Request Sent' : 'تم الإرسال') : 
+                           (hasRequestReceived ? (currentLang === 'en' ? 'Request Received' : 'طلب وارد') : 
+                            (currentLang === 'en' ? 'Add Friend' : 'إضافة صديق')))}
+                    </button>
+                `;
+                
+                resultsDiv.appendChild(resultDiv);
+            });
+        }
+
+        function sendFriendRequest(toEmail) {
+            if (!currentUser) return;
+            
+            // Check if already friends
+            if (currentUser.friends?.includes(toEmail)) {
+                showNotification(
+                    currentLang === 'en' ? 'Already friends!' : 'أنتم أصدقاء بالفعل!',
+                    'warning'
+                );
+                return;
+            }
+            
+            // Check if request already sent
+            const existingRequest = friendRequests.find(r => 
+                r.from === currentUser.email && r.to === toEmail && r.status === 'pending'
+            );
+            
+            if (existingRequest) {
+                showNotification(
+                    currentLang === 'en' ? 'Friend request already sent!' : 'تم إرسال طلب الصداقة بالفعل!',
+                    'warning'
+                );
+                return;
+            }
+            
+            const request = {
+                id: Date.now(),
+                from: currentUser.email,
+                to: toEmail,
+                status: 'pending',
+                timestamp: new Date().toISOString()
+            };
+            
+            friendRequests.push(request);
+            saveData();
+            
+            showNotification(
+                currentLang === 'en' ? 'Friend request sent!' : 'تم إرسال طلب الصداقة!',
+                'success'
+            );
+            
+            document.getElementById('friendSearchInput').value = '';
+            document.getElementById('friendSearchResults').innerHTML = '';
+            
+            // If the recipient is online and has the groups section open, we would update their view
+            // For now, just show notification to sender
+        }
+
+        function loadFriendRequests() {
+            const requestsDiv = document.getElementById('friendRequests');
+            if (!requestsDiv) return;
+            
+            const pendingRequests = friendRequests.filter(r => 
+                r.to === currentUser.email && r.status === 'pending'
+            );
+            
+            requestsDiv.innerHTML = '';
+            
+            if (pendingRequests.length === 0) {
+                requestsDiv.innerHTML = '<p style="color: rgba(255,255,255,0.5); text-align: center; padding: 20px;">' + 
+                    (currentLang === 'en' ? 'No pending requests' : 'لا توجد طلبات معلقة') + '</p>';
+                return;
+            }
+            
+            pendingRequests.forEach(request => {
+                const fromUser = users.find(u => u.email === request.from);
+                if (!fromUser) return;
+                
+                const requestDiv = document.createElement('div');
+                requestDiv.className = 'request-item';
+                
+                const avatarHtml = fromUser.profileImage ? 
+                    `<img src="${fromUser.profileImage}" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">` : 
+                    `<i class="fas fa-user-graduate" style="font-size: 20px; color: #667eea;"></i>`;
+                
+                requestDiv.innerHTML = `
+                    <div class="request-info">
+                        <div class="request-avatar">
+                            ${avatarHtml}
+                        </div>
+                        <div class="request-details">
+                            <div class="request-name">${fromUser.nickname || fromUser.name}</div>
+                            <div class="request-nickname">@${fromUser.accountName}</div>
+                        </div>
+                    </div>
+                    <div class="request-actions">
+                        <button class="request-accept" onclick="acceptFriendRequest(${request.id})">
+                            <i class="fas fa-check"></i>
+                        </button>
+                        <button class="request-reject" onclick="rejectFriendRequest(${request.id})">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+                
+                requestsDiv.appendChild(requestDiv);
+            });
+        }
+
+        function acceptFriendRequest(requestId) {
+            const request = friendRequests.find(r => r.id === requestId);
+            if (!request) return;
+            
+            // Update request status
+            request.status = 'accepted';
+            
+            // Add to friends lists
+            if (!currentUser.friends) currentUser.friends = [];
+            if (!currentUser.friends.includes(request.from)) {
+                currentUser.friends.push(request.from);
+            }
+            
+            const fromUser = users.find(u => u.email === request.from);
+            if (fromUser) {
+                if (!fromUser.friends) fromUser.friends = [];
+                if (!fromUser.friends.includes(currentUser.email)) {
+                    fromUser.friends.push(currentUser.email);
+                }
+            }
+            
+            saveData();
+            
+            showNotification(
+                currentLang === 'en' ? 'Friend request accepted!' : 'تم قبول طلب الصداقة!',
+                'success'
+            );
+            
+            loadFriendRequests();
+            loadFriendsList();
+        }
+
+        function rejectFriendRequest(requestId) {
+            const request = friendRequests.find(r => r.id === requestId);
+            if (!request) return;
+            
+            request.status = 'rejected';
+            saveData();
+            
+            showNotification(
+                currentLang === 'en' ? 'Friend request rejected' : 'تم رفض طلب الصداقة',
+                'info'
+            );
+            
+            loadFriendRequests();
+        }
+
+        function loadFriendsList() {
+            const friendsDiv = document.getElementById('friendsList');
+            if (!friendsDiv) return;
+            
+            const friends = currentUser.friends || [];
+            
+            friendsDiv.innerHTML = '';
+            
+            if (friends.length === 0) {
+                friendsDiv.innerHTML = '<p style="color: rgba(255,255,255,0.5); text-align: center; padding: 20px;">' + 
+                    (currentLang === 'en' ? 'No friends yet' : 'لا يوجد أصدقاء بعد') + '</p>';
+                return;
+            }
+            
+            friends.forEach(friendEmail => {
+                const friend = users.find(u => u.email === friendEmail);
+                if (!friend) return;
+                
+                const friendDiv = document.createElement('div');
+                friendDiv.className = 'friend-item';
+                
+                const avatarHtml = friend.profileImage ? 
+                    `<img src="${friend.profileImage}" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">` : 
+                    `<i class="fas fa-user-graduate" style="font-size: 20px; color: #667eea;"></i>`;
+                
+                friendDiv.innerHTML = `
+                    <div class="friend-avatar">
+                        ${avatarHtml}
+                    </div>
+                    <div class="friend-info">
+                        <div class="friend-name">${friend.nickname || friend.name}</div>
+                        <div class="friend-nickname">@${friend.accountName}</div>
+                    </div>
+                    <div class="friend-status"></div>
+                `;
+                
+                friendsDiv.appendChild(friendDiv);
+            });
+        }
+
+        // Group Functions
+        function loadGroups() {
+            if (currentUser.type !== 'student') return;
+            
+            loadFriendRequests();
+            loadFriendsList();
+            
+            const groupsDiv = document.getElementById('groupsList');
+            if (!groupsDiv) return;
+            
+            const userGroups = groups.filter(g => g.members.includes(currentUser.email));
+            
+            groupsDiv.innerHTML = '';
+            
+            if (userGroups.length === 0) {
+                groupsDiv.innerHTML = '<p style="color: rgba(255,255,255,0.5); text-align: center; padding: 20px;">' + 
+                    (currentLang === 'en' ? 'No groups yet. Create your first group!' : 'لا توجد مجموعات بعد. أنشئ مجموعتك الأولى!') + '</p>';
+                return;
+            }
+            
+            userGroups.forEach(group => {
+                const groupDiv = document.createElement('div');
+                groupDiv.className = 'group-item';
+                
+                const isOwner = group.owner === currentUser.email;
+                const members = group.members.map(email => {
+                    const user = users.find(u => u.email === email);
+                    return user ? user.nickname || user.name : email;
+                }).join(', ');
+                
+                groupDiv.innerHTML = `
+                    <div class="group-header">
+                        <h4>
+                            <i class="fas fa-users"></i> ${group.name}
+                            ${isOwner ? '<span class="group-owner-badge">Owner</span>' : ''}
+                        </h4>
+                        <div class="group-actions">
+                            ${isOwner ? `<button onclick="deleteGroup(${group.id})"><i class="fas fa-trash"></i></button>` : ''}
+                            <button onclick="leaveGroup(${group.id})"><i class="fas fa-sign-out-alt"></i></button>
+                        </div>
+                    </div>
+                    <p style="color: rgba(255,255,255,0.7); margin-bottom: 10px;">${group.description || ''}</p>
+                    <div class="group-members">
+                        ${group.members.map(email => {
+                            const user = users.find(u => u.email === email);
+                            const name = user ? (user.nickname || user.name) : email;
+                            return `
+                                <div class="group-member">
+                                    <i class="fas fa-user"></i>
+                                    <span>${name}</span>
+                                    ${email === group.owner ? '<i class="fas fa-crown" style="color: gold; margin-left: 3px;"></i>' : ''}
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+                
+                groupsDiv.appendChild(groupDiv);
+            });
+        }
+
+        function createGroup() {
+            if (!currentUser || currentUser.type !== 'student') return;
+            
+            const groupName = prompt(currentLang === 'en' ? 'Enter group name:' : 'أدخل اسم المجموعة:');
+            if (!groupName) return;
+            
+            const groupDescription = prompt(currentLang === 'en' ? 'Enter group description (optional):' : 'أدخل وصف المجموعة (اختياري):');
+            
+            const newGroup = {
+                id: groups.length + 1,
+                name: groupName,
+                description: groupDescription || '',
+                owner: currentUser.email,
+                members: [currentUser.email],
+                createdAt: new Date().toISOString()
+            };
+            
+            groups.push(newGroup);
+            
+            if (!currentUser.groups) currentUser.groups = [];
+            currentUser.groups.push(newGroup.id);
+            
+            saveData();
+            
+            showNotification(
+                currentLang === 'en' ? 'Group created successfully!' : 'تم إنشاء المجموعة بنجاح!',
+                'success'
+            );
+            
+            loadGroups();
+        }
+
+        function deleteGroup(groupId) {
+            const group = groups.find(g => g.id === groupId);
+            if (!group || group.owner !== currentUser.email) return;
+            
+            if (confirm(currentLang === 'en' ? 'Are you sure you want to delete this group?' : 'هل أنت متأكد من حذف هذه المجموعة؟')) {
+                groups = groups.filter(g => g.id !== groupId);
+                
+                // Remove group from all members
+                group.members.forEach(email => {
+                    const user = users.find(u => u.email === email);
+                    if (user && user.groups) {
+                        user.groups = user.groups.filter(id => id !== groupId);
+                    }
+                });
+                
+                saveData();
+                
+                showNotification(
+                    currentLang === 'en' ? 'Group deleted successfully!' : 'تم حذف المجموعة بنجاح!',
+                    'success'
+                );
+                
+                loadGroups();
+            }
+        }
+
+        function leaveGroup(groupId) {
+            const group = groups.find(g => g.id === groupId);
+            if (!group) return;
+            
+            if (group.owner === currentUser.email) {
+                showNotification(
+                    currentLang === 'en' ? 'Group owner cannot leave. Delete the group instead.' : 'لا يمكن لمالك المجموعة المغادرة. احذف المجموعة بدلاً من ذلك.',
+                    'warning'
+                );
+                return;
+            }
+            
+            group.members = group.members.filter(email => email !== currentUser.email);
+            
+            if (currentUser.groups) {
+                currentUser.groups = currentUser.groups.filter(id => id !== groupId);
+            }
+            
+            saveData();
+            
+            showNotification(
+                currentLang === 'en' ? 'You left the group' : 'لقد غادرت المجموعة',
+                'info'
+            );
+            
+            loadGroups();
         }
     </script>
 </body>
