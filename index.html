@@ -3536,9 +3536,8 @@
                     <div class="teacher-code-field" id="teacherCodeField" style="display: none;">
                         <div class="input-group">
                             <i class="fas fa-key"></i>
-                            <input type="text" id="teacherCode" placeholder="Teacher Access Code / رمز المدرس">
+                            <input type="password" id="teacherCode" placeholder="Teacher Access Code / رمز المدرس">
                         </div>
-                        <small class="code-hint" data-en="Use code: TEACHER2024" data-ar="استخدم الرمز: TEACHER2024">Use code: TEACHER2024</small>
                     </div>
                     
                     <!-- Bio Field -->
@@ -3548,18 +3547,6 @@
                     </div>
                     
                     <button type="button" class="login-btn" onclick="handleSignup()" data-en="Create Account" data-ar="إنشاء حساب">Create Account</button>
-                </div>
-            </div>
-
-            <div class="demo-credentials" id="demoCredentials">
-                <p data-en="Demo Credentials:" data-ar="بيانات الدخول التجريبية:">Demo Credentials:</p>
-                <div class="demo-student">
-                    <i class="fas fa-user-graduate"></i>
-                    <small data-en="Student: student@studx.com (any password)" data-ar="طالب: student@studx.com (أي كلمة مرور)">Student: student@studx.com (any password)</small>
-                </div>
-                <div class="demo-teacher">
-                    <i class="fas fa-chalkboard-teacher"></i>
-                    <small data-en="Teacher: teacher@studx.com (any password) - Premium room creation included" data-ar="مدرس: teacher@studx.com (أي كلمة مرور) - إنشاء غرف مميزة متضمن">Teacher: teacher@studx.com (any password) - Premium room creation included</small>
                 </div>
             </div>
         </div>
@@ -4768,13 +4755,11 @@
         function showSignup() {
             document.getElementById('loginForm').style.display = 'none';
             document.getElementById('signupForm').style.display = 'block';
-            document.getElementById('demoCredentials').style.display = 'none';
         }
 
         function showLogin() {
             document.getElementById('loginForm').style.display = 'block';
             document.getElementById('signupForm').style.display = 'none';
-            document.getElementById('demoCredentials').style.display = 'block';
         }
 
         function handleSignup() {
@@ -4814,6 +4799,7 @@
                     errors.push(currentLang === 'en' ? 'Please select your grade!' : 'الرجاء اختيار صفك!');
                 }
                 const teacherCode = document.getElementById('teacherCode').value;
+                // Hidden teacher code validation - still works but no hint displayed
                 if (teacherCode !== 'TEACHER2024') {
                     errors.push(currentLang === 'en' ? 'Invalid teacher access code!' : 'رمز المدرس غير صحيح!');
                 }
@@ -5021,7 +5007,6 @@
             document.getElementById('loginPage').style.display = 'flex';
             document.getElementById('loginForm').style.display = 'block';
             document.getElementById('signupForm').style.display = 'none';
-            document.getElementById('demoCredentials').style.display = 'block';
             document.getElementById('editProfileModal').classList.remove('active');
         }
 
