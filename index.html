@@ -2845,6 +2845,12 @@
                             <i class="fas fa-graduation-cap"></i>
                             <select id="studentGrade" required>
                                 <option value="" data-en="Select your grade" data-ar="اختر صفك">Select your grade</option>
+                                <!-- Comprehensive grade options from Grade 1 to Grade 12 -->
+                                <option value="1" data-en="Grade 1" data-ar="الصف الأول">Grade 1</option>
+                                <option value="2" data-en="Grade 2" data-ar="الصف الثاني">Grade 2</option>
+                                <option value="3" data-en="Grade 3" data-ar="الصف الثالث">Grade 3</option>
+                                <option value="4" data-en="Grade 4" data-ar="الصف الرابع">Grade 4</option>
+                                <option value="5" data-en="Grade 5" data-ar="الصف الخامس">Grade 5</option>
                                 <option value="6" data-en="Grade 6" data-ar="الصف السادس">Grade 6</option>
                                 <option value="7" data-en="Grade 7" data-ar="الصف السابع">Grade 7</option>
                                 <option value="8" data-en="Grade 8" data-ar="الصف الثامن">Grade 8</option>
@@ -2873,6 +2879,12 @@
                             <i class="fas fa-chalkboard"></i>
                             <select id="teacherGrade">
                                 <option value="" data-en="Select your grade" data-ar="اختر صفك">Select your grade</option>
+                                <!-- Comprehensive grade options from Grade 1 to Grade 12 -->
+                                <option value="1" data-en="Grade 1" data-ar="الصف الأول">Grade 1</option>
+                                <option value="2" data-en="Grade 2" data-ar="الصف الثاني">Grade 2</option>
+                                <option value="3" data-en="Grade 3" data-ar="الصف الثالث">Grade 3</option>
+                                <option value="4" data-en="Grade 4" data-ar="الصف الرابع">Grade 4</option>
+                                <option value="5" data-en="Grade 5" data-ar="الصف الخامس">Grade 5</option>
                                 <option value="6" data-en="Grade 6" data-ar="الصف السادس">Grade 6</option>
                                 <option value="7" data-en="Grade 7" data-ar="الصف السابع">Grade 7</option>
                                 <option value="8" data-en="Grade 8" data-ar="الصف الثامن">Grade 8</option>
@@ -3880,7 +3892,6 @@
             
             if (currentUser.type === 'student') {
                 document.getElementById('navStudentName').textContent = currentUser.name;
-                document.getElementById('studentName').textContent = currentUser.name;
                 document.getElementById('studentDisplayName').textContent = currentUser.name;
                 
                 const navAvatar = document.getElementById('navStudentAvatar');
@@ -3894,7 +3905,6 @@
                 }
             } else {
                 document.getElementById('navTeacherName').textContent = currentUser.name;
-                document.getElementById('teacherName').textContent = currentUser.name;
                 
                 const navAvatar = document.getElementById('navTeacherAvatar');
                 const navImg = document.getElementById('navTeacherAvatarImg');
@@ -4088,7 +4098,6 @@
             
             if (user.type === 'student') {
                 document.getElementById('studentWebsite').style.display = 'block';
-                document.getElementById('studentName').textContent = user.name;
                 document.getElementById('studentDisplayName').textContent = user.name;
                 document.getElementById('navStudentName').textContent = user.name;
                 document.getElementById('studentGradeBadge').textContent = `Grade ${user.grade}`;
@@ -4108,13 +4117,13 @@
                     navIcon.style.display = 'block';
                 }
                 
+                // Force immediate data loading
                 loadStudentExercises();
                 loadStudentTeachers();
                 updateStudentProgress();
                 updateGradeStats();
             } else {
                 document.getElementById('teacherWebsite').style.display = 'block';
-                document.getElementById('teacherName').textContent = user.name;
                 document.getElementById('navTeacherName').textContent = user.name;
                 document.getElementById('teacherGradeBadge').textContent = `Grade ${user.grade}`;
                 document.getElementById('currentTeacherGrade').textContent = user.grade;
@@ -4135,6 +4144,7 @@
                     navIcon.style.display = 'block';
                 }
                 
+                // Force immediate data loading
                 loadTeacherExercises();
                 loadTeacherStudents();
                 updateTeacherStats();
@@ -4155,8 +4165,6 @@
             const user = users.find(u => u.email === email && u.password === password);
             
             if (user) {
-                // No verification check - users can login immediately
-                
                 if (user.type !== selectedLoginType) {
                     alert(currentLang === 'en' ? 
                         `This email is registered as a ${user.type}. Please select the correct login type.` : 
