@@ -3884,7 +3884,7 @@
                     </div>
                     <div class="payment-method" onclick="selectPaymentMethod('bank')" id="methodBank">
                         <i class="fas fa-university"></i>
-                        <span data-en="Bank" data-ar="بنك">Bank</span>
+                        <span data-en="transfer" data-ar="تحويل بنكي">Bank Transfer</span>
                     </div>
                 </div>
 
@@ -3923,17 +3923,10 @@
                 <!-- Bank Transfer Form (Hidden by default) -->
                 <div id="bankPaymentForm" style="display: none;">
                     <div class="form-row">
-                        <label data-en="Account Name" data-ar="اسم الحساب">Account Name</label>
-                        <input type="text" id="accountName" placeholder="John Doe">
+                        <label data-en="whatsapp number 96505241" data-ar="رقم التواصل 96505241">تواصل مع هدا الرقم  96505241</label>
+                    
                     </div>
-                    <div class="form-row">
-                        <label data-en="Account Number" data-ar="رقم الحساب">Account Number</label>
-                        <input type="text" id="accountNumber" placeholder="123456789">
-                    </div>
-                    <div class="form-row">
-                        <label data-en="Bank Name" data-ar="اسم البنك">Bank Name</label>
-                        <input type="text" id="bankName" placeholder="Bank Muscat">
-                    </div>
+           
                 </div>
 
                 <button class="pay-btn" onclick="processPayment()" data-en="Pay Now" data-ar="ادفع الآن">Pay Now</button>
@@ -4048,7 +4041,7 @@
                             <div class="image-upload-container" onclick="document.getElementById('exerciseImage').click()">
                                 <i class="fas fa-cloud-upload-alt"></i>
                                 <p data-en="Click to upload an image" data-ar="انقر لرفع صورة">Click to upload an image</p>
-                                <small data-en="Supports: JPG, PNG, GIF (Max 5MB)" data-ar="يدعم: JPG, PNG, GIF (حد أقصى 5 ميجابايت)">Supports: JPG, PNG, GIF (Max 5MB)</small>
+                                <small data-en="Supports: JPG, PNG, GIF, PDF (Max 50MB)" data-ar="يدعم: JPG, PNG, GIF, PDF (حد أقصى 50 ميجابايت)">Supports: JPG, PNG, GIF, PDF (Max 50MB)</small>
                                 <input type="file" id="exerciseImage" class="hidden-input" accept="image/*" onchange="previewImage(this)">
                                 <img id="imagePreview" class="image-preview" alt="Preview">
                                 <div class="remove-image" onclick="removeImage(event)" style="display: none;">
@@ -4209,13 +4202,13 @@
             <div class="footer-section">
                 <h4 data-en="Contact" data-ar="اتصل بنا">Contact</h4>
                 <ul>
-                    <li><i class="fas fa-envelope"></i> studxacad@gmail.com</li>
-                    <li><i class="fas fa-phone"></i>+968 79094070</li>
+                    <li><i class="fas fa-envelope"></i> support@studx.com</li>
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 StudX. <span data-en="All rights reserved." data-ar="جميع الحقوق محفوظة.">All rights reserved.</span></p>
+            <p>&copy; 2024 StudX. <span data-en="All rights reserved." data-ar="جميع الحقوق محفوظة.">All rights reserved.</span></p>
         </div>
     </footer>
 
