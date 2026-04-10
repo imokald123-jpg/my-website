@@ -1956,6 +1956,71 @@
             display: block;
         }
 
+        /* PDF Upload Styles */
+        .pdf-upload-container {
+            border: 2px dashed rgba(102, 126, 234, 0.5);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(102, 126, 234, 0.05);
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .pdf-upload-container:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .pdf-upload-container i {
+            font-size: 48px;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .pdf-upload-container p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 5px;
+        }
+
+        .pdf-upload-container small {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+        }
+
+        .pdf-name {
+            margin-top: 10px;
+            padding: 5px;
+            background: rgba(102, 126, 234, 0.2);
+            border-radius: 5px;
+            font-size: 12px;
+            display: inline-block;
+        }
+
+        .remove-pdf {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(244, 67, 54, 0.8);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .remove-pdf:hover {
+            background: #f44336;
+        }
+
         .remove-image {
             position: absolute;
             top: 10px;
@@ -2003,6 +2068,29 @@
             border-radius: 8px;
             margin-bottom: 10px;
             border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* PDF Link Styles */
+        .pdf-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+            padding: 8px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        .pdf-link:hover {
+            background: rgba(102, 126, 234, 0.3);
+        }
+
+        .pdf-link i {
+            font-size: 18px;
         }
 
         /* Teacher Exercises */
@@ -3884,7 +3972,7 @@
                     </div>
                     <div class="payment-method" onclick="selectPaymentMethod('bank')" id="methodBank">
                         <i class="fas fa-university"></i>
-                        <span data-en="transfer" data-ar="تحويل بنكي">Bank Transfer</span>
+                        <span data-en="Bank" data-ar="بنك">Bank</span>
                     </div>
                 </div>
 
@@ -3923,10 +4011,17 @@
                 <!-- Bank Transfer Form (Hidden by default) -->
                 <div id="bankPaymentForm" style="display: none;">
                     <div class="form-row">
-                        <label data-en="whatsapp number 96505241" data-ar="رقم التواصل 96505241">تواصل مع هدا الرقم  96505241</label>
-                    
+                        <label data-en="Account Name" data-ar="اسم الحساب">Account Name</label>
+                        <input type="text" id="accountName" placeholder="John Doe">
                     </div>
-           
+                    <div class="form-row">
+                        <label data-en="Account Number" data-ar="رقم الحساب">Account Number</label>
+                        <input type="text" id="accountNumber" placeholder="123456789">
+                    </div>
+                    <div class="form-row">
+                        <label data-en="Bank Name" data-ar="اسم البنك">Bank Name</label>
+                        <input type="text" id="bankName" placeholder="Bank Muscat">
+                    </div>
                 </div>
 
                 <button class="pay-btn" onclick="processPayment()" data-en="Pay Now" data-ar="ادفع الآن">Pay Now</button>
@@ -4041,10 +4136,25 @@
                             <div class="image-upload-container" onclick="document.getElementById('exerciseImage').click()">
                                 <i class="fas fa-cloud-upload-alt"></i>
                                 <p data-en="Click to upload an image" data-ar="انقر لرفع صورة">Click to upload an image</p>
-                                <small data-en="Supports: JPG, PNG, GIF, PDF (Max 50MB)" data-ar="يدعم: JPG, PNG, GIF, PDF (حد أقصى 50 ميجابايت)">Supports: JPG, PNG, GIF, PDF (Max 50MB)</small>
+                                <small data-en="Supports: JPG, PNG, GIF (Max 5MB)" data-ar="يدعم: JPG, PNG, GIF (حد أقصى 5 ميجابايت)">Supports: JPG, PNG, GIF (Max 5MB)</small>
                                 <input type="file" id="exerciseImage" class="hidden-input" accept="image/*" onchange="previewImage(this)">
                                 <img id="imagePreview" class="image-preview" alt="Preview">
                                 <div class="remove-image" onclick="removeImage(event)" style="display: none;">
+                                    <i class="fas fa-times"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PDF Upload Section -->
+                        <div class="form-group">
+                            <label data-en="Upload PDF (Optional):" data-ar="رفع ملف PDF (اختياري):">Upload PDF (Optional):</label>
+                            <div class="pdf-upload-container" onclick="document.getElementById('exercisePdf').click()">
+                                <i class="fas fa-file-pdf"></i>
+                                <p data-en="Click to upload a PDF file" data-ar="انقر لرفع ملف PDF">Click to upload a PDF file</p>
+                                <small data-en="Supports: PDF (Max 10MB)" data-ar="يدعم: PDF (حد أقصى 10 ميجابايت)">Supports: PDF (Max 10MB)</small>
+                                <input type="file" id="exercisePdf" class="hidden-input" accept=".pdf" onchange="previewPdf(this)">
+                                <span id="pdfName" class="pdf-name" style="display: none;"></span>
+                                <div class="remove-pdf" onclick="removePdf(event)" style="display: none;">
                                     <i class="fas fa-times"></i>
                                 </div>
                             </div>
@@ -4160,6 +4270,13 @@
                     <!-- Exercise Image Display -->
                     <div class="exercise-image-container" id="exerciseImageContainer" style="display: none;">
                         <img id="currentExerciseImage" class="exercise-image" src="" alt="Exercise image">
+                    </div>
+
+                    <!-- Exercise PDF Link Display -->
+                    <div id="exercisePdfContainer" style="display: none; margin-top: 15px;">
+                        <a id="currentExercisePdfLink" class="pdf-link" href="#" target="_blank">
+                            <i class="fas fa-file-pdf"></i> <span data-en="Download PDF Material" data-ar="تحميل ملف PDF">Download PDF Material</span>
+                        </a>
                     </div>
                 </div>
 
@@ -4374,6 +4491,7 @@
                 teacherName: 'Teacher',
                 grade: '10',
                 image: null,
+                pdf: null,
                 completions: 0,
                 attempts: 0,
                 correctAttempts: 0
@@ -4391,6 +4509,7 @@
                 teacherName: 'Teacher',
                 grade: '10',
                 image: null,
+                pdf: null,
                 completions: 0,
                 attempts: 0,
                 correctAttempts: 0
@@ -4408,6 +4527,7 @@
                 teacherName: 'Teacher',
                 grade: '11',
                 image: null,
+                pdf: null,
                 completions: 0,
                 attempts: 0,
                 correctAttempts: 0
@@ -4425,6 +4545,7 @@
                 teacherName: 'Teacher',
                 grade: '9',
                 image: null,
+                pdf: null,
                 completions: 0,
                 attempts: 0,
                 correctAttempts: 0
@@ -4536,156 +4657,50 @@
             }
         }
 
-        // Profile Functions
-        function showProfile() {
-            if (!currentUser) return;
-            
-            document.getElementById('profileName').textContent = currentUser.name;
-            document.getElementById('profileType').textContent = currentUser.type === 'student' ? 
-                `Student • Grade ${currentUser.grade}` : `Teacher • Grade ${currentUser.grade}`;
-            document.getElementById('profileEmail').textContent = currentUser.email;
-            document.getElementById('profileBio').textContent = currentUser.bio || 'No bio yet. Click edit to add a bio.';
-            
-            const profileAvatar = document.getElementById('profileAvatar');
-            const avatarImg = document.getElementById('profileAvatarImg');
-            const avatarIcon = profileAvatar.querySelector('i');
-            
-            if (currentUser.profileImage) {
-                avatarImg.src = currentUser.profileImage;
-                avatarImg.style.display = 'block';
-                avatarIcon.style.display = 'none';
-            } else {
-                avatarImg.style.display = 'none';
-                avatarIcon.style.display = 'block';
-            }
-            
-            const statsGrid = document.getElementById('profileStats');
-            if (currentUser.type === 'student') {
-                statsGrid.innerHTML = `
-                    <div class="stat-item">
-                        <div class="stat-number">${currentUser.completedExercises?.length || 0}</div>
-                        <div class="stat-label" data-en="Completed" data-ar="مكتمل">Completed</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">${currentUser.averageScore || 0}%</div>
-                        <div class="stat-label" data-en="Avg Score" data-ar="المتوسط">Avg Score</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">${currentUser.studyHours?.toFixed(1) || 0}</div>
-                        <div class="stat-label" data-en="Hours" data-ar="ساعات">Hours</div>
-                    </div>
-                `;
-            } else {
-                statsGrid.innerHTML = `
-                    <div class="stat-item">
-                        <div class="stat-number">${currentUser.exercises?.length || 0}</div>
-                        <div class="stat-label" data-en="Exercises" data-ar="تمارين">Exercises</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">${privateRooms.filter(r => r.teacherEmail === currentUser.email).length}</div>
-                        <div class="stat-label" data-en="Rooms" data-ar="غرف">Rooms</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">${users.filter(u => u.type === 'student' && u.grade === currentUser.grade).length}</div>
-                        <div class="stat-label" data-en="Students" data-ar="طلاب">Students</div>
-                    </div>
-                `;
-            }
-            
-            if (currentUser.type === 'student') {
-                document.getElementById('studentWebsite').style.display = 'none';
-            } else {
-                document.getElementById('teacherWebsite').style.display = 'none';
-            }
-            document.getElementById('footer').style.display = 'none';
-            document.getElementById('profilePage').style.display = 'block';
-        }
+        // PDF Preview Function
+        let currentPdfData = null;
+        let currentPdfName = null;
 
-        function goBackFromProfile() {
-            document.getElementById('profilePage').style.display = 'none';
-            document.getElementById('footer').style.display = 'block';
-            if (currentUser.type === 'student') {
-                document.getElementById('studentWebsite').style.display = 'block';
-                loadGroups();
-            } else {
-                document.getElementById('teacherWebsite').style.display = 'block';
-            }
-        }
-
-        function openEditProfile() {
-            document.getElementById('editName').value = currentUser.name;
-            document.getElementById('editNickname').value = currentUser.nickname || '';
-            document.getElementById('editBio').value = currentUser.bio || '';
-            document.getElementById('editProfileModal').classList.add('active');
-        }
-
-        function closeEditProfile() {
-            document.getElementById('editProfileModal').classList.remove('active');
-        }
-
-        function saveProfile() {
-            const newName = document.getElementById('editName').value;
-            const newNickname = document.getElementById('editNickname').value;
-            const newBio = document.getElementById('editBio').value;
-            const imageInput = document.getElementById('editProfileImage');
+        function previewPdf(input) {
+            const pdfNameSpan = document.getElementById('pdfName');
+            const removePdfBtn = document.querySelector('.remove-pdf');
             
-            if (!newName) {
-                showNotification(currentLang === 'en' ? 'Name cannot be empty!' : 'الاسم لا يمكن أن يكون فارغاً!', 'error');
-                return;
-            }
-            
-            currentUser.name = newName;
-            currentUser.nickname = newNickname || newName;
-            currentUser.bio = newBio;
-            
-            if (imageInput.files && imageInput.files[0]) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                if (file.type !== 'application/pdf') {
+                    showNotification('Please select a valid PDF file!', 'error');
+                    input.value = '';
+                    return;
+                }
+                if (file.size > 10 * 1024 * 1024) {
+                    showNotification('PDF file size must be less than 10MB!', 'error');
+                    input.value = '';
+                    return;
+                }
+                
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    currentUser.profileImage = e.target.result;
-                    finishSaveProfile();
+                    currentPdfData = e.target.result;
+                    currentPdfName = file.name;
+                    pdfNameSpan.textContent = file.name;
+                    pdfNameSpan.style.display = 'inline-block';
+                    removePdfBtn.style.display = 'flex';
                 }
-                reader.readAsDataURL(imageInput.files[0]);
-            } else {
-                finishSaveProfile();
+                reader.readAsDataURL(input.files[0]);
             }
         }
 
-        function finishSaveProfile() {
-            const userIndex = users.findIndex(u => u.email === currentUser.email);
-            users[userIndex] = currentUser;
+        function removePdf(event) {
+            event.stopPropagation();
+            const input = document.getElementById('exercisePdf');
+            const pdfNameSpan = document.getElementById('pdfName');
+            const removePdfBtn = document.querySelector('.remove-pdf');
             
-            if (currentUser.type === 'student') {
-                document.getElementById('navStudentName').textContent = currentUser.name;
-                document.getElementById('studentDisplayName').textContent = currentUser.name;
-                
-                const navAvatar = document.getElementById('navStudentAvatar');
-                const navImg = document.getElementById('navStudentAvatarImg');
-                const navIcon = navAvatar.querySelector('i');
-                
-                if (currentUser.profileImage) {
-                    navImg.src = currentUser.profileImage;
-                    navImg.style.display = 'block';
-                    navIcon.style.display = 'none';
-                }
-            } else {
-                document.getElementById('navTeacherName').textContent = currentUser.name;
-                
-                const navAvatar = document.getElementById('navTeacherAvatar');
-                const navImg = document.getElementById('navTeacherAvatarImg');
-                const navIcon = navAvatar.querySelector('i');
-                
-                if (currentUser.profileImage) {
-                    navImg.src = currentUser.profileImage;
-                    navImg.style.display = 'block';
-                    navIcon.style.display = 'none';
-                }
-            }
-            
-            saveData();
-            closeEditProfile();
-            showProfile();
-            
-            showNotification(currentLang === 'en' ? 'Profile updated successfully!' : 'تم تحديث الملف الشخصي بنجاح!', 'success');
+            input.value = '';
+            currentPdfData = null;
+            currentPdfName = null;
+            pdfNameSpan.style.display = 'none';
+            removePdfBtn.style.display = 'none';
         }
 
         function previewImage(input) {
@@ -5035,14 +5050,14 @@
                 const reader = new FileReader();
                 reader.onloadend = function() {
                     imageData = reader.result;
-                    saveExerciseWithImage(imageData);
+                    saveExerciseWithFiles(imageData);
                 }
                 reader.readAsDataURL(imageInput.files[0]);
             } else {
-                saveExerciseWithImage(null);
+                saveExerciseWithFiles(null);
             }
             
-            function saveExerciseWithImage(image) {
+            function saveExerciseWithFiles(image) {
                 const newExercise = {
                     id: exercises.length + 1,
                     title: title,
@@ -5056,6 +5071,8 @@
                     teacherName: currentUser.name,
                     grade: grade,
                     image: image,
+                    pdf: currentPdfData,
+                    pdfName: currentPdfName,
                     completions: 0,
                     attempts: 0,
                     correctAttempts: 0,
@@ -5076,6 +5093,10 @@
                 document.getElementById('exerciseGrade').value = `Grade ${grade}`;
                 document.getElementById('imagePreview').classList.remove('show');
                 document.querySelector('.remove-image').style.display = 'none';
+                document.getElementById('pdfName').style.display = 'none';
+                document.querySelector('.remove-pdf').style.display = 'none';
+                currentPdfData = null;
+                currentPdfName = null;
                 
                 loadTeacherExercises();
                 updateTeacherStats();
@@ -5422,6 +5443,16 @@
                 imageContainer.style.display = 'none';
             }
             
+            const pdfContainer = document.getElementById('exercisePdfContainer');
+            const pdfLink = document.getElementById('currentExercisePdfLink');
+            
+            if (exercise.pdf) {
+                pdfLink.href = exercise.pdf;
+                pdfContainer.style.display = 'block';
+            } else {
+                pdfContainer.style.display = 'none';
+            }
+            
             document.getElementById('studentAnswer').value = '';
             document.getElementById('resultBox').style.display = 'none';
         }
@@ -5591,11 +5622,13 @@
                 const thumbnailHtml = ex.image ? 
                     `<img src="${ex.image}" class="exercise-thumbnail" alt="Exercise image">` : '';
                 
+                const pdfBadge = ex.pdf ? '<span class="pdf-badge" style="background: rgba(220, 53, 69, 0.2); color: #dc3545; margin-left: 5px;"><i class="fas fa-file-pdf"></i> PDF</span>' : '';
+                
                 card.innerHTML = `
                     <div class="grade-tag">Grade ${ex.grade}</div>
                     ${thumbnailHtml}
                     <div class="exercise-icon">${getSubjectIcon(ex.subject)}</div>
-                    <h3>${ex.title}</h3>
+                    <h3>${ex.title} ${pdfBadge}</h3>
                     <p>${questionPreview}</p>
                     <div class="exercise-meta">
                         <span><i class="far fa-clock"></i> ${ex.time} ${currentLang === 'en' ? 'min' : 'د'}</span>
@@ -6308,5 +6341,28 @@
             loadGroups();
         }
     </script>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyBpunCadwttAIHMWvWfKaoWhHLn8bVVX3c",
+    authDomain: "studxacad-b794b.firebaseapp.com",
+    projectId: "studxacad-b794b",
+    storageBucket: "studxacad-b794b.firebasestorage.app",
+    messagingSenderId: "68013006076",
+    appId: "1:68013006076:web:4ca1738c194c2d52aacb79",
+    measurementId: "G-F71JF4D6WV"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
 </body>
 </html>
