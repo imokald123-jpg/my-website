@@ -373,7 +373,7 @@
             cursor: pointer;
         }
 
-        /* Forgot Password Modal - Step 1 (Email) */
+        /* Forgot Password Modal */
         .forgot-password-modal {
             display: none;
             position: fixed;
@@ -466,7 +466,7 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
-        /* Verification Code Modal - Step 2 */
+        /* Verification Code Modal */
         .verification-modal {
             display: none;
             position: fixed;
@@ -522,7 +522,7 @@
             font-size: 20px;
         }
 
-        /* Reset Password Modal - Step 3 */
+        /* Reset Password Modal */
         .reset-password-modal {
             display: none;
             position: fixed;
@@ -1949,7 +1949,7 @@
             box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
         }
 
-        /* Payment Page Styles */
+        /* Payment Page Styles - Updated with only Card and Bank Transfer */
         .payment-page {
             min-height: 100vh;
             background: #000000;
@@ -2125,6 +2125,30 @@
             gap: 15px;
         }
 
+        /* WhatsApp Button */
+        .whatsapp-btn {
+            width: 100%;
+            padding: 15px;
+            background: #25D366;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .whatsapp-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+        }
+
         .pay-btn {
             width: 100%;
             padding: 15px;
@@ -2221,7 +2245,7 @@
             font-size: 14px;
         }
 
-        /* Add Exercise Section with Image Upload */
+        /* Add Exercise Section */
         .add-exercise {
             max-width: 1200px;
             margin: 0 auto;
@@ -2238,7 +2262,7 @@
             margin: 0 auto;
         }
 
-        /* NEW: Add Summary Section */
+        /* Add Summary Section */
         .add-summary {
             max-width: 1200px;
             margin: 0 auto;
@@ -2255,7 +2279,7 @@
             margin: 0 auto;
         }
 
-        /* NEW: Summaries Section */
+        /* Summaries Section */
         .summaries {
             max-width: 1200px;
             margin: 0 auto;
@@ -4307,7 +4331,7 @@
         </div>
     </div>
 
-    <!-- Student Main Website (simplified for brevity - same functionality) -->
+    <!-- Student Main Website (simplified for brevity) -->
     <div class="main-website" id="studentWebsite" style="display: none;">
         <nav class="navbar">
             <div class="nav-container">
@@ -4372,9 +4396,77 @@
         </div>
     </div>
 
-    <!-- Payment Page -->
+    <!-- Payment Page - Updated with only Card and Bank Transfer via WhatsApp -->
     <div class="payment-page" id="paymentPage" style="display: none;">
-        <div class="payment-container"><div class="payment-summary"><a class="back-to-plans" onclick="hidePaymentPage()"><i class="fas fa-arrow-left"></i> Back</a><h2>Order Summary</h2><div class="order-item"><span id="selectedPlanName">Regular Plan</span><span id="selectedPlanPrice">2 OMR</span></div><div class="order-total"><span>Total</span><span id="totalPrice">2 OMR</span></div><button class="pay-btn" onclick="processPayment()">Pay Now</button></div></div>
+        <div class="payment-container">
+            <div class="payment-summary">
+                <a class="back-to-plans" onclick="hidePaymentPage()"><i class="fas fa-arrow-left"></i> <span data-en="Back to Plans" data-ar="العودة للباقات">Back to Plans</span></a>
+                <h2 data-en="Order Summary" data-ar="ملخص الطلب">Order Summary</h2>
+                <div class="order-item"><span id="selectedPlanName">Regular Plan</span><span id="selectedPlanPrice">2 OMR</span></div>
+                <div class="plan-details" id="planDetails"></div>
+                <div class="order-total"><span data-en="Total" data-ar="المجموع">Total</span><span id="totalPrice">2 OMR</span></div>
+                <div class="secure-badge"><i class="fas fa-lock"></i><span data-en="Secure Payment" data-ar="دفع آمن">Secure Payment</span><i class="fas fa-shield-alt"></i></div>
+            </div>
+
+            <div class="payment-form">
+                <h2 data-en="Payment Details" data-ar="بيانات الدفع">Payment Details</h2>
+                
+                <!-- Payment Method Selection - Only Card and Bank Transfer -->
+                <div class="payment-methods">
+                    <div class="payment-method active" onclick="selectPaymentMethod('card')" id="methodCard">
+                        <i class="fas fa-credit-card"></i>
+                        <span data-en="Credit Card" data-ar="بطاقة ائتمان">Credit Card</span>
+                    </div>
+                    <div class="payment-method" onclick="selectPaymentMethod('bank')" id="methodBank">
+                        <i class="fas fa-university"></i>
+                        <span data-en="Bank Transfer (WhatsApp)" data-ar="تحويل بنكي (واتساب)">Bank Transfer (WhatsApp)</span>
+                    </div>
+                </div>
+
+                <!-- Card Payment Form -->
+                <div id="cardPaymentForm">
+                    <div class="form-row">
+                        <label data-en="Card Number" data-ar="رقم البطاقة">Card Number</label>
+                        <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                    </div>
+                    <div class="form-row-flex">
+                        <div class="form-row">
+                            <label data-en="Expiry Date" data-ar="تاريخ الانتهاء">Expiry Date</label>
+                            <input type="text" id="expiryDate" placeholder="MM/YY">
+                        </div>
+                        <div class="form-row">
+                            <label data-en="CVV" data-ar="رمز الأمان">CVV</label>
+                            <input type="text" id="cvv" placeholder="123" maxlength="3">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label data-en="Cardholder Name" data-ar="اسم حامل البطاقة">Cardholder Name</label>
+                        <input type="text" id="cardholderName" placeholder="John Doe">
+                    </div>
+                    <button class="pay-btn" onclick="processCardPayment()" data-en="Pay Now" data-ar="ادفع الآن">Pay Now</button>
+                </div>
+
+                <!-- Bank Transfer Form (WhatsApp) -->
+                <div id="bankPaymentForm" style="display: none;">
+                    <div class="form-row">
+                        <label data-en="Account Name" data-ar="اسم الحساب">Account Name</label>
+                        <input type="text" id="accountName" placeholder="John Doe">
+                    </div>
+                    <div class="form-row">
+                        <label data-en="Account Number" data-ar="رقم الحساب">Account Number</label>
+                        <input type="text" id="accountNumber" placeholder="123456789">
+                    </div>
+                    <div class="form-row">
+                        <label data-en="Bank Name" data-ar="اسم البنك">Bank Name</label>
+                        <input type="text" id="bankName" placeholder="Bank Muscat">
+                    </div>
+                    <button class="whatsapp-btn" onclick="processBankTransfer()">
+                        <i class="fab fa-whatsapp"></i>
+                        <span data-en="Continue on WhatsApp" data-ar="المتابعة عبر واتساب">Continue on WhatsApp</span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <footer class="footer" id="footer" style="display: none;">
@@ -4398,6 +4490,10 @@
         let selectedPaymentMethod = 'card';
         let resetEmailForCode = null;
         let verificationCode = null;
+
+        // WhatsApp number for payments
+        const WHATSAPP_NUMBER = "96812345678"; // Replace with your actual WhatsApp number
+        const WHATSAPP_MESSAGE_TEMPLATE = "I would like to complete my payment for StudX subscription. Plan: ";
 
         // Notification System
         function showNotification(message, type = 'info', duration = 3000) {
@@ -4592,10 +4688,70 @@
             showNotification('Summary added successfully!', 'success');
         }
 
-        function showPaymentPage(plan, price) { selectedPlan = { name: plan, price }; document.getElementById('selectedPlanName').textContent = plan === 'regular' ? 'Regular Plan' : 'Professional Plan'; document.getElementById('selectedPlanPrice').textContent = price + ' OMR'; document.getElementById('totalPrice').textContent = price + ' OMR'; if (currentUser.type === 'student') document.getElementById('studentWebsite').style.display = 'none'; else document.getElementById('teacherWebsite').style.display = 'none'; document.getElementById('footer').style.display = 'none'; document.getElementById('paymentPage').style.display = 'flex'; }
-        function hidePaymentPage() { document.getElementById('paymentPage').style.display = 'none'; document.getElementById('footer').style.display = 'block'; if (currentUser.type === 'student') document.getElementById('studentWebsite').style.display = 'block'; else document.getElementById('teacherWebsite').style.display = 'block'; }
-        function selectPaymentMethod(method) { selectedPaymentMethod = method; }
-        function processPayment() { if (!currentUser || !selectedPlan) return; const userIndex = users.findIndex(u => u.email === currentUser.email); users[userIndex].subscription = selectedPlan.name; currentUser.subscription = selectedPlan.name; saveData(); showNotification(`Payment successful!`, 'success'); hidePaymentPage(); }
+        function showPaymentPage(plan, price) { 
+            selectedPlan = { name: plan, price: price }; 
+            document.getElementById('selectedPlanName').textContent = plan === 'regular' ? 'Regular Plan' : 'Professional Plan'; 
+            document.getElementById('selectedPlanPrice').textContent = price + ' OMR'; 
+            document.getElementById('totalPrice').textContent = price + ' OMR'; 
+            const planDetails = document.getElementById('planDetails'); 
+            if (plan === 'regular') { 
+                planDetails.innerHTML = `<h3>Regular Plan Includes:</h3><ul><li><i class="fas fa-check"></i> 500 exercises/month</li><li><i class="fas fa-check"></i> Basic progress tracking</li><li><i class="fas fa-check"></i> Community forums</li><li><i class="fas fa-check"></i> Create free rooms</li></ul>`; 
+            } else { 
+                planDetails.innerHTML = `<h3>Professional Plan Includes:</h3><ul><li><i class="fas fa-check"></i> Unlimited exercises</li><li><i class="fas fa-check"></i> Advanced analytics</li><li><i class="fas fa-check"></i> Priority support</li><li><i class="fas fa-check"></i> Premium rooms access</li><li><i class="fas fa-check"></i> Create premium rooms</li></ul>`; 
+            } 
+            if (currentUser.type === 'student') document.getElementById('studentWebsite').style.display = 'none'; 
+            else document.getElementById('teacherWebsite').style.display = 'none'; 
+            document.getElementById('footer').style.display = 'none'; 
+            document.getElementById('paymentPage').style.display = 'flex'; 
+        }
+        
+        function hidePaymentPage() { 
+            document.getElementById('paymentPage').style.display = 'none'; 
+            document.getElementById('footer').style.display = 'block'; 
+            if (currentUser.type === 'student') document.getElementById('studentWebsite').style.display = 'block'; 
+            else document.getElementById('teacherWebsite').style.display = 'block'; 
+        }
+        
+        function selectPaymentMethod(method) { 
+            selectedPaymentMethod = method; 
+            document.getElementById('methodCard').classList.remove('active'); 
+            document.getElementById('methodBank').classList.remove('active'); 
+            document.getElementById('method' + method.charAt(0).toUpperCase() + method.slice(1)).classList.add('active'); 
+            document.getElementById('cardPaymentForm').style.display = method === 'card' ? 'block' : 'none'; 
+            document.getElementById('bankPaymentForm').style.display = method === 'bank' ? 'block' : 'none'; 
+        }
+        
+        function processCardPayment() { 
+            if (!currentUser || !selectedPlan) return; 
+            const errors = []; 
+            if (!document.getElementById('cardNumber').value || !document.getElementById('expiryDate').value || !document.getElementById('cvv').value || !document.getElementById('cardholderName').value) 
+                errors.push('Please fill in all card details!'); 
+            if (errors.length > 0) { showErrorLock('Payment Failed', 'Please fix the following errors:', errors); return; } 
+            const userIndex = users.findIndex(u => u.email === currentUser.email); 
+            users[userIndex].subscription = selectedPlan.name; 
+            currentUser.subscription = selectedPlan.name; 
+            saveData(); 
+            showNotification(`Payment successful! You have upgraded to ${selectedPlan.name} plan.`, 'success'); 
+            hidePaymentPage(); 
+            if (currentUser.type === 'teacher') updateTeacherRooms(); 
+            else loadStudentTeachers(); 
+        }
+        
+        function processBankTransfer() { 
+            if (!currentUser || !selectedPlan) return; 
+            const accountName = document.getElementById('accountName').value; 
+            const accountNumber = document.getElementById('accountNumber').value; 
+            const bankName = document.getElementById('bankName').value; 
+            if (!accountName || !accountNumber || !bankName) { 
+                showNotification('Please fill in all bank details!', 'error'); 
+                return; 
+            } 
+            const message = `${WHATSAPP_MESSAGE_TEMPLATE}${selectedPlan.name} plan (${selectedPlan.price} OMR). My name: ${currentUser.name}, Email: ${currentUser.email}. Account Name: ${accountName}, Account Number: ${accountNumber}, Bank: ${bankName}`; 
+            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`; 
+            window.open(whatsappUrl, '_blank'); 
+            showNotification('Please complete the payment on WhatsApp. Our team will activate your plan after confirmation.', 'info'); 
+            hidePaymentPage(); 
+        }
 
         function loadStudentExercises() { const grid = document.getElementById('studentExercisesGrid'); if (!grid) return; grid.innerHTML = ''; const gradeExercises = exercises.filter(ex => ex.grade === currentUser?.grade); if (gradeExercises.length === 0) { grid.innerHTML = `<p class="no-data">No exercises available.</p>`; return; } gradeExercises.forEach(ex => { const isCompleted = currentUser?.completedExercises?.includes(ex.id); const card = document.createElement('div'); card.className = 'exercise-card' + (isCompleted ? ' completed' : ''); card.innerHTML = `<div class="grade-tag">Grade ${ex.grade}</div><div class="exercise-icon">📐</div><h3>${ex.title}</h3><p>${ex.question.substring(0, 50)}...</p><div class="exercise-meta"><span><i class="far fa-clock"></i> ${ex.time} min</span><span><i class="fas fa-signal"></i> ${ex.difficulty}</span></div>${isCompleted ? '<div class="completed-badge"><i class="fas fa-check-circle"></i> Completed</div>' : '<button class="start-btn" onclick="alert(\'Exercise starting soon!\')">Start</button>'}`; grid.appendChild(card); }); updateGradeStats(); }
         function loadStudentSummaries() { const grid = document.getElementById('studentSummariesGrid'); if (!grid) return; grid.innerHTML = ''; const gradeSummaries = summaries.filter(s => s.grade === currentUser?.grade); if (gradeSummaries.length === 0) { grid.innerHTML = `<p class="no-data">No summaries available.</p>`; return; } gradeSummaries.forEach(sum => { const card = document.createElement('div'); card.className = 'summary-card'; const previewContent = sum.content.substring(0, 80) + '...'; card.innerHTML = `<div class="summary-grade">Grade ${sum.grade}</div><div class="summary-icon"><i class="fas fa-file-alt"></i></div><h3>${sum.title}</h3><p>${previewContent}</p><div class="summary-meta"><span><i class="fas fa-book"></i> ${sum.subject}</span><span><i class="fas fa-user"></i> ${sum.teacherName}</span></div><button class="download-summary-btn" onclick="downloadSummary(${sum.id})"><i class="fas fa-download"></i> Download</button>`; grid.appendChild(card); }); }
@@ -4690,7 +4846,6 @@
         const auth = getAuth(app);
         const googleProvider = new GoogleAuthProvider();
 
-        // Google Sign In
         window.googleSignIn = async () => {
           try {
             const result = await signInWithPopup(auth, googleProvider);
@@ -4728,7 +4883,6 @@
           }
         };
 
-        // Sign up
         window.firebaseSignup = async () => {
           const email = document.getElementById("signupEmail").value;
           const password = document.getElementById("signupPassword").value;
@@ -4741,7 +4895,6 @@
           } catch (err) { showNotification(err.message, "error"); }
         };
 
-        // Login
         window.firebaseLogin = async () => {
           const email = document.getElementById("email").value;
           const password = document.getElementById("password").value;
@@ -4753,14 +4906,12 @@
           } catch (err) { showNotification(err.message, "error"); }
         };
 
-        // Delete Account Function - Permanently removes from Firebase and local database
         window.confirmDeleteAccount = async () => {
           if (!currentUser) {
             showNotification("No user logged in!", "error");
             closeDeleteAccountModal();
             return;
           }
-
           try {
             const user = auth.currentUser;
             if (!user) {
@@ -4768,9 +4919,6 @@
               closeDeleteAccountModal();
               return;
             }
-
-            // For email/password users, we need to re-authenticate
-            // For Google users, we can delete directly
             if (currentUser.password && currentUser.password !== 'google_auth_user') {
               const password = prompt("Please enter your password to confirm account deletion:");
               if (!password) {
@@ -4781,24 +4929,16 @@
               const credential = EmailAuthProvider.credential(user.email, password);
               await reauthenticateWithCredential(user, credential);
             }
-
-            // Delete from Firebase Authentication
             await deleteUser(user);
             console.log("Firebase user deleted:", user.email);
-
-            // Remove user from local database
             const userIndex = users.findIndex(u => u.email === currentUser.email);
             if (userIndex !== -1) {
               users.splice(userIndex, 1);
               saveData();
             }
-
-            // Remove user's data from exercises, rooms, etc.
             exercises = exercises.filter(ex => ex.teacher !== currentUser.email);
             summaries = summaries.filter(s => s.teacher !== currentUser.email);
             privateRooms = privateRooms.filter(r => r.teacherEmail !== currentUser.email);
-            
-            // Remove user from groups
             groups.forEach(group => {
               group.members = group.members.filter(m => m !== currentUser.email);
               if (group.owner === currentUser.email && group.members.length > 0) {
@@ -4806,19 +4946,12 @@
               }
             });
             groups = groups.filter(g => g.members.length > 0);
-            
-            // Remove friend requests
             friendRequests = friendRequests.filter(r => r.from !== currentUser.email && r.to !== currentUser.email);
-            
             saveData();
-
             showNotification("Your account has been permanently deleted.", "success");
             closeDeleteAccountModal();
-            
-            // Log out the user
             await signOut(auth);
             handleLogout();
-            
           } catch (err) {
             console.error("Account deletion error:", err);
             if (err.code === 'auth/requires-recent-login') {
@@ -4831,7 +4964,6 @@
           }
         };
 
-        // Auto login state
         onAuthStateChanged(auth, async (user) => {
           if (user) {
             if (!user.emailVerified && user.providerData[0]?.providerId !== 'google.com') { 
