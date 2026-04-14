@@ -5285,7 +5285,12 @@
           if (!email || !password) { showNotification("Please enter email and password", "error"); return; }
           try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            if (!userCredential.user.emailVerified) { showNotification("Please verify your email first!", "warning"); await signOut(auth); return; }
+            // Email verification is required for students only, teachers can skip
+            if (!userCredential.user.emailVerified && selectedLoginType === 'student') { 
+              showNotification("Please verify your email first!", "warning"); 
+              await signOut(auth); 
+              return; 
+            }
             showNotification("Logged in successfully! ✅", "success");
           } catch (err) { showNotification(err.message, "error"); }
         };
@@ -5345,7 +5350,11 @@
 
         onAuthStateChanged(auth, async (user) => {
           if (user) {
-            if (!user.emailVerified && user.providerData[0]?.providerId !== 'google.com') { await signOut(auth); return; }
+            // For Google users, no verification needed. For email/password, check if student
+            if (!user.emailVerified && user.providerData[0]?.providerId !== 'google.com' && selectedLoginType === 'student') { 
+              await signOut(auth); 
+              return; 
+            }
             const existingUser = users.find(u => u.email === user.email);
             if (existingUser) {
               performLogin(existingUser);
@@ -5391,7 +5400,12 @@
           const password = document.getElementById("password").value;
           if (!email || !password) { showNotification("Please enter email and password!", "error"); return; }
           signInWithEmailAndPassword(auth, email, password).then(async (userCredential) => {
-            if (!userCredential.user.emailVerified) { showNotification("Please verify your email first!", "warning"); await signOut(auth); return; }
+            // Only require email verification for students, not teachers
+            if (!userCredential.user.emailVerified && selectedLoginType === 'student') { 
+              showNotification("Please verify your email first!", "warning"); 
+              await signOut(auth); 
+              return; 
+            }
             if (originalLoginHandler) originalLoginHandler({ preventDefault: () => {} });
           }).catch((err) => { showNotification(err.message, "error"); });
         };
