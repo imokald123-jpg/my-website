@@ -638,16 +638,6 @@
             gap: 10px;
         }
 
-        .forgot-password-buttons button {
-            flex: 1;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
         .reset-btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -4688,8 +4678,8 @@
                         <span data-en="Credit Card" data-ar="بطاقة ائتمان">Credit Card</span>
                     </div>
                     <div class="payment-method" onclick="selectPaymentMethod('bank')" id="methodBank">
-                        <i class="fas fa-university"></i>
-                        <span data-en="Bank Transfer (WhatsApp)" data-ar="تحويل بنكي (واتساب)">Bank Transfer (WhatsApp)</span>
+                        <i class="fab fa-whatsapp"></i>
+                        <span data-en="WhatsApp" data-ar="واتساب">WhatsApp</span>
                     </div>
                 </div>
 
@@ -4716,18 +4706,13 @@
                 </div>
 
                 <div id="bankPaymentForm" style="display: none;">
-                    <div class="form-row">
-                        <label data-en="Account Name" data-ar="اسم الحساب">Account Name</label>
-                        <input type="text" id="accountName" placeholder="John Doe">
-                    </div>
-                    <div class="form-row">
-                        <label data-en="Account Number" data-ar="رقم الحساب">Account Number</label>
-                        <input type="text" id="accountNumber" placeholder="123456789">
-                    </div>
-                    <div class="form-row">
-                        <label data-en="Bank Name" data-ar="اسم البنك">Bank Name</label>
-                        <input type="text" id="bankName" placeholder="Bank Muscat">
-                    </div>
+                    <!-- No input fields - direct WhatsApp link -->
+                    <p style="color: rgba(255,255,255,0.7); margin-bottom: 20px; text-align: center;">
+                        <i class="fas fa-info-circle"></i> 
+                        <span data-en="You will be redirected to WhatsApp to complete your payment." data-ar="سيتم تحويلك إلى واتساب لإتمام الدفع.">
+                            You will be redirected to WhatsApp to complete your payment.
+                        </span>
+                    </p>
                     <button class="whatsapp-btn" onclick="processBankTransfer()">
                         <i class="fab fa-whatsapp"></i>
                         <span data-en="Continue on WhatsApp" data-ar="المتابعة عبر واتساب">Continue on WhatsApp</span>
@@ -4973,11 +4958,6 @@
                 document.getElementById('navTeacherName').textContent = user.name;
                 document.getElementById('teacherGradeBadge').textContent = `Grade ${user.grade}`;
                 document.getElementById('currentTeacherGrade').textContent = user.grade;
-                document.getElementById('teacherExercisesGrade').textContent = user.grade;
-                document.getElementById('teacherSummariesGrade').textContent = user.grade;
-                document.getElementById('createRoomGrade').textContent = user.grade;
-                document.getElementById('exerciseGrade').value = `Grade ${user.grade}`;
-                document.getElementById('summaryGrade').value = `Grade ${user.grade}`;
                 const navAvatar = document.getElementById('navTeacherAvatar'); const navImg = document.getElementById('navTeacherAvatarImg'); const navIcon = navAvatar.querySelector('i');
                 if (user.profileImage) { navImg.src = user.profileImage; navImg.style.display = 'block'; navIcon.style.display = 'none'; } else { navImg.style.display = 'none'; navIcon.style.display = 'block'; }
                 loadTeacherExercises(); loadTeacherSummaries(); loadTeacherStudents(); updateTeacherStats(); updateTeacherRooms(); updateTeacherGradeStats();
@@ -5095,14 +5075,7 @@
         
         function processBankTransfer() { 
             if (!currentUser || !selectedPlan) return; 
-            const accountName = document.getElementById('accountName').value; 
-            const accountNumber = document.getElementById('accountNumber').value; 
-            const bankName = document.getElementById('bankName').value; 
-            if (!accountName || !accountNumber || !bankName) { 
-                showNotification('Please fill in all bank details!', 'error'); 
-                return; 
-            } 
-            const message = `${WHATSAPP_MESSAGE_TEMPLATE}${selectedPlan.name} plan (${selectedPlan.price} OMR). My name: ${currentUser.name}, Email: ${currentUser.email}. Account Name: ${accountName}, Account Number: ${accountNumber}, Bank: ${bankName}`; 
+            const message = `${WHATSAPP_MESSAGE_TEMPLATE}${selectedPlan.name} plan (${selectedPlan.price} OMR). My name: ${currentUser.name}, Email: ${currentUser.email}`; 
             const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`; 
             window.open(whatsappUrl, '_blank'); 
             showNotification('Please complete the payment on WhatsApp. Our team will activate your plan after confirmation.', 'info'); 
