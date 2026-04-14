@@ -4292,6 +4292,181 @@
             border-color: #fff;
             background: rgba(255, 255, 255, 0.1);
         }
+
+        /* Schedule Section */
+        .schedule-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .schedule-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+        }
+
+        .add-schedule-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .add-schedule-card h3 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .add-schedule-card h3 i {
+            color: #667eea;
+        }
+
+        .schedule-time-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .schedule-time-input input {
+            flex: 1;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+        }
+
+        .schedule-time-input input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .schedule-subject-select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .add-schedule-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .add-schedule-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .schedules-list {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .schedules-list h3 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .schedules-list h3 i {
+            color: #667eea;
+        }
+
+        .schedule-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .schedule-item:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .schedule-info {
+            flex: 1;
+        }
+
+        .schedule-subject {
+            color: #fff;
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .schedule-time {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .schedule-time i {
+            color: #667eea;
+        }
+
+        .delete-schedule-btn {
+            background: transparent;
+            border: 1px solid #f44336;
+            color: #f44336;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .delete-schedule-btn:hover {
+            background: #f44336;
+            color: white;
+        }
+
+        .no-schedules {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            padding: 40px;
+        }
+
+        .premium-badge {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
@@ -4703,6 +4878,7 @@
                     <li><a href="#student-home" class="active" data-en="Home" data-ar="الرئيسية">Home</a></li>
                     <li><a href="#student-exercises" data-en="Exercises" data-ar="التمارين">Exercises</a></li>
                     <li><a href="#student-summaries" data-en="Summaries" data-ar="الملخصات">Summaries</a></li>
+                    <li><a href="#student-schedule" data-en="Study Schedule" data-ar="جدول الدراسة">Study Schedule</a></li>
                     <li><a href="#student-rooms" data-en="Private Rooms" data-ar="غرف خاصة">Private Rooms</a></li>
                     <li><a href="#student-groups" data-en="Groups" data-ar="المجموعات">Groups</a></li>
                     <li><a href="#student-pricing" data-en="Pricing" data-ar="الباقات">Pricing</a></li>
@@ -4719,6 +4895,31 @@
             <div class="grade-info" id="studentGradeInfo"><h3><span data-en="Your Grade:" data-ar="صفك:">Your Grade:</span> <span id="currentStudentGrade">10</span></h3><p><span data-en="Exercises available:" data-ar="التمارين المتاحة:">Exercises available:</span> <span id="studentGradeExerciseCount">0</span></p><p><span data-en="Teachers available:" data-ar="المدرسون المتاحون:">Teachers available:</span> <span id="studentGradeTeacherCount">0</span></p></div>
             <section class="exercises" id="student-exercises"><h2 class="section-title" data-en="Available Exercises" data-ar="التمارين المتاحة">Available Exercises</h2><div class="exercises-grid" id="studentExercisesGrid"></div></section>
             <section class="summaries" id="student-summaries"><h2 class="section-title" data-en="Study Summaries" data-ar="الملخصات الدراسية">Study Summaries</h2><div class="summaries-grid" id="studentSummariesGrid"></div></section>
+            <section class="schedule-section" id="student-schedule">
+                <h2 class="section-title">Study Schedule <span class="premium-badge">Premium Feature</span></h2>
+                <div class="schedule-container">
+                    <div class="add-schedule-card">
+                        <h3><i class="fas fa-plus-circle"></i> Add Study Time</h3>
+                        <div class="schedule-time-input">
+                            <input type="time" id="scheduleTime" placeholder="Time">
+                        </div>
+                        <select id="scheduleSubject" class="schedule-subject-select">
+                            <option value="Mathematics">Mathematics</option>
+                            <option value="Physics">Physics</option>
+                            <option value="Chemistry">Chemistry</option>
+                            <option value="Biology">Biology</option>
+                            <option value="English">English</option>
+                            <option value="Arabic">Arabic</option>
+                            <option value="History">History</option>
+                        </select>
+                        <button class="add-schedule-btn" onclick="addSchedule()"><i class="fas fa-bell"></i> Set Reminder</button>
+                    </div>
+                    <div class="schedules-list">
+                        <h3><i class="fas fa-calendar-alt"></i> Your Study Schedule</h3>
+                        <div id="schedulesListContainer"></div>
+                    </div>
+                </div>
+            </section>
             <section class="private-rooms" id="student-rooms"><h2 class="section-title" data-en="Available Teachers & Rooms" data-ar="المدرسون والغرف المتاحة">Available Teachers & Rooms</h2><div class="rooms-grid" id="studentTeachersGrid"></div></section>
             <section class="pricing" id="student-pricing"><h2 class="section-title" data-en="Pricing" data-ar="الباقات">Pricing</h2><div class="pricing-grid"><div class="pricing-card"><h3>Regular</h3><div class="price">2 <span>OMR</span><small>per month</small></div><button class="pricing-btn" onclick="showPaymentPage('regular', 2)">Select Plan</button></div><div class="pricing-card popular"><div class="popular-badge">MOST POPULAR</div><h3>Professional</h3><div class="price">4 <span>OMR</span><small>per month</small></div><button class="pricing-btn popular-btn" onclick="showPaymentPage('professional', 4)">Select Plan</button></div></div></section>
             <section class="progress" id="student-progress"><h2 class="section-title" data-en="My Progress" data-ar="تقدمي">My Progress</h2><div class="progress-stats"><div class="stat-card"><i class="fas fa-check-circle"></i><div class="stat-number" id="completedExercises">0</div><div class="stat-label">Completed</div></div><div class="stat-card"><i class="fas fa-star"></i><div class="stat-number" id="averageScore">0%</div><div class="stat-label">Avg Score</div></div><div class="stat-card"><i class="fas fa-clock"></i><div class="stat-number" id="studyHours">0</div><div class="stat-label">Hours</div></div><div class="stat-card"><i class="fas fa-door-open"></i><div class="stat-number" id="joinedRooms">0</div><div class="stat-label">Rooms</div></div></div></section>
@@ -4854,6 +5055,9 @@
         let currentSummaryPdfData = null;
         let currentSummaryPdfName = null;
 
+        // Schedule system
+        let studySchedules = [];
+
         function showNotification(message, type = 'info', duration = 3000) {
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
@@ -4871,14 +5075,14 @@
             document.body.appendChild(errorLock);
         }
 
-        function showSubscriptionRequired(summaryTitle) {
+        function showSubscriptionRequired(featureName) {
             const overlay = document.createElement('div');
             overlay.className = 'subscription-overlay';
             overlay.innerHTML = `
                 <div class="subscription-card">
                     <i class="fas fa-crown"></i>
-                    <h2>Premium Content</h2>
-                    <p>"${summaryTitle}" is available for subscribed students only. Subscribe now to access all summaries and premium features!</p>
+                    <h2>Premium Feature</h2>
+                    <p>"${featureName}" is available for subscribed students only. Subscribe now to access study schedule and all premium features!</p>
                     <button class="subscribe-now-btn" onclick="closeSubscriptionOverlayAndGoToPricing()">Subscribe Now</button>
                     <button class="close-subscription-btn" onclick="this.closest('.subscription-overlay').remove()">Maybe Later</button>
                 </div>
@@ -4888,26 +5092,126 @@
 
         function closeSubscriptionOverlayAndGoToPricing() {
             document.querySelector('.subscription-overlay')?.remove();
-            // Scroll to pricing section
             const pricingSection = document.getElementById('student-pricing');
             if (pricingSection) {
                 pricingSection.scrollIntoView({ behavior: 'smooth' });
             }
         }
 
-        function showSubscriptionUpgradeAnimation() {
-            const overlay = document.createElement('div');
-            overlay.className = 'subscription-overlay';
-            overlay.innerHTML = `
-                <div class="subscription-card">
-                    <i class="fas fa-rocket"></i>
-                    <h2>Upgrade to Premium!</h2>
-                    <p>You need a subscription to access this feature. Choose a plan that suits you best!</p>
-                    <button class="subscribe-now-btn" onclick="closeSubscriptionOverlayAndGoToPricing()">View Plans</button>
-                    <button class="close-subscription-btn" onclick="this.closest('.subscription-overlay').remove()">Close</button>
+        function addSchedule() {
+            if (!currentUser || currentUser.type !== 'student') return;
+            
+            // Check if user has premium subscription
+            if (currentUser.subscription !== 'professional' && currentUser.subscription !== 'premium') {
+                showSubscriptionRequired('Study Schedule');
+                return;
+            }
+            
+            const time = document.getElementById('scheduleTime').value;
+            const subject = document.getElementById('scheduleSubject').value;
+            
+            if (!time) {
+                showNotification('Please select a time!', 'error');
+                return;
+            }
+            
+            const schedule = {
+                id: Date.now(),
+                time: time,
+                subject: subject,
+                createdAt: new Date().toISOString()
+            };
+            
+            if (!currentUser.schedules) currentUser.schedules = [];
+            currentUser.schedules.push(schedule);
+            
+            const userIndex = users.findIndex(u => u.email === currentUser.email);
+            users[userIndex].schedules = currentUser.schedules;
+            saveData();
+            
+            loadSchedules();
+            document.getElementById('scheduleTime').value = '';
+            
+            // Set notification reminder
+            scheduleNotification(schedule);
+            
+            showNotification(`Study reminder set for ${subject} at ${time}!`, 'success');
+        }
+        
+        function scheduleNotification(schedule) {
+            const now = new Date();
+            const [hours, minutes] = schedule.time.split(':');
+            const scheduleTime = new Date();
+            scheduleTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+            
+            let timeUntil = scheduleTime - now;
+            if (timeUntil < 0) {
+                scheduleTime.setDate(scheduleTime.getDate() + 1);
+                timeUntil = scheduleTime - now;
+            }
+            
+            if (timeUntil > 0 && timeUntil < 86400000) {
+                setTimeout(() => {
+                    showNotification(`⏰ Time to study ${schedule.subject}! Your scheduled study time is now.`, 'warning', 10000);
+                    // Play sound notification if supported
+                    try {
+                        const audio = new Audio('https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3');
+                        audio.play().catch(e => console.log('Audio play failed'));
+                    } catch(e) {}
+                }, timeUntil);
+            }
+        }
+        
+        function loadSchedules() {
+            const container = document.getElementById('schedulesListContainer');
+            if (!container) return;
+            
+            if (!currentUser || currentUser.type !== 'student') {
+                container.innerHTML = '<div class="no-schedules">Please login to view your schedule</div>';
+                return;
+            }
+            
+            // Check if user has premium subscription
+            if (currentUser.subscription !== 'professional' && currentUser.subscription !== 'premium') {
+                container.innerHTML = `
+                    <div class="no-schedules">
+                        <i class="fas fa-lock" style="font-size: 40px; margin-bottom: 15px; color: #ffd700;"></i>
+                        <p>Study Schedule is a premium feature!</p>
+                        <button class="pricing-btn" onclick="showPaymentPage('professional', 4)" style="margin-top: 15px;">Upgrade to Premium</button>
+                    </div>
+                `;
+                return;
+            }
+            
+            const schedules = currentUser.schedules || [];
+            
+            if (schedules.length === 0) {
+                container.innerHTML = '<div class="no-schedules">No study schedules yet. Add your first study time above!</div>';
+                return;
+            }
+            
+            // Sort schedules by time
+            schedules.sort((a, b) => a.time.localeCompare(b.time));
+            
+            container.innerHTML = schedules.map(schedule => `
+                <div class="schedule-item">
+                    <div class="schedule-info">
+                        <div class="schedule-subject">${schedule.subject}</div>
+                        <div class="schedule-time"><i class="fas fa-clock"></i> ${schedule.time}</div>
+                    </div>
+                    <button class="delete-schedule-btn" onclick="deleteSchedule(${schedule.id})"><i class="fas fa-trash"></i></button>
                 </div>
-            `;
-            document.body.appendChild(overlay);
+            `).join('');
+        }
+        
+        function deleteSchedule(scheduleId) {
+            if (!currentUser) return;
+            currentUser.schedules = currentUser.schedules.filter(s => s.id !== scheduleId);
+            const userIndex = users.findIndex(u => u.email === currentUser.email);
+            users[userIndex].schedules = currentUser.schedules;
+            saveData();
+            loadSchedules();
+            showNotification('Schedule removed', 'info');
         }
 
         function previewSummaryPdf(input) {
@@ -5015,7 +5319,7 @@
                     type: selectedRole, grade: grade, bio: '', profileImage: image || tempGoogleUser.photoURL,
                     subscription: 'free', canCreatePremiumRooms: selectedRole === 'teacher',
                     friends: [], groups: [], completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [],
-                    gradeLastChanged: now
+                    gradeLastChanged: now, schedules: []
                 };
                 if (selectedRole === 'teacher') { newUser.exercises = []; newUser.summaries = []; newUser.privateRooms = []; newUser.teacherCode = teacherCode; newUser.subscription = 'professional'; }
                 users.push(newUser);
@@ -5041,15 +5345,15 @@
             showNotification('Sign-in cancelled.', 'info');
         }
 
-        // Default data
+        // Default data - removed the math exercise
         users = [
-            { name: 'Student', accountName: 'student123', nickname: 'studious', email: 'student@studx.com', password: 'student123', type: 'student', grade: '10', bio: 'I love learning math and science.', profileImage: null, completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [], subscription: 'free', friends: [], groups: [], gradeLastChanged: new Date().toISOString() },
+            { name: 'Student', accountName: 'student123', nickname: 'studious', email: 'student@studx.com', password: 'student123', type: 'student', grade: '10', bio: 'I love learning math and science.', profileImage: null, completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [], subscription: 'free', friends: [], groups: [], gradeLastChanged: new Date().toISOString(), schedules: [] },
             { name: 'Teacher', accountName: 'teacher123', nickname: 'professor', email: 'teacher@studx.com', password: 'teacher123', type: 'teacher', grade: '10', bio: 'Experienced teacher.', profileImage: null, exercises: [], summaries: [], privateRooms: [], subscription: 'professional', canCreatePremiumRooms: true, gradeLastChanged: new Date().toISOString() }
         ];
         groups = [{ id: 1, name: 'Math Study Group', description: 'Discuss math problems', owner: 'student@studx.com', members: ['student@studx.com'], createdAt: new Date().toISOString() }];
+        // Only one exercise left (removed the math exercise)
         exercises = [
-            { id: 1, title: 'Algebra Basics', subject: 'Mathematics', difficulty: 'Beginner', time: 15, question: 'Solve for x: 2x + 5 = 13', correctAnswer: '4', explanation: 'Subtract 5: 2x = 8, divide by 2: x = 4', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', image: null, pdf: null, completions: 0, attempts: 0, correctAttempts: 0 },
-            { id: 2, title: "Newton's Laws", subject: 'Physics', difficulty: 'Intermediate', time: 20, question: 'Force for 5kg at 2m/s²? (Newtons)', correctAnswer: '10', explanation: 'F = ma = 5 × 2 = 10N', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', image: null, pdf: null, completions: 0, attempts: 0, correctAttempts: 0 }
+            { id: 1, title: "Newton's Laws", subject: 'Physics', difficulty: 'Intermediate', time: 20, question: 'Force for 5kg at 2m/s²? (Newtons)', correctAnswer: '10', explanation: 'F = ma = 5 × 2 = 10N', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', image: null, pdf: null, completions: 0, attempts: 0, correctAttempts: 0 }
         ];
         summaries = [{ id: 1, title: 'Algebra Final Review', subject: 'Mathematics', content: 'Linear equations: ax + b = c\nQuadratic equations: ax² + bx + c = 0', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', createdAt: new Date().toISOString(), pdfData: null, pdfName: null }];
         privateRooms = [{ id: 1, teacherEmail: 'teacher@studx.com', teacherName: 'Teacher', roomName: 'Grade 10 Math Mastery', description: 'Advanced math tutoring', schedule: 'Mon, Wed, Fri - 4:00 PM', grade: '10', subscribersOnly: true, students: [] }];
@@ -5100,7 +5404,7 @@
             const now = new Date().toISOString();
             if (imageInput.files && imageInput.files[0]) { const reader = new FileReader(); reader.onload = e => createUserWithImage(e.target.result); reader.readAsDataURL(imageInput.files[0]); } else createUserWithImage(null);
             function createUserWithImage(image) {
-                const newUser = { name, accountName, nickname, email, password, type: selectedSignupType, grade, bio, profileImage: image, subscription: 'free', canCreatePremiumRooms: selectedSignupType === 'teacher', friends: [], groups: [], gradeLastChanged: now };
+                const newUser = { name, accountName, nickname, email, password, type: selectedSignupType, grade, bio, profileImage: image, subscription: 'free', canCreatePremiumRooms: selectedSignupType === 'teacher', friends: [], groups: [], gradeLastChanged: now, schedules: [] };
                 if (selectedSignupType === 'student') { newUser.completedExercises = []; newUser.averageScore = 0; newUser.studyHours = 0; newUser.attempts = []; newUser.joinedRooms = []; }
                 else { newUser.exercises = []; newUser.summaries = []; newUser.privateRooms = []; newUser.teacherCode = document.getElementById('teacherCode').value; newUser.subscription = 'professional'; }
                 users.push(newUser);
@@ -5124,7 +5428,7 @@
                 document.getElementById('joinedRooms').textContent = user.joinedRooms ? user.joinedRooms.length : 0;
                 const navAvatar = document.getElementById('navStudentAvatar'); const navImg = document.getElementById('navStudentAvatarImg'); const navIcon = navAvatar.querySelector('i');
                 if (user.profileImage) { navImg.src = user.profileImage; navImg.style.display = 'block'; navIcon.style.display = 'none'; } else { navImg.style.display = 'none'; navIcon.style.display = 'block'; }
-                loadStudentExercises(); loadStudentSummaries(); loadStudentTeachers(); updateStudentProgress(); updateGradeStats(); loadGroups();
+                loadStudentExercises(); loadStudentSummaries(); loadStudentTeachers(); updateStudentProgress(); updateGradeStats(); loadGroups(); loadSchedules();
                 showNotification(`Welcome back, ${user.nickname || user.name}!`, 'success');
             } else {
                 document.getElementById('teacherWebsite').style.display = 'block';
@@ -5210,7 +5514,7 @@
             if (plan === 'regular') { 
                 planDetails.innerHTML = `<h3>Regular Plan Includes:</h3><ul><li><i class="fas fa-check"></i> 500 exercises/month</li><li><i class="fas fa-check"></i> Basic progress tracking</li><li><i class="fas fa-check"></i> Community forums</li><li><i class="fas fa-check"></i> Create free rooms</li></ul>`; 
             } else { 
-                planDetails.innerHTML = `<h3>Professional Plan Includes:</h3><ul><li><i class="fas fa-check"></i> Unlimited exercises</li><li><i class="fas fa-check"></i> Advanced analytics</li><li><i class="fas fa-check"></i> Priority support</li><li><i class="fas fa-check"></i> Premium rooms access</li><li><i class="fas fa-check"></i> Create premium rooms</li></ul>`; 
+                planDetails.innerHTML = `<h3>Professional Plan Includes:</h3><ul><li><i class="fas fa-check"></i> Unlimited exercises</li><li><i class="fas fa-check"></i> Advanced analytics</li><li><i class="fas fa-check"></i> Priority support</li><li><i class="fas fa-check"></i> Premium rooms access</li><li><i class="fas fa-check"></i> Create premium rooms</li><li><i class="fas fa-check"></i> Study Schedule & Reminders</li></ul>`; 
             } 
             if (currentUser.type === 'student') document.getElementById('studentWebsite').style.display = 'none'; 
             else document.getElementById('teacherWebsite').style.display = 'none'; 
@@ -5247,7 +5551,7 @@
             showNotification(`Payment successful! You have upgraded to ${selectedPlan.name} plan.`, 'success'); 
             hidePaymentPage(); 
             if (currentUser.type === 'teacher') updateTeacherRooms(); 
-            else loadStudentTeachers(); 
+            else { loadStudentTeachers(); loadSchedules(); }
         }
         
         function processBankTransfer() { 
@@ -5266,21 +5570,17 @@
         function viewSummary(summaryId) { 
             const summary = summaries.find(s => s.id === summaryId); 
             if (!summary) return; 
-            // Check if user is subscribed (professional plan)
             if (currentUser.subscription !== 'professional' && currentUser.subscription !== 'premium') {
                 showSubscriptionRequired(summary.title);
                 return;
             }
-            // If subscribed, download or view the summary
             if (summary.pdfData) {
-                // Download PDF
                 const link = document.createElement('a');
                 link.href = summary.pdfData;
                 link.download = summary.pdfName || `${summary.title}.pdf`;
                 link.click();
                 showNotification('Downloading PDF...', 'success');
             } else {
-                // Download as text
                 const content = `STUDX STUDY SUMMARY\n\nTitle: ${summary.title}\nSubject: ${summary.subject}\nGrade: ${summary.grade}\nTeacher: ${summary.teacherName}\n\n${summary.content}\n\nGenerated by StudX`; 
                 const blob = new Blob([content], { type: 'text/plain' }); 
                 const url = URL.createObjectURL(blob); 
@@ -5312,8 +5612,8 @@
         function updateGradeStats() { if (!currentUser || currentUser.type !== 'student') return; const gradeExercises = exercises.filter(ex => ex.grade === currentUser.grade); const gradeTeachers = users.filter(u => u.type === 'teacher' && u.grade === currentUser.grade); document.getElementById('studentGradeExerciseCount').textContent = gradeExercises.length; document.getElementById('studentGradeTeacherCount').textContent = gradeTeachers.length; }
         function updateTeacherGradeStats() { if (!currentUser || currentUser.type !== 'teacher') return; const gradeStudents = users.filter(u => u.type === 'student' && u.grade === currentUser.grade); const gradeExercises = exercises.filter(ex => ex.grade === currentUser.grade); document.getElementById('teacherGradeStudentCount').textContent = gradeStudents.length; document.getElementById('teacherGradeExerciseCount').textContent = gradeExercises.length; document.getElementById('teacherStudentsCount').textContent = gradeStudents.length; }
         function updateTeacherRooms() { const grid = document.getElementById('teacherRoomsList'); if (!grid) return; grid.innerHTML = ''; const teacherRooms = privateRooms.filter(room => room.teacherEmail === currentUser?.email); if (teacherRooms.length === 0) { grid.innerHTML = `<p class="no-data">No private rooms yet.</p>`; return; } teacherRooms.forEach(room => { const roomDiv = document.createElement('div'); roomDiv.className = 'created-room'; roomDiv.innerHTML = `<div class="room-grade-tag">Grade ${room.grade}</div><h4>${room.roomName}</h4><p>${room.description}</p><div class="room-meta"><span><i class="fas fa-calendar"></i> ${room.schedule}</span><span><i class="fas fa-users"></i> ${room.students?.length || 0} students</span></div>`; grid.appendChild(roomDiv); }); }
-        function scrollToSection(section) { let element; if (currentUser.type === 'student') { switch(section) { case 'home': element = document.getElementById('student-home'); break; case 'exercises': element = document.getElementById('student-exercises'); break; case 'rooms': element = document.getElementById('student-rooms'); break; case 'pricing': element = document.getElementById('student-pricing'); break; } } else { switch(section) { case 'home': element = document.getElementById('teacher-home'); break; case 'exercises': element = document.getElementById('teacher-exercises'); break; case 'rooms': element = document.getElementById('teacher-private-rooms'); break; case 'pricing': element = document.getElementById('teacher-pricing'); break; } } if (element) element.scrollIntoView({ behavior: 'smooth' }); }
-        function switchLanguage(lang) { currentLang = lang; document.querySelectorAll('.lang-btn').forEach(btn => { btn.classList.remove('active'); if ((lang === 'en' && btn.textContent.trim() === 'English') || (lang === 'ar' && btn.textContent.trim() === 'العربية')) btn.classList.add('active'); }); document.querySelectorAll('[data-en][data-ar]').forEach(element => { if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') { if (element.placeholder) element.placeholder = element.getAttribute(`data-${lang}`); } else if (element.tagName === 'SELECT') { Array.from(element.options).forEach(option => { if (option.getAttribute(`data-${lang}`)) option.textContent = option.getAttribute(`data-${lang}`); }); } else if (!element.classList.contains('lang-btn') && element.children.length === 0) element.textContent = element.getAttribute(`data-${lang}`); }); document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr'; document.documentElement.lang = lang; if (currentUser) { if (currentUser.type === 'student') { loadStudentExercises(); loadStudentSummaries(); loadStudentTeachers(); loadGroups(); } else { loadTeacherExercises(); loadTeacherSummaries(); loadTeacherStudents(); updateTeacherRooms(); } } }
+        function scrollToSection(section) { let element; if (currentUser.type === 'student') { switch(section) { case 'home': element = document.getElementById('student-home'); break; case 'exercises': element = document.getElementById('student-exercises'); break; case 'schedule': element = document.getElementById('student-schedule'); break; case 'rooms': element = document.getElementById('student-rooms'); break; case 'pricing': element = document.getElementById('student-pricing'); break; } } else { switch(section) { case 'home': element = document.getElementById('teacher-home'); break; case 'exercises': element = document.getElementById('teacher-exercises'); break; case 'rooms': element = document.getElementById('teacher-private-rooms'); break; case 'pricing': element = document.getElementById('teacher-pricing'); break; } } if (element) element.scrollIntoView({ behavior: 'smooth' }); }
+        function switchLanguage(lang) { currentLang = lang; document.querySelectorAll('.lang-btn').forEach(btn => { btn.classList.remove('active'); if ((lang === 'en' && btn.textContent.trim() === 'English') || (lang === 'ar' && btn.textContent.trim() === 'العربية')) btn.classList.add('active'); }); document.querySelectorAll('[data-en][data-ar]').forEach(element => { if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') { if (element.placeholder) element.placeholder = element.getAttribute(`data-${lang}`); } else if (element.tagName === 'SELECT') { Array.from(element.options).forEach(option => { if (option.getAttribute(`data-${lang}`)) option.textContent = option.getAttribute(`data-${lang}`); }); } else if (!element.classList.contains('lang-btn') && element.children.length === 0) element.textContent = element.getAttribute(`data-${lang}`); }); document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr'; document.documentElement.lang = lang; if (currentUser) { if (currentUser.type === 'student') { loadStudentExercises(); loadStudentSummaries(); loadStudentTeachers(); loadGroups(); loadSchedules(); } else { loadTeacherExercises(); loadTeacherSummaries(); loadTeacherStudents(); updateTeacherRooms(); } } }
         
         // Friend System Functions
         function searchFriends() { const searchTerm = document.getElementById('friendSearchInput').value.toLowerCase(); if (!searchTerm) { showNotification('Please enter a search term', 'warning'); return; } const results = users.filter(u => u.email !== currentUser.email && u.type === 'student' && (u.accountName.toLowerCase().includes(searchTerm) || (u.nickname && u.nickname.toLowerCase().includes(searchTerm)))); const resultsDiv = document.getElementById('friendSearchResults'); resultsDiv.innerHTML = ''; if (results.length === 0) { resultsDiv.innerHTML = `<p class="no-data">No users found</p>`; return; } results.forEach(user => { const isFriend = currentUser.friends?.includes(user.email); const hasRequestSent = friendRequests.some(r => r.from === currentUser.email && r.to === user.email && r.status === 'pending'); const hasRequestReceived = friendRequests.some(r => r.from === user.email && r.to === currentUser.email && r.status === 'pending'); const resultDiv = document.createElement('div'); resultDiv.className = 'search-result-item'; const avatarHtml = user.profileImage ? `<img src="${user.profileImage}" style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover;">` : `<i class="fas fa-user-graduate" style="font-size: 20px; color: #667eea;"></i>`; resultDiv.innerHTML = `<div class="search-result-info"><div class="search-result-avatar">${avatarHtml}</div><div class="search-result-details"><div class="search-result-name">${user.nickname || user.name}</div><div class="search-result-nickname">@${user.accountName}</div></div></div><button class="send-request-btn" onclick="sendFriendRequest('${user.email}')" ${isFriend || hasRequestSent || hasRequestReceived ? 'disabled' : ''}>${isFriend ? 'Friends' : (hasRequestSent ? 'Request Sent' : (hasRequestReceived ? 'Request Received' : 'Add Friend'))}</button>`; resultsDiv.appendChild(resultDiv); }); }
@@ -5327,7 +5627,7 @@
         function deleteGroup(groupId) { const group = groups.find(g => g.id === groupId); if (!group || group.owner !== currentUser.email) return; if (confirm('Delete this group?')) { groups = groups.filter(g => g.id !== groupId); group.members.forEach(email => { const user = users.find(u => u.email === email); if (user && user.groups) user.groups = user.groups.filter(id => id !== groupId); }); saveData(); showNotification('Group deleted!', 'success'); loadGroups(); } }
         function leaveGroup(groupId) { const group = groups.find(g => g.id === groupId); if (!group) return; if (group.owner === currentUser.email) { showNotification('Owner cannot leave. Delete the group instead.', 'warning'); return; } group.members = group.members.filter(email => email !== currentUser.email); if (currentUser.groups) currentUser.groups = currentUser.groups.filter(id => id !== groupId); saveData(); showNotification('You left the group', 'info'); loadGroups(); }
         function showProfile() { if (!currentUser) return; document.getElementById('profileName').textContent = currentUser.name; document.getElementById('profileType').textContent = currentUser.type === 'student' ? `Student • Grade ${currentUser.grade}` : `Teacher • Grade ${currentUser.grade}`; document.getElementById('profileEmail').textContent = currentUser.email; document.getElementById('profileBio').textContent = currentUser.bio || 'No bio yet.'; const profileAvatar = document.getElementById('profileAvatar'); const avatarImg = document.getElementById('profileAvatarImg'); const avatarIcon = profileAvatar.querySelector('i'); if (currentUser.profileImage) { avatarImg.src = currentUser.profileImage; avatarImg.style.display = 'block'; avatarIcon.style.display = 'none'; } else { avatarImg.style.display = 'none'; avatarIcon.style.display = 'block'; } const statsGrid = document.getElementById('profileStats'); if (currentUser.type === 'student') { statsGrid.innerHTML = `<div class="stat-item"><div class="stat-number">${currentUser.completedExercises?.length || 0}</div><div class="stat-label">Completed</div></div><div class="stat-item"><div class="stat-number">${currentUser.averageScore || 0}%</div><div class="stat-label">Avg Score</div></div><div class="stat-item"><div class="stat-number">${currentUser.studyHours?.toFixed(1) || 0}</div><div class="stat-label">Hours</div></div>`; } else { statsGrid.innerHTML = `<div class="stat-item"><div class="stat-number">${currentUser.exercises?.length || 0}</div><div class="stat-label">Exercises</div></div><div class="stat-item"><div class="stat-number">${currentUser.summaries?.length || 0}</div><div class="stat-label">Summaries</div></div><div class="stat-item"><div class="stat-number">${privateRooms.filter(r => r.teacherEmail === currentUser.email).length}</div><div class="stat-label">Rooms</div></div>`; } if (currentUser.type === 'student') document.getElementById('studentWebsite').style.display = 'none'; else document.getElementById('teacherWebsite').style.display = 'none'; document.getElementById('footer').style.display = 'none'; document.getElementById('profilePage').style.display = 'block'; }
-        function goBackFromProfile() { document.getElementById('profilePage').style.display = 'none'; document.getElementById('footer').style.display = 'block'; if (currentUser.type === 'student') { document.getElementById('studentWebsite').style.display = 'block'; loadGroups(); } else { document.getElementById('teacherWebsite').style.display = 'block'; } }
+        function goBackFromProfile() { document.getElementById('profilePage').style.display = 'none'; document.getElementById('footer').style.display = 'block'; if (currentUser.type === 'student') { document.getElementById('studentWebsite').style.display = 'block'; loadGroups(); loadSchedules(); } else { document.getElementById('teacherWebsite').style.display = 'block'; } }
         function openEditProfile() { 
             document.getElementById('editName').value = currentUser.name; 
             document.getElementById('editNickname').value = currentUser.nickname || ''; 
