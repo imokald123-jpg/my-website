@@ -1,3 +1,6 @@
+Here is the complete HTML code with the Google Sign-In flow updated to show a grade and role selection screen after authentication. Users can choose their grade, role (Student/Teacher), and provide a teacher code if applicable. They can also set their display name and profile picture.
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -371,6 +374,208 @@
             text-decoration: none;
             font-weight: 600;
             cursor: pointer;
+        }
+
+        /* Role Selection Modal */
+        .role-selection-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 7500;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .role-selection-modal.active {
+            display: flex;
+        }
+
+        .role-selection-content {
+            background: rgba(20, 20, 20, 0.98);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 35px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            animation: slideUp 0.3s ease;
+        }
+
+        .role-selection-content h3 {
+            color: #fff;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .role-selection-content p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .role-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .role-btn {
+            flex: 1;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .role-btn i {
+            font-size: 40px;
+        }
+
+        .role-btn:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .role-btn.selected {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+        }
+
+        .grade-select {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .teacher-code-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .teacher-code-input.active {
+            display: block;
+        }
+
+        .name-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .profile-preview-role {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-avatar-role {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid #667eea;
+            transition: all 0.3s;
+        }
+
+        .profile-avatar-role:hover {
+            border-color: #fff;
+            transform: scale(1.05);
+        }
+
+        .profile-avatar-role i {
+            font-size: 40px;
+            color: #667eea;
+        }
+
+        .profile-avatar-role img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .role-action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .role-action-buttons button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .confirm-role-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+        }
+
+        .confirm-role-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .quit-signin-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .quit-signin-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #f44336;
+            border-color: #f44336;
+        }
+
+        .error-message {
+            color: #f44336;
+            font-size: 13px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
         }
 
         /* Forgot Password Modal */
@@ -1949,7 +2154,7 @@
             box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
         }
 
-        /* Payment Page Styles - Updated with only Card and Bank Transfer */
+        /* Payment Page Styles */
         .payment-page {
             min-height: 100vh;
             background: #000000;
@@ -2125,7 +2330,6 @@
             gap: 15px;
         }
 
-        /* WhatsApp Button */
         .whatsapp-btn {
             width: 100%;
             padding: 15px;
@@ -2262,7 +2466,6 @@
             margin: 0 auto;
         }
 
-        /* Add Summary Section */
         .add-summary {
             max-width: 1200px;
             margin: 0 auto;
@@ -2279,7 +2482,6 @@
             margin: 0 auto;
         }
 
-        /* Summaries Section */
         .summaries {
             max-width: 1200px;
             margin: 0 auto;
@@ -2447,7 +2649,6 @@
             color: #fff;
         }
 
-        /* Image Upload Styles */
         .image-upload-container {
             border: 2px dashed rgba(102, 126, 234, 0.5);
             border-radius: 10px;
@@ -2494,7 +2695,6 @@
             display: block;
         }
 
-        /* PDF Upload Styles */
         .pdf-upload-container {
             border: 2px dashed rgba(102, 126, 234, 0.5);
             border-radius: 10px;
@@ -2585,7 +2785,6 @@
             display: none;
         }
 
-        /* Exercise Image in Student View */
         .exercise-image-container {
             margin: 20px 0;
             text-align: center;
@@ -2608,7 +2807,6 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* PDF Link Styles */
         .pdf-link {
             display: inline-flex;
             align-items: center;
@@ -2631,7 +2829,6 @@
             font-size: 18px;
         }
 
-        /* Teacher Exercises */
         .teacher-exercises {
             max-width: 1200px;
             margin: 0 auto;
@@ -2672,7 +2869,6 @@
             color: white;
         }
 
-        /* Private Room Creation */
         .private-room-creation {
             max-width: 1200px;
             margin: 0 auto;
@@ -2795,7 +2991,6 @@
             box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
         }
 
-        /* Students Grid */
         .students-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -2899,7 +3094,6 @@
             grid-column: 1 / -1;
         }
 
-        /* Exercise Page with Image */
         .exercise-page {
             min-height: 100vh;
             background: #000000;
@@ -3137,7 +3331,6 @@
             border: 1px solid rgba(230, 81, 0, 0.3);
         }
 
-        /* Footer */
         .footer {
             background: #000;
             color: white;
@@ -4039,7 +4232,7 @@
             </div>
 
             <!-- Google Sign In Button -->
-            <button class="google-signin-btn" onclick="googleSignIn()">
+            <button class="google-signin-btn" onclick="startGoogleSignIn()">
                 <i class="fab fa-google"></i>
                 <span data-en="Continue with Google" data-ar="المتابعة بواسطة Google">Continue with Google</span>
             </button>
@@ -4070,6 +4263,68 @@
                     <a href="#" onclick="showSignup()" data-en="Sign up" data-ar="إنشاء حساب">Sign up</a>
                 </div>
             </form>
+
+            <!-- Role Selection Modal (for Google Sign-In) -->
+            <div class="role-selection-modal" id="roleSelectionModal">
+                <div class="role-selection-content">
+                    <i class="fas fa-user-astronaut" style="font-size: 50px; color: #667eea; margin-bottom: 15px;"></i>
+                    <h3 data-en="Complete Your Profile" data-ar="أكمل ملفك الشخصي">Complete Your Profile</h3>
+                    <p data-en="Please choose your role and grade to continue" data-ar="الرجاء اختيار دورك وصفك للمتابعة">Please choose your role and grade to continue</p>
+                    
+                    <!-- Profile Picture Upload -->
+                    <div class="profile-preview-role">
+                        <div class="profile-avatar-role" onclick="document.getElementById('roleProfileImage').click()">
+                            <i class="fas fa-camera" id="roleProfileIcon"></i>
+                            <img id="roleProfilePreview" style="display: none;">
+                        </div>
+                        <input type="file" id="roleProfileImage" class="hidden-input" accept="image/*" onchange="previewRoleProfileImage(this)">
+                    </div>
+
+                    <!-- Name Input -->
+                    <input type="text" id="roleName" class="name-input" placeholder="Your Name / اسمك" value="">
+
+                    <!-- Role Selection Buttons -->
+                    <div class="role-buttons">
+                        <div class="role-btn" onclick="selectRole('student')" id="roleStudentBtn">
+                            <i class="fas fa-user-graduate"></i>
+                            <span data-en="Student" data-ar="طالب">Student</span>
+                        </div>
+                        <div class="role-btn" onclick="selectRole('teacher')" id="roleTeacherBtn">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <span data-en="Teacher" data-ar="مدرس">Teacher</span>
+                        </div>
+                    </div>
+
+                    <!-- Grade Selection -->
+                    <select id="roleGrade" class="grade-select">
+                        <option value="" data-en="Select your grade" data-ar="اختر صفك">Select your grade</option>
+                        <option value="1">Grade 1</option>
+                        <option value="2">Grade 2</option>
+                        <option value="3">Grade 3</option>
+                        <option value="4">Grade 4</option>
+                        <option value="5">Grade 5</option>
+                        <option value="6">Grade 6</option>
+                        <option value="7">Grade 7</option>
+                        <option value="8">Grade 8</option>
+                        <option value="9">Grade 9</option>
+                        <option value="10">Grade 10</option>
+                        <option value="11">Grade 11</option>
+                        <option value="12">Grade 12</option>
+                    </select>
+
+                    <!-- Teacher Code Field (hidden by default) -->
+                    <input type="password" id="roleTeacherCode" class="teacher-code-input" placeholder="Teacher Access Code / رمز المدرس">
+
+                    <!-- Error Message -->
+                    <div class="error-message" id="roleErrorMessage"></div>
+
+                    <!-- Action Buttons -->
+                    <div class="role-action-buttons">
+                        <button class="confirm-role-btn" onclick="confirmRoleSelection()" data-en="Continue" data-ar="متابعة">Continue</button>
+                        <button class="quit-signin-btn" onclick="quitGoogleSignIn()" data-en="Quit" data-ar="خروج">Quit</button>
+                    </div>
+                </div>
+            </div>
 
             <!-- Forgot Password Modal -->
             <div class="forgot-password-modal" id="forgotPasswordModal">
@@ -4396,7 +4651,7 @@
         </div>
     </div>
 
-    <!-- Payment Page - Updated with only Card and Bank Transfer via WhatsApp -->
+    <!-- Payment Page -->
     <div class="payment-page" id="paymentPage" style="display: none;">
         <div class="payment-container">
             <div class="payment-summary">
@@ -4411,7 +4666,6 @@
             <div class="payment-form">
                 <h2 data-en="Payment Details" data-ar="بيانات الدفع">Payment Details</h2>
                 
-                <!-- Payment Method Selection - Only Card and Bank Transfer -->
                 <div class="payment-methods">
                     <div class="payment-method active" onclick="selectPaymentMethod('card')" id="methodCard">
                         <i class="fas fa-credit-card"></i>
@@ -4423,7 +4677,6 @@
                     </div>
                 </div>
 
-                <!-- Card Payment Form -->
                 <div id="cardPaymentForm">
                     <div class="form-row">
                         <label data-en="Card Number" data-ar="رقم البطاقة">Card Number</label>
@@ -4446,7 +4699,6 @@
                     <button class="pay-btn" onclick="processCardPayment()" data-en="Pay Now" data-ar="ادفع الآن">Pay Now</button>
                 </div>
 
-                <!-- Bank Transfer Form (WhatsApp) -->
                 <div id="bankPaymentForm" style="display: none;">
                     <div class="form-row">
                         <label data-en="Account Name" data-ar="اسم الحساب">Account Name</label>
@@ -4490,9 +4742,12 @@
         let selectedPaymentMethod = 'card';
         let resetEmailForCode = null;
         let verificationCode = null;
+        
+        // Google Sign-In temporary data
+        let tempGoogleUser = null;
+        let selectedRole = null;
 
-        // WhatsApp number for payments
-        const WHATSAPP_NUMBER = "96812345678"; // Replace with your actual WhatsApp number
+        const WHATSAPP_NUMBER = "96812345678";
         const WHATSAPP_MESSAGE_TEMPLATE = "I would like to complete my payment for StudX subscription. Plan: ";
 
         // Notification System
@@ -4520,6 +4775,138 @@
         function closeResetPasswordModal() { document.getElementById('resetPasswordModal').classList.remove('active'); document.getElementById('newPassword').value = ''; document.getElementById('confirmNewPassword').value = ''; }
         function showDeleteAccountModal() { document.getElementById('deleteAccountModal').classList.add('active'); }
         function closeDeleteAccountModal() { document.getElementById('deleteAccountModal').classList.remove('active'); }
+        function showRoleSelectionModal() { document.getElementById('roleSelectionModal').classList.add('active'); }
+        function hideRoleSelectionModal() { document.getElementById('roleSelectionModal').classList.remove('active'); }
+
+        // Role Selection Functions
+        function selectRole(role) {
+            selectedRole = role;
+            document.getElementById('roleStudentBtn').classList.remove('selected');
+            document.getElementById('roleTeacherBtn').classList.remove('selected');
+            document.getElementById(`role${role.charAt(0).toUpperCase() + role.slice(1)}Btn`).classList.add('selected');
+            
+            const teacherCodeField = document.getElementById('roleTeacherCode');
+            if (role === 'teacher') {
+                teacherCodeField.classList.add('active');
+            } else {
+                teacherCodeField.classList.remove('active');
+            }
+            
+            document.getElementById('roleErrorMessage').classList.remove('show');
+        }
+
+        function previewRoleProfileImage(input) {
+            const preview = document.getElementById('roleProfilePreview');
+            const icon = document.getElementById('roleProfileIcon');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    icon.style.display = 'none';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function confirmRoleSelection() {
+            const name = document.getElementById('roleName').value.trim();
+            const grade = document.getElementById('roleGrade').value;
+            const teacherCode = document.getElementById('roleTeacherCode').value;
+            const imageInput = document.getElementById('roleProfileImage');
+            
+            const errors = [];
+            
+            if (!name) {
+                errors.push(currentLang === 'en' ? 'Please enter your name!' : 'الرجاء إدخال اسمك!');
+            }
+            
+            if (!selectedRole) {
+                errors.push(currentLang === 'en' ? 'Please select a role (Student or Teacher)!' : 'الرجاء اختيار دورك (طالب أو مدرس)!');
+            }
+            
+            if (!grade) {
+                errors.push(currentLang === 'en' ? 'Please select your grade!' : 'الرجاء اختيار صفك!');
+            }
+            
+            if (selectedRole === 'teacher' && teacherCode !== 'TEACHER2024') {
+                errors.push(currentLang === 'en' ? 'Invalid teacher access code!' : 'رمز المدرس غير صحيح!');
+            }
+            
+            if (errors.length > 0) {
+                const errorDiv = document.getElementById('roleErrorMessage');
+                errorDiv.innerHTML = errors.join('<br>');
+                errorDiv.classList.add('show');
+                return;
+            }
+            
+            let profileImage = null;
+            if (imageInput.files && imageInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    profileImage = e.target.result;
+                    createUserFromGoogle(profileImage);
+                };
+                reader.readAsDataURL(imageInput.files[0]);
+            } else {
+                createUserFromGoogle(null);
+            }
+            
+            function createUserFromGoogle(image) {
+                const accountName = tempGoogleUser.email.split('@')[0] + Math.floor(Math.random() * 10000);
+                const newUser = {
+                    name: name,
+                    accountName: accountName,
+                    nickname: name,
+                    email: tempGoogleUser.email,
+                    password: 'google_auth_user',
+                    type: selectedRole,
+                    grade: grade,
+                    bio: '',
+                    profileImage: image || tempGoogleUser.photoURL,
+                    subscription: selectedRole === 'teacher' ? 'professional' : 'free',
+                    canCreatePremiumRooms: selectedRole === 'teacher',
+                    friends: [],
+                    groups: [],
+                    completedExercises: [],
+                    averageScore: 0,
+                    studyHours: 0,
+                    attempts: [],
+                    joinedRooms: []
+                };
+                
+                if (selectedRole === 'teacher') {
+                    newUser.exercises = [];
+                    newUser.summaries = [];
+                    newUser.privateRooms = [];
+                    newUser.teacherCode = teacherCode;
+                }
+                
+                users.push(newUser);
+                saveData();
+                
+                hideRoleSelectionModal();
+                performLogin(newUser);
+                showNotification(`Welcome ${name}!`, 'success');
+                
+                tempGoogleUser = null;
+                selectedRole = null;
+                document.getElementById('roleName').value = '';
+                document.getElementById('roleGrade').value = '';
+                document.getElementById('roleTeacherCode').value = '';
+                document.getElementById('roleProfilePreview').style.display = 'none';
+                document.getElementById('roleProfileIcon').style.display = 'block';
+                document.getElementById('roleStudentBtn').classList.remove('selected');
+                document.getElementById('roleTeacherBtn').classList.remove('selected');
+            }
+        }
+
+        function quitGoogleSignIn() {
+            hideRoleSelectionModal();
+            tempGoogleUser = null;
+            selectedRole = null;
+            showNotification('Sign-in cancelled.', 'info');
+        }
 
         // Default data
         users = [
@@ -4820,7 +5207,7 @@
         };
     </script>
 
-    <!-- Firebase Authentication Script with Account Deletion -->
+    <!-- Firebase Authentication Script with Google Sign-In -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
         import { 
@@ -4846,43 +5233,40 @@
         const auth = getAuth(app);
         const googleProvider = new GoogleAuthProvider();
 
-        window.googleSignIn = async () => {
+        // Google Sign In - Shows role selection modal after authentication
+        window.startGoogleSignIn = async () => {
           try {
             const result = await signInWithPopup(auth, googleProvider);
             const user = result.user;
-            let existingUser = users.find(u => u.email === user.email);
-            if (!existingUser) {
-              const newUser = {
-                name: user.displayName || user.email.split('@')[0],
-                accountName: user.email.split('@')[0] + Math.floor(Math.random() * 1000),
-                nickname: user.displayName || user.email.split('@')[0],
+            
+            // Check if user already exists in local database
+            const existingUser = users.find(u => u.email === user.email);
+            
+            if (existingUser) {
+              // If user exists, log them in directly
+              performLogin(existingUser);
+              showNotification(`Welcome back ${existingUser.name}!`, 'success');
+            } else {
+              // Store temp user data and show role selection modal
+              tempGoogleUser = {
                 email: user.email,
-                password: 'google_auth_user',
-                type: selectedLoginType,
-                grade: '10',
-                bio: '',
-                profileImage: user.photoURL,
-                subscription: 'free',
-                canCreatePremiumRooms: false,
-                friends: [],
-                groups: [],
-                completedExercises: [],
-                averageScore: 0,
-                studyHours: 0,
-                attempts: [],
-                joinedRooms: []
+                photoURL: user.photoURL,
+                displayName: user.displayName
               };
-              users.push(newUser);
-              saveData();
-              existingUser = newUser;
+              
+              // Pre-fill name field
+              document.getElementById('roleName').value = user.displayName || user.email.split('@')[0];
+              
+              // Show the role selection modal
+              showRoleSelectionModal();
             }
-            performLogin(existingUser);
-            showNotification(`Welcome ${user.displayName || user.email}!`, 'success');
           } catch (err) {
+            console.error("Google Sign-In error:", err);
             showNotification(err.message, 'error');
           }
         };
 
+        // Sign up with email/password
         window.firebaseSignup = async () => {
           const email = document.getElementById("signupEmail").value;
           const password = document.getElementById("signupPassword").value;
@@ -4895,6 +5279,7 @@
           } catch (err) { showNotification(err.message, "error"); }
         };
 
+        // Login with email/password
         window.firebaseLogin = async () => {
           const email = document.getElementById("email").value;
           const password = document.getElementById("password").value;
@@ -4906,12 +5291,14 @@
           } catch (err) { showNotification(err.message, "error"); }
         };
 
+        // Delete Account Function
         window.confirmDeleteAccount = async () => {
           if (!currentUser) {
             showNotification("No user logged in!", "error");
             closeDeleteAccountModal();
             return;
           }
+
           try {
             const user = auth.currentUser;
             if (!user) {
@@ -4919,6 +5306,7 @@
               closeDeleteAccountModal();
               return;
             }
+            
             if (currentUser.password && currentUser.password !== 'google_auth_user') {
               const password = prompt("Please enter your password to confirm account deletion:");
               if (!password) {
@@ -4929,16 +5317,20 @@
               const credential = EmailAuthProvider.credential(user.email, password);
               await reauthenticateWithCredential(user, credential);
             }
+            
             await deleteUser(user);
             console.log("Firebase user deleted:", user.email);
+            
             const userIndex = users.findIndex(u => u.email === currentUser.email);
             if (userIndex !== -1) {
               users.splice(userIndex, 1);
               saveData();
             }
+            
             exercises = exercises.filter(ex => ex.teacher !== currentUser.email);
             summaries = summaries.filter(s => s.teacher !== currentUser.email);
             privateRooms = privateRooms.filter(r => r.teacherEmail !== currentUser.email);
+            
             groups.forEach(group => {
               group.members = group.members.filter(m => m !== currentUser.email);
               if (group.owner === currentUser.email && group.members.length > 0) {
@@ -4948,6 +5340,7 @@
             groups = groups.filter(g => g.members.length > 0);
             friendRequests = friendRequests.filter(r => r.from !== currentUser.email && r.to !== currentUser.email);
             saveData();
+            
             showNotification("Your account has been permanently deleted.", "success");
             closeDeleteAccountModal();
             await signOut(auth);
@@ -4964,6 +5357,7 @@
           }
         };
 
+        // Auto login state
         onAuthStateChanged(auth, async (user) => {
           if (user) {
             if (!user.emailVerified && user.providerData[0]?.providerId !== 'google.com') { 
@@ -4971,39 +5365,22 @@
               return; 
             }
             const existingUser = users.find(u => u.email === user.email);
-            if (existingUser) performLogin(existingUser);
-            else {
-              if (user.providerData[0]?.providerId === 'google.com') {
-                const newUser = {
-                  name: user.displayName || user.email.split('@')[0],
-                  accountName: user.email.split('@')[0] + Math.floor(Math.random() * 1000),
-                  nickname: user.displayName || user.email.split('@')[0],
+            if (existingUser) {
+              performLogin(existingUser);
+            } else if (user.providerData[0]?.providerId === 'google.com') {
+              // For Google users not yet in database, show role selection
+              if (!document.getElementById('roleSelectionModal').classList.contains('active')) {
+                tempGoogleUser = {
                   email: user.email,
-                  password: 'google_auth_user',
-                  type: 'student',
-                  grade: '10',
-                  bio: '',
-                  profileImage: user.photoURL,
-                  subscription: 'free',
-                  canCreatePremiumRooms: false,
-                  friends: [],
-                  groups: [],
-                  completedExercises: [],
-                  averageScore: 0,
-                  studyHours: 0,
-                  attempts: [],
-                  joinedRooms: []
+                  photoURL: user.photoURL,
+                  displayName: user.displayName
                 };
-                users.push(newUser);
-                saveData();
-                performLogin(newUser);
+                document.getElementById('roleName').value = user.displayName || user.email.split('@')[0];
+                showRoleSelectionModal();
               }
             }
             document.getElementById("loginPage").style.display = "none";
             document.getElementById("footer").style.display = "block";
-            if (existingUser && existingUser.type === "student") document.getElementById("studentWebsite").style.display = "block";
-            else if (existingUser && existingUser.type === "teacher") document.getElementById("teacherWebsite").style.display = "block";
-            else document.getElementById("studentWebsite").style.display = "block";
           } else {
             document.getElementById("loginPage").style.display = "flex";
             document.getElementById("studentWebsite").style.display = "none";
