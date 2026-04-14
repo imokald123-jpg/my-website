@@ -4193,6 +4193,14 @@
         .create-group-btn:hover {
             transform: translateY(-2px);
         }
+
+        /* Grade Change Cooldown Message */
+        .grade-cooldown-message {
+            color: #ff9800;
+            font-size: 12px;
+            margin-top: 5px;
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -4563,6 +4571,25 @@
                     <label data-en="Nickname:" data-ar="الاسم المستعار:">Nickname:</label>
                     <input type="text" id="editNickname" placeholder="Your nickname">
                 </div>
+                <!-- Grade change field with 30-day cooldown -->
+                <div class="form-group" id="gradeEditGroup">
+                    <label data-en="Grade:" data-ar="الصف:">Grade:</label>
+                    <select id="editGrade">
+                        <option value="1">Grade 1</option>
+                        <option value="2">Grade 2</option>
+                        <option value="3">Grade 3</option>
+                        <option value="4">Grade 4</option>
+                        <option value="5">Grade 5</option>
+                        <option value="6">Grade 6</option>
+                        <option value="7">Grade 7</option>
+                        <option value="8">Grade 8</option>
+                        <option value="9">Grade 9</option>
+                        <option value="10">Grade 10</option>
+                        <option value="11">Grade 11</option>
+                        <option value="12">Grade 12</option>
+                    </select>
+                    <small id="gradeCooldownMessage" class="grade-cooldown-message"></small>
+                </div>
                 <div class="form-group">
                     <label data-en="Bio:" data-ar="نبذة:">Bio:</label>
                     <textarea id="editBio" rows="4" placeholder="Tell us about yourself..."></textarea>
@@ -4737,6 +4764,7 @@
 
         const WHATSAPP_NUMBER = "96812345678";
         const WHATSAPP_MESSAGE_TEMPLATE = "I would like to complete my payment for StudX subscription. Plan: ";
+        const TEACHER_VERIFICATION_CODE = "TEACHER2024";
 
         function showNotification(message, type = 'info', duration = 3000) {
             const notification = document.createElement('div');
@@ -4801,7 +4829,7 @@
             if (!name) errors.push('Please enter your name!');
             if (!selectedRole) errors.push('Please select a role (Student or Teacher)!');
             if (!grade) errors.push('Please select your grade!');
-            if (selectedRole === 'teacher' && teacherCode !== 'TEACHER2024') errors.push('Invalid teacher access code!');
+            if (selectedRole === 'teacher' && teacherCode !== TEACHER_VERIFICATION_CODE) errors.push('Invalid teacher access code!');
             if (errors.length > 0) {
                 const errorDiv = document.getElementById('roleErrorMessage');
                 errorDiv.innerHTML = errors.join('<br>');
@@ -4818,11 +4846,13 @@
             }
             function createUserFromGoogle(image) {
                 const accountName = tempGoogleUser.email.split('@')[0] + Math.floor(Math.random() * 10000);
+                const now = new Date().toISOString();
                 const newUser = {
                     name: name, accountName: accountName, nickname: name, email: tempGoogleUser.email, password: 'google_auth_user',
                     type: selectedRole, grade: grade, bio: '', profileImage: image || tempGoogleUser.photoURL,
                     subscription: selectedRole === 'teacher' ? 'professional' : 'free', canCreatePremiumRooms: selectedRole === 'teacher',
-                    friends: [], groups: [], completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: []
+                    friends: [], groups: [], completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [],
+                    gradeLastChanged: now
                 };
                 if (selectedRole === 'teacher') { newUser.exercises = []; newUser.summaries = []; newUser.privateRooms = []; newUser.teacherCode = teacherCode; }
                 users.push(newUser);
@@ -4850,8 +4880,8 @@
 
         // Default data
         users = [
-            { name: 'Student', accountName: 'student123', nickname: 'studious', email: 'student@studx.com', password: 'student123', type: 'student', grade: '10', bio: 'I love learning math and science.', profileImage: null, completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [], subscription: 'free', friends: [], groups: [] },
-            { name: 'Teacher', accountName: 'teacher123', nickname: 'professor', email: 'teacher@studx.com', password: 'teacher123', type: 'teacher', grade: '10', bio: 'Experienced teacher.', profileImage: null, exercises: [], summaries: [], privateRooms: [], subscription: 'professional', canCreatePremiumRooms: true }
+            { name: 'Student', accountName: 'student123', nickname: 'studious', email: 'student@studx.com', password: 'student123', type: 'student', grade: '10', bio: 'I love learning math and science.', profileImage: null, completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [], subscription: 'free', friends: [], groups: [], gradeLastChanged: new Date().toISOString() },
+            { name: 'Teacher', accountName: 'teacher123', nickname: 'professor', email: 'teacher@studx.com', password: 'teacher123', type: 'teacher', grade: '10', bio: 'Experienced teacher.', profileImage: null, exercises: [], summaries: [], privateRooms: [], subscription: 'professional', canCreatePremiumRooms: true, gradeLastChanged: new Date().toISOString() }
         ];
         groups = [{ id: 1, name: 'Math Study Group', description: 'Discuss math problems', owner: 'student@studx.com', members: ['student@studx.com'], createdAt: new Date().toISOString() }];
         exercises = [
@@ -4905,13 +4935,14 @@
             if (accountName && users.find(u => u.accountName === accountName)) errors.push('Account name already exists!');
             let grade = '';
             if (selectedSignupType === 'student') { grade = document.getElementById('studentGrade').value; if (!grade) errors.push('Please select your grade!'); }
-            else { grade = document.getElementById('teacherGrade').value; if (!grade) errors.push('Please select your grade!'); const teacherCode = document.getElementById('teacherCode').value; if (teacherCode !== 'TEACHER2024') errors.push('Invalid teacher access code!'); }
+            else { grade = document.getElementById('teacherGrade').value; if (!grade) errors.push('Please select your grade!'); const teacherCode = document.getElementById('teacherCode').value; if (teacherCode !== TEACHER_VERIFICATION_CODE) errors.push('Invalid teacher access code!'); }
             if (users.find(u => u.email === email)) errors.push('Email already registered!');
             if (errors.length > 0) { showErrorLock('Account Creation Failed', 'Please fix the following errors:', errors); return; }
             const imageInput = document.getElementById('profileImage');
+            const now = new Date().toISOString();
             if (imageInput.files && imageInput.files[0]) { const reader = new FileReader(); reader.onload = e => createUserWithImage(e.target.result); reader.readAsDataURL(imageInput.files[0]); } else createUserWithImage(null);
             function createUserWithImage(image) {
-                const newUser = { name, accountName, nickname, email, password, type: selectedSignupType, grade, bio, profileImage: image, subscription: selectedSignupType === 'teacher' ? 'professional' : 'free', canCreatePremiumRooms: selectedSignupType === 'teacher', friends: [], groups: [] };
+                const newUser = { name, accountName, nickname, email, password, type: selectedSignupType, grade, bio, profileImage: image, subscription: selectedSignupType === 'teacher' ? 'professional' : 'free', canCreatePremiumRooms: selectedSignupType === 'teacher', friends: [], groups: [], gradeLastChanged: now };
                 if (selectedSignupType === 'student') { newUser.completedExercises = []; newUser.averageScore = 0; newUser.studyHours = 0; newUser.attempts = []; newUser.joinedRooms = []; }
                 else { newUser.exercises = []; newUser.summaries = []; newUser.privateRooms = []; newUser.teacherCode = document.getElementById('teacherCode').value; }
                 users.push(newUser);
@@ -5109,15 +5140,89 @@
         function leaveGroup(groupId) { const group = groups.find(g => g.id === groupId); if (!group) return; if (group.owner === currentUser.email) { showNotification('Owner cannot leave. Delete the group instead.', 'warning'); return; } group.members = group.members.filter(email => email !== currentUser.email); if (currentUser.groups) currentUser.groups = currentUser.groups.filter(id => id !== groupId); saveData(); showNotification('You left the group', 'info'); loadGroups(); }
         function showProfile() { if (!currentUser) return; document.getElementById('profileName').textContent = currentUser.name; document.getElementById('profileType').textContent = currentUser.type === 'student' ? `Student • Grade ${currentUser.grade}` : `Teacher • Grade ${currentUser.grade}`; document.getElementById('profileEmail').textContent = currentUser.email; document.getElementById('profileBio').textContent = currentUser.bio || 'No bio yet.'; const profileAvatar = document.getElementById('profileAvatar'); const avatarImg = document.getElementById('profileAvatarImg'); const avatarIcon = profileAvatar.querySelector('i'); if (currentUser.profileImage) { avatarImg.src = currentUser.profileImage; avatarImg.style.display = 'block'; avatarIcon.style.display = 'none'; } else { avatarImg.style.display = 'none'; avatarIcon.style.display = 'block'; } const statsGrid = document.getElementById('profileStats'); if (currentUser.type === 'student') { statsGrid.innerHTML = `<div class="stat-item"><div class="stat-number">${currentUser.completedExercises?.length || 0}</div><div class="stat-label">Completed</div></div><div class="stat-item"><div class="stat-number">${currentUser.averageScore || 0}%</div><div class="stat-label">Avg Score</div></div><div class="stat-item"><div class="stat-number">${currentUser.studyHours?.toFixed(1) || 0}</div><div class="stat-label">Hours</div></div>`; } else { statsGrid.innerHTML = `<div class="stat-item"><div class="stat-number">${currentUser.exercises?.length || 0}</div><div class="stat-label">Exercises</div></div><div class="stat-item"><div class="stat-number">${currentUser.summaries?.length || 0}</div><div class="stat-label">Summaries</div></div><div class="stat-item"><div class="stat-number">${privateRooms.filter(r => r.teacherEmail === currentUser.email).length}</div><div class="stat-label">Rooms</div></div>`; } if (currentUser.type === 'student') document.getElementById('studentWebsite').style.display = 'none'; else document.getElementById('teacherWebsite').style.display = 'none'; document.getElementById('footer').style.display = 'none'; document.getElementById('profilePage').style.display = 'block'; }
         function goBackFromProfile() { document.getElementById('profilePage').style.display = 'none'; document.getElementById('footer').style.display = 'block'; if (currentUser.type === 'student') { document.getElementById('studentWebsite').style.display = 'block'; loadGroups(); } else { document.getElementById('teacherWebsite').style.display = 'block'; } }
-        function openEditProfile() { document.getElementById('editName').value = currentUser.name; document.getElementById('editNickname').value = currentUser.nickname || ''; document.getElementById('editBio').value = currentUser.bio || ''; document.getElementById('editProfileModal').classList.add('active'); }
+        function openEditProfile() { 
+            document.getElementById('editName').value = currentUser.name; 
+            document.getElementById('editNickname').value = currentUser.nickname || ''; 
+            document.getElementById('editBio').value = currentUser.bio || ''; 
+            const gradeSelect = document.getElementById('editGrade');
+            gradeSelect.value = currentUser.grade;
+            // Check 30-day cooldown for grade change
+            const lastChanged = currentUser.gradeLastChanged ? new Date(currentUser.gradeLastChanged) : null;
+            const now = new Date();
+            const daysSinceLastChange = lastChanged ? Math.floor((now - lastChanged) / (1000 * 60 * 60 * 24)) : 31;
+            const cooldownMsg = document.getElementById('gradeCooldownMessage');
+            if (daysSinceLastChange < 30) {
+                const daysLeft = 30 - daysSinceLastChange;
+                cooldownMsg.textContent = `You can change your grade again in ${daysLeft} day(s).`;
+                gradeSelect.disabled = true;
+            } else {
+                cooldownMsg.textContent = '';
+                gradeSelect.disabled = false;
+            }
+            document.getElementById('editProfileModal').classList.add('active'); 
+        }
         function closeEditProfile() { document.getElementById('editProfileModal').classList.remove('active'); }
-        function saveProfile() { const newName = document.getElementById('editName').value; const newNickname = document.getElementById('editNickname').value; const newBio = document.getElementById('editBio').value; const imageInput = document.getElementById('editProfileImage'); if (!newName) { showNotification('Name cannot be empty!', 'error'); return; } currentUser.name = newName; currentUser.nickname = newNickname || newName; currentUser.bio = newBio; if (imageInput.files && imageInput.files[0]) { const reader = new FileReader(); reader.onload = e => { currentUser.profileImage = e.target.result; finishSaveProfile(); }; reader.readAsDataURL(imageInput.files[0]); } else finishSaveProfile(); }
-        function finishSaveProfile() { const userIndex = users.findIndex(u => u.email === currentUser.email); users[userIndex] = currentUser; if (currentUser.type === 'student') { document.getElementById('navStudentName').textContent = currentUser.name; document.getElementById('studentDisplayName').textContent = currentUser.name; const navAvatar = document.getElementById('navStudentAvatar'); const navImg = document.getElementById('navStudentAvatarImg'); const navIcon = navAvatar.querySelector('i'); if (currentUser.profileImage) { navImg.src = currentUser.profileImage; navImg.style.display = 'block'; navIcon.style.display = 'none'; } } else { document.getElementById('navTeacherName').textContent = currentUser.name; const navAvatar = document.getElementById('navTeacherAvatar'); const navImg = document.getElementById('navTeacherAvatarImg'); const navIcon = navAvatar.querySelector('i'); if (currentUser.profileImage) { navImg.src = currentUser.profileImage; navImg.style.display = 'block'; navIcon.style.display = 'none'; } } saveData(); closeEditProfile(); showProfile(); showNotification('Profile updated successfully!', 'success'); }
+        function saveProfile() { 
+            const newName = document.getElementById('editName').value; 
+            const newNickname = document.getElementById('editNickname').value; 
+            const newBio = document.getElementById('editBio').value; 
+            const newGrade = document.getElementById('editGrade').value;
+            const imageInput = document.getElementById('editProfileImage'); 
+            if (!newName) { showNotification('Name cannot be empty!', 'error'); return; } 
+            currentUser.name = newName; 
+            currentUser.nickname = newNickname || newName; 
+            currentUser.bio = newBio; 
+            // Update grade if changed and cooldown passed
+            if (newGrade && newGrade !== currentUser.grade) {
+                const lastChanged = currentUser.gradeLastChanged ? new Date(currentUser.gradeLastChanged) : null;
+                const now = new Date();
+                const daysSinceLastChange = lastChanged ? Math.floor((now - lastChanged) / (1000 * 60 * 60 * 24)) : 31;
+                if (daysSinceLastChange >= 30) {
+                    currentUser.grade = newGrade;
+                    currentUser.gradeLastChanged = now.toISOString();
+                    showNotification(`Grade changed to Grade ${newGrade}!`, 'success');
+                } else {
+                    showNotification(`Cannot change grade yet. Please wait ${30 - daysSinceLastChange} more days.`, 'warning');
+                }
+            }
+            if (imageInput.files && imageInput.files[0]) { 
+                const reader = new FileReader(); 
+                reader.onload = e => { currentUser.profileImage = e.target.result; finishSaveProfile(); }; 
+                reader.readAsDataURL(imageInput.files[0]); 
+            } else finishSaveProfile(); 
+        }
+        function finishSaveProfile() { 
+            const userIndex = users.findIndex(u => u.email === currentUser.email); 
+            users[userIndex] = currentUser; 
+            if (currentUser.type === 'student') { 
+                document.getElementById('navStudentName').textContent = currentUser.name; 
+                document.getElementById('studentDisplayName').textContent = currentUser.name; 
+                document.getElementById('studentGradeBadge').textContent = `Grade ${currentUser.grade}`;
+                document.getElementById('currentStudentGrade').textContent = currentUser.grade;
+                const navAvatar = document.getElementById('navStudentAvatar'); 
+                const navImg = document.getElementById('navStudentAvatarImg'); 
+                const navIcon = navAvatar.querySelector('i'); 
+                if (currentUser.profileImage) { navImg.src = currentUser.profileImage; navImg.style.display = 'block'; navIcon.style.display = 'none'; } 
+            } else { 
+                document.getElementById('navTeacherName').textContent = currentUser.name; 
+                document.getElementById('teacherGradeBadge').textContent = `Grade ${currentUser.grade}`;
+                document.getElementById('currentTeacherGrade').textContent = currentUser.grade;
+                const navAvatar = document.getElementById('navTeacherAvatar'); 
+                const navImg = document.getElementById('navTeacherAvatarImg'); 
+                const navIcon = navAvatar.querySelector('i'); 
+                if (currentUser.profileImage) { navImg.src = currentUser.profileImage; navImg.style.display = 'block'; navIcon.style.display = 'none'; } 
+            } 
+            saveData(); 
+            closeEditProfile(); 
+            showProfile(); 
+            showNotification('Profile updated successfully!', 'success'); 
+        }
 
         // Password reset functions
         window.sendVerificationCode = () => {
             const email = document.getElementById('resetEmail').value;
             if (!email) { showNotification('Please enter your email address!', 'error'); return; }
+            resetEmailForCode = email;
             verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
             console.log('Verification code for', email, ':', verificationCode);
             showNotification(`Verification code sent to ${email}. Check console for demo.`, 'info');
