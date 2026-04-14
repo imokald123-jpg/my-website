@@ -2490,6 +2490,7 @@
             padding: 25px;
             transition: transform 0.3s;
             position: relative;
+            cursor: pointer;
         }
 
         .summary-card:hover {
@@ -2548,6 +2549,17 @@
             padding: 4px 8px;
             border-radius: 15px;
             border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .summary-pdf-badge {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
         }
 
         .download-summary-btn {
@@ -4191,6 +4203,95 @@
             margin-top: 5px;
             display: block;
         }
+
+        /* Subscription Required Overlay */
+        .subscription-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.4s ease;
+        }
+
+        .subscription-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            padding: 50px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            animation: slideUp 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .subscription-card i {
+            font-size: 80px;
+            color: #ffd700;
+            margin-bottom: 20px;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .subscription-card h2 {
+            color: #fff;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .subscription-card p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .subscribe-now-btn {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-right: 15px;
+        }
+
+        .subscribe-now-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+        }
+
+        .close-subscription-btn {
+            padding: 15px 30px;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .close-subscription-btn:hover {
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -4592,7 +4693,7 @@
         </div>
     </div>
 
-    <!-- Student Main Website (simplified for brevity) -->
+    <!-- Student Main Website -->
     <div class="main-website" id="studentWebsite" style="display: none;">
         <nav class="navbar">
             <div class="nav-container">
@@ -4624,7 +4725,7 @@
         </div>
     </div>
 
-    <!-- Teacher Main Website (simplified for brevity) -->
+    <!-- Teacher Main Website -->
     <div class="main-website" id="teacherWebsite" style="display: none;">
         <nav class="navbar">
             <div class="nav-container">
@@ -4651,7 +4752,7 @@
             <div class="grade-info" id="teacherGradeInfo"><h3><span data-en="Your Grade:" data-ar="صفك:">Your Grade:</span> <span id="currentTeacherGrade">10</span></h3><p><span data-en="Students:" data-ar="الطلاب:">Students:</span> <span id="teacherGradeStudentCount">0</span></p><p><span data-en="Exercises:" data-ar="التمارين:">Exercises:</span> <span id="teacherGradeExerciseCount">0</span></p></div>
             <section class="add-exercise" id="teacher-add-exercise"><h2 class="section-title" data-en="Add Exercise" data-ar="إضافة تمرين">Add Exercise</h2><div class="add-exercise-card"><form id="addExerciseForm" onsubmit="handleAddExercise(event)"><div class="form-group"><label>Title:</label><input type="text" id="exerciseTitle" required></div><div class="form-group"><label>Subject:</label><select id="exerciseSubject"><option>Mathematics</option><option>Physics</option><option>Chemistry</option><option>Biology</option><option>English</option></select></div><div class="form-group"><label>Difficulty:</label><select id="exerciseDifficulty"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></div><div class="form-group"><label>Time (min):</label><input type="number" id="exerciseTime" value="15"></div><div class="form-group"><label>Question:</label><textarea id="exerciseQuestion" rows="3" required></textarea></div><div class="form-group"><label>Correct Answer:</label><input type="text" id="correctAnswer" required></div><div class="form-group"><label>Explanation:</label><textarea id="exerciseExplanation" rows="2"></textarea></div><button type="submit" class="btn-primary">Publish</button></form></div></section>
             <section class="teacher-exercises" id="teacher-exercises"><h2 class="section-title" data-en="My Exercises" data-ar="تماريني">My Exercises</h2><div class="exercises-grid" id="teacherExercisesGrid"></div></section>
-            <section class="add-summary" id="teacher-add-summary"><h2 class="section-title" data-en="Add Summary" data-ar="إضافة ملخص">Add Summary</h2><div class="add-summary-card"><form id="addSummaryForm" onsubmit="handleAddSummary(event)"><div class="form-group"><label>Title:</label><input type="text" id="summaryTitle" required></div><div class="form-group"><label>Subject:</label><select id="summarySubject"><option>Mathematics</option><option>Physics</option><option>Chemistry</option><option>Biology</option><option>English</option></select></div><div class="form-group"><label>Content:</label><textarea id="summaryContent" rows="8" required></textarea></div><button type="submit" class="btn-primary">Publish Summary</button></form></div></section>
+            <section class="add-summary" id="teacher-add-summary"><h2 class="section-title" data-en="Add Summary" data-ar="إضافة ملخص">Add Summary</h2><div class="add-summary-card"><form id="addSummaryForm" onsubmit="handleAddSummary(event)"><div class="form-group"><label>Title:</label><input type="text" id="summaryTitle" required></div><div class="form-group"><label>Subject:</label><select id="summarySubject"><option>Mathematics</option><option>Physics</option><option>Chemistry</option><option>Biology</option><option>English</option></select></div><div class="form-group"><label>Content:</label><textarea id="summaryContent" rows="8" placeholder="Write summary content here..."></textarea></div><div class="form-group"><label>PDF File (Optional):</label><div class="pdf-upload-container" onclick="document.getElementById('summaryPdf').click()"><i class="fas fa-file-pdf"></i><p>Click to upload PDF</p><small>Upload a PDF file for this summary</small></div><input type="file" id="summaryPdf" class="hidden-input" accept="application/pdf" onchange="previewSummaryPdf(this)"><div id="summaryPdfName" class="pdf-name" style="display: none;"></div><button type="button" class="remove-pdf" id="removeSummaryPdfBtn" style="display: none;" onclick="removeSummaryPdf(event)">×</button></div><button type="submit" class="btn-primary">Publish Summary</button></form></div></section>
             <section class="teacher-summaries" id="teacher-summaries"><h2 class="section-title" data-en="My Summaries" data-ar="ملخصاتي">My Summaries</h2><div class="summaries-grid" id="teacherSummariesGrid"></div></section>
             <section class="teacher-students" id="teacher-students"><h2 class="section-title" data-en="My Students" data-ar="طلابي">My Students</h2><div class="students-grid" id="teacherStudentsGrid"></div></section>
         </div>
@@ -4706,7 +4807,6 @@
                 </div>
 
                 <div id="bankPaymentForm" style="display: none;">
-                    <!-- No input fields - direct WhatsApp link -->
                     <p style="color: rgba(255,255,255,0.7); margin-bottom: 20px; text-align: center;">
                         <i class="fas fa-info-circle"></i> 
                         <span data-en="You will be redirected to WhatsApp to complete your payment." data-ar="سيتم تحويلك إلى واتساب لإتمام الدفع.">
@@ -4751,6 +4851,9 @@
         const WHATSAPP_MESSAGE_TEMPLATE = "I would like to complete my payment for StudX subscription. Plan: ";
         const TEACHER_VERIFICATION_CODE = "TEACHER2024";
 
+        let currentSummaryPdfData = null;
+        let currentSummaryPdfName = null;
+
         function showNotification(message, type = 'info', duration = 3000) {
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
@@ -4766,6 +4869,81 @@
             let detailsHtml = details.length > 0 ? `<div class="error-lock-details"><ul>${details.map(d => `<li>${d}</li>`).join('')}</ul></div>` : '';
             errorLock.innerHTML = `<div class="error-lock-content"><div class="error-lock-icon"><i class="fas fa-lock"></i></div><h3 class="error-lock-title">${title}</h3><p class="error-lock-message">${message}</p>${detailsHtml}<button class="error-lock-button" onclick="this.closest('.error-lock').remove()">${currentLang === 'en' ? 'Understood' : 'فهمت'}</button></div>`;
             document.body.appendChild(errorLock);
+        }
+
+        function showSubscriptionRequired(summaryTitle) {
+            const overlay = document.createElement('div');
+            overlay.className = 'subscription-overlay';
+            overlay.innerHTML = `
+                <div class="subscription-card">
+                    <i class="fas fa-crown"></i>
+                    <h2>Premium Content</h2>
+                    <p>"${summaryTitle}" is available for subscribed students only. Subscribe now to access all summaries and premium features!</p>
+                    <button class="subscribe-now-btn" onclick="closeSubscriptionOverlayAndGoToPricing()">Subscribe Now</button>
+                    <button class="close-subscription-btn" onclick="this.closest('.subscription-overlay').remove()">Maybe Later</button>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+        }
+
+        function closeSubscriptionOverlayAndGoToPricing() {
+            document.querySelector('.subscription-overlay')?.remove();
+            // Scroll to pricing section
+            const pricingSection = document.getElementById('student-pricing');
+            if (pricingSection) {
+                pricingSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function showSubscriptionUpgradeAnimation() {
+            const overlay = document.createElement('div');
+            overlay.className = 'subscription-overlay';
+            overlay.innerHTML = `
+                <div class="subscription-card">
+                    <i class="fas fa-rocket"></i>
+                    <h2>Upgrade to Premium!</h2>
+                    <p>You need a subscription to access this feature. Choose a plan that suits you best!</p>
+                    <button class="subscribe-now-btn" onclick="closeSubscriptionOverlayAndGoToPricing()">View Plans</button>
+                    <button class="close-subscription-btn" onclick="this.closest('.subscription-overlay').remove()">Close</button>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+        }
+
+        function previewSummaryPdf(input) {
+            const pdfNameSpan = document.getElementById('summaryPdfName');
+            const removePdfBtn = document.getElementById('removeSummaryPdfBtn');
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                if (file.type !== 'application/pdf') {
+                    showNotification('Please select a valid PDF file!', 'error');
+                    input.value = '';
+                    return;
+                }
+                if (file.size > 10 * 1024 * 1024) {
+                    showNotification('PDF file size must be less than 10MB!', 'error');
+                    input.value = '';
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = e => {
+                    currentSummaryPdfData = e.target.result;
+                    currentSummaryPdfName = file.name;
+                    pdfNameSpan.textContent = file.name;
+                    pdfNameSpan.style.display = 'inline-block';
+                    removePdfBtn.style.display = 'flex';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function removeSummaryPdf(event) {
+            event.stopPropagation();
+            document.getElementById('summaryPdf').value = '';
+            currentSummaryPdfData = null;
+            currentSummaryPdfName = null;
+            document.getElementById('summaryPdfName').style.display = 'none';
+            document.getElementById('removeSummaryPdfBtn').style.display = 'none';
         }
 
         function showForgotPasswordModal() { document.getElementById('forgotPasswordModal').classList.add('active'); }
@@ -4835,11 +5013,11 @@
                 const newUser = {
                     name: name, accountName: accountName, nickname: name, email: tempGoogleUser.email, password: 'google_auth_user',
                     type: selectedRole, grade: grade, bio: '', profileImage: image || tempGoogleUser.photoURL,
-                    subscription: selectedRole === 'teacher' ? 'professional' : 'free', canCreatePremiumRooms: selectedRole === 'teacher',
+                    subscription: 'free', canCreatePremiumRooms: selectedRole === 'teacher',
                     friends: [], groups: [], completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [],
                     gradeLastChanged: now
                 };
-                if (selectedRole === 'teacher') { newUser.exercises = []; newUser.summaries = []; newUser.privateRooms = []; newUser.teacherCode = teacherCode; }
+                if (selectedRole === 'teacher') { newUser.exercises = []; newUser.summaries = []; newUser.privateRooms = []; newUser.teacherCode = teacherCode; newUser.subscription = 'professional'; }
                 users.push(newUser);
                 saveData();
                 hideRoleSelectionModal();
@@ -4873,7 +5051,7 @@
             { id: 1, title: 'Algebra Basics', subject: 'Mathematics', difficulty: 'Beginner', time: 15, question: 'Solve for x: 2x + 5 = 13', correctAnswer: '4', explanation: 'Subtract 5: 2x = 8, divide by 2: x = 4', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', image: null, pdf: null, completions: 0, attempts: 0, correctAttempts: 0 },
             { id: 2, title: "Newton's Laws", subject: 'Physics', difficulty: 'Intermediate', time: 20, question: 'Force for 5kg at 2m/s²? (Newtons)', correctAnswer: '10', explanation: 'F = ma = 5 × 2 = 10N', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', image: null, pdf: null, completions: 0, attempts: 0, correctAttempts: 0 }
         ];
-        summaries = [{ id: 1, title: 'Algebra Final Review', subject: 'Mathematics', content: 'Linear equations: ax + b = c\nQuadratic equations: ax² + bx + c = 0', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', createdAt: new Date().toISOString() }];
+        summaries = [{ id: 1, title: 'Algebra Final Review', subject: 'Mathematics', content: 'Linear equations: ax + b = c\nQuadratic equations: ax² + bx + c = 0', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', createdAt: new Date().toISOString(), pdfData: null, pdfName: null }];
         privateRooms = [{ id: 1, teacherEmail: 'teacher@studx.com', teacherName: 'Teacher', roomName: 'Grade 10 Math Mastery', description: 'Advanced math tutoring', schedule: 'Mon, Wed, Fri - 4:00 PM', grade: '10', subscribersOnly: true, students: [] }];
 
         function saveData() { localStorage.setItem('studx_users', JSON.stringify(users)); localStorage.setItem('studx_exercises', JSON.stringify(exercises)); localStorage.setItem('studx_summaries', JSON.stringify(summaries)); localStorage.setItem('studx_rooms', JSON.stringify(privateRooms)); localStorage.setItem('studx_groups', JSON.stringify(groups)); localStorage.setItem('studx_friend_requests', JSON.stringify(friendRequests)); }
@@ -4896,11 +5074,6 @@
 
         function previewProfileImage(input) { const preview = document.getElementById('profilePreview'); const icon = document.getElementById('profileIcon'); if (input.files && input.files[0]) { const reader = new FileReader(); reader.onload = e => { preview.src = e.target.result; preview.style.display = 'block'; icon.style.display = 'none'; }; reader.readAsDataURL(input.files[0]); } }
         function previewEditProfileImage(input) { const preview = document.getElementById('editProfilePreview'); const icon = document.getElementById('editProfileIcon'); if (input.files && input.files[0]) { const reader = new FileReader(); reader.onload = e => { preview.src = e.target.result; preview.style.display = 'block'; icon.style.display = 'none'; }; reader.readAsDataURL(input.files[0]); } }
-        let currentPdfData = null; let currentPdfName = null;
-        function previewPdf(input) { const pdfNameSpan = document.getElementById('pdfName'); const removePdfBtn = document.querySelector('.remove-pdf'); if (input.files && input.files[0]) { const file = input.files[0]; if (file.type !== 'application/pdf') { showNotification('Please select a valid PDF file!', 'error'); input.value = ''; return; } if (file.size > 10 * 1024 * 1024) { showNotification('PDF file size must be less than 10MB!', 'error'); input.value = ''; return; } const reader = new FileReader(); reader.onload = e => { currentPdfData = e.target.result; currentPdfName = file.name; pdfNameSpan.textContent = file.name; pdfNameSpan.style.display = 'inline-block'; removePdfBtn.style.display = 'flex'; }; reader.readAsDataURL(input.files[0]); } }
-        function removePdf(event) { event.stopPropagation(); document.getElementById('exercisePdf').value = ''; currentPdfData = null; currentPdfName = null; document.getElementById('pdfName').style.display = 'none'; document.querySelector('.remove-pdf').style.display = 'none'; }
-        function previewImage(input) { const preview = document.getElementById('imagePreview'); const removeBtn = document.querySelector('.remove-image'); if (input.files && input.files[0]) { const reader = new FileReader(); reader.onload = e => { preview.src = e.target.result; preview.classList.add('show'); removeBtn.style.display = 'flex'; }; reader.readAsDataURL(input.files[0]); } }
-        function removeImage(event) { event.stopPropagation(); document.getElementById('exerciseImage').value = ''; document.getElementById('imagePreview').src = ''; document.getElementById('imagePreview').classList.remove('show'); document.querySelector('.remove-image').style.display = 'none'; }
         function selectLoginType(type) { selectedLoginType = type; document.querySelectorAll('.login-type-btn').forEach(btn => btn.classList.remove('active')); document.getElementById(type + 'LoginBtn').classList.add('active'); }
         function selectSignupType(type) { selectedSignupType = type; document.getElementById('signupStudentBtn').classList.remove('active'); document.getElementById('signupTeacherBtn').classList.remove('active'); document.getElementById('signup' + type.charAt(0).toUpperCase() + type.slice(1) + 'Btn').classList.add('active'); const studentGradeField = document.getElementById('studentGradeField'); const teacherGradeField = document.getElementById('teacherGradeField'); const teacherCodeField = document.getElementById('teacherCodeField'); if (type === 'student') { studentGradeField.style.display = 'block'; teacherGradeField.style.display = 'none'; teacherCodeField.style.display = 'none'; document.getElementById('studentGrade').required = true; document.getElementById('teacherGrade').required = false; } else { studentGradeField.style.display = 'none'; teacherGradeField.style.display = 'block'; teacherCodeField.style.display = 'block'; document.getElementById('studentGrade').required = false; document.getElementById('teacherGrade').required = true; } }
         function showSignup() { document.getElementById('loginForm').style.display = 'none'; document.getElementById('signupForm').style.display = 'block'; }
@@ -4927,9 +5100,9 @@
             const now = new Date().toISOString();
             if (imageInput.files && imageInput.files[0]) { const reader = new FileReader(); reader.onload = e => createUserWithImage(e.target.result); reader.readAsDataURL(imageInput.files[0]); } else createUserWithImage(null);
             function createUserWithImage(image) {
-                const newUser = { name, accountName, nickname, email, password, type: selectedSignupType, grade, bio, profileImage: image, subscription: selectedSignupType === 'teacher' ? 'professional' : 'free', canCreatePremiumRooms: selectedSignupType === 'teacher', friends: [], groups: [], gradeLastChanged: now };
+                const newUser = { name, accountName, nickname, email, password, type: selectedSignupType, grade, bio, profileImage: image, subscription: 'free', canCreatePremiumRooms: selectedSignupType === 'teacher', friends: [], groups: [], gradeLastChanged: now };
                 if (selectedSignupType === 'student') { newUser.completedExercises = []; newUser.averageScore = 0; newUser.studyHours = 0; newUser.attempts = []; newUser.joinedRooms = []; }
-                else { newUser.exercises = []; newUser.summaries = []; newUser.privateRooms = []; newUser.teacherCode = document.getElementById('teacherCode').value; }
+                else { newUser.exercises = []; newUser.summaries = []; newUser.privateRooms = []; newUser.teacherCode = document.getElementById('teacherCode').value; newUser.subscription = 'professional'; }
                 users.push(newUser);
                 saveData();
                 showNotification('Account created successfully! Please verify your email and login.', 'success');
@@ -5014,12 +5187,16 @@
             const subject = document.getElementById('summarySubject').value;
             const content = document.getElementById('summaryContent').value;
             const grade = currentUser.grade;
-            const newSummary = { id: summaries.length + 1, title, subject, content, teacher: currentUser.email, teacherName: currentUser.name, grade, createdAt: new Date().toISOString() };
+            const newSummary = { id: summaries.length + 1, title, subject, content, teacher: currentUser.email, teacherName: currentUser.name, grade, createdAt: new Date().toISOString(), pdfData: currentSummaryPdfData, pdfName: currentSummaryPdfName };
             summaries.push(newSummary);
             if (!currentUser.summaries) currentUser.summaries = []; currentUser.summaries.push(newSummary.id);
             const userIndex = users.findIndex(u => u.email === currentUser.email); users[userIndex].summaries = currentUser.summaries;
             saveData();
             document.getElementById('addSummaryForm').reset();
+            currentSummaryPdfData = null;
+            currentSummaryPdfName = null;
+            document.getElementById('summaryPdfName').style.display = 'none';
+            document.getElementById('removeSummaryPdfBtn').style.display = 'none';
             loadTeacherSummaries(); updateTeacherStats();
             showNotification('Summary added successfully!', 'success');
         }
@@ -5083,13 +5260,51 @@
         }
 
         function loadStudentExercises() { const grid = document.getElementById('studentExercisesGrid'); if (!grid) return; grid.innerHTML = ''; const gradeExercises = exercises.filter(ex => ex.grade === currentUser?.grade); if (gradeExercises.length === 0) { grid.innerHTML = `<p class="no-data">No exercises available.</p>`; return; } gradeExercises.forEach(ex => { const isCompleted = currentUser?.completedExercises?.includes(ex.id); const card = document.createElement('div'); card.className = 'exercise-card' + (isCompleted ? ' completed' : ''); card.innerHTML = `<div class="grade-tag">Grade ${ex.grade}</div><div class="exercise-icon">📐</div><h3>${ex.title}</h3><p>${ex.question.substring(0, 50)}...</p><div class="exercise-meta"><span><i class="far fa-clock"></i> ${ex.time} min</span><span><i class="fas fa-signal"></i> ${ex.difficulty}</span></div>${isCompleted ? '<div class="completed-badge"><i class="fas fa-check-circle"></i> Completed</div>' : '<button class="start-btn" onclick="alert(\'Exercise starting soon!\')">Start</button>'}`; grid.appendChild(card); }); updateGradeStats(); }
-        function loadStudentSummaries() { const grid = document.getElementById('studentSummariesGrid'); if (!grid) return; grid.innerHTML = ''; const gradeSummaries = summaries.filter(s => s.grade === currentUser?.grade); if (gradeSummaries.length === 0) { grid.innerHTML = `<p class="no-data">No summaries available.</p>`; return; } gradeSummaries.forEach(sum => { const card = document.createElement('div'); card.className = 'summary-card'; const previewContent = sum.content.substring(0, 80) + '...'; card.innerHTML = `<div class="summary-grade">Grade ${sum.grade}</div><div class="summary-icon"><i class="fas fa-file-alt"></i></div><h3>${sum.title}</h3><p>${previewContent}</p><div class="summary-meta"><span><i class="fas fa-book"></i> ${sum.subject}</span><span><i class="fas fa-user"></i> ${sum.teacherName}</span></div><button class="download-summary-btn" onclick="downloadSummary(${sum.id})"><i class="fas fa-download"></i> Download</button>`; grid.appendChild(card); }); }
-        function downloadSummary(summaryId) { const summary = summaries.find(s => s.id === summaryId); if (!summary) return; const content = `STUDX STUDY SUMMARY\n\nTitle: ${summary.title}\nSubject: ${summary.subject}\nGrade: ${summary.grade}\nTeacher: ${summary.teacherName}\n\n${summary.content}\n\nGenerated by StudX`; const blob = new Blob([content], { type: 'text/plain' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `${summary.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_summary.txt`; a.click(); URL.revokeObjectURL(url); showNotification('Summary downloaded!', 'success'); }
+        
+        function loadStudentSummaries() { const grid = document.getElementById('studentSummariesGrid'); if (!grid) return; grid.innerHTML = ''; const gradeSummaries = summaries.filter(s => s.grade === currentUser?.grade); if (gradeSummaries.length === 0) { grid.innerHTML = `<p class="no-data">No summaries available.</p>`; return; } gradeSummaries.forEach(sum => { const card = document.createElement('div'); card.className = 'summary-card'; const previewContent = sum.content.substring(0, 80) + '...'; const pdfBadge = sum.pdfData ? '<span class="summary-pdf-badge"><i class="fas fa-file-pdf"></i> PDF</span>' : ''; card.innerHTML = `<div class="summary-grade">Grade ${sum.grade}</div><div class="summary-icon"><i class="fas fa-file-alt"></i></div><h3>${sum.title}</h3><p>${previewContent}</p><div class="summary-meta"><span><i class="fas fa-book"></i> ${sum.subject}</span><span><i class="fas fa-user"></i> ${sum.teacherName}</span>${pdfBadge ? `<span>${pdfBadge}</span>` : ''}</div><button class="download-summary-btn" onclick="viewSummary(${sum.id})"><i class="fas fa-download"></i> View / Download</button>`; card.onclick = (e) => { if (!e.target.classList.contains('download-summary-btn')) viewSummary(sum.id); }; grid.appendChild(card); }); }
+        
+        function viewSummary(summaryId) { 
+            const summary = summaries.find(s => s.id === summaryId); 
+            if (!summary) return; 
+            // Check if user is subscribed (professional plan)
+            if (currentUser.subscription !== 'professional' && currentUser.subscription !== 'premium') {
+                showSubscriptionRequired(summary.title);
+                return;
+            }
+            // If subscribed, download or view the summary
+            if (summary.pdfData) {
+                // Download PDF
+                const link = document.createElement('a');
+                link.href = summary.pdfData;
+                link.download = summary.pdfName || `${summary.title}.pdf`;
+                link.click();
+                showNotification('Downloading PDF...', 'success');
+            } else {
+                // Download as text
+                const content = `STUDX STUDY SUMMARY\n\nTitle: ${summary.title}\nSubject: ${summary.subject}\nGrade: ${summary.grade}\nTeacher: ${summary.teacherName}\n\n${summary.content}\n\nGenerated by StudX`; 
+                const blob = new Blob([content], { type: 'text/plain' }); 
+                const url = URL.createObjectURL(blob); 
+                const a = document.createElement('a'); 
+                a.href = url; 
+                a.download = `${summary.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_summary.txt`; 
+                a.click(); 
+                URL.revokeObjectURL(url); 
+                showNotification('Summary downloaded!', 'success');
+            }
+        }
+        
+        function downloadSummary(summaryId) { viewSummary(summaryId); }
+        
         function loadTeacherExercises() { const grid = document.getElementById('teacherExercisesGrid'); if (!grid) return; grid.innerHTML = ''; const teacherExercises = exercises.filter(ex => ex.teacher === currentUser?.email && ex.grade === currentUser?.grade); if (teacherExercises.length === 0) { grid.innerHTML = `<p class="no-data">No exercises yet.</p>`; return; } teacherExercises.forEach(ex => { const card = document.createElement('div'); card.className = 'exercise-card'; card.innerHTML = `<div class="grade-tag">Grade ${ex.grade}</div><div class="exercise-icon">📐</div><h3>${ex.title}</h3><p>${ex.question.substring(0, 50)}...</p><div class="exercise-meta"><span><i class="far fa-clock"></i> ${ex.time} min</span><span><i class="fas fa-signal"></i} ${ex.difficulty}</span><span><i class="fas fa-check-circle"></i> ${ex.completions || 0} completed</span></div><button class="delete-btn" onclick="deleteExercise(${ex.id})"><i class="fas fa-trash"></i> Delete</button>`; grid.appendChild(card); }); updateTeacherGradeStats(); }
-        function loadTeacherSummaries() { const grid = document.getElementById('teacherSummariesGrid'); if (!grid) return; grid.innerHTML = ''; const teacherSummaries = summaries.filter(s => s.teacher === currentUser?.email && s.grade === currentUser?.grade); if (teacherSummaries.length === 0) { grid.innerHTML = `<p class="no-data">No summaries yet.</p>`; return; } teacherSummaries.forEach(sum => { const card = document.createElement('div'); card.className = 'summary-card'; card.innerHTML = `<div class="summary-grade">Grade ${sum.grade}</div><div class="summary-icon"><i class="fas fa-file-alt"></i></div><h3>${sum.title}</h3><p>${sum.content.substring(0, 60)}...</p><div class="summary-meta"><span><i class="fas fa-book"></i> ${sum.subject}</span></div><button class="download-summary-btn" onclick="downloadSummary(${sum.id})"><i class="fas fa-download"></i> Download</button><button class="delete-summary-btn" onclick="deleteSummary(${sum.id})"><i class="fas fa-trash"></i> Delete</button>`; grid.appendChild(card); }); }
+        
+        function loadTeacherSummaries() { const grid = document.getElementById('teacherSummariesGrid'); if (!grid) return; grid.innerHTML = ''; const teacherSummaries = summaries.filter(s => s.teacher === currentUser?.email && s.grade === currentUser?.grade); if (teacherSummaries.length === 0) { grid.innerHTML = `<p class="no-data">No summaries yet.</p>`; return; } teacherSummaries.forEach(sum => { const card = document.createElement('div'); card.className = 'summary-card'; const pdfBadge = sum.pdfData ? '<span class="summary-pdf-badge"><i class="fas fa-file-pdf"></i> PDF</span>' : ''; card.innerHTML = `<div class="summary-grade">Grade ${sum.grade}</div><div class="summary-icon"><i class="fas fa-file-alt"></i></div><h3>${sum.title}</h3><p>${sum.content.substring(0, 60)}...</p><div class="summary-meta"><span><i class="fas fa-book"></i> ${sum.subject}</span>${pdfBadge ? `<span>${pdfBadge}</span>` : ''}</div><button class="download-summary-btn" onclick="downloadSummary(${sum.id})"><i class="fas fa-download"></i> Download</button><button class="delete-summary-btn" onclick="deleteSummary(${sum.id})"><i class="fas fa-trash"></i> Delete</button>`; grid.appendChild(card); }); }
+        
         function deleteSummary(summaryId) { if (!currentUser || currentUser.type !== 'teacher') return; if (confirm('Delete this summary?')) { summaries = summaries.filter(s => s.id !== summaryId); if (currentUser.summaries) currentUser.summaries = currentUser.summaries.filter(id => id !== summaryId); const userIndex = users.findIndex(u => u.email === currentUser.email); users[userIndex].summaries = currentUser.summaries; saveData(); loadTeacherSummaries(); updateTeacherStats(); showNotification('Summary deleted!', 'success'); } }
+        
         function loadStudentTeachers() { const grid = document.getElementById('studentTeachersGrid'); if (!grid) return; grid.innerHTML = ''; const teachers = users.filter(u => u.type === 'teacher' && u.grade === currentUser?.grade); if (teachers.length === 0) { grid.innerHTML = `<p class="no-data">No teachers available.</p>`; return; } teachers.forEach(teacher => { const card = document.createElement('div'); card.className = 'room-card'; card.innerHTML = `<div class="room-grade">Grade ${teacher.grade}</div><div class="room-header"><i class="fas fa-chalkboard-teacher" style="font-size: 50px; color: #667eea;"></i><div class="teacher-info"><h3>${teacher.name}</h3><p>${teacher.bio || 'Experienced teacher'}</p></div></div><button class="book-btn" onclick="bookTeacher('${teacher.email}')">Contact Teacher</button>`; grid.appendChild(card); }); updateGradeStats(); }
+        
         function loadTeacherStudents() { const grid = document.getElementById('teacherStudentsGrid'); if (!grid) return; grid.innerHTML = ''; const students = users.filter(u => u.type === 'student' && u.grade === currentUser?.grade); if (students.length === 0) { grid.innerHTML = `<p class="no-data">No students in your grade yet.</p>`; return; } students.forEach(student => { const card = document.createElement('div'); card.className = 'student-card'; const avatarHtml = student.profileImage ? `<img src="${student.profileImage}" class="student-avatar" alt="Profile">` : `<i class="fas fa-user-graduate student-avatar"></i>`; card.innerHTML = `<div class="student-grade">Grade ${student.grade}</div>${avatarHtml}<h3>${student.nickname || student.name}</h3><p>${student.email}</p><div class="student-bio">${student.bio ? student.bio.substring(0, 50) : ''}</div>`; grid.appendChild(card); }); updateTeacherGradeStats(); }
+        
         function deleteExercise(exerciseId) { if (!currentUser || currentUser.type !== 'teacher') return; if (confirm('Delete this exercise?')) { exercises = exercises.filter(ex => ex.id !== exerciseId); saveData(); loadTeacherExercises(); updateTeacherStats(); updateTeacherGradeStats(); showNotification('Exercise deleted!', 'success'); } }
         function bookTeacher(teacherEmail) { showNotification('Booking feature coming soon!', 'info'); }
         function updateStudentProgress() { if (!currentUser || currentUser.type !== 'student') return; document.getElementById('completedExercises').textContent = currentUser.completedExercises?.length || 0; document.getElementById('averageScore').textContent = (currentUser.averageScore || 0) + '%'; document.getElementById('studyHours').textContent = currentUser.studyHours ? currentUser.studyHours.toFixed(1) : 0; document.getElementById('joinedRooms').textContent = currentUser.joinedRooms ? currentUser.joinedRooms.length : 0; }
@@ -5119,7 +5334,6 @@
             document.getElementById('editBio').value = currentUser.bio || ''; 
             const gradeSelect = document.getElementById('editGrade');
             gradeSelect.value = currentUser.grade;
-            // Check 30-day cooldown for grade change
             const lastChanged = currentUser.gradeLastChanged ? new Date(currentUser.gradeLastChanged) : null;
             const now = new Date();
             const daysSinceLastChange = lastChanged ? Math.floor((now - lastChanged) / (1000 * 60 * 60 * 24)) : 31;
@@ -5145,7 +5359,6 @@
             currentUser.name = newName; 
             currentUser.nickname = newNickname || newName; 
             currentUser.bio = newBio; 
-            // Update grade if changed and cooldown passed
             if (newGrade && newGrade !== currentUser.grade) {
                 const lastChanged = currentUser.gradeLastChanged ? new Date(currentUser.gradeLastChanged) : null;
                 const now = new Date();
@@ -5285,7 +5498,6 @@
           if (!email || !password) { showNotification("Please enter email and password", "error"); return; }
           try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            // Email verification is required for students only, teachers can skip
             if (!userCredential.user.emailVerified && selectedLoginType === 'student') { 
               showNotification("Please verify your email first!", "warning"); 
               await signOut(auth); 
@@ -5350,7 +5562,6 @@
 
         onAuthStateChanged(auth, async (user) => {
           if (user) {
-            // For Google users, no verification needed. For email/password, check if student
             if (!user.emailVerified && user.providerData[0]?.providerId !== 'google.com' && selectedLoginType === 'student') { 
               await signOut(auth); 
               return; 
@@ -5400,7 +5611,6 @@
           const password = document.getElementById("password").value;
           if (!email || !password) { showNotification("Please enter email and password!", "error"); return; }
           signInWithEmailAndPassword(auth, email, password).then(async (userCredential) => {
-            // Only require email verification for students, not teachers
             if (!userCredential.user.emailVerified && selectedLoginType === 'student') { 
               showNotification("Please verify your email first!", "warning"); 
               await signOut(auth); 
