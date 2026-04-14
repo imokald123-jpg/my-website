@@ -1,6 +1,3 @@
-Here is the complete HTML code with the Google Sign-In flow updated to show a grade and role selection screen after authentication. Users can choose their grade, role (Student/Teacher), and provide a teacher code if applicable. They can also set their display name and profile picture.
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -4264,14 +4261,13 @@ Here is the complete HTML code with the Google Sign-In flow updated to show a gr
                 </div>
             </form>
 
-            <!-- Role Selection Modal (for Google Sign-In) -->
+            <!-- Role Selection Modal -->
             <div class="role-selection-modal" id="roleSelectionModal">
                 <div class="role-selection-content">
                     <i class="fas fa-user-astronaut" style="font-size: 50px; color: #667eea; margin-bottom: 15px;"></i>
                     <h3 data-en="Complete Your Profile" data-ar="أكمل ملفك الشخصي">Complete Your Profile</h3>
                     <p data-en="Please choose your role and grade to continue" data-ar="الرجاء اختيار دورك وصفك للمتابعة">Please choose your role and grade to continue</p>
                     
-                    <!-- Profile Picture Upload -->
                     <div class="profile-preview-role">
                         <div class="profile-avatar-role" onclick="document.getElementById('roleProfileImage').click()">
                             <i class="fas fa-camera" id="roleProfileIcon"></i>
@@ -4280,10 +4276,8 @@ Here is the complete HTML code with the Google Sign-In flow updated to show a gr
                         <input type="file" id="roleProfileImage" class="hidden-input" accept="image/*" onchange="previewRoleProfileImage(this)">
                     </div>
 
-                    <!-- Name Input -->
                     <input type="text" id="roleName" class="name-input" placeholder="Your Name / اسمك" value="">
 
-                    <!-- Role Selection Buttons -->
                     <div class="role-buttons">
                         <div class="role-btn" onclick="selectRole('student')" id="roleStudentBtn">
                             <i class="fas fa-user-graduate"></i>
@@ -4295,7 +4289,6 @@ Here is the complete HTML code with the Google Sign-In flow updated to show a gr
                         </div>
                     </div>
 
-                    <!-- Grade Selection -->
                     <select id="roleGrade" class="grade-select">
                         <option value="" data-en="Select your grade" data-ar="اختر صفك">Select your grade</option>
                         <option value="1">Grade 1</option>
@@ -4312,13 +4305,10 @@ Here is the complete HTML code with the Google Sign-In flow updated to show a gr
                         <option value="12">Grade 12</option>
                     </select>
 
-                    <!-- Teacher Code Field (hidden by default) -->
                     <input type="password" id="roleTeacherCode" class="teacher-code-input" placeholder="Teacher Access Code / رمز المدرس">
 
-                    <!-- Error Message -->
                     <div class="error-message" id="roleErrorMessage"></div>
 
-                    <!-- Action Buttons -->
                     <div class="role-action-buttons">
                         <button class="confirm-role-btn" onclick="confirmRoleSelection()" data-en="Continue" data-ar="متابعة">Continue</button>
                         <button class="quit-signin-btn" onclick="quitGoogleSignIn()" data-en="Quit" data-ar="خروج">Quit</button>
@@ -4390,7 +4380,6 @@ Here is the complete HTML code with the Google Sign-In flow updated to show a gr
                     <p style="color: rgba(255,255,255,0.6); font-size: 12px; margin-top: 5px;" data-en="You will need to verify your email after signing up" data-ar="ستحتاج إلى تأكيد بريدك الإلكتروني بعد التسجيل">You will need to verify your email after signing up</p>
                 </div>
                 
-                <!-- Signup Form Fields -->
                 <div id="signupFields">
                     <div class="profile-upload">
                         <div class="profile-preview" onclick="document.getElementById('profileImage').click()">
@@ -4435,18 +4424,18 @@ Here is the complete HTML code with the Google Sign-In flow updated to show a gr
                             <i class="fas fa-graduation-cap"></i>
                             <select id="studentGrade" required>
                                 <option value="" data-en="Select your grade" data-ar="اختر صفك">Select your grade</option>
-                                <option value="1" data-en="Grade 1" data-ar="الصف الأول">Grade 1</option>
-                                <option value="2" data-en="Grade 2" data-ar="الصف الثاني">Grade 2</option>
-                                <option value="3" data-en="Grade 3" data-ar="الصف الثالث">Grade 3</option>
-                                <option value="4" data-en="Grade 4" data-ar="الصف الرابع">Grade 4</option>
-                                <option value="5" data-en="Grade 5" data-ar="الصف الخامس">Grade 5</option>
-                                <option value="6" data-en="Grade 6" data-ar="الصف السادس">Grade 6</option>
-                                <option value="7" data-en="Grade 7" data-ar="الصف السابع">Grade 7</option>
-                                <option value="8" data-en="Grade 8" data-ar="الصف الثامن">Grade 8</option>
-                                <option value="9" data-en="Grade 9" data-ar="الصف التاسع">Grade 9</option>
-                                <option value="10" data-en="Grade 10" data-ar="الصف العاشر">Grade 10</option>
-                                <option value="11" data-en="Grade 11" data-ar="الصف الحادي عشر">Grade 11</option>
-                                <option value="12" data-en="Grade 12" data-ar="الصف الثاني عشر">Grade 12</option>
+                                <option value="1">Grade 1</option>
+                                <option value="2">Grade 2</option>
+                                <option value="3">Grade 3</option>
+                                <option value="4">Grade 4</option>
+                                <option value="5">Grade 5</option>
+                                <option value="6">Grade 6</option>
+                                <option value="7">Grade 7</option>
+                                <option value="8">Grade 8</option>
+                                <option value="9">Grade 9</option>
+                                <option value="10">Grade 10</option>
+                                <option value="11">Grade 11</option>
+                                <option value="12">Grade 12</option>
                             </select>
                         </div>
                     </div>
@@ -4467,18 +4456,18 @@ Here is the complete HTML code with the Google Sign-In flow updated to show a gr
                             <i class="fas fa-chalkboard"></i>
                             <select id="teacherGrade">
                                 <option value="" data-en="Select your grade" data-ar="اختر صفك">Select your grade</option>
-                                <option value="1" data-en="Grade 1" data-ar="الصف الأول">Grade 1</option>
-                                <option value="2" data-en="Grade 2" data-ar="الصف الثاني">Grade 2</option>
-                                <option value="3" data-en="Grade 3" data-ar="الصف الثالث">Grade 3</option>
-                                <option value="4" data-en="Grade 4" data-ar="الصف الرابع">Grade 4</option>
-                                <option value="5" data-en="Grade 5" data-ar="الصف الخامس">Grade 5</option>
-                                <option value="6" data-en="Grade 6" data-ar="الصف السادس">Grade 6</option>
-                                <option value="7" data-en="Grade 7" data-ar="الصف السابع">Grade 7</option>
-                                <option value="8" data-en="Grade 8" data-ar="الصف الثامن">Grade 8</option>
-                                <option value="9" data-en="Grade 9" data-ar="الصف التاسع">Grade 9</option>
-                                <option value="10" data-en="Grade 10" data-ar="الصف العاشر">Grade 10</option>
-                                <option value="11" data-en="Grade 11" data-ar="الصف الحادي عشر">Grade 11</option>
-                                <option value="12" data-en="Grade 12" data-ar="الصف الثاني عشر">Grade 12</option>
+                                <option value="1">Grade 1</option>
+                                <option value="2">Grade 2</option>
+                                <option value="3">Grade 3</option>
+                                <option value="4">Grade 4</option>
+                                <option value="5">Grade 5</option>
+                                <option value="6">Grade 6</option>
+                                <option value="7">Grade 7</option>
+                                <option value="8">Grade 8</option>
+                                <option value="9">Grade 9</option>
+                                <option value="10">Grade 10</option>
+                                <option value="11">Grade 11</option>
+                                <option value="12">Grade 12</option>
                             </select>
                         </div>
                     </div>
@@ -4743,14 +4732,12 @@ Here is the complete HTML code with the Google Sign-In flow updated to show a gr
         let resetEmailForCode = null;
         let verificationCode = null;
         
-        // Google Sign-In temporary data
         let tempGoogleUser = null;
         let selectedRole = null;
 
         const WHATSAPP_NUMBER = "96812345678";
         const WHATSAPP_MESSAGE_TEMPLATE = "I would like to complete my payment for StudX subscription. Plan: ";
 
-        // Notification System
         function showNotification(message, type = 'info', duration = 3000) {
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
@@ -4768,7 +4755,6 @@ Here is the complete HTML code with the Google Sign-In flow updated to show a gr
             document.body.appendChild(errorLock);
         }
 
-        // Modal Functions
         function showForgotPasswordModal() { document.getElementById('forgotPasswordModal').classList.add('active'); }
         function closeForgotPasswordModal() { document.getElementById('forgotPasswordModal').classList.remove('active'); document.getElementById('resetEmail').value = ''; }
         function closeVerificationModal() { document.getElementById('verificationModal').classList.remove('active'); document.getElementById('verificationCode').value = ''; }
@@ -4778,20 +4764,17 @@ Here is the complete HTML code with the Google Sign-In flow updated to show a gr
         function showRoleSelectionModal() { document.getElementById('roleSelectionModal').classList.add('active'); }
         function hideRoleSelectionModal() { document.getElementById('roleSelectionModal').classList.remove('active'); }
 
-        // Role Selection Functions
         function selectRole(role) {
             selectedRole = role;
             document.getElementById('roleStudentBtn').classList.remove('selected');
             document.getElementById('roleTeacherBtn').classList.remove('selected');
             document.getElementById(`role${role.charAt(0).toUpperCase() + role.slice(1)}Btn`).classList.add('selected');
-            
             const teacherCodeField = document.getElementById('roleTeacherCode');
             if (role === 'teacher') {
                 teacherCodeField.classList.add('active');
             } else {
                 teacherCodeField.classList.remove('active');
             }
-            
             document.getElementById('roleErrorMessage').classList.remove('show');
         }
 
@@ -4814,83 +4797,40 @@ Here is the complete HTML code with the Google Sign-In flow updated to show a gr
             const grade = document.getElementById('roleGrade').value;
             const teacherCode = document.getElementById('roleTeacherCode').value;
             const imageInput = document.getElementById('roleProfileImage');
-            
             const errors = [];
-            
-            if (!name) {
-                errors.push(currentLang === 'en' ? 'Please enter your name!' : 'الرجاء إدخال اسمك!');
-            }
-            
-            if (!selectedRole) {
-                errors.push(currentLang === 'en' ? 'Please select a role (Student or Teacher)!' : 'الرجاء اختيار دورك (طالب أو مدرس)!');
-            }
-            
-            if (!grade) {
-                errors.push(currentLang === 'en' ? 'Please select your grade!' : 'الرجاء اختيار صفك!');
-            }
-            
-            if (selectedRole === 'teacher' && teacherCode !== 'TEACHER2024') {
-                errors.push(currentLang === 'en' ? 'Invalid teacher access code!' : 'رمز المدرس غير صحيح!');
-            }
-            
+            if (!name) errors.push('Please enter your name!');
+            if (!selectedRole) errors.push('Please select a role (Student or Teacher)!');
+            if (!grade) errors.push('Please select your grade!');
+            if (selectedRole === 'teacher' && teacherCode !== 'TEACHER2024') errors.push('Invalid teacher access code!');
             if (errors.length > 0) {
                 const errorDiv = document.getElementById('roleErrorMessage');
                 errorDiv.innerHTML = errors.join('<br>');
                 errorDiv.classList.add('show');
                 return;
             }
-            
             let profileImage = null;
             if (imageInput.files && imageInput.files[0]) {
                 const reader = new FileReader();
-                reader.onload = e => {
-                    profileImage = e.target.result;
-                    createUserFromGoogle(profileImage);
-                };
+                reader.onload = e => { profileImage = e.target.result; createUserFromGoogle(profileImage); };
                 reader.readAsDataURL(imageInput.files[0]);
             } else {
                 createUserFromGoogle(null);
             }
-            
             function createUserFromGoogle(image) {
                 const accountName = tempGoogleUser.email.split('@')[0] + Math.floor(Math.random() * 10000);
                 const newUser = {
-                    name: name,
-                    accountName: accountName,
-                    nickname: name,
-                    email: tempGoogleUser.email,
-                    password: 'google_auth_user',
-                    type: selectedRole,
-                    grade: grade,
-                    bio: '',
-                    profileImage: image || tempGoogleUser.photoURL,
-                    subscription: selectedRole === 'teacher' ? 'professional' : 'free',
-                    canCreatePremiumRooms: selectedRole === 'teacher',
-                    friends: [],
-                    groups: [],
-                    completedExercises: [],
-                    averageScore: 0,
-                    studyHours: 0,
-                    attempts: [],
-                    joinedRooms: []
+                    name: name, accountName: accountName, nickname: name, email: tempGoogleUser.email, password: 'google_auth_user',
+                    type: selectedRole, grade: grade, bio: '', profileImage: image || tempGoogleUser.photoURL,
+                    subscription: selectedRole === 'teacher' ? 'professional' : 'free', canCreatePremiumRooms: selectedRole === 'teacher',
+                    friends: [], groups: [], completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: []
                 };
-                
-                if (selectedRole === 'teacher') {
-                    newUser.exercises = [];
-                    newUser.summaries = [];
-                    newUser.privateRooms = [];
-                    newUser.teacherCode = teacherCode;
-                }
-                
+                if (selectedRole === 'teacher') { newUser.exercises = []; newUser.summaries = []; newUser.privateRooms = []; newUser.teacherCode = teacherCode; }
                 users.push(newUser);
                 saveData();
-                
                 hideRoleSelectionModal();
                 performLogin(newUser);
                 showNotification(`Welcome ${name}!`, 'success');
-                
-                tempGoogleUser = null;
-                selectedRole = null;
+                tempGoogleUser = null; selectedRole = null;
                 document.getElementById('roleName').value = '';
                 document.getElementById('roleGrade').value = '';
                 document.getElementById('roleTeacherCode').value = '';
@@ -4918,9 +4858,7 @@ Here is the complete HTML code with the Google Sign-In flow updated to show a gr
             { id: 1, title: 'Algebra Basics', subject: 'Mathematics', difficulty: 'Beginner', time: 15, question: 'Solve for x: 2x + 5 = 13', correctAnswer: '4', explanation: 'Subtract 5: 2x = 8, divide by 2: x = 4', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', image: null, pdf: null, completions: 0, attempts: 0, correctAttempts: 0 },
             { id: 2, title: "Newton's Laws", subject: 'Physics', difficulty: 'Intermediate', time: 20, question: 'Force for 5kg at 2m/s²? (Newtons)', correctAnswer: '10', explanation: 'F = ma = 5 × 2 = 10N', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', image: null, pdf: null, completions: 0, attempts: 0, correctAttempts: 0 }
         ];
-        summaries = [
-            { id: 1, title: 'Algebra Final Review', subject: 'Mathematics', content: 'Linear equations: ax + b = c\nQuadratic equations: ax² + bx + c = 0', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', createdAt: new Date().toISOString() }
-        ];
+        summaries = [{ id: 1, title: 'Algebra Final Review', subject: 'Mathematics', content: 'Linear equations: ax + b = c\nQuadratic equations: ax² + bx + c = 0', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', createdAt: new Date().toISOString() }];
         privateRooms = [{ id: 1, teacherEmail: 'teacher@studx.com', teacherName: 'Teacher', roomName: 'Grade 10 Math Mastery', description: 'Advanced math tutoring', schedule: 'Mon, Wed, Fri - 4:00 PM', grade: '10', subscribersOnly: true, students: [] }];
 
         function saveData() { localStorage.setItem('studx_users', JSON.stringify(users)); localStorage.setItem('studx_exercises', JSON.stringify(exercises)); localStorage.setItem('studx_summaries', JSON.stringify(summaries)); localStorage.setItem('studx_rooms', JSON.stringify(privateRooms)); localStorage.setItem('studx_groups', JSON.stringify(groups)); localStorage.setItem('studx_friend_requests', JSON.stringify(friendRequests)); }
@@ -5143,7 +5081,7 @@ Here is the complete HTML code with the Google Sign-In flow updated to show a gr
         function loadStudentExercises() { const grid = document.getElementById('studentExercisesGrid'); if (!grid) return; grid.innerHTML = ''; const gradeExercises = exercises.filter(ex => ex.grade === currentUser?.grade); if (gradeExercises.length === 0) { grid.innerHTML = `<p class="no-data">No exercises available.</p>`; return; } gradeExercises.forEach(ex => { const isCompleted = currentUser?.completedExercises?.includes(ex.id); const card = document.createElement('div'); card.className = 'exercise-card' + (isCompleted ? ' completed' : ''); card.innerHTML = `<div class="grade-tag">Grade ${ex.grade}</div><div class="exercise-icon">📐</div><h3>${ex.title}</h3><p>${ex.question.substring(0, 50)}...</p><div class="exercise-meta"><span><i class="far fa-clock"></i> ${ex.time} min</span><span><i class="fas fa-signal"></i> ${ex.difficulty}</span></div>${isCompleted ? '<div class="completed-badge"><i class="fas fa-check-circle"></i> Completed</div>' : '<button class="start-btn" onclick="alert(\'Exercise starting soon!\')">Start</button>'}`; grid.appendChild(card); }); updateGradeStats(); }
         function loadStudentSummaries() { const grid = document.getElementById('studentSummariesGrid'); if (!grid) return; grid.innerHTML = ''; const gradeSummaries = summaries.filter(s => s.grade === currentUser?.grade); if (gradeSummaries.length === 0) { grid.innerHTML = `<p class="no-data">No summaries available.</p>`; return; } gradeSummaries.forEach(sum => { const card = document.createElement('div'); card.className = 'summary-card'; const previewContent = sum.content.substring(0, 80) + '...'; card.innerHTML = `<div class="summary-grade">Grade ${sum.grade}</div><div class="summary-icon"><i class="fas fa-file-alt"></i></div><h3>${sum.title}</h3><p>${previewContent}</p><div class="summary-meta"><span><i class="fas fa-book"></i> ${sum.subject}</span><span><i class="fas fa-user"></i> ${sum.teacherName}</span></div><button class="download-summary-btn" onclick="downloadSummary(${sum.id})"><i class="fas fa-download"></i> Download</button>`; grid.appendChild(card); }); }
         function downloadSummary(summaryId) { const summary = summaries.find(s => s.id === summaryId); if (!summary) return; const content = `STUDX STUDY SUMMARY\n\nTitle: ${summary.title}\nSubject: ${summary.subject}\nGrade: ${summary.grade}\nTeacher: ${summary.teacherName}\n\n${summary.content}\n\nGenerated by StudX`; const blob = new Blob([content], { type: 'text/plain' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `${summary.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_summary.txt`; a.click(); URL.revokeObjectURL(url); showNotification('Summary downloaded!', 'success'); }
-        function loadTeacherExercises() { const grid = document.getElementById('teacherExercisesGrid'); if (!grid) return; grid.innerHTML = ''; const teacherExercises = exercises.filter(ex => ex.teacher === currentUser?.email && ex.grade === currentUser?.grade); if (teacherExercises.length === 0) { grid.innerHTML = `<p class="no-data">No exercises yet.</p>`; return; } teacherExercises.forEach(ex => { const card = document.createElement('div'); card.className = 'exercise-card'; card.innerHTML = `<div class="grade-tag">Grade ${ex.grade}</div><div class="exercise-icon">📐</div><h3>${ex.title}</h3><p>${ex.question.substring(0, 50)}...</p><div class="exercise-meta"><span><i class="far fa-clock"></i> ${ex.time} min</span><span><i class="fas fa-signal"></i> ${ex.difficulty}</span><span><i class="fas fa-check-circle"></i> ${ex.completions || 0} completed</span></div><button class="delete-btn" onclick="deleteExercise(${ex.id})"><i class="fas fa-trash"></i> Delete</button>`; grid.appendChild(card); }); updateTeacherGradeStats(); }
+        function loadTeacherExercises() { const grid = document.getElementById('teacherExercisesGrid'); if (!grid) return; grid.innerHTML = ''; const teacherExercises = exercises.filter(ex => ex.teacher === currentUser?.email && ex.grade === currentUser?.grade); if (teacherExercises.length === 0) { grid.innerHTML = `<p class="no-data">No exercises yet.</p>`; return; } teacherExercises.forEach(ex => { const card = document.createElement('div'); card.className = 'exercise-card'; card.innerHTML = `<div class="grade-tag">Grade ${ex.grade}</div><div class="exercise-icon">📐</div><h3>${ex.title}</h3><p>${ex.question.substring(0, 50)}...</p><div class="exercise-meta"><span><i class="far fa-clock"></i> ${ex.time} min</span><span><i class="fas fa-signal"></i} ${ex.difficulty}</span><span><i class="fas fa-check-circle"></i> ${ex.completions || 0} completed</span></div><button class="delete-btn" onclick="deleteExercise(${ex.id})"><i class="fas fa-trash"></i> Delete</button>`; grid.appendChild(card); }); updateTeacherGradeStats(); }
         function loadTeacherSummaries() { const grid = document.getElementById('teacherSummariesGrid'); if (!grid) return; grid.innerHTML = ''; const teacherSummaries = summaries.filter(s => s.teacher === currentUser?.email && s.grade === currentUser?.grade); if (teacherSummaries.length === 0) { grid.innerHTML = `<p class="no-data">No summaries yet.</p>`; return; } teacherSummaries.forEach(sum => { const card = document.createElement('div'); card.className = 'summary-card'; card.innerHTML = `<div class="summary-grade">Grade ${sum.grade}</div><div class="summary-icon"><i class="fas fa-file-alt"></i></div><h3>${sum.title}</h3><p>${sum.content.substring(0, 60)}...</p><div class="summary-meta"><span><i class="fas fa-book"></i> ${sum.subject}</span></div><button class="download-summary-btn" onclick="downloadSummary(${sum.id})"><i class="fas fa-download"></i> Download</button><button class="delete-summary-btn" onclick="deleteSummary(${sum.id})"><i class="fas fa-trash"></i> Delete</button>`; grid.appendChild(card); }); }
         function deleteSummary(summaryId) { if (!currentUser || currentUser.type !== 'teacher') return; if (confirm('Delete this summary?')) { summaries = summaries.filter(s => s.id !== summaryId); if (currentUser.summaries) currentUser.summaries = currentUser.summaries.filter(id => id !== summaryId); const userIndex = users.findIndex(u => u.email === currentUser.email); users[userIndex].summaries = currentUser.summaries; saveData(); loadTeacherSummaries(); updateTeacherStats(); showNotification('Summary deleted!', 'success'); } }
         function loadStudentTeachers() { const grid = document.getElementById('studentTeachersGrid'); if (!grid) return; grid.innerHTML = ''; const teachers = users.filter(u => u.type === 'teacher' && u.grade === currentUser?.grade); if (teachers.length === 0) { grid.innerHTML = `<p class="no-data">No teachers available.</p>`; return; } teachers.forEach(teacher => { const card = document.createElement('div'); card.className = 'room-card'; card.innerHTML = `<div class="room-grade">Grade ${teacher.grade}</div><div class="room-header"><i class="fas fa-chalkboard-teacher" style="font-size: 50px; color: #667eea;"></i><div class="teacher-info"><h3>${teacher.name}</h3><p>${teacher.bio || 'Experienced teacher'}</p></div></div><button class="book-btn" onclick="bookTeacher('${teacher.email}')">Contact Teacher</button>`; grid.appendChild(card); }); updateGradeStats(); }
@@ -5207,7 +5145,7 @@ Here is the complete HTML code with the Google Sign-In flow updated to show a gr
         };
     </script>
 
-    <!-- Firebase Authentication Script with Google Sign-In -->
+    <!-- Firebase Authentication Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
         import { 
@@ -5233,40 +5171,24 @@ Here is the complete HTML code with the Google Sign-In flow updated to show a gr
         const auth = getAuth(app);
         const googleProvider = new GoogleAuthProvider();
 
-        // Google Sign In - Shows role selection modal after authentication
         window.startGoogleSignIn = async () => {
           try {
             const result = await signInWithPopup(auth, googleProvider);
             const user = result.user;
-            
-            // Check if user already exists in local database
             const existingUser = users.find(u => u.email === user.email);
-            
             if (existingUser) {
-              // If user exists, log them in directly
               performLogin(existingUser);
               showNotification(`Welcome back ${existingUser.name}!`, 'success');
             } else {
-              // Store temp user data and show role selection modal
-              tempGoogleUser = {
-                email: user.email,
-                photoURL: user.photoURL,
-                displayName: user.displayName
-              };
-              
-              // Pre-fill name field
+              tempGoogleUser = { email: user.email, photoURL: user.photoURL, displayName: user.displayName };
               document.getElementById('roleName').value = user.displayName || user.email.split('@')[0];
-              
-              // Show the role selection modal
               showRoleSelectionModal();
             }
           } catch (err) {
-            console.error("Google Sign-In error:", err);
             showNotification(err.message, 'error');
           }
         };
 
-        // Sign up with email/password
         window.firebaseSignup = async () => {
           const email = document.getElementById("signupEmail").value;
           const password = document.getElementById("signupPassword").value;
@@ -5279,7 +5201,6 @@ Here is the complete HTML code with the Google Sign-In flow updated to show a gr
           } catch (err) { showNotification(err.message, "error"); }
         };
 
-        // Login with email/password
         window.firebaseLogin = async () => {
           const email = document.getElementById("email").value;
           const password = document.getElementById("password").value;
@@ -5291,14 +5212,12 @@ Here is the complete HTML code with the Google Sign-In flow updated to show a gr
           } catch (err) { showNotification(err.message, "error"); }
         };
 
-        // Delete Account Function
         window.confirmDeleteAccount = async () => {
           if (!currentUser) {
             showNotification("No user logged in!", "error");
             closeDeleteAccountModal();
             return;
           }
-
           try {
             const user = auth.currentUser;
             if (!user) {
@@ -5306,7 +5225,6 @@ Here is the complete HTML code with the Google Sign-In flow updated to show a gr
               closeDeleteAccountModal();
               return;
             }
-            
             if (currentUser.password && currentUser.password !== 'google_auth_user') {
               const password = prompt("Please enter your password to confirm account deletion:");
               if (!password) {
@@ -5317,30 +5235,20 @@ Here is the complete HTML code with the Google Sign-In flow updated to show a gr
               const credential = EmailAuthProvider.credential(user.email, password);
               await reauthenticateWithCredential(user, credential);
             }
-            
             await deleteUser(user);
             console.log("Firebase user deleted:", user.email);
-            
             const userIndex = users.findIndex(u => u.email === currentUser.email);
-            if (userIndex !== -1) {
-              users.splice(userIndex, 1);
-              saveData();
-            }
-            
+            if (userIndex !== -1) { users.splice(userIndex, 1); saveData(); }
             exercises = exercises.filter(ex => ex.teacher !== currentUser.email);
             summaries = summaries.filter(s => s.teacher !== currentUser.email);
             privateRooms = privateRooms.filter(r => r.teacherEmail !== currentUser.email);
-            
             groups.forEach(group => {
               group.members = group.members.filter(m => m !== currentUser.email);
-              if (group.owner === currentUser.email && group.members.length > 0) {
-                group.owner = group.members[0];
-              }
+              if (group.owner === currentUser.email && group.members.length > 0) group.owner = group.members[0];
             });
             groups = groups.filter(g => g.members.length > 0);
             friendRequests = friendRequests.filter(r => r.from !== currentUser.email && r.to !== currentUser.email);
             saveData();
-            
             showNotification("Your account has been permanently deleted.", "success");
             closeDeleteAccountModal();
             await signOut(auth);
@@ -5357,24 +5265,15 @@ Here is the complete HTML code with the Google Sign-In flow updated to show a gr
           }
         };
 
-        // Auto login state
         onAuthStateChanged(auth, async (user) => {
           if (user) {
-            if (!user.emailVerified && user.providerData[0]?.providerId !== 'google.com') { 
-              await signOut(auth); 
-              return; 
-            }
+            if (!user.emailVerified && user.providerData[0]?.providerId !== 'google.com') { await signOut(auth); return; }
             const existingUser = users.find(u => u.email === user.email);
             if (existingUser) {
               performLogin(existingUser);
             } else if (user.providerData[0]?.providerId === 'google.com') {
-              // For Google users not yet in database, show role selection
               if (!document.getElementById('roleSelectionModal').classList.contains('active')) {
-                tempGoogleUser = {
-                  email: user.email,
-                  photoURL: user.photoURL,
-                  displayName: user.displayName
-                };
+                tempGoogleUser = { email: user.email, photoURL: user.photoURL, displayName: user.displayName };
                 document.getElementById('roleName').value = user.displayName || user.email.split('@')[0];
                 showRoleSelectionModal();
               }
