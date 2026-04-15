@@ -3356,7 +3356,6 @@
             color: rgba(255, 255, 255, 0.7);
         }
 
-        /* RTL Support */
         [dir="rtl"] .language-switcher {
             right: auto;
             left: 20px;
@@ -5300,12 +5299,32 @@
         }
         loadData();
 
+        // Check for saved user session on page load
         function checkSavedLogin() {
             const savedUserEmail = localStorage.getItem('currentUserEmail');
             const savedUserPassword = localStorage.getItem('currentUserPassword');
-            if (savedUserEmail && savedUserPassword) { const user = users.find(u => u.email === savedUserEmail && u.password === savedUserPassword); if (user) setTimeout(() => performLogin(user), 2000); }
+            if (savedUserEmail && savedUserPassword) { 
+                const user = users.find(u => u.email === savedUserEmail && u.password === savedUserPassword); 
+                if (user) {
+                    performLogin(user);
+                    return true;
+                }
+            }
+            
+            // Also check for Firebase session
+            const firebaseUser = localStorage.getItem('firebaseUser');
+            if (firebaseUser) {
+                try {
+                    const userData = JSON.parse(firebaseUser);
+                    const user = users.find(u => u.email === userData.email);
+                    if (user) {
+                        performLogin(user);
+                        return true;
+                    }
+                } catch(e) {}
+            }
+            return false;
         }
-        document.addEventListener('DOMContentLoaded', () => checkSavedLogin());
 
         function previewProfileImage(input) { const preview = document.getElementById('profilePreview'); const icon = document.getElementById('profileIcon'); if (input.files && input.files[0]) { const reader = new FileReader(); reader.onload = e => { preview.src = e.target.result; preview.style.display = 'block'; icon.style.display = 'none'; }; reader.readAsDataURL(input.files[0]); } }
         function previewEditProfileImage(input) { const preview = document.getElementById('editProfilePreview'); const icon = document.getElementById('editProfileIcon'); if (input.files && input.files[0]) { const reader = new FileReader(); reader.onload = e => { preview.src = e.target.result; preview.style.display = 'block'; icon.style.display = 'none'; }; reader.readAsDataURL(input.files[0]); } }
@@ -5382,13 +5401,22 @@
             const user = users.find(u => u.email === email && u.password === password);
             if (user) {
                 if (user.type !== selectedLoginType) { showErrorLock('Login Type Mismatch', `This email is registered as a ${user.type}. Please select the correct login type.`); return; }
-                if (rememberMe) { localStorage.setItem('currentUserEmail', user.email); localStorage.setItem('currentUserPassword', user.password); }
+                if (rememberMe) { 
+                    localStorage.setItem('currentUserEmail', user.email); 
+                    localStorage.setItem('currentUserPassword', user.password); 
+                } else {
+                    // Still save session but without remember me flag - session persists until logout
+                    localStorage.setItem('currentUserEmail', user.email); 
+                    localStorage.setItem('currentUserPassword', user.password);
+                }
                 performLogin(user);
             } else { showErrorLock('Login Failed', 'Invalid email or password!'); }
         }
 
         function handleLogout() {
-            localStorage.removeItem('currentUserEmail'); localStorage.removeItem('currentUserPassword');
+            localStorage.removeItem('currentUserEmail'); 
+            localStorage.removeItem('currentUserPassword');
+            localStorage.removeItem('firebaseUser');
             showNotification('Logged out successfully!', 'info');
             currentUser = null; currentExercise = null;
             document.getElementById('studentWebsite').style.display = 'none'; document.getElementById('teacherWebsite').style.display = 'none';
@@ -5663,6 +5691,26 @@
             if (user) { user.password = newPassword; saveData(); showNotification('Password reset successfully! Please login with your new password.', 'success'); closeResetPasswordModal(); }
             else { showNotification('User not found.', 'error'); }
         };
+
+        // Check for saved session on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                if (!checkSavedLogin()) {
+                    // If no saved session, show animation then login page
+                    const animationContainer = document.getElementById('animationContainer');
+                    if (animationContainer) {
+                        setTimeout(() => {
+                            animationContainer.style.display = 'none';
+                        }, 2000);
+                    }
+                } else {
+                    const animationContainer = document.getElementById('animationContainer');
+                    if (animationContainer) {
+                        animationContainer.style.display = 'none';
+                    }
+                }
+            }, 500);
+        });
     </script>
 
     <script type="module">
@@ -5731,6 +5779,8 @@
               await signOut(auth); 
               return; 
             }
+            // Save user session
+            localStorage.setItem('firebaseUser', JSON.stringify({ email: userCredential.user.email, uid: userCredential.user.uid }));
             showNotification("Logged in successfully! ✅", "success");
           } catch (err) { showNotification(err.message, "error"); }
         };
@@ -5807,18 +5857,25 @@
             document.getElementById("loginPage").style.display = "none";
             document.getElementById("footer").style.display = "block";
           } else {
-            document.getElementById("loginPage").style.display = "flex";
-            document.getElementById("studentWebsite").style.display = "none";
-            document.getElementById("teacherWebsite").style.display = "none";
-            document.getElementById("footer").style.display = "none";
-            document.getElementById("profilePage").style.display = "none";
-            document.getElementById("exercisePage").style.display = "none";
-            document.getElementById("paymentPage").style.display = "none";
+            // Only show login page if not already logged in via localStorage
+            if (!currentUser) {
+              document.getElementById("loginPage").style.display = "flex";
+              document.getElementById("studentWebsite").style.display = "none";
+              document.getElementById("teacherWebsite").style.display = "none";
+              document.getElementById("footer").style.display = "none";
+              document.getElementById("profilePage").style.display = "none";
+              document.getElementById("exercisePage").style.display = "none";
+              document.getElementById("paymentPage").style.display = "none";
+            }
           }
         });
 
         const originalLogout = window.handleLogout;
-        window.handleLogout = () => { signOut(auth).then(() => { if (originalLogout) originalLogout(); }); };
+        window.handleLogout = () => { 
+          signOut(auth).then(() => { 
+            if (originalLogout) originalLogout(); 
+          }); 
+        };
         
         const originalSignupHandler = window.handleSignup;
         window.handleSignup = () => {
@@ -5844,6 +5901,8 @@
               await signOut(auth); 
               return; 
             }
+            // Save user session
+            localStorage.setItem('firebaseUser', JSON.stringify({ email: userCredential.user.email, uid: userCredential.user.uid }));
             if (originalLoginHandler) originalLoginHandler({ preventDefault: () => {} });
           }).catch((err) => { showNotification(err.message, "error"); });
         };
