@@ -5067,7 +5067,7 @@
         let tempGoogleUser = null;
         let selectedRole = null;
 
-        const WHATSAPP_NUMBER = "96812345678";
+        const WHATSAPP_NUMBER = "96505241";
         const WHATSAPP_MESSAGE_TEMPLATE = "I would like to complete my payment for StudX subscription. Plan: ";
         const TEACHER_VERIFICATION_CODE = "TEACHER2024";
 
@@ -5235,7 +5235,6 @@
                     input.value = '';
                     return;
                 }
-                // Increased limit to 200MB
                 if (file.size > 200 * 1024 * 1024) {
                     showNotification('PDF file size must be less than 200MB!', 'error');
                     input.value = '';
@@ -5366,7 +5365,6 @@
             { name: 'Teacher', accountName: 'teacher123', nickname: 'professor', email: 'teacher@studx.com', password: 'teacher123', type: 'teacher', grade: '10', bio: 'Experienced teacher.', profileImage: null, exercises: [], summaries: [], privateRooms: [], subscription: 'professional', canCreatePremiumRooms: true, gradeLastChanged: new Date().toISOString() }
         ];
         groups = [{ id: 1, name: 'Math Study Group', description: 'Discuss math problems', owner: 'student@studx.com', members: ['student@studx.com'], createdAt: new Date().toISOString() }];
-        // Only one exercise left (removed the math exercise)
         exercises = [
             { id: 1, title: "Newton's Laws", subject: 'Physics', difficulty: 'Intermediate', time: 20, question: 'Force for 5kg at 2m/s²? (Newtons)', correctAnswer: '10', explanation: 'F = ma = 5 × 2 = 10N', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', image: null, pdf: null, completions: 0, attempts: 0, correctAttempts: 0 }
         ];
