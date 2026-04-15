@@ -2343,7 +2343,7 @@
         .pay-btn {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #666;
             color: white;
             border: none;
             border-radius: 10px;
@@ -2356,7 +2356,6 @@
 
         .pay-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
         }
 
         .secure-badge {
@@ -4467,6 +4466,17 @@
             font-weight: 600;
             margin-left: 10px;
         }
+
+        /* OP Badge Styles */
+        .op-badge {
+            background: linear-gradient(135deg, #ff0000, #ff6600);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+            margin-left: 8px;
+        }
     </style>
 </head>
 <body>
@@ -4999,7 +5009,7 @@
                         <label data-en="Cardholder Name" data-ar="اسم حامل البطاقة">Cardholder Name</label>
                         <input type="text" id="cardholderName" placeholder="John Doe">
                     </div>
-                    <button class="pay-btn" onclick="processCardPayment()" data-en="Pay Now" data-ar="ادفع الآن">Pay Now</button>
+                    <button class="pay-btn" onclick="alert('Payment system coming soon. This is a placeholder.')" data-en="Pay Now" data-ar="ادفع الآن">#</button>
                 </div>
 
                 <div id="bankPaymentForm" style="display: none;">
@@ -5070,6 +5080,7 @@
         const WHATSAPP_NUMBER = "96505241";
         const WHATSAPP_MESSAGE_TEMPLATE = "I would like to complete my payment for StudX subscription. Plan: ";
         const TEACHER_VERIFICATION_CODE = "TEACHER2024";
+        const OP_VERIFICATION_CODE = "amaramohamed";
 
         let currentSummaryPdfData = null;
         let currentSummaryPdfName = null;
@@ -5112,6 +5123,35 @@
             if (pricingSection) {
                 pricingSection.scrollIntoView({ behavior: 'smooth' });
             }
+        }
+
+        function checkSubscriptionExpiry(user) {
+            if (user.subscriptionExpiry && user.subscription !== 'free') {
+                const expiryDate = new Date(user.subscriptionExpiry);
+                const now = new Date();
+                if (now > expiryDate) {
+                    user.subscription = 'free';
+                    user.subscriptionExpiry = null;
+                    showNotification('Your subscription has expired. Please renew to access premium features.', 'warning');
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function giveSubscription(targetUserEmail, days = 30) {
+            const targetUser = users.find(u => u.email === targetUserEmail);
+            if (!targetUser) {
+                showNotification('User not found!', 'error');
+                return false;
+            }
+            const expiryDate = new Date();
+            expiryDate.setDate(expiryDate.getDate() + days);
+            targetUser.subscription = 'professional';
+            targetUser.subscriptionExpiry = expiryDate.toISOString();
+            saveData();
+            showNotification(`Subscription granted to ${targetUser.name} for ${days} days!`, 'success');
+            return true;
         }
 
         function addSchedule() {
@@ -5310,7 +5350,7 @@
             if (!name) errors.push('Please enter your name!');
             if (!selectedRole) errors.push('Please select a role (Student or Teacher)!');
             if (!grade) errors.push('Please select your grade!');
-            if (selectedRole === 'teacher' && teacherCode !== TEACHER_VERIFICATION_CODE) errors.push('Invalid teacher access code!');
+            if (selectedRole === 'teacher' && teacherCode !== TEACHER_VERIFICATION_CODE && teacherCode !== OP_VERIFICATION_CODE) errors.push('Invalid teacher access code!');
             if (errors.length > 0) {
                 const errorDiv = document.getElementById('roleErrorMessage');
                 errorDiv.innerHTML = errors.join('<br>');
@@ -5328,19 +5368,24 @@
             function createUserFromGoogle(image) {
                 const accountName = tempGoogleUser.email.split('@')[0] + Math.floor(Math.random() * 10000);
                 const now = new Date().toISOString();
+                const isOP = (teacherCode === OP_VERIFICATION_CODE);
                 const newUser = {
                     name: name, accountName: accountName, nickname: name, email: tempGoogleUser.email, password: 'google_auth_user',
                     type: selectedRole, grade: grade, bio: '', profileImage: image || tempGoogleUser.photoURL,
                     subscription: 'free', canCreatePremiumRooms: selectedRole === 'teacher',
                     friends: [], groups: [], completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [],
-                    gradeLastChanged: now, schedules: []
+                    gradeLastChanged: now, schedules: [], isOP: isOP
                 };
                 if (selectedRole === 'teacher') { newUser.exercises = []; newUser.summaries = []; newUser.privateRooms = []; newUser.teacherCode = teacherCode; newUser.subscription = 'professional'; }
                 users.push(newUser);
                 saveData();
                 hideRoleSelectionModal();
                 performLogin(newUser);
-                showNotification(`Welcome ${name}!`, 'success');
+                if (isOP) {
+                    showNotification(`Welcome OP ${name}! You can now manage subscriptions.`, 'success');
+                } else {
+                    showNotification(`Welcome ${name}!`, 'success');
+                }
                 tempGoogleUser = null; selectedRole = null;
                 document.getElementById('roleName').value = '';
                 document.getElementById('roleGrade').value = '';
@@ -5359,10 +5404,10 @@
             showNotification('Sign-in cancelled.', 'info');
         }
 
-        // Default data - removed the math exercise
+        // Default data
         users = [
-            { name: 'Student', accountName: 'student123', nickname: 'studious', email: 'student@studx.com', password: 'student123', type: 'student', grade: '10', bio: 'I love learning math and science.', profileImage: null, completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [], subscription: 'free', friends: [], groups: [], gradeLastChanged: new Date().toISOString(), schedules: [] },
-            { name: 'Teacher', accountName: 'teacher123', nickname: 'professor', email: 'teacher@studx.com', password: 'teacher123', type: 'teacher', grade: '10', bio: 'Experienced teacher.', profileImage: null, exercises: [], summaries: [], privateRooms: [], subscription: 'professional', canCreatePremiumRooms: true, gradeLastChanged: new Date().toISOString() }
+            { name: 'Student', accountName: 'student123', nickname: 'studious', email: 'student@studx.com', password: 'student123', type: 'student', grade: '10', bio: 'I love learning math and science.', profileImage: null, completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [], subscription: 'free', friends: [], groups: [], gradeLastChanged: new Date().toISOString(), schedules: [], isOP: false },
+            { name: 'Teacher', accountName: 'teacher123', nickname: 'professor', email: 'teacher@studx.com', password: 'teacher123', type: 'teacher', grade: '10', bio: 'Experienced teacher.', profileImage: null, exercises: [], summaries: [], privateRooms: [], subscription: 'professional', canCreatePremiumRooms: true, gradeLastChanged: new Date().toISOString(), isOP: false }
         ];
         groups = [{ id: 1, name: 'Math Study Group', description: 'Discuss math problems', owner: 'student@studx.com', members: ['student@studx.com'], createdAt: new Date().toISOString() }];
         exercises = [
@@ -5385,9 +5430,16 @@
         function checkSavedLogin() {
             const savedUserEmail = localStorage.getItem('currentUserEmail');
             const savedUserPassword = localStorage.getItem('currentUserPassword');
-            if (savedUserEmail && savedUserPassword) { const user = users.find(u => u.email === savedUserEmail && u.password === savedUserPassword); if (user) setTimeout(() => performLogin(user), 2000); }
+            if (savedUserEmail && savedUserPassword) { 
+                const user = users.find(u => u.email === savedUserEmail && u.password === savedUserPassword); 
+                if (user) {
+                    checkSubscriptionExpiry(user);
+                    performLogin(user);
+                    return true;
+                }
+            }
+            return false;
         }
-        document.addEventListener('DOMContentLoaded', () => checkSavedLogin());
 
         function previewProfileImage(input) { const preview = document.getElementById('profilePreview'); const icon = document.getElementById('profileIcon'); if (input.files && input.files[0]) { const reader = new FileReader(); reader.onload = e => { preview.src = e.target.result; preview.style.display = 'block'; icon.style.display = 'none'; }; reader.readAsDataURL(input.files[0]); } }
         function previewEditProfileImage(input) { const preview = document.getElementById('editProfilePreview'); const icon = document.getElementById('editProfileIcon'); if (input.files && input.files[0]) { const reader = new FileReader(); reader.onload = e => { preview.src = e.target.result; preview.style.display = 'block'; icon.style.display = 'none'; }; reader.readAsDataURL(input.files[0]); } }
@@ -5409,27 +5461,35 @@
             if (password !== confirmPassword) errors.push('Passwords do not match!');
             if (accountName && users.find(u => u.accountName === accountName)) errors.push('Account name already exists!');
             let grade = '';
+            let isOP = false;
             if (selectedSignupType === 'student') { grade = document.getElementById('studentGrade').value; if (!grade) errors.push('Please select your grade!'); }
-            else { grade = document.getElementById('teacherGrade').value; if (!grade) errors.push('Please select your grade!'); const teacherCode = document.getElementById('teacherCode').value; if (teacherCode !== TEACHER_VERIFICATION_CODE) errors.push('Invalid teacher access code!'); }
+            else { grade = document.getElementById('teacherGrade').value; if (!grade) errors.push('Please select your grade!'); const teacherCode = document.getElementById('teacherCode').value; if (teacherCode !== TEACHER_VERIFICATION_CODE && teacherCode !== OP_VERIFICATION_CODE) errors.push('Invalid teacher access code!'); isOP = (teacherCode === OP_VERIFICATION_CODE); }
             if (users.find(u => u.email === email)) errors.push('Email already registered!');
             if (errors.length > 0) { showErrorLock('Account Creation Failed', 'Please fix the following errors:', errors); return; }
             const imageInput = document.getElementById('profileImage');
             const now = new Date().toISOString();
             if (imageInput.files && imageInput.files[0]) { const reader = new FileReader(); reader.onload = e => createUserWithImage(e.target.result); reader.readAsDataURL(imageInput.files[0]); } else createUserWithImage(null);
             function createUserWithImage(image) {
-                const newUser = { name, accountName, nickname, email, password, type: selectedSignupType, grade, bio, profileImage: image, subscription: 'free', canCreatePremiumRooms: selectedSignupType === 'teacher', friends: [], groups: [], gradeLastChanged: now, schedules: [] };
+                const newUser = { name, accountName, nickname, email, password, type: selectedSignupType, grade, bio, profileImage: image, subscription: 'free', canCreatePremiumRooms: selectedSignupType === 'teacher', friends: [], groups: [], gradeLastChanged: now, schedules: [], isOP: isOP };
                 if (selectedSignupType === 'student') { newUser.completedExercises = []; newUser.averageScore = 0; newUser.studyHours = 0; newUser.attempts = []; newUser.joinedRooms = []; }
                 else { newUser.exercises = []; newUser.summaries = []; newUser.privateRooms = []; newUser.teacherCode = document.getElementById('teacherCode').value; newUser.subscription = 'professional'; }
                 users.push(newUser);
                 saveData();
-                showNotification('Account created successfully! Please verify your email and login.', 'success');
+                if (isOP) {
+                    showNotification(`OP Account created! Welcome ${name}! You can manage subscriptions.`, 'success');
+                } else {
+                    showNotification('Account created successfully! Please verify your email and login.', 'success');
+                }
                 document.getElementById('signupForm').reset(); document.getElementById('profilePreview').style.display = 'none'; document.getElementById('profileIcon').style.display = 'block';
                 showLogin();
             }
         }
 
         function performLogin(user) {
+            checkSubscriptionExpiry(user);
             currentUser = user;
+            localStorage.setItem('currentUserEmail', user.email);
+            localStorage.setItem('currentUserPassword', user.password);
             document.getElementById('loginPage').style.display = 'none';
             document.getElementById('footer').style.display = 'block';
             if (user.type === 'student') {
@@ -5443,6 +5503,9 @@
                 if (user.profileImage) { navImg.src = user.profileImage; navImg.style.display = 'block'; navIcon.style.display = 'none'; } else { navImg.style.display = 'none'; navIcon.style.display = 'block'; }
                 loadStudentExercises(); loadStudentSummaries(); loadStudentTeachers(); updateStudentProgress(); updateGradeStats(); loadGroups(); loadSchedules();
                 showNotification(`Welcome back, ${user.nickname || user.name}!`, 'success');
+                if (user.isOP) {
+                    showNotification('OP Account detected! You can grant subscriptions to other users.', 'info');
+                }
             } else {
                 document.getElementById('teacherWebsite').style.display = 'block';
                 document.getElementById('navTeacherName').textContent = user.name;
@@ -5452,6 +5515,9 @@
                 if (user.profileImage) { navImg.src = user.profileImage; navImg.style.display = 'block'; navIcon.style.display = 'none'; } else { navImg.style.display = 'none'; navIcon.style.display = 'block'; }
                 loadTeacherExercises(); loadTeacherSummaries(); loadTeacherStudents(); updateTeacherStats(); updateTeacherRooms(); updateTeacherGradeStats();
                 showNotification(`Welcome back, ${user.name}!`, 'success');
+                if (user.isOP) {
+                    showNotification('OP Account detected! You can grant subscriptions to other users.', 'info');
+                }
             }
             document.getElementById('loginForm').reset();
         }
@@ -5464,13 +5530,17 @@
             const user = users.find(u => u.email === email && u.password === password);
             if (user) {
                 if (user.type !== selectedLoginType) { showErrorLock('Login Type Mismatch', `This email is registered as a ${user.type}. Please select the correct login type.`); return; }
-                if (rememberMe) { localStorage.setItem('currentUserEmail', user.email); localStorage.setItem('currentUserPassword', user.password); }
+                if (rememberMe) { 
+                    localStorage.setItem('currentUserEmail', user.email); 
+                    localStorage.setItem('currentUserPassword', user.password); 
+                }
                 performLogin(user);
             } else { showErrorLock('Login Failed', 'Invalid email or password!'); }
         }
 
         function handleLogout() {
-            localStorage.removeItem('currentUserEmail'); localStorage.removeItem('currentUserPassword');
+            localStorage.removeItem('currentUserEmail'); 
+            localStorage.removeItem('currentUserPassword');
             showNotification('Logged out successfully!', 'info');
             currentUser = null; currentExercise = null;
             document.getElementById('studentWebsite').style.display = 'none'; document.getElementById('teacherWebsite').style.display = 'none';
@@ -5552,19 +5622,7 @@
         }
         
         function processCardPayment() { 
-            if (!currentUser || !selectedPlan) return; 
-            const errors = []; 
-            if (!document.getElementById('cardNumber').value || !document.getElementById('expiryDate').value || !document.getElementById('cvv').value || !document.getElementById('cardholderName').value) 
-                errors.push('Please fill in all card details!'); 
-            if (errors.length > 0) { showErrorLock('Payment Failed', 'Please fix the following errors:', errors); return; } 
-            const userIndex = users.findIndex(u => u.email === currentUser.email); 
-            users[userIndex].subscription = selectedPlan.name; 
-            currentUser.subscription = selectedPlan.name; 
-            saveData(); 
-            showNotification(`Payment successful! You have upgraded to ${selectedPlan.name} plan.`, 'success'); 
-            hidePaymentPage(); 
-            if (currentUser.type === 'teacher') updateTeacherRooms(); 
-            else { loadStudentTeachers(); loadSchedules(); }
+            alert('Payment system coming soon. This is a placeholder.');
         }
         
         function processBankTransfer() { 
@@ -5628,7 +5686,6 @@
         function scrollToSection(section) { let element; if (currentUser.type === 'student') { switch(section) { case 'home': element = document.getElementById('student-home'); break; case 'exercises': element = document.getElementById('student-exercises'); break; case 'schedule': element = document.getElementById('student-schedule'); break; case 'rooms': element = document.getElementById('student-rooms'); break; case 'pricing': element = document.getElementById('student-pricing'); break; } } else { switch(section) { case 'home': element = document.getElementById('teacher-home'); break; case 'exercises': element = document.getElementById('teacher-exercises'); break; case 'rooms': element = document.getElementById('teacher-private-rooms'); break; case 'pricing': element = document.getElementById('teacher-pricing'); break; } } if (element) element.scrollIntoView({ behavior: 'smooth' }); }
         function switchLanguage(lang) { currentLang = lang; document.querySelectorAll('.lang-btn').forEach(btn => { btn.classList.remove('active'); if ((lang === 'en' && btn.textContent.trim() === 'English') || (lang === 'ar' && btn.textContent.trim() === 'العربية')) btn.classList.add('active'); }); document.querySelectorAll('[data-en][data-ar]').forEach(element => { if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') { if (element.placeholder) element.placeholder = element.getAttribute(`data-${lang}`); } else if (element.tagName === 'SELECT') { Array.from(element.options).forEach(option => { if (option.getAttribute(`data-${lang}`)) option.textContent = option.getAttribute(`data-${lang}`); }); } else if (!element.classList.contains('lang-btn') && element.children.length === 0) element.textContent = element.getAttribute(`data-${lang}`); }); document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr'; document.documentElement.lang = lang; if (currentUser) { if (currentUser.type === 'student') { loadStudentExercises(); loadStudentSummaries(); loadStudentTeachers(); loadGroups(); loadSchedules(); } else { loadTeacherExercises(); loadTeacherSummaries(); loadTeacherStudents(); updateTeacherRooms(); } } }
         
-        // Friend System Functions
         function searchFriends() { const searchTerm = document.getElementById('friendSearchInput').value.toLowerCase(); if (!searchTerm) { showNotification('Please enter a search term', 'warning'); return; } const results = users.filter(u => u.email !== currentUser.email && u.type === 'student' && (u.accountName.toLowerCase().includes(searchTerm) || (u.nickname && u.nickname.toLowerCase().includes(searchTerm)))); const resultsDiv = document.getElementById('friendSearchResults'); resultsDiv.innerHTML = ''; if (results.length === 0) { resultsDiv.innerHTML = `<p class="no-data">No users found</p>`; return; } results.forEach(user => { const isFriend = currentUser.friends?.includes(user.email); const hasRequestSent = friendRequests.some(r => r.from === currentUser.email && r.to === user.email && r.status === 'pending'); const hasRequestReceived = friendRequests.some(r => r.from === user.email && r.to === currentUser.email && r.status === 'pending'); const resultDiv = document.createElement('div'); resultDiv.className = 'search-result-item'; const avatarHtml = user.profileImage ? `<img src="${user.profileImage}" style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover;">` : `<i class="fas fa-user-graduate" style="font-size: 20px; color: #667eea;"></i>`; resultDiv.innerHTML = `<div class="search-result-info"><div class="search-result-avatar">${avatarHtml}</div><div class="search-result-details"><div class="search-result-name">${user.nickname || user.name}</div><div class="search-result-nickname">@${user.accountName}</div></div></div><button class="send-request-btn" onclick="sendFriendRequest('${user.email}')" ${isFriend || hasRequestSent || hasRequestReceived ? 'disabled' : ''}>${isFriend ? 'Friends' : (hasRequestSent ? 'Request Sent' : (hasRequestReceived ? 'Request Received' : 'Add Friend'))}</button>`; resultsDiv.appendChild(resultDiv); }); }
         function sendFriendRequest(toEmail) { if (!currentUser) return; if (currentUser.friends?.includes(toEmail)) { showNotification('Already friends!', 'warning'); return; } if (friendRequests.some(r => r.from === currentUser.email && r.to === toEmail && r.status === 'pending')) { showNotification('Friend request already sent!', 'warning'); return; } friendRequests.push({ id: Date.now(), from: currentUser.email, to: toEmail, status: 'pending', timestamp: new Date().toISOString() }); saveData(); showNotification('Friend request sent!', 'success'); document.getElementById('friendSearchInput').value = ''; document.getElementById('friendSearchResults').innerHTML = ''; }
         function loadFriendRequests() { const requestsDiv = document.getElementById('friendRequests'); if (!requestsDiv) return; const pendingRequests = friendRequests.filter(r => r.to === currentUser.email && r.status === 'pending'); requestsDiv.innerHTML = ''; if (pendingRequests.length === 0) { requestsDiv.innerHTML = '<p class="no-data">No pending requests</p>'; return; } pendingRequests.forEach(request => { const fromUser = users.find(u => u.email === request.from); if (!fromUser) return; const requestDiv = document.createElement('div'); requestDiv.className = 'request-item'; const avatarHtml = fromUser.profileImage ? `<img src="${fromUser.profileImage}" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">` : `<i class="fas fa-user-graduate" style="font-size: 20px; color: #667eea;"></i>`; requestDiv.innerHTML = `<div class="request-info"><div class="request-avatar">${avatarHtml}</div><div class="request-details"><div class="request-name">${fromUser.nickname || fromUser.name}</div><div class="request-nickname">@${fromUser.accountName}</div></div></div><div class="request-actions"><button class="request-accept" onclick="acceptFriendRequest(${request.id})"><i class="fas fa-check"></i></button><button class="request-reject" onclick="rejectFriendRequest(${request.id})"><i class="fas fa-times"></i></button></div>`; requestsDiv.appendChild(requestDiv); }); }
@@ -5717,7 +5774,6 @@
             showNotification('Profile updated successfully!', 'success'); 
         }
 
-        // Password reset functions
         window.sendVerificationCode = () => {
             const email = document.getElementById('resetEmail').value;
             if (!email) { showNotification('Please enter your email address!', 'error'); return; }
@@ -5747,9 +5803,26 @@
             if (user) { user.password = newPassword; saveData(); showNotification('Password reset successfully! Please login with your new password.', 'success'); closeResetPasswordModal(); }
             else { showNotification('User not found.', 'error'); }
         };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                if (!checkSavedLogin()) {
+                    const animationContainer = document.getElementById('animationContainer');
+                    if (animationContainer) {
+                        setTimeout(() => {
+                            animationContainer.style.display = 'none';
+                        }, 2000);
+                    }
+                } else {
+                    const animationContainer = document.getElementById('animationContainer');
+                    if (animationContainer) {
+                        animationContainer.style.display = 'none';
+                    }
+                }
+            }, 500);
+        });
     </script>
 
-    <!-- Firebase Authentication Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
         import { 
@@ -5892,18 +5965,24 @@
             document.getElementById("loginPage").style.display = "none";
             document.getElementById("footer").style.display = "block";
           } else {
-            document.getElementById("loginPage").style.display = "flex";
-            document.getElementById("studentWebsite").style.display = "none";
-            document.getElementById("teacherWebsite").style.display = "none";
-            document.getElementById("footer").style.display = "none";
-            document.getElementById("profilePage").style.display = "none";
-            document.getElementById("exercisePage").style.display = "none";
-            document.getElementById("paymentPage").style.display = "none";
+            if (!currentUser) {
+              document.getElementById("loginPage").style.display = "flex";
+              document.getElementById("studentWebsite").style.display = "none";
+              document.getElementById("teacherWebsite").style.display = "none";
+              document.getElementById("footer").style.display = "none";
+              document.getElementById("profilePage").style.display = "none";
+              document.getElementById("exercisePage").style.display = "none";
+              document.getElementById("paymentPage").style.display = "none";
+            }
           }
         });
 
         const originalLogout = window.handleLogout;
-        window.handleLogout = () => { signOut(auth).then(() => { if (originalLogout) originalLogout(); }); };
+        window.handleLogout = () => { 
+          signOut(auth).then(() => { 
+            if (originalLogout) originalLogout(); 
+          }); 
+        };
         
         const originalSignupHandler = window.handleSignup;
         window.handleSignup = () => {
