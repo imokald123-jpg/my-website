@@ -4434,6 +4434,97 @@
             margin-left: 8px;
         }
 
+        /* OP Panel Styles */
+        .op-panel {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 2000;
+        }
+
+        .op-panel-btn {
+            background: linear-gradient(135deg, #ff0000, #ff6600);
+            border: none;
+            border-radius: 50px;
+            padding: 12px 20px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s;
+        }
+
+        .op-panel-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .op-panel-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .op-panel-card {
+            background: linear-gradient(135deg, rgba(255, 0, 0, 0.1), rgba(255, 102, 0, 0.1));
+            border: 2px solid #ff6600;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .op-panel-card h2 {
+            color: #ff6600;
+            margin-bottom: 20px;
+        }
+
+        .op-panel-card input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+        }
+
+        .op-panel-card select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+        }
+
+        .op-panel-card button {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #ff6600, #ff0000);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+
+        .op-panel-card .close-op {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
         /* WhatsApp Number Animation */
         .whatsapp-number-modal {
             position: fixed;
@@ -5000,6 +5091,13 @@
         </div>
     </div>
 
+    <!-- OP Panel (visible only for OP accounts) -->
+    <div class="op-panel" id="opPanel" style="display: none;">
+        <button class="op-panel-btn" onclick="showOPPanel()">
+            <i class="fas fa-crown"></i> OP Panel
+        </button>
+    </div>
+
     <!-- Payment Page -->
     <div class="payment-page" id="paymentPage" style="display: none;">
         <div class="payment-container">
@@ -5160,6 +5258,53 @@
             }, 2000);
         }
 
+        function showOPPanel() {
+            const overlay = document.createElement('div');
+            overlay.className = 'op-panel-modal';
+            overlay.innerHTML = `
+                <div class="op-panel-card">
+                    <h2><i class="fas fa-crown"></i> OP Control Panel</h2>
+                    <p style="color: white; margin-bottom: 20px;">Grant subscription to a student after WhatsApp payment confirmation</p>
+                    <input type="email" id="opStudentEmail" placeholder="Student Email Address">
+                    <select id="opSubscriptionDays">
+                        <option value="30">30 days</option>
+                        <option value="60">60 days</option>
+                        <option value="90">90 days</option>
+                        <option value="180">180 days</option>
+                        <option value="365">365 days</option>
+                    </select>
+                    <button onclick="grantSubscriptionFromOP()">Grant Subscription</button>
+                    <button class="close-op" onclick="this.closest('.op-panel-modal').remove()">Close</button>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+        }
+
+        function grantSubscriptionFromOP() {
+            const email = document.getElementById('opStudentEmail').value;
+            const days = parseInt(document.getElementById('opSubscriptionDays').value);
+            if (!email) {
+                showNotification('Please enter student email!', 'error');
+                return;
+            }
+            const targetUser = users.find(u => u.email === email);
+            if (!targetUser) {
+                showNotification('User not found!', 'error');
+                return;
+            }
+            if (targetUser.type !== 'student') {
+                showNotification('Can only grant subscription to students!', 'error');
+                return;
+            }
+            const expiryDate = new Date();
+            expiryDate.setDate(expiryDate.getDate() + days);
+            targetUser.subscription = 'professional';
+            targetUser.subscriptionExpiry = expiryDate.toISOString();
+            saveData();
+            showNotification(`Subscription granted to ${targetUser.name} for ${days} days!`, 'success');
+            document.querySelector('.op-panel-modal')?.remove();
+        }
+
         function showSubscriptionRequired(featureName) {
             const overlay = document.createElement('div');
             overlay.className = 'subscription-overlay';
@@ -5195,21 +5340,6 @@
                 }
             }
             return false;
-        }
-
-        function giveSubscription(targetUserEmail, days = 30) {
-            const targetUser = users.find(u => u.email === targetUserEmail);
-            if (!targetUser) {
-                showNotification('User not found!', 'error');
-                return false;
-            }
-            const expiryDate = new Date();
-            expiryDate.setDate(expiryDate.getDate() + days);
-            targetUser.subscription = 'professional';
-            targetUser.subscriptionExpiry = expiryDate.toISOString();
-            saveData();
-            showNotification(`Subscription granted to ${targetUser.name} for ${days} days!`, 'success');
-            return true;
         }
 
         function addSchedule() {
@@ -5550,6 +5680,14 @@
             localStorage.setItem('currentUserPassword', user.password);
             document.getElementById('loginPage').style.display = 'none';
             document.getElementById('footer').style.display = 'block';
+            
+            // Show OP Panel if user is OP
+            if (user.isOP) {
+                document.getElementById('opPanel').style.display = 'block';
+            } else {
+                document.getElementById('opPanel').style.display = 'none';
+            }
+            
             if (user.type === 'student') {
                 document.getElementById('studentWebsite').style.display = 'block';
                 document.getElementById('studentDisplayName').textContent = user.nickname || user.name;
@@ -5606,6 +5744,7 @@
             document.getElementById('paymentPage').style.display = 'none'; document.getElementById('footer').style.display = 'none';
             document.getElementById('loginPage').style.display = 'flex'; document.getElementById('loginForm').style.display = 'block';
             document.getElementById('signupForm').style.display = 'none'; document.getElementById('editProfileModal').classList.remove('active');
+            document.getElementById('opPanel').style.display = 'none';
         }
 
         function handleAddExercise(event) {
