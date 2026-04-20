@@ -6,7 +6,7 @@
     <title>StudX - منصة التعلم التفاعلية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* All CSS styles remain exactly the same as your original */
+        /* All CSS styles remain exactly the same */
         * {
             margin: 0;
             padding: 0;
@@ -1478,7 +1478,7 @@
         .hero {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 80px 20px;
+            padding: 60px 20px;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 50px;
@@ -1557,6 +1557,93 @@
             margin: 0 10px;
             color: #667eea;
             opacity: 0.8;
+        }
+
+        /* BIG FEATURE BUTTONS SECTION */
+        .feature-buttons {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        
+        .feature-buttons h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #fff;
+        }
+        
+        .features-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .big-feature-btn {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .big-feature-btn:hover {
+            transform: translateY(-10px);
+            border-color: #667eea;
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+            background: rgba(102, 126, 234, 0.1);
+        }
+        
+        .big-feature-btn i {
+            font-size: 60px;
+            color: #667eea;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        
+        .big-feature-btn h3 {
+            font-size: 28px;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+        
+        .big-feature-btn p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .big-feature-btn .btn-explore {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 30px;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            transition: transform 0.3s;
+        }
+        
+        .big-feature-btn:hover .btn-explore {
+            transform: scale(1.05);
+        }
+        
+        .premium-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #000;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
         }
 
         /* Section Title */
@@ -5136,16 +5223,69 @@
                 <div class="hero-content">
                     <h1><span data-en="Welcome back," data-ar="مرحباً بعودتك،">Welcome back,</span> <span id="studentDisplayName">Student</span>!</h1>
                     <p data-en="Continue your learning journey." data-ar="واصل رحلتك التعليمية.">Continue your learning journey.</p>
-                    <div class="hero-buttons">
-                        <button class="btn-primary" onclick="navigateToPage('exercises')" data-en="Start Practicing" data-ar="ابدأ التمارين">Start Practicing</button>
-                        <button class="btn-secondary" onclick="navigateToPage('rooms')" data-en="Find a Teacher" data-ar="ابحث عن مدرس">Find a Teacher</button>
-                    </div>
                 </div>
                 <div class="hero-image">
                     <i class="fas fa-laptop-code"></i>
                     <i class="fas fa-book-open"></i>
                 </div>
             </section>
+            
+            <!-- BIG FEATURE BUTTONS SECTION -->
+            <div class="feature-buttons">
+                <h2>Explore StudX Features</h2>
+                <div class="features-buttons-grid">
+                    <div class="big-feature-btn" onclick="navigateToPage('exercises')">
+                        <i class="fas fa-dumbbell"></i>
+                        <h3>Interactive Exercises</h3>
+                        <p>Practice with thousands of exercises across all subjects. Test your knowledge and track your progress.</p>
+                        <span class="btn-explore">Start Practicing →</span>
+                    </div>
+                    
+                    <div class="big-feature-btn" onclick="navigateToPage('summaries')">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>Study Summaries</h3>
+                        <p>Access comprehensive summaries created by expert teachers. Download PDFs for offline study.</p>
+                        <span class="btn-explore">Browse Summaries →</span>
+                    </div>
+                    
+                    <div class="big-feature-btn" onclick="navigateToPage('schedule')">
+                        <i class="fas fa-calendar-alt"></i>
+                        <h3>Study Schedule</h3>
+                        <p>Create your personalized study schedule. Get reminders and stay organized.</p>
+                        <span class="btn-explore">Plan Your Day →</span>
+                        <span class="premium-tag">Premium</span>
+                    </div>
+                    
+                    <div class="big-feature-btn" onclick="navigateToPage('rooms')">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <h3>Private Rooms</h3>
+                        <p>Connect with expert teachers for personalized tutoring sessions.</p>
+                        <span class="btn-explore">Find a Teacher →</span>
+                    </div>
+                    
+                    <div class="big-feature-btn" onclick="navigateToPage('groups')">
+                        <i class="fas fa-users"></i>
+                        <h3>Study Groups</h3>
+                        <p>Create or join study groups. Collaborate with friends and learn together.</p>
+                        <span class="btn-explore">Join Groups →</span>
+                    </div>
+                    
+                    <div class="big-feature-btn" onclick="navigateToPage('pricing')">
+                        <i class="fas fa-crown"></i>
+                        <h3>Premium Plans</h3>
+                        <p>Unlock unlimited access to all features with our affordable subscription plans.</p>
+                        <span class="btn-explore">View Plans →</span>
+                    </div>
+                    
+                    <div class="big-feature-btn" onclick="navigateToPage('progress')">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>My Progress</h3>
+                        <p>Track your learning journey. See your achievements and areas for improvement.</p>
+                        <span class="btn-explore">View Stats →</span>
+                    </div>
+                </div>
+            </div>
+            
             <div class="grade-info">
                 <h3><span data-en="Your Grade:" data-ar="صفك:">Your Grade:</span> <span id="currentStudentGrade">10</span></h3>
                 <p><span data-en="Exercises available:" data-ar="التمارين المتاحة:">Exercises available:</span> <span id="studentGradeExerciseCount">0</span></p>
@@ -5449,7 +5589,7 @@
     </footer>
 
     <script>
-        // ========== CLIENT-SIDE ROUTING IMPLEMENTATION ==========
+        // ========== CLIENT-SIDE ROUTING & BIG BUTTONS IMPLEMENTATION ==========
         
         // Navigation function - updates URL hash and loads the correct page
         function navigateToPage(pageName) {
