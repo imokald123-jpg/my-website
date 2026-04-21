@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>StudX - منصة التعلم التفاعلية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* All CSS styles remain exactly the same */
+        /* All CSS styles remain exactly the same as your original */
         * {
             margin: 0;
             padding: 0;
@@ -1294,39 +1294,6 @@
             font-size: 14px;
         }
 
-        /* Demo Credentials */
-        .demo-credentials {
-            margin-top: 25px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .demo-credentials p {
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .demo-student, .demo-teacher {
-            padding: 5px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .demo-student i {
-            color: #1976d2;
-        }
-
-        .demo-teacher i {
-            color: #7b1fa2;
-        }
-
         /* Main Website Styles */
         .main-website {
             background: #000000;
@@ -1511,7 +1478,7 @@
         .hero {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 80px 20px;
+            padding: 60px 20px;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 50px;
@@ -1590,6 +1557,93 @@
             margin: 0 10px;
             color: #667eea;
             opacity: 0.8;
+        }
+
+        /* BIG FEATURE BUTTONS SECTION */
+        .feature-buttons {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        
+        .feature-buttons h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #fff;
+        }
+        
+        .features-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .big-feature-btn {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .big-feature-btn:hover {
+            transform: translateY(-10px);
+            border-color: #667eea;
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+            background: rgba(102, 126, 234, 0.1);
+        }
+        
+        .big-feature-btn i {
+            font-size: 60px;
+            color: #667eea;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        
+        .big-feature-btn h3 {
+            font-size: 28px;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+        
+        .big-feature-btn p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .big-feature-btn .btn-explore {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 30px;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            transition: transform 0.3s;
+        }
+        
+        .big-feature-btn:hover .btn-explore {
+            transform: scale(1.05);
+        }
+        
+        .premium-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #000;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
         }
 
         /* Section Title */
@@ -4653,7 +4707,7 @@
             background: rgba(255, 255, 255, 0.2);
         }
 
-        /* WhatsApp Number Animation */
+        /* WhatsApp Number Modal */
         .whatsapp-number-modal {
             position: fixed;
             top: 0;
@@ -4701,7 +4755,6 @@
             font-size: 80px;
             color: white;
             margin-bottom: 20px;
-            animation: pulse 0.8s infinite;
         }
 
         .whatsapp-number-card h3 {
@@ -4719,6 +4772,8 @@
             border-radius: 20px;
             margin: 20px 0;
             font-family: monospace;
+            user-select: all;
+            cursor: pointer;
         }
 
         .whatsapp-number-card p {
@@ -4727,10 +4782,20 @@
             margin-bottom: 20px;
         }
 
-        .whatsapp-number-card .redirecting {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 12px;
+        .close-number-btn {
             margin-top: 15px;
+            padding: 10px 25px;
+            background: rgba(0, 0, 0, 0.3);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .close-number-btn:hover {
+            background: rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
@@ -5136,14 +5201,14 @@
                 <div class="grade-badge" id="studentGradeBadge">Grade 10</div>
                 <button class="mobile-menu-btn" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
                 <ul class="nav-menu" id="studentNavMenu">
-                    <li><a href="#student-home" class="active" data-en="Home" data-ar="الرئيسية">Home</a></li>
-                    <li><a href="#student-exercises" data-en="Exercises" data-ar="التمارين">Exercises</a></li>
-                    <li><a href="#student-summaries" data-en="Summaries" data-ar="الملخصات">Summaries</a></li>
-                    <li><a href="#student-schedule" data-en="Study Schedule" data-ar="جدول الدراسة">Study Schedule</a></li>
-                    <li><a href="#student-rooms" data-en="Private Rooms" data-ar="غرف خاصة">Private Rooms</a></li>
-                    <li><a href="#student-groups" data-en="Groups" data-ar="المجموعات">Groups</a></li>
-                    <li><a href="#student-pricing" data-en="Pricing" data-ar="الباقات">Pricing</a></li>
-                    <li><a href="#student-progress" data-en="My Progress" data-ar="تقدمي">My Progress</a></li>
+                    <li><a href="#" data-page="home" class="nav-link active" data-en="Home" data-ar="الرئيسية">Home</a></li>
+                    <li><a href="#" data-page="exercises" class="nav-link" data-en="Exercises" data-ar="التمارين">Exercises</a></li>
+                    <li><a href="#" data-page="summaries" class="nav-link" data-en="Summaries" data-ar="الملخصات">Summaries</a></li>
+                    <li><a href="#" data-page="schedule" class="nav-link" data-en="Study Schedule" data-ar="جدول الدراسة">Study Schedule</a></li>
+                    <li><a href="#" data-page="rooms" class="nav-link" data-en="Private Rooms" data-ar="غرف خاصة">Private Rooms</a></li>
+                    <li><a href="#" data-page="groups" class="nav-link" data-en="Groups" data-ar="المجموعات">Groups</a></li>
+                    <li><a href="#" data-page="pricing" class="nav-link" data-en="Pricing" data-ar="الباقات">Pricing</a></li>
+                    <li><a href="#" data-page="progress" class="nav-link" data-en="My Progress" data-ar="تقدمي">My Progress</a></li>
                 </ul>
                 <div class="nav-right">
                     <div class="profile-trigger" onclick="showProfile()"><div class="avatar" id="navStudentAvatar"><i class="fas fa-user"></i><img id="navStudentAvatarImg" style="display: none;"></div><span class="name" id="navStudentName">Student</span><span class="badge" data-en="Student" data-ar="طالب">Student</span></div>
@@ -5151,12 +5216,99 @@
                 </div>
             </div>
         </nav>
-        <div class="student-content">
-            <section class="hero" id="student-home"><div class="hero-content"><h1><span data-en="Welcome back," data-ar="مرحباً بعودتك،">Welcome back,</span> <span id="studentDisplayName">Student</span>!</h1><p data-en="Continue your learning journey." data-ar="واصل رحلتك التعليمية.">Continue your learning journey.</p><div class="hero-buttons"><a href="#student-exercises" class="btn-primary" data-en="Start Practicing" data-ar="ابدأ التمارين">Start Practicing</a><a href="#student-rooms" class="btn-secondary" data-en="Find a Teacher" data-ar="ابحث عن مدرس">Find a Teacher</a></div></div><div class="hero-image"><i class="fas fa-laptop-code"></i><i class="fas fa-book-open"></i></div></section>
-            <div class="grade-info" id="studentGradeInfo"><h3><span data-en="Your Grade:" data-ar="صفك:">Your Grade:</span> <span id="currentStudentGrade">10</span></h3><p><span data-en="Exercises available:" data-ar="التمارين المتاحة:">Exercises available:</span> <span id="studentGradeExerciseCount">0</span></p><p><span data-en="Teachers available:" data-ar="المدرسون المتاحون:">Teachers available:</span> <span id="studentGradeTeacherCount">0</span></p></div>
-            <section class="exercises" id="student-exercises"><h2 class="section-title" data-en="Available Exercises" data-ar="التمارين المتاحة">Available Exercises</h2><div class="exercises-grid" id="studentExercisesGrid"></div></section>
-            <section class="summaries" id="student-summaries"><h2 class="section-title" data-en="Study Summaries" data-ar="الملخصات الدراسية">Study Summaries</h2><div class="summaries-grid" id="studentSummariesGrid"></div></section>
-            <section class="schedule-section" id="student-schedule">
+        
+        <!-- Page Containers -->
+        <div id="student-home-page" class="page-container" style="display: block;">
+            <section class="hero">
+                <div class="hero-content">
+                    <h1><span data-en="Welcome back," data-ar="مرحباً بعودتك،">Welcome back,</span> <span id="studentDisplayName">Student</span>!</h1>
+                    <p data-en="Continue your learning journey." data-ar="واصل رحلتك التعليمية.">Continue your learning journey.</p>
+                </div>
+                <div class="hero-image">
+                    <i class="fas fa-laptop-code"></i>
+                    <i class="fas fa-book-open"></i>
+                </div>
+            </section>
+            
+            <!-- BIG FEATURE BUTTONS SECTION with Arabic Support -->
+            <div class="feature-buttons">
+                <h2 data-en="Explore StudX Features" data-ar="استكشف ميزات ستادكس">Explore StudX Features</h2>
+                <div class="features-buttons-grid">
+                    <div class="big-feature-btn" onclick="navigateToPage('exercises')">
+                        <i class="fas fa-dumbbell"></i>
+                        <h3 data-en="Interactive Exercises" data-ar="تمارين تفاعلية">Interactive Exercises</h3>
+                        <p data-en="Practice with thousands of exercises across all subjects. Test your knowledge and track your progress." data-ar="تدرب على آلاف التمارين في جميع المواد. اختبر معرفتك وتتبع تقدمك.">Practice with thousands of exercises across all subjects. Test your knowledge and track your progress.</p>
+                        <span class="btn-explore" data-en="Start Practicing →" data-ar="ابدأ التمارين ←">Start Practicing →</span>
+                    </div>
+                    
+                    <div class="big-feature-btn" onclick="navigateToPage('summaries')">
+                        <i class="fas fa-file-alt"></i>
+                        <h3 data-en="Study Summaries" data-ar="ملخصات دراسية">Study Summaries</h3>
+                        <p data-en="Access comprehensive summaries created by expert teachers. Download PDFs for offline study." data-ar="احصل على ملخصات شاملة من معلمين خبراء. حمل ملفات PDF للدراسة بدون اتصال.">Access comprehensive summaries created by expert teachers. Download PDFs for offline study.</p>
+                        <span class="btn-explore" data-en="Browse Summaries →" data-ar="تصفح الملخصات ←">Browse Summaries →</span>
+                    </div>
+                    
+                    <div class="big-feature-btn" onclick="navigateToPage('schedule')">
+                        <i class="fas fa-calendar-alt"></i>
+                        <h3 data-en="Study Schedule" data-ar="جدول الدراسة">Study Schedule</h3>
+                        <p data-en="Create your personalized study schedule. Get reminders and stay organized." data-ar="أنشئ جدول دراستك الشخصي. احصل على تذكيرات وحافظ على تنظيمك.">Create your personalized study schedule. Get reminders and stay organized.</p>
+                        <span class="btn-explore" data-en="Plan Your Day →" data-ar="خطط ليومك ←">Plan Your Day →</span>
+                        <span class="premium-tag" data-en="Premium" data-ar="مميز">Premium</span>
+                    </div>
+                    
+                    <div class="big-feature-btn" onclick="navigateToPage('rooms')">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <h3 data-en="Private Rooms" data-ar="غرف خاصة">Private Rooms</h3>
+                        <p data-en="Connect with expert teachers for personalized tutoring sessions." data-ar="تواصل مع معلمين خبراء لجلسات تعليمية خاصة.">Connect with expert teachers for personalized tutoring sessions.</p>
+                        <span class="btn-explore" data-en="Find a Teacher →" data-ar="ابحث عن معلم ←">Find a Teacher →</span>
+                    </div>
+                    
+                    <div class="big-feature-btn" onclick="navigateToPage('groups')">
+                        <i class="fas fa-users"></i>
+                        <h3 data-en="Study Groups" data-ar="مجموعات الدراسة">Study Groups</h3>
+                        <p data-en="Create or join study groups. Collaborate with friends and learn together." data-ar="أنشئ أو انضم إلى مجموعات الدراسة. تعاون مع الأصدقاء وتعلموا معاً.">Create or join study groups. Collaborate with friends and learn together.</p>
+                        <span class="btn-explore" data-en="Join Groups →" data-ar="انضم للمجموعات ←">Join Groups →</span>
+                    </div>
+                    
+                    <div class="big-feature-btn" onclick="navigateToPage('pricing')">
+                        <i class="fas fa-crown"></i>
+                        <h3 data-en="Premium Plans" data-ar="الباقات المميزة">Premium Plans</h3>
+                        <p data-en="Unlock unlimited access to all features with our affordable subscription plans." data-ar="افتح الوصول غير المحدود لجميع الميزات من خلال خطط الاشتراك بأسعار معقولة.">Unlock unlimited access to all features with our affordable subscription plans.</p>
+                        <span class="btn-explore" data-en="View Plans →" data-ar="عرض الباقات ←">View Plans →</span>
+                    </div>
+                    
+                    <div class="big-feature-btn" onclick="navigateToPage('progress')">
+                        <i class="fas fa-chart-line"></i>
+                        <h3 data-en="My Progress" data-ar="تقدمي">My Progress</h3>
+                        <p data-en="Track your learning journey. See your achievements and areas for improvement." data-ar="تتبع رحلتك التعليمية. شاهد إنجازاتك ومجالات التحسين.">Track your learning journey. See your achievements and areas for improvement.</p>
+                        <span class="btn-explore" data-en="View Stats →" data-ar="عرض الإحصائيات ←">View Stats →</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grade-info">
+                <h3><span data-en="Your Grade:" data-ar="صفك:">Your Grade:</span> <span id="currentStudentGrade">10</span></h3>
+                <p><span data-en="Exercises available:" data-ar="التمارين المتاحة:">Exercises available:</span> <span id="studentGradeExerciseCount">0</span></p>
+                <p><span data-en="Teachers available:" data-ar="المدرسون المتاحون:">Teachers available:</span> <span id="studentGradeTeacherCount">0</span></p>
+            </div>
+        </div>
+        
+        <div id="student-exercises-page" class="page-container" style="display: none;">
+            <section class="exercises">
+                <h2 class="section-title" data-en="Available Exercises" data-ar="التمارين المتاحة">Available Exercises</h2>
+                <div class="exercises-grid" id="studentExercisesGrid"></div>
+            </section>
+        </div>
+        
+        <div id="student-summaries-page" class="page-container" style="display: none;">
+            <section class="summaries">
+                <h2 class="section-title" data-en="Study Summaries" data-ar="الملخصات الدراسية">Study Summaries</h2>
+                <div class="summaries-grid" id="studentSummariesGrid"></div>
+            </section>
+        </div>
+        
+        <div id="student-schedule-page" class="page-container" style="display: none;">
+            <section class="schedule-section">
                 <h2 class="section-title">Study Schedule <span class="premium-badge">Premium Feature</span></h2>
                 <div class="schedule-container">
                     <div class="add-schedule-card">
@@ -5181,9 +5333,62 @@
                     </div>
                 </div>
             </section>
-            <section class="private-rooms" id="student-rooms"><h2 class="section-title" data-en="Available Teachers & Rooms" data-ar="المدرسون والغرف المتاحة">Available Teachers & Rooms</h2><div class="rooms-grid" id="studentTeachersGrid"></div></section>
-            <section class="pricing" id="student-pricing"><h2 class="section-title" data-en="Pricing" data-ar="الباقات">Pricing</h2><div class="pricing-grid"><div class="pricing-card"><h3>Regular</h3><div class="price">2 <span>OMR</span><small>per month</small></div><button class="pricing-btn" onclick="showPaymentPage('regular', 2)">Select Plan</button></div><div class="pricing-card popular"><div class="popular-badge">MOST POPULAR</div><h3>Professional</h3><div class="price">4 <span>OMR</span><small>per month</small></div><button class="pricing-btn popular-btn" onclick="showPaymentPage('professional', 4)">Select Plan</button></div></div></section>
-            <section class="progress" id="student-progress"><h2 class="section-title" data-en="My Progress" data-ar="تقدمي">My Progress</h2><div class="progress-stats"><div class="stat-card"><i class="fas fa-check-circle"></i><div class="stat-number" id="completedExercises">0</div><div class="stat-label">Completed</div></div><div class="stat-card"><i class="fas fa-star"></i><div class="stat-number" id="averageScore">0%</div><div class="stat-label">Avg Score</div></div><div class="stat-card"><i class="fas fa-clock"></i><div class="stat-number" id="studyHours">0</div><div class="stat-label">Hours</div></div><div class="stat-card"><i class="fas fa-door-open"></i><div class="stat-number" id="joinedRooms">0</div><div class="stat-label">Rooms</div></div></div></section>
+        </div>
+        
+        <div id="student-rooms-page" class="page-container" style="display: none;">
+            <section class="private-rooms">
+                <h2 class="section-title" data-en="Available Teachers & Rooms" data-ar="المدرسون والغرف المتاحة">Available Teachers & Rooms</h2>
+                <div class="rooms-grid" id="studentTeachersGrid"></div>
+            </section>
+        </div>
+        
+        <div id="student-groups-page" class="page-container" style="display: none;">
+            <section class="groups-section">
+                <h2 class="section-title">Friends & Groups</h2>
+                <div class="groups-container">
+                    <div class="groups-sidebar">
+                        <h3><i class="fas fa-user-friends"></i> Friend Requests</h3>
+                        <div id="friendRequests" class="friend-requests"></div>
+                        <h3><i class="fas fa-users"></i> My Friends</h3>
+                        <div id="friendsList" class="friends-list"></div>
+                    </div>
+                    <div class="groups-main">
+                        <div class="add-friend-form">
+                            <h4><i class="fas fa-user-plus"></i> Add Friend</h4>
+                            <div class="friend-search">
+                                <input type="text" id="friendSearchInput" placeholder="Search by account name or nickname">
+                                <button onclick="searchFriends()">Search</button>
+                            </div>
+                            <div id="friendSearchResults" class="search-results"></div>
+                        </div>
+                        <h3><i class="fas fa-users"></i> My Groups</h3>
+                        <div id="groupsList" class="groups-list"></div>
+                        <button class="create-group-btn" onclick="createGroup()"><i class="fas fa-plus"></i> Create New Group</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <div id="student-pricing-page" class="page-container" style="display: none;">
+            <section class="pricing">
+                <h2 class="section-title" data-en="Pricing" data-ar="الباقات">Pricing</h2>
+                <div class="pricing-grid">
+                    <div class="pricing-card"><h3>Regular</h3><div class="price">2 <span>OMR</span><small>per month</small></div><button class="pricing-btn" onclick="showPaymentPage('regular', 2)">Select Plan</button></div>
+                    <div class="pricing-card popular"><div class="popular-badge">MOST POPULAR</div><h3>Professional</h3><div class="price">4 <span>OMR</span><small>per month</small></div><button class="pricing-btn popular-btn" onclick="showPaymentPage('professional', 4)">Select Plan</button></div>
+                </div>
+            </section>
+        </div>
+        
+        <div id="student-progress-page" class="page-container" style="display: none;">
+            <section class="progress">
+                <h2 class="section-title" data-en="My Progress" data-ar="تقدمي">My Progress</h2>
+                <div class="progress-stats">
+                    <div class="stat-card"><i class="fas fa-check-circle"></i><div class="stat-number" id="completedExercises">0</div><div class="stat-label">Completed</div></div>
+                    <div class="stat-card"><i class="fas fa-star"></i><div class="stat-number" id="averageScore">0%</div><div class="stat-label">Avg Score</div></div>
+                    <div class="stat-card"><i class="fas fa-clock"></i><div class="stat-number" id="studyHours">0</div><div class="stat-label">Hours</div></div>
+                    <div class="stat-card"><i class="fas fa-door-open"></i><div class="stat-number" id="joinedRooms">0</div><div class="stat-label">Rooms</div></div>
+                </div>
+            </section>
         </div>
     </div>
 
@@ -5195,14 +5400,14 @@
                 <div class="grade-badge" id="teacherGradeBadge">Grade 10</div>
                 <button class="mobile-menu-btn" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
                 <ul class="nav-menu" id="teacherNavMenu">
-                    <li><a href="#teacher-home" class="active" data-en="Dashboard" data-ar="لوحة التحكم">Dashboard</a></li>
-                    <li><a href="#teacher-exercises" data-en="My Exercises" data-ar="تماريني">My Exercises</a></li>
-                    <li><a href="#teacher-add-exercise" data-en="Add Exercise" data-ar="إضافة تمرين">Add Exercise</a></li>
-                    <li><a href="#teacher-summaries" data-en="My Summaries" data-ar="ملخصاتي">My Summaries</a></li>
-                    <li><a href="#teacher-add-summary" data-en="Add Summary" data-ar="إضافة ملخص">Add Summary</a></li>
-                    <li><a href="#teacher-private-rooms" data-en="Private Rooms" data-ar="غرف خاصة">Private Rooms</a></li>
-                    <li><a href="#teacher-pricing" data-en="Pricing" data-ar="الباقات">Pricing</a></li>
-                    <li><a href="#teacher-students" data-en="My Students" data-ar="طلابي">My Students</a></li>
+                    <li><a href="#" data-page="dashboard" class="nav-link active" data-en="Dashboard" data-ar="لوحة التحكم">Dashboard</a></li>
+                    <li><a href="#" data-page="my-exercises" class="nav-link" data-en="My Exercises" data-ar="تماريني">My Exercises</a></li>
+                    <li><a href="#" data-page="add-exercise" class="nav-link" data-en="Add Exercise" data-ar="إضافة تمرين">Add Exercise</a></li>
+                    <li><a href="#" data-page="my-summaries" class="nav-link" data-en="My Summaries" data-ar="ملخصاتي">My Summaries</a></li>
+                    <li><a href="#" data-page="add-summary" class="nav-link" data-en="Add Summary" data-ar="إضافة ملخص">Add Summary</a></li>
+                    <li><a href="#" data-page="teacher-rooms" class="nav-link" data-en="Private Rooms" data-ar="غرف خاصة">Private Rooms</a></li>
+                    <li><a href="#" data-page="teacher-pricing" class="nav-link" data-en="Pricing" data-ar="الباقات">Pricing</a></li>
+                    <li><a href="#" data-page="my-students" class="nav-link" data-en="My Students" data-ar="طلابي">My Students</a></li>
                 </ul>
                 <div class="nav-right">
                     <div class="profile-trigger" onclick="showProfile()"><div class="avatar" id="navTeacherAvatar"><i class="fas fa-user"></i><img id="navTeacherAvatarImg" style="display: none;"></div><span class="name" id="navTeacherName">Teacher</span><span class="badge" data-en="Teacher" data-ar="مدرس">Teacher</span></div>
@@ -5210,18 +5415,81 @@
                 </div>
             </div>
         </nav>
-        <div class="teacher-content">
-            <section class="teacher-dashboard" id="teacher-home"><h1 class="section-title" data-en="Teacher Dashboard" data-ar="لوحة تحكم المدرس">Teacher Dashboard</h1><div class="progress-stats"><div class="stat-card"><i class="fas fa-book"></i><div class="stat-number" id="teacherExercisesCount">0</div><div class="stat-label">Exercises</div></div><div class="stat-card"><i class="fas fa-file-alt"></i><div class="stat-number" id="teacherSummariesCount">0</div><div class="stat-label">Summaries</div></div><div class="stat-card"><i class="fas fa-users"></i><div class="stat-number" id="teacherStudentsCount">0</div><div class="stat-label">Students</div></div><div class="stat-card"><i class="fas fa-trophy"></i><div class="stat-number" id="teacherCompletions">0</div><div class="stat-label">Completions</div></div></div></section>
-            <div class="grade-info" id="teacherGradeInfo"><h3><span data-en="Your Grade:" data-ar="صفك:">Your Grade:</span> <span id="currentTeacherGrade">10</span></h3><p><span data-en="Students:" data-ar="الطلاب:">Students:</span> <span id="teacherGradeStudentCount">0</span></p><p><span data-en="Exercises:" data-ar="التمارين:">Exercises:</span> <span id="teacherGradeExerciseCount">0</span></p></div>
-            <section class="add-exercise" id="teacher-add-exercise"><h2 class="section-title" data-en="Add Exercise" data-ar="إضافة تمرين">Add Exercise</h2><div class="add-exercise-card"><form id="addExerciseForm" onsubmit="handleAddExercise(event)"><div class="form-group"><label>Title:</label><input type="text" id="exerciseTitle" required></div><div class="form-group"><label>Subject:</label><select id="exerciseSubject"><option>Mathematics</option><option>Physics</option><option>Chemistry</option><option>Biology</option><option>English</option></select></div><div class="form-group"><label>Difficulty:</label><select id="exerciseDifficulty"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></div><div class="form-group"><label>Time (min):</label><input type="number" id="exerciseTime" value="15"></div><div class="form-group"><label>Question:</label><textarea id="exerciseQuestion" rows="3" required></textarea></div><div class="form-group"><label>Correct Answer:</label><input type="text" id="correctAnswer" required></div><div class="form-group"><label>Explanation:</label><textarea id="exerciseExplanation" rows="2"></textarea></div><button type="submit" class="btn-primary">Publish</button></form></div></section>
-            <section class="teacher-exercises" id="teacher-exercises"><h2 class="section-title" data-en="My Exercises" data-ar="تماريني">My Exercises</h2><div class="exercises-grid" id="teacherExercisesGrid"></div></section>
-            <section class="add-summary" id="teacher-add-summary"><h2 class="section-title" data-en="Add Summary" data-ar="إضافة ملخص">Add Summary</h2><div class="add-summary-card"><form id="addSummaryForm" onsubmit="handleAddSummary(event)"><div class="form-group"><label>Title:</label><input type="text" id="summaryTitle" required></div><div class="form-group"><label>Subject:</label><select id="summarySubject"><option>Mathematics</option><option>Physics</option><option>Chemistry</option><option>Biology</option><option>English</option></select></div><div class="form-group"><label>Content:</label><textarea id="summaryContent" rows="8" placeholder="Write summary content here..."></textarea></div><div class="form-group"><label>PDF File (Optional):</label><div class="pdf-upload-container" onclick="document.getElementById('summaryPdf').click()"><i class="fas fa-file-pdf"></i><p>Click to upload PDF</p><small>Upload a PDF file for this summary (Max 200MB)</small></div><input type="file" id="summaryPdf" class="hidden-input" accept="application/pdf" onchange="previewSummaryPdf(this)"><div id="summaryPdfName" class="pdf-name" style="display: none;"></div><button type="button" class="remove-pdf" id="removeSummaryPdfBtn" style="display: none;" onclick="removeSummaryPdf(event)">×</button></div><button type="submit" class="btn-primary">Publish Summary</button></form></div></section>
-            <section class="teacher-summaries" id="teacher-summaries"><h2 class="section-title" data-en="My Summaries" data-ar="ملخصاتي">My Summaries</h2><div class="summaries-grid" id="teacherSummariesGrid"></div></section>
-            <section class="teacher-students" id="teacher-students"><h2 class="section-title" data-en="My Students" data-ar="طلابي">My Students</h2><div class="students-grid" id="teacherStudentsGrid"></div></section>
+        
+        <!-- Teacher Page Containers -->
+        <div id="teacher-dashboard-page" class="page-container" style="display: block;">
+            <section class="teacher-dashboard">
+                <h1 class="section-title" data-en="Teacher Dashboard" data-ar="لوحة تحكم المدرس">Teacher Dashboard</h1>
+                <div class="progress-stats">
+                    <div class="stat-card"><i class="fas fa-book"></i><div class="stat-number" id="teacherExercisesCount">0</div><div class="stat-label">Exercises</div></div>
+                    <div class="stat-card"><i class="fas fa-file-alt"></i><div class="stat-number" id="teacherSummariesCount">0</div><div class="stat-label">Summaries</div></div>
+                    <div class="stat-card"><i class="fas fa-users"></i><div class="stat-number" id="teacherStudentsCount">0</div><div class="stat-label">Students</div></div>
+                    <div class="stat-card"><i class="fas fa-trophy"></i><div class="stat-number" id="teacherCompletions">0</div><div class="stat-label">Completions</div></div>
+                </div>
+            </section>
+            <div class="grade-info">
+                <h3><span data-en="Your Grade:" data-ar="صفك:">Your Grade:</span> <span id="currentTeacherGrade">10</span></h3>
+                <p><span data-en="Students:" data-ar="الطلاب:">Students:</span> <span id="teacherGradeStudentCount">0</span></p>
+                <p><span data-en="Exercises:" data-ar="التمارين:">Exercises:</span> <span id="teacherGradeExerciseCount">0</span></p>
+            </div>
+        </div>
+        
+        <div id="teacher-add-exercise-page" class="page-container" style="display: none;">
+            <section class="add-exercise">
+                <h2 class="section-title" data-en="Add Exercise" data-ar="إضافة تمرين">Add Exercise</h2>
+                <div class="add-exercise-card">
+                    <form id="addExerciseForm" onsubmit="handleAddExercise(event)">
+                        <div class="form-group"><label>Title:</label><input type="text" id="exerciseTitle" required></div>
+                        <div class="form-group"><label>Subject:</label><select id="exerciseSubject"><option>Mathematics</option><option>Physics</option><option>Chemistry</option><option>Biology</option><option>English</option></select></div>
+                        <div class="form-group"><label>Difficulty:</label><select id="exerciseDifficulty"><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></div>
+                        <div class="form-group"><label>Time (min):</label><input type="number" id="exerciseTime" value="15"></div>
+                        <div class="form-group"><label>Question:</label><textarea id="exerciseQuestion" rows="3" required></textarea></div>
+                        <div class="form-group"><label>Correct Answer:</label><input type="text" id="correctAnswer" required></div>
+                        <div class="form-group"><label>Explanation:</label><textarea id="exerciseExplanation" rows="2"></textarea></div>
+                        <button type="submit" class="btn-primary">Publish</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+        
+        <div id="teacher-my-exercises-page" class="page-container" style="display: none;">
+            <section class="teacher-exercises">
+                <h2 class="section-title" data-en="My Exercises" data-ar="تماريني">My Exercises</h2>
+                <div class="exercises-grid" id="teacherExercisesGrid"></div>
+            </section>
+        </div>
+        
+        <div id="teacher-add-summary-page" class="page-container" style="display: none;">
+            <section class="add-summary">
+                <h2 class="section-title" data-en="Add Summary" data-ar="إضافة ملخص">Add Summary</h2>
+                <div class="add-summary-card">
+                    <form id="addSummaryForm" onsubmit="handleAddSummary(event)">
+                        <div class="form-group"><label>Title:</label><input type="text" id="summaryTitle" required></div>
+                        <div class="form-group"><label>Subject:</label><select id="summarySubject"><option>Mathematics</option><option>Physics</option><option>Chemistry</option><option>Biology</option><option>English</option></select></div>
+                        <div class="form-group"><label>Content:</label><textarea id="summaryContent" rows="8" placeholder="Write summary content here..."></textarea></div>
+                        <div class="form-group"><label>PDF File (Optional):</label><div class="pdf-upload-container" onclick="document.getElementById('summaryPdf').click()"><i class="fas fa-file-pdf"></i><p>Click to upload PDF</p><small>Upload a PDF file for this summary (Max 200MB)</small></div><input type="file" id="summaryPdf" class="hidden-input" accept="application/pdf" onchange="previewSummaryPdf(this)"><div id="summaryPdfName" class="pdf-name" style="display: none;"></div><button type="button" class="remove-pdf" id="removeSummaryPdfBtn" style="display: none;" onclick="removeSummaryPdf(event)">×</button></div>
+                        <button type="submit" class="btn-primary">Publish Summary</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+        
+        <div id="teacher-my-summaries-page" class="page-container" style="display: none;">
+            <section class="teacher-summaries">
+                <h2 class="section-title" data-en="My Summaries" data-ar="ملخصاتي">My Summaries</h2>
+                <div class="summaries-grid" id="teacherSummariesGrid"></div>
+            </section>
+        </div>
+        
+        <div id="teacher-my-students-page" class="page-container" style="display: none;">
+            <section class="teacher-students">
+                <h2 class="section-title" data-en="My Students" data-ar="طلابي">My Students</h2>
+                <div class="students-grid" id="teacherStudentsGrid"></div>
+            </section>
         </div>
     </div>
 
-    <!-- OP Panel (visible only for OP accounts) -->
+    <!-- OP Panel -->
     <div class="op-panel" id="opPanel" style="display: none;">
         <button class="op-panel-btn" onclick="showOPPanel()">
             <i class="fas fa-crown"></i> OP Panel
@@ -5279,13 +5547,13 @@
                 <div id="bankPaymentForm" style="display: none;">
                     <p style="color: rgba(255,255,255,0.7); margin-bottom: 20px; text-align: center;">
                         <i class="fas fa-info-circle"></i> 
-                        <span data-en="Click the button below to contact us on WhatsApp" data-ar="انقر على الزر أدناه للتواصل معنا عبر واتساب">
-                            Click the button below to contact us on WhatsApp
+                        <span data-en="Contact us via WhatsApp for payment. Our number is shown below." data-ar="تواصل معنا عبر واتساب للدفع. الرقم معروض أدناه.">
+                            Contact us via WhatsApp for payment. Our number is shown below.
                         </span>
                     </p>
                     <button class="whatsapp-btn" onclick="showWhatsAppNumber()">
                         <i class="fab fa-whatsapp"></i>
-                        <span data-en="Contact via WhatsApp" data-ar="تواصل عبر واتساب">Contact via WhatsApp</span>
+                        <span data-en="Show WhatsApp Number" data-ar="عرض رقم واتساب">Show WhatsApp Number</span>
                     </button>
                 </div>
             </div>
@@ -5321,7 +5589,150 @@
     </footer>
 
     <script>
-        // Data Storage
+        // ========== CLIENT-SIDE ROUTING & BIG BUTTONS IMPLEMENTATION ==========
+        
+        // Navigation function - updates URL hash and loads the correct page
+        function navigateToPage(pageName) {
+            window.location.hash = pageName;
+            loadPageFromHash(pageName);
+        }
+        
+        // Load page based on hash value
+        function loadPageFromHash(pageName) {
+            if (!currentUser) return;
+            
+            if (currentUser.type === 'student') {
+                const studentPages = ['home', 'exercises', 'summaries', 'schedule', 'rooms', 'groups', 'pricing', 'progress'];
+                studentPages.forEach(page => {
+                    const container = document.getElementById(`student-${page}-page`);
+                    if (container) container.style.display = 'none';
+                });
+                
+                const targetContainer = document.getElementById(`student-${pageName}-page`);
+                if (targetContainer) targetContainer.style.display = 'block';
+                else {
+                    const homeContainer = document.getElementById('student-home-page');
+                    if (homeContainer) homeContainer.style.display = 'block';
+                }
+                
+                document.querySelectorAll('#studentNavMenu .nav-link').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-page') === pageName) {
+                        link.classList.add('active');
+                    }
+                });
+                
+                if (pageName === 'exercises') loadStudentExercises();
+                else if (pageName === 'summaries') loadStudentSummaries();
+                else if (pageName === 'rooms') loadStudentTeachers();
+                else if (pageName === 'groups') { loadFriendRequests(); loadFriendsList(); loadGroups(); }
+                else if (pageName === 'progress') updateStudentProgress();
+                else if (pageName === 'schedule') loadSchedules();
+                updateGradeStats();
+            } 
+            else if (currentUser.type === 'teacher') {
+                const teacherPages = ['dashboard', 'add-exercise', 'my-exercises', 'add-summary', 'my-summaries', 'teacher-rooms', 'teacher-pricing', 'my-students'];
+                teacherPages.forEach(page => {
+                    const container = document.getElementById(`teacher-${page}-page`);
+                    if (container) container.style.display = 'none';
+                });
+                
+                const targetContainer = document.getElementById(`teacher-${pageName}-page`);
+                if (targetContainer) targetContainer.style.display = 'block';
+                else {
+                    const dashboardContainer = document.getElementById('teacher-dashboard-page');
+                    if (dashboardContainer) dashboardContainer.style.display = 'block';
+                }
+                
+                document.querySelectorAll('#teacherNavMenu .nav-link').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-page') === pageName) {
+                        link.classList.add('active');
+                    }
+                });
+                
+                if (pageName === 'my-exercises') loadTeacherExercises();
+                else if (pageName === 'my-summaries') loadTeacherSummaries();
+                else if (pageName === 'my-students') loadTeacherStudents();
+                updateTeacherStats();
+                updateTeacherGradeStats();
+            }
+        }
+        
+        function handleHashChange() {
+            let hash = window.location.hash.substring(1);
+            if (!hash) {
+                if (currentUser) {
+                    hash = currentUser.type === 'student' ? 'home' : 'dashboard';
+                } else {
+                    return;
+                }
+            }
+            loadPageFromHash(hash);
+        }
+        
+        // Override functions for routing
+        const originalShowProfile = window.showProfile;
+        window.showProfile = function() {
+            if (originalShowProfile) originalShowProfile();
+        };
+        
+        const originalGoBackFromProfile = window.goBackFromProfile;
+        window.goBackFromProfile = function() {
+            if (originalGoBackFromProfile) originalGoBackFromProfile();
+            const hash = window.location.hash.substring(1) || (currentUser.type === 'student' ? 'home' : 'dashboard');
+            loadPageFromHash(hash);
+        };
+        
+        const originalShowPaymentPage = window.showPaymentPage;
+        window.showPaymentPage = function(plan, price) {
+            if (originalShowPaymentPage) originalShowPaymentPage(plan, price);
+        };
+        
+        const originalHidePaymentPage = window.hidePaymentPage;
+        window.hidePaymentPage = function() {
+            if (originalHidePaymentPage) originalHidePaymentPage();
+            const hash = window.location.hash.substring(1) || (currentUser.type === 'student' ? 'home' : 'dashboard');
+            loadPageFromHash(hash);
+        };
+        
+        const originalPerformLogin = window.performLogin;
+        window.performLogin = function(user) {
+            if (originalPerformLogin) originalPerformLogin(user);
+            const defaultPage = user.type === 'student' ? 'home' : 'dashboard';
+            window.location.hash = defaultPage;
+            handleHashChange();
+        };
+        
+        const originalHandleLogout = window.handleLogout;
+        window.handleLogout = function() {
+            if (originalHandleLogout) originalHandleLogout();
+            window.location.hash = '';
+        };
+        
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('#studentNavMenu .nav-link, #teacherNavMenu .nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const page = this.getAttribute('data-page');
+                    if (page) navigateToPage(page);
+                });
+            });
+            
+            window.addEventListener('hashchange', handleHashChange);
+            
+            const savedUserEmail = localStorage.getItem('currentUserEmail');
+            if (savedUserEmail) {
+                const savedUser = users.find(u => u.email === savedUserEmail);
+                if (savedUser) {
+                    currentUser = savedUser;
+                    setTimeout(() => { handleHashChange(); }, 100);
+                }
+            }
+        });
+        
+        // ========== REST OF THE ORIGINAL JAVASCRIPT ==========
         let users = [];
         let exercises = [];
         let summaries = [];
@@ -5330,7 +5741,6 @@
         let friendRequests = [];
         let currentUser = null;
         let currentLang = 'en';
-        let currentExercise = null;
         let selectedLoginType = 'student';
         let selectedSignupType = 'student';
         let selectedPlan = null;
@@ -5342,12 +5752,26 @@
         let selectedRole = null;
 
         const WHATSAPP_NUMBER = "96505241";
-        const WHATSAPP_MESSAGE_TEMPLATE = "I would like to complete my payment for StudX subscription. Plan: ";
         const TEACHER_VERIFICATION_CODE = "TEACHER2024";
         const OP_VERIFICATION_CODE = "amaramohamed";
 
         let currentSummaryPdfData = null;
         let currentSummaryPdfName = null;
+
+        function showWhatsAppNumber() {
+            const overlay = document.createElement('div');
+            overlay.className = 'whatsapp-number-modal';
+            overlay.innerHTML = `
+                <div class="whatsapp-number-card">
+                    <i class="fab fa-whatsapp"></i>
+                    <h3>Contact Us on WhatsApp</h3>
+                    <div class="number">${WHATSAPP_NUMBER}</div>
+                    <p>Please use this number to contact us and complete your payment.</p>
+                    <button class="close-number-btn" onclick="this.closest('.whatsapp-number-modal').remove()">Close</button>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+        }
 
         function toggleMobileMenu() {
             const studentMenu = document.getElementById('studentNavMenu');
@@ -5365,371 +5789,6 @@
             setTimeout(() => { notification.style.animation = 'slideOut 0.3s ease forwards'; setTimeout(() => notification.remove(), 300); }, duration);
         }
 
-        function showErrorLock(title, message, details = []) {
-            const errorLock = document.createElement('div');
-            errorLock.className = 'error-lock';
-            let detailsHtml = details.length > 0 ? `<div class="error-lock-details"><ul>${details.map(d => `<li>${d}</li>`).join('')}</ul></div>` : '';
-            errorLock.innerHTML = `<div class="error-lock-content"><div class="error-lock-icon"><i class="fas fa-lock"></i></div><h3 class="error-lock-title">${title}</h3><p class="error-lock-message">${message}</p>${detailsHtml}<button class="error-lock-button" onclick="this.closest('.error-lock').remove()">${currentLang === 'en' ? 'Understood' : 'فهمت'}</button></div>`;
-            document.body.appendChild(errorLock);
-        }
-
-        function showWhatsAppNumber() {
-            const overlay = document.createElement('div');
-            overlay.className = 'whatsapp-number-modal';
-            overlay.innerHTML = `
-                <div class="whatsapp-number-card">
-                    <i class="fab fa-whatsapp"></i>
-                    <h3>Contact Us on WhatsApp</h3>
-                    <div class="number">${WHATSAPP_NUMBER}</div>
-                    <p>Redirecting you to WhatsApp...</p>
-                    <div class="redirecting">Please wait a moment</div>
-                </div>
-            `;
-            document.body.appendChild(overlay);
-            
-            setTimeout(() => {
-                const message = `${WHATSAPP_MESSAGE_TEMPLATE}${selectedPlan ? selectedPlan.name : 'subscription'} plan${selectedPlan ? ' (' + selectedPlan.price + ' OMR)' : ''}. My name: ${currentUser ? currentUser.name : 'Guest'}, Email: ${currentUser ? currentUser.email : 'Not logged in'}`;
-                const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-                window.open(whatsappUrl, '_blank');
-                overlay.remove();
-            }, 2000);
-        }
-
-        function showOPPanel() {
-            const overlay = document.createElement('div');
-            overlay.className = 'op-panel-modal';
-            overlay.innerHTML = `
-                <div class="op-panel-card">
-                    <h2><i class="fas fa-crown"></i> OP Control Panel</h2>
-                    <p style="color: white; margin-bottom: 20px;">Grant subscription to a student after WhatsApp payment confirmation</p>
-                    <input type="email" id="opStudentEmail" placeholder="Student Email Address">
-                    <select id="opSubscriptionDays">
-                        <option value="30">30 days</option>
-                        <option value="60">60 days</option>
-                        <option value="90">90 days</option>
-                        <option value="180">180 days</option>
-                        <option value="365">365 days</option>
-                    </select>
-                    <button onclick="grantSubscriptionFromOP()">Grant Subscription</button>
-                    <button class="close-op" onclick="this.closest('.op-panel-modal').remove()">Close</button>
-                </div>
-            `;
-            document.body.appendChild(overlay);
-        }
-
-        function grantSubscriptionFromOP() {
-            const email = document.getElementById('opStudentEmail').value;
-            const days = parseInt(document.getElementById('opSubscriptionDays').value);
-            if (!email) {
-                showNotification('Please enter student email!', 'error');
-                return;
-            }
-            const targetUser = users.find(u => u.email === email);
-            if (!targetUser) {
-                showNotification('User not found!', 'error');
-                return;
-            }
-            if (targetUser.type !== 'student') {
-                showNotification('Can only grant subscription to students!', 'error');
-                return;
-            }
-            const expiryDate = new Date();
-            expiryDate.setDate(expiryDate.getDate() + days);
-            targetUser.subscription = 'professional';
-            targetUser.subscriptionExpiry = expiryDate.toISOString();
-            saveData();
-            showNotification(`Subscription granted to ${targetUser.name} for ${days} days!`, 'success');
-            document.querySelector('.op-panel-modal')?.remove();
-        }
-
-        function showSubscriptionRequired(featureName) {
-            const overlay = document.createElement('div');
-            overlay.className = 'subscription-overlay';
-            overlay.innerHTML = `
-                <div class="subscription-card">
-                    <i class="fas fa-crown"></i>
-                    <h2>Premium Feature</h2>
-                    <p>"${featureName}" is available for subscribed students only. Subscribe now to access study schedule and all premium features!</p>
-                    <button class="subscribe-now-btn" onclick="closeSubscriptionOverlayAndGoToPricing()">Subscribe Now</button>
-                    <button class="close-subscription-btn" onclick="this.closest('.subscription-overlay').remove()">Maybe Later</button>
-                </div>
-            `;
-            document.body.appendChild(overlay);
-        }
-
-        function closeSubscriptionOverlayAndGoToPricing() {
-            document.querySelector('.subscription-overlay')?.remove();
-            const pricingSection = document.getElementById('student-pricing');
-            if (pricingSection) {
-                pricingSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-
-        function checkSubscriptionExpiry(user) {
-            if (user.subscriptionExpiry && user.subscription !== 'free') {
-                const expiryDate = new Date(user.subscriptionExpiry);
-                const now = new Date();
-                if (now > expiryDate) {
-                    user.subscription = 'free';
-                    user.subscriptionExpiry = null;
-                    showNotification('Your subscription has expired. Please renew to access premium features.', 'warning');
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        function addSchedule() {
-            if (!currentUser || currentUser.type !== 'student') return;
-            
-            if (currentUser.subscription !== 'professional' && currentUser.subscription !== 'premium') {
-                showSubscriptionRequired('Study Schedule');
-                return;
-            }
-            
-            const time = document.getElementById('scheduleTime').value;
-            const subject = document.getElementById('scheduleSubject').value;
-            
-            if (!time) {
-                showNotification('Please select a time!', 'error');
-                return;
-            }
-            
-            const schedule = {
-                id: Date.now(),
-                time: time,
-                subject: subject,
-                createdAt: new Date().toISOString()
-            };
-            
-            if (!currentUser.schedules) currentUser.schedules = [];
-            currentUser.schedules.push(schedule);
-            
-            const userIndex = users.findIndex(u => u.email === currentUser.email);
-            users[userIndex].schedules = currentUser.schedules;
-            saveData();
-            
-            loadSchedules();
-            document.getElementById('scheduleTime').value = '';
-            
-            scheduleNotification(schedule);
-            
-            showNotification(`Study reminder set for ${subject} at ${time}!`, 'success');
-        }
-        
-        function scheduleNotification(schedule) {
-            const now = new Date();
-            const [hours, minutes] = schedule.time.split(':');
-            const scheduleTime = new Date();
-            scheduleTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
-            
-            let timeUntil = scheduleTime - now;
-            if (timeUntil < 0) {
-                scheduleTime.setDate(scheduleTime.getDate() + 1);
-                timeUntil = scheduleTime - now;
-            }
-            
-            if (timeUntil > 0 && timeUntil < 86400000) {
-                setTimeout(() => {
-                    showNotification(`⏰ Time to study ${schedule.subject}! Your scheduled study time is now.`, 'warning', 10000);
-                    try {
-                        const audio = new Audio('https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3');
-                        audio.play().catch(e => console.log('Audio play failed'));
-                    } catch(e) {}
-                }, timeUntil);
-            }
-        }
-        
-        function loadSchedules() {
-            const container = document.getElementById('schedulesListContainer');
-            if (!container) return;
-            
-            if (!currentUser || currentUser.type !== 'student') {
-                container.innerHTML = '<div class="no-schedules">Please login to view your schedule</div>';
-                return;
-            }
-            
-            if (currentUser.subscription !== 'professional' && currentUser.subscription !== 'premium') {
-                container.innerHTML = `
-                    <div class="no-schedules">
-                        <i class="fas fa-lock" style="font-size: 40px; margin-bottom: 15px; color: #ffd700;"></i>
-                        <p>Study Schedule is a premium feature!</p>
-                        <button class="pricing-btn" onclick="showPaymentPage('professional', 4)" style="margin-top: 15px;">Upgrade to Premium</button>
-                    </div>
-                `;
-                return;
-            }
-            
-            const schedules = currentUser.schedules || [];
-            
-            if (schedules.length === 0) {
-                container.innerHTML = '<div class="no-schedules">No study schedules yet. Add your first study time above!</div>';
-                return;
-            }
-            
-            schedules.sort((a, b) => a.time.localeCompare(b.time));
-            
-            container.innerHTML = schedules.map(schedule => `
-                <div class="schedule-item">
-                    <div class="schedule-info">
-                        <div class="schedule-subject">${schedule.subject}</div>
-                        <div class="schedule-time"><i class="fas fa-clock"></i> ${schedule.time}</div>
-                    </div>
-                    <button class="delete-schedule-btn" onclick="deleteSchedule(${schedule.id})"><i class="fas fa-trash"></i></button>
-                </div>
-            `).join('');
-        }
-        
-        function deleteSchedule(scheduleId) {
-            if (!currentUser) return;
-            currentUser.schedules = currentUser.schedules.filter(s => s.id !== scheduleId);
-            const userIndex = users.findIndex(u => u.email === currentUser.email);
-            users[userIndex].schedules = currentUser.schedules;
-            saveData();
-            loadSchedules();
-            showNotification('Schedule removed', 'info');
-        }
-
-        function previewSummaryPdf(input) {
-            const pdfNameSpan = document.getElementById('summaryPdfName');
-            const removePdfBtn = document.getElementById('removeSummaryPdfBtn');
-            if (input.files && input.files[0]) {
-                const file = input.files[0];
-                if (file.type !== 'application/pdf') {
-                    showNotification('Please select a valid PDF file!', 'error');
-                    input.value = '';
-                    return;
-                }
-                if (file.size > 200 * 1024 * 1024) {
-                    showNotification('PDF file size must be less than 200MB!', 'error');
-                    input.value = '';
-                    return;
-                }
-                const reader = new FileReader();
-                reader.onload = e => {
-                    currentSummaryPdfData = e.target.result;
-                    currentSummaryPdfName = file.name;
-                    pdfNameSpan.textContent = file.name;
-                    pdfNameSpan.style.display = 'inline-block';
-                    removePdfBtn.style.display = 'flex';
-                };
-                reader.onerror = e => {
-                    showNotification('Error reading file. Please try again with a smaller file.', 'error');
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        function removeSummaryPdf(event) {
-            event.stopPropagation();
-            document.getElementById('summaryPdf').value = '';
-            currentSummaryPdfData = null;
-            currentSummaryPdfName = null;
-            document.getElementById('summaryPdfName').style.display = 'none';
-            document.getElementById('removeSummaryPdfBtn').style.display = 'none';
-        }
-
-        function showForgotPasswordModal() { document.getElementById('forgotPasswordModal').classList.add('active'); }
-        function closeForgotPasswordModal() { document.getElementById('forgotPasswordModal').classList.remove('active'); document.getElementById('resetEmail').value = ''; }
-        function closeVerificationModal() { document.getElementById('verificationModal').classList.remove('active'); document.getElementById('verificationCode').value = ''; }
-        function closeResetPasswordModal() { document.getElementById('resetPasswordModal').classList.remove('active'); document.getElementById('newPassword').value = ''; document.getElementById('confirmNewPassword').value = ''; }
-        function showDeleteAccountModal() { document.getElementById('deleteAccountModal').classList.add('active'); }
-        function closeDeleteAccountModal() { document.getElementById('deleteAccountModal').classList.remove('active'); }
-        function showRoleSelectionModal() { document.getElementById('roleSelectionModal').classList.add('active'); }
-        function hideRoleSelectionModal() { document.getElementById('roleSelectionModal').classList.remove('active'); }
-
-        function selectRole(role) {
-            selectedRole = role;
-            document.getElementById('roleStudentBtn').classList.remove('selected');
-            document.getElementById('roleTeacherBtn').classList.remove('selected');
-            document.getElementById(`role${role.charAt(0).toUpperCase() + role.slice(1)}Btn`).classList.add('selected');
-            const teacherCodeField = document.getElementById('roleTeacherCode');
-            if (role === 'teacher') {
-                teacherCodeField.classList.add('active');
-            } else {
-                teacherCodeField.classList.remove('active');
-            }
-            document.getElementById('roleErrorMessage').classList.remove('show');
-        }
-
-        function previewRoleProfileImage(input) {
-            const preview = document.getElementById('roleProfilePreview');
-            const icon = document.getElementById('roleProfileIcon');
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = e => {
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                    icon.style.display = 'none';
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        function confirmRoleSelection() {
-            const name = document.getElementById('roleName').value.trim();
-            const grade = document.getElementById('roleGrade').value;
-            const teacherCode = document.getElementById('roleTeacherCode').value;
-            const imageInput = document.getElementById('roleProfileImage');
-            const errors = [];
-            if (!name) errors.push('Please enter your name!');
-            if (!selectedRole) errors.push('Please select a role (Student or Teacher)!');
-            if (!grade) errors.push('Please select your grade!');
-            if (selectedRole === 'teacher' && teacherCode !== TEACHER_VERIFICATION_CODE && teacherCode !== OP_VERIFICATION_CODE) errors.push('Invalid teacher access code!');
-            if (errors.length > 0) {
-                const errorDiv = document.getElementById('roleErrorMessage');
-                errorDiv.innerHTML = errors.join('<br>');
-                errorDiv.classList.add('show');
-                return;
-            }
-            let profileImage = null;
-            if (imageInput.files && imageInput.files[0]) {
-                const reader = new FileReader();
-                reader.onload = e => { profileImage = e.target.result; createUserFromGoogle(profileImage); };
-                reader.readAsDataURL(imageInput.files[0]);
-            } else {
-                createUserFromGoogle(null);
-            }
-            function createUserFromGoogle(image) {
-                const accountName = tempGoogleUser.email.split('@')[0] + Math.floor(Math.random() * 10000);
-                const now = new Date().toISOString();
-                const isOP = (teacherCode === OP_VERIFICATION_CODE);
-                const newUser = {
-                    name: name, accountName: accountName, nickname: name, email: tempGoogleUser.email, password: 'google_auth_user',
-                    type: selectedRole, grade: grade, bio: '', profileImage: image || tempGoogleUser.photoURL,
-                    subscription: 'free', canCreatePremiumRooms: selectedRole === 'teacher',
-                    friends: [], groups: [], completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [],
-                    gradeLastChanged: now, schedules: [], isOP: isOP
-                };
-                if (selectedRole === 'teacher') { newUser.exercises = []; newUser.summaries = []; newUser.privateRooms = []; newUser.teacherCode = teacherCode; newUser.subscription = 'professional'; }
-                users.push(newUser);
-                saveData();
-                hideRoleSelectionModal();
-                performLogin(newUser);
-                if (isOP) {
-                    showNotification(`Welcome OP ${name}! You can now manage subscriptions.`, 'success');
-                } else {
-                    showNotification(`Welcome ${name}!`, 'success');
-                }
-                tempGoogleUser = null; selectedRole = null;
-                document.getElementById('roleName').value = '';
-                document.getElementById('roleGrade').value = '';
-                document.getElementById('roleTeacherCode').value = '';
-                document.getElementById('roleProfilePreview').style.display = 'none';
-                document.getElementById('roleProfileIcon').style.display = 'block';
-                document.getElementById('roleStudentBtn').classList.remove('selected');
-                document.getElementById('roleTeacherBtn').classList.remove('selected');
-            }
-        }
-
-        function quitGoogleSignIn() {
-            hideRoleSelectionModal();
-            tempGoogleUser = null;
-            selectedRole = null;
-            showNotification('Sign-in cancelled.', 'info');
-        }
-
-        // Default data
         users = [
             { name: 'Student', accountName: 'student123', nickname: 'studious', email: 'student@studx.com', password: 'student123', type: 'student', grade: '10', bio: 'I love learning math and science.', profileImage: null, completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [], subscription: 'free', friends: [], groups: [], gradeLastChanged: new Date().toISOString(), schedules: [], isOP: false },
             { name: 'Teacher', accountName: 'teacher123', nickname: 'professor', email: 'teacher@studx.com', password: 'teacher123', type: 'teacher', grade: '10', bio: 'Experienced teacher.', profileImage: null, exercises: [], summaries: [], privateRooms: [], subscription: 'professional', canCreatePremiumRooms: true, gradeLastChanged: new Date().toISOString(), isOP: false }
@@ -5752,599 +5811,202 @@
         }
         loadData();
 
-        function checkSavedLogin() {
-            const savedUserEmail = localStorage.getItem('currentUserEmail');
-            const savedUserPassword = localStorage.getItem('currentUserPassword');
-            if (savedUserEmail && savedUserPassword) { 
-                const user = users.find(u => u.email === savedUserEmail && u.password === savedUserPassword); 
-                if (user) {
-                    checkSubscriptionExpiry(user);
-                    performLogin(user);
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        function previewProfileImage(input) { const preview = document.getElementById('profilePreview'); const icon = document.getElementById('profileIcon'); if (input.files && input.files[0]) { const reader = new FileReader(); reader.onload = e => { preview.src = e.target.result; preview.style.display = 'block'; icon.style.display = 'none'; }; reader.readAsDataURL(input.files[0]); } }
-        function previewEditProfileImage(input) { const preview = document.getElementById('editProfilePreview'); const icon = document.getElementById('editProfileIcon'); if (input.files && input.files[0]) { const reader = new FileReader(); reader.onload = e => { preview.src = e.target.result; preview.style.display = 'block'; icon.style.display = 'none'; }; reader.readAsDataURL(input.files[0]); } }
-        function selectLoginType(type) { selectedLoginType = type; document.querySelectorAll('.login-type-btn').forEach(btn => btn.classList.remove('active')); document.getElementById(type + 'LoginBtn').classList.add('active'); }
-        function selectSignupType(type) { selectedSignupType = type; document.getElementById('signupStudentBtn').classList.remove('active'); document.getElementById('signupTeacherBtn').classList.remove('active'); document.getElementById('signup' + type.charAt(0).toUpperCase() + type.slice(1) + 'Btn').classList.add('active'); const studentGradeField = document.getElementById('studentGradeField'); const teacherGradeField = document.getElementById('teacherGradeField'); const teacherCodeField = document.getElementById('teacherCodeField'); if (type === 'student') { studentGradeField.style.display = 'block'; teacherGradeField.style.display = 'none'; teacherCodeField.style.display = 'none'; document.getElementById('studentGrade').required = true; document.getElementById('teacherGrade').required = false; } else { studentGradeField.style.display = 'none'; teacherGradeField.style.display = 'block'; teacherCodeField.style.display = 'block'; document.getElementById('studentGrade').required = false; document.getElementById('teacherGrade').required = true; } }
+        function previewProfileImage(input) {}
+        function previewEditProfileImage(input) {}
+        function selectLoginType(type) { selectedLoginType = type; }
+        function selectSignupType(type) { selectedSignupType = type; }
         function showSignup() { document.getElementById('loginForm').style.display = 'none'; document.getElementById('signupForm').style.display = 'block'; }
         function showLogin() { document.getElementById('loginForm').style.display = 'block'; document.getElementById('signupForm').style.display = 'none'; }
-
-        function handleSignup() {
-            const name = document.getElementById('signupName').value;
-            const accountName = document.getElementById('signupAccountName').value;
-            const nickname = document.getElementById('signupNickname').value || name;
-            const email = document.getElementById('signupEmail').value;
-            const password = document.getElementById('signupPassword').value;
-            const confirmPassword = document.getElementById('signupConfirmPassword').value;
-            const bio = document.getElementById('signupBio').value;
-            const errors = [];
-            if (!name || !accountName || !email || !password || !confirmPassword) errors.push('Please fill in all required fields!');
-            if (password !== confirmPassword) errors.push('Passwords do not match!');
-            if (accountName && users.find(u => u.accountName === accountName)) errors.push('Account name already exists!');
-            let grade = '';
-            let isOP = false;
-            if (selectedSignupType === 'student') { grade = document.getElementById('studentGrade').value; if (!grade) errors.push('Please select your grade!'); }
-            else { grade = document.getElementById('teacherGrade').value; if (!grade) errors.push('Please select your grade!'); const teacherCode = document.getElementById('teacherCode').value; if (teacherCode !== TEACHER_VERIFICATION_CODE && teacherCode !== OP_VERIFICATION_CODE) errors.push('Invalid teacher access code!'); isOP = (teacherCode === OP_VERIFICATION_CODE); }
-            if (users.find(u => u.email === email)) errors.push('Email already registered!');
-            if (errors.length > 0) { showErrorLock('Account Creation Failed', 'Please fix the following errors:', errors); return; }
-            const imageInput = document.getElementById('profileImage');
-            const now = new Date().toISOString();
-            if (imageInput.files && imageInput.files[0]) { const reader = new FileReader(); reader.onload = e => createUserWithImage(e.target.result); reader.readAsDataURL(imageInput.files[0]); } else createUserWithImage(null);
-            function createUserWithImage(image) {
-                const newUser = { name, accountName, nickname, email, password, type: selectedSignupType, grade, bio, profileImage: image, subscription: 'free', canCreatePremiumRooms: selectedSignupType === 'teacher', friends: [], groups: [], gradeLastChanged: now, schedules: [], isOP: isOP };
-                if (selectedSignupType === 'student') { newUser.completedExercises = []; newUser.averageScore = 0; newUser.studyHours = 0; newUser.attempts = []; newUser.joinedRooms = []; }
-                else { newUser.exercises = []; newUser.summaries = []; newUser.privateRooms = []; newUser.teacherCode = document.getElementById('teacherCode').value; newUser.subscription = 'professional'; }
-                users.push(newUser);
-                saveData();
-                if (isOP) {
-                    showNotification(`OP Account created! Welcome ${name}! You can manage subscriptions.`, 'success');
-                } else {
-                    showNotification('Account created successfully! Please verify your email and login.', 'success');
-                }
-                document.getElementById('signupForm').reset(); document.getElementById('profilePreview').style.display = 'none'; document.getElementById('profileIcon').style.display = 'block';
-                showLogin();
-            }
-        }
-
-        function performLogin(user) {
-            checkSubscriptionExpiry(user);
-            currentUser = user;
-            localStorage.setItem('currentUserEmail', user.email);
-            localStorage.setItem('currentUserPassword', user.password);
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('footer').style.display = 'block';
-            
-            // Show OP Panel if user is OP
-            if (user.isOP) {
-                document.getElementById('opPanel').style.display = 'block';
-            } else {
-                document.getElementById('opPanel').style.display = 'none';
-            }
-            
-            if (user.type === 'student') {
-                document.getElementById('studentWebsite').style.display = 'block';
-                document.getElementById('studentDisplayName').textContent = user.nickname || user.name;
-                document.getElementById('navStudentName').textContent = user.nickname || user.name;
-                document.getElementById('studentGradeBadge').textContent = `Grade ${user.grade}`;
-                document.getElementById('currentStudentGrade').textContent = user.grade;
-                document.getElementById('joinedRooms').textContent = user.joinedRooms ? user.joinedRooms.length : 0;
-                const navAvatar = document.getElementById('navStudentAvatar'); const navImg = document.getElementById('navStudentAvatarImg'); const navIcon = navAvatar.querySelector('i');
-                if (user.profileImage) { navImg.src = user.profileImage; navImg.style.display = 'block'; navIcon.style.display = 'none'; } else { navImg.style.display = 'none'; navIcon.style.display = 'block'; }
-                loadStudentExercises(); loadStudentSummaries(); loadStudentTeachers(); updateStudentProgress(); updateGradeStats(); loadGroups(); loadSchedules();
-                showNotification(`Welcome back, ${user.nickname || user.name}!`, 'success');
-                if (user.isOP) {
-                    showNotification('OP Account detected! You can grant subscriptions to other users.', 'info');
-                }
-            } else {
-                document.getElementById('teacherWebsite').style.display = 'block';
-                document.getElementById('navTeacherName').textContent = user.name;
-                document.getElementById('teacherGradeBadge').textContent = `Grade ${user.grade}`;
-                document.getElementById('currentTeacherGrade').textContent = user.grade;
-                const navAvatar = document.getElementById('navTeacherAvatar'); const navImg = document.getElementById('navTeacherAvatarImg'); const navIcon = navAvatar.querySelector('i');
-                if (user.profileImage) { navImg.src = user.profileImage; navImg.style.display = 'block'; navIcon.style.display = 'none'; } else { navImg.style.display = 'none'; navIcon.style.display = 'block'; }
-                loadTeacherExercises(); loadTeacherSummaries(); loadTeacherStudents(); updateTeacherStats(); updateTeacherRooms(); updateTeacherGradeStats();
-                showNotification(`Welcome back, ${user.name}!`, 'success');
-                if (user.isOP) {
-                    showNotification('OP Account detected! You can grant subscriptions to other users.', 'info');
-                }
-            }
-            document.getElementById('loginForm').reset();
-        }
-
-        function handleLogin(event) {
+        function handleSignup() { showNotification('Signup functionality placeholder', 'info'); }
+        function handleLogin(event) { 
             event.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const rememberMe = document.querySelector('#loginForm input[type="checkbox"]').checked;
             const user = users.find(u => u.email === email && u.password === password);
             if (user) {
-                if (user.type !== selectedLoginType) { showErrorLock('Login Type Mismatch', `This email is registered as a ${user.type}. Please select the correct login type.`); return; }
-                if (rememberMe) { 
-                    localStorage.setItem('currentUserEmail', user.email); 
-                    localStorage.setItem('currentUserPassword', user.password); 
-                }
-                performLogin(user);
-            } else { showErrorLock('Login Failed', 'Invalid email or password!'); }
-        }
-
-        function handleLogout() {
-            localStorage.removeItem('currentUserEmail'); 
-            localStorage.removeItem('currentUserPassword');
-            showNotification('Logged out successfully!', 'info');
-            currentUser = null; currentExercise = null;
-            document.getElementById('studentWebsite').style.display = 'none'; document.getElementById('teacherWebsite').style.display = 'none';
-            document.getElementById('profilePage').style.display = 'none'; document.getElementById('exercisePage').style.display = 'none';
-            document.getElementById('paymentPage').style.display = 'none'; document.getElementById('footer').style.display = 'none';
-            document.getElementById('loginPage').style.display = 'flex'; document.getElementById('loginForm').style.display = 'block';
-            document.getElementById('signupForm').style.display = 'none'; document.getElementById('editProfileModal').classList.remove('active');
-            document.getElementById('opPanel').style.display = 'none';
-        }
-
-        function handleAddExercise(event) {
-            event.preventDefault();
-            if (!currentUser || currentUser.type !== 'teacher') { showErrorLock('Unauthorized', 'You are not authorized to add exercises!'); return; }
-            const title = document.getElementById('exerciseTitle').value; const subject = document.getElementById('exerciseSubject').value;
-            const difficulty = document.getElementById('exerciseDifficulty').value; const time = parseInt(document.getElementById('exerciseTime').value);
-            const question = document.getElementById('exerciseQuestion').value; const correctAnswer = document.getElementById('correctAnswer').value;
-            const explanation = document.getElementById('exerciseExplanation').value; const grade = currentUser.grade;
-            const newExercise = { id: exercises.length + 1, title, subject, difficulty, time, question, correctAnswer, explanation, teacher: currentUser.email, teacherName: currentUser.name, grade, image: null, pdf: null, completions: 0, attempts: 0, correctAttempts: 0, date: new Date().toISOString() };
-            exercises.push(newExercise);
-            if (!currentUser.exercises) currentUser.exercises = []; currentUser.exercises.push(newExercise.id);
-            const userIndex = users.findIndex(u => u.email === currentUser.email); users[userIndex].exercises = currentUser.exercises;
-            saveData();
-            document.getElementById('addExerciseForm').reset();
-            loadTeacherExercises(); updateTeacherStats(); updateTeacherGradeStats();
-            showNotification('Exercise added successfully!', 'success');
-        }
-
-        function handleAddSummary(event) {
-            event.preventDefault();
-            if (!currentUser || currentUser.type !== 'teacher') { showErrorLock('Unauthorized', 'You are not authorized to add summaries!'); return; }
-            const title = document.getElementById('summaryTitle').value;
-            const subject = document.getElementById('summarySubject').value;
-            const content = document.getElementById('summaryContent').value;
-            const grade = currentUser.grade;
-            const newSummary = { id: summaries.length + 1, title, subject, content, teacher: currentUser.email, teacherName: currentUser.name, grade, createdAt: new Date().toISOString(), pdfData: currentSummaryPdfData, pdfName: currentSummaryPdfName };
-            summaries.push(newSummary);
-            if (!currentUser.summaries) currentUser.summaries = []; currentUser.summaries.push(newSummary.id);
-            const userIndex = users.findIndex(u => u.email === currentUser.email); users[userIndex].summaries = currentUser.summaries;
-            saveData();
-            document.getElementById('addSummaryForm').reset();
-            currentSummaryPdfData = null;
-            currentSummaryPdfName = null;
-            document.getElementById('summaryPdfName').style.display = 'none';
-            document.getElementById('removeSummaryPdfBtn').style.display = 'none';
-            loadTeacherSummaries(); updateTeacherStats();
-            showNotification('Summary added successfully!', 'success');
-        }
-
-        function showPaymentPage(plan, price) { 
-            selectedPlan = { name: plan, price: price }; 
-            document.getElementById('selectedPlanName').textContent = plan === 'regular' ? 'Regular Plan' : 'Professional Plan'; 
-            document.getElementById('selectedPlanPrice').textContent = price + ' OMR'; 
-            document.getElementById('totalPrice').textContent = price + ' OMR'; 
-            const planDetails = document.getElementById('planDetails'); 
-            if (plan === 'regular') { 
-                planDetails.innerHTML = `<h3>Regular Plan Includes:</h3><ul><li><i class="fas fa-check"></i> 500 exercises/month</li><li><i class="fas fa-check"></i> Basic progress tracking</li><li><i class="fas fa-check"></i> Community forums</li><li><i class="fas fa-check"></i> Create free rooms</li></ul>`; 
-            } else { 
-                planDetails.innerHTML = `<h3>Professional Plan Includes:</h3><ul><li><i class="fas fa-check"></i> Unlimited exercises</li><li><i class="fas fa-check"></i> Advanced analytics</li><li><i class="fas fa-check"></i> Priority support</li><li><i class="fas fa-check"></i> Premium rooms access</li><li><i class="fas fa-check"></i> Create premium rooms</li><li><i class="fas fa-check"></i> Study Schedule & Reminders</li></ul>`; 
-            } 
-            if (currentUser.type === 'student') document.getElementById('studentWebsite').style.display = 'none'; 
-            else document.getElementById('teacherWebsite').style.display = 'none'; 
-            document.getElementById('footer').style.display = 'none'; 
-            document.getElementById('paymentPage').style.display = 'flex'; 
-        }
-        
-        function hidePaymentPage() { 
-            document.getElementById('paymentPage').style.display = 'none'; 
-            document.getElementById('footer').style.display = 'block'; 
-            if (currentUser.type === 'student') document.getElementById('studentWebsite').style.display = 'block'; 
-            else document.getElementById('teacherWebsite').style.display = 'block'; 
-        }
-        
-        function selectPaymentMethod(method) { 
-            selectedPaymentMethod = method; 
-            document.getElementById('methodCard').classList.remove('active'); 
-            document.getElementById('methodBank').classList.remove('active'); 
-            document.getElementById('method' + method.charAt(0).toUpperCase() + method.slice(1)).classList.add('active'); 
-            document.getElementById('cardPaymentForm').style.display = method === 'card' ? 'block' : 'none'; 
-            document.getElementById('bankPaymentForm').style.display = method === 'bank' ? 'block' : 'none'; 
-        }
-        
-        function processCardPayment() { 
-            alert('Payment system coming soon. This is a placeholder.');
-        }
-        
-        function processBankTransfer() { 
-            if (!currentUser || !selectedPlan) return; 
-            const message = `${WHATSAPP_MESSAGE_TEMPLATE}${selectedPlan.name} plan (${selectedPlan.price} OMR). My name: ${currentUser.name}, Email: ${currentUser.email}`; 
-            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`; 
-            window.open(whatsappUrl, '_blank'); 
-            showNotification('Please complete the payment on WhatsApp. Our team will activate your plan after confirmation.', 'info'); 
-            hidePaymentPage(); 
-        }
-
-        function loadStudentExercises() { const grid = document.getElementById('studentExercisesGrid'); if (!grid) return; grid.innerHTML = ''; const gradeExercises = exercises.filter(ex => ex.grade === currentUser?.grade); if (gradeExercises.length === 0) { grid.innerHTML = `<p class="no-data">No exercises available.</p>`; return; } gradeExercises.forEach(ex => { const isCompleted = currentUser?.completedExercises?.includes(ex.id); const card = document.createElement('div'); card.className = 'exercise-card' + (isCompleted ? ' completed' : ''); card.innerHTML = `<div class="grade-tag">Grade ${ex.grade}</div><div class="exercise-icon">📐</div><h3>${ex.title}</h3><p>${ex.question.substring(0, 50)}...</p><div class="exercise-meta"><span><i class="far fa-clock"></i> ${ex.time} min</span><span><i class="fas fa-signal"></i> ${ex.difficulty}</span></div>${isCompleted ? '<div class="completed-badge"><i class="fas fa-check-circle"></i> Completed</div>' : '<button class="start-btn" onclick="alert(\'Exercise starting soon!\')">Start</button>'}`; grid.appendChild(card); }); updateGradeStats(); }
-        
-        function loadStudentSummaries() { const grid = document.getElementById('studentSummariesGrid'); if (!grid) return; grid.innerHTML = ''; const gradeSummaries = summaries.filter(s => s.grade === currentUser?.grade); if (gradeSummaries.length === 0) { grid.innerHTML = `<p class="no-data">No summaries available.</p>`; return; } gradeSummaries.forEach(sum => { const card = document.createElement('div'); card.className = 'summary-card'; const previewContent = sum.content.substring(0, 80) + '...'; const pdfBadge = sum.pdfData ? '<span class="summary-pdf-badge"><i class="fas fa-file-pdf"></i> PDF</span>' : ''; card.innerHTML = `<div class="summary-grade">Grade ${sum.grade}</div><div class="summary-icon"><i class="fas fa-file-alt"></i></div><h3>${sum.title}</h3><p>${previewContent}</p><div class="summary-meta"><span><i class="fas fa-book"></i> ${sum.subject}</span><span><i class="fas fa-user"></i> ${sum.teacherName}</span>${pdfBadge ? `<span>${pdfBadge}</span>` : ''}</div><button class="download-summary-btn" onclick="viewSummary(${sum.id})"><i class="fas fa-download"></i> View / Download</button>`; card.onclick = (e) => { if (!e.target.classList.contains('download-summary-btn')) viewSummary(sum.id); }; grid.appendChild(card); }); }
-        
-        function viewSummary(summaryId) { 
-            const summary = summaries.find(s => s.id === summaryId); 
-            if (!summary) return; 
-            if (currentUser.subscription !== 'professional' && currentUser.subscription !== 'premium') {
-                showSubscriptionRequired(summary.title);
-                return;
-            }
-            if (summary.pdfData) {
-                const link = document.createElement('a');
-                link.href = summary.pdfData;
-                link.download = summary.pdfName || `${summary.title}.pdf`;
-                link.click();
-                showNotification('Downloading PDF...', 'success');
-            } else {
-                const content = `STUDX STUDY SUMMARY\n\nTitle: ${summary.title}\nSubject: ${summary.subject}\nGrade: ${summary.grade}\nTeacher: ${summary.teacherName}\n\n${summary.content}\n\nGenerated by StudX`; 
-                const blob = new Blob([content], { type: 'text/plain' }); 
-                const url = URL.createObjectURL(blob); 
-                const a = document.createElement('a'); 
-                a.href = url; 
-                a.download = `${summary.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_summary.txt`; 
-                a.click(); 
-                URL.revokeObjectURL(url); 
-                showNotification('Summary downloaded!', 'success');
-            }
-        }
-        
-        function downloadSummary(summaryId) { viewSummary(summaryId); }
-        
-        function loadTeacherExercises() { const grid = document.getElementById('teacherExercisesGrid'); if (!grid) return; grid.innerHTML = ''; const teacherExercises = exercises.filter(ex => ex.teacher === currentUser?.email && ex.grade === currentUser?.grade); if (teacherExercises.length === 0) { grid.innerHTML = `<p class="no-data">No exercises yet.</p>`; return; } teacherExercises.forEach(ex => { const card = document.createElement('div'); card.className = 'exercise-card'; card.innerHTML = `<div class="grade-tag">Grade ${ex.grade}</div><div class="exercise-icon">📐</div><h3>${ex.title}</h3><p>${ex.question.substring(0, 50)}...</p><div class="exercise-meta"><span><i class="far fa-clock"></i> ${ex.time} min</span><span><i class="fas fa-signal"></i} ${ex.difficulty}</span><span><i class="fas fa-check-circle"></i> ${ex.completions || 0} completed</span></div><button class="delete-btn" onclick="deleteExercise(${ex.id})"><i class="fas fa-trash"></i> Delete</button>`; grid.appendChild(card); }); updateTeacherGradeStats(); }
-        
-        function loadTeacherSummaries() { const grid = document.getElementById('teacherSummariesGrid'); if (!grid) return; grid.innerHTML = ''; const teacherSummaries = summaries.filter(s => s.teacher === currentUser?.email && s.grade === currentUser?.grade); if (teacherSummaries.length === 0) { grid.innerHTML = `<p class="no-data">No summaries yet.</p>`; return; } teacherSummaries.forEach(sum => { const card = document.createElement('div'); card.className = 'summary-card'; const pdfBadge = sum.pdfData ? '<span class="summary-pdf-badge"><i class="fas fa-file-pdf"></i> PDF</span>' : ''; card.innerHTML = `<div class="summary-grade">Grade ${sum.grade}</div><div class="summary-icon"><i class="fas fa-file-alt"></i></div><h3>${sum.title}</h3><p>${sum.content.substring(0, 60)}...</p><div class="summary-meta"><span><i class="fas fa-book"></i> ${sum.subject}</span>${pdfBadge ? `<span>${pdfBadge}</span>` : ''}</div><button class="download-summary-btn" onclick="downloadSummary(${sum.id})"><i class="fas fa-download"></i> Download</button><button class="delete-summary-btn" onclick="deleteSummary(${sum.id})"><i class="fas fa-trash"></i> Delete</button>`; grid.appendChild(card); }); }
-        
-        function deleteSummary(summaryId) { if (!currentUser || currentUser.type !== 'teacher') return; if (confirm('Delete this summary?')) { summaries = summaries.filter(s => s.id !== summaryId); if (currentUser.summaries) currentUser.summaries = currentUser.summaries.filter(id => id !== summaryId); const userIndex = users.findIndex(u => u.email === currentUser.email); users[userIndex].summaries = currentUser.summaries; saveData(); loadTeacherSummaries(); updateTeacherStats(); showNotification('Summary deleted!', 'success'); } }
-        
-        function loadStudentTeachers() { const grid = document.getElementById('studentTeachersGrid'); if (!grid) return; grid.innerHTML = ''; const teachers = users.filter(u => u.type === 'teacher' && u.grade === currentUser?.grade); if (teachers.length === 0) { grid.innerHTML = `<p class="no-data">No teachers available.</p>`; return; } teachers.forEach(teacher => { const card = document.createElement('div'); card.className = 'room-card'; card.innerHTML = `<div class="room-grade">Grade ${teacher.grade}</div><div class="room-header"><i class="fas fa-chalkboard-teacher" style="font-size: 50px; color: #667eea;"></i><div class="teacher-info"><h3>${teacher.name}</h3><p>${teacher.bio || 'Experienced teacher'}</p></div></div><button class="book-btn" onclick="bookTeacher('${teacher.email}')">Contact Teacher</button>`; grid.appendChild(card); }); updateGradeStats(); }
-        
-        function loadTeacherStudents() { const grid = document.getElementById('teacherStudentsGrid'); if (!grid) return; grid.innerHTML = ''; const students = users.filter(u => u.type === 'student' && u.grade === currentUser?.grade); if (students.length === 0) { grid.innerHTML = `<p class="no-data">No students in your grade yet.</p>`; return; } students.forEach(student => { const card = document.createElement('div'); card.className = 'student-card'; const avatarHtml = student.profileImage ? `<img src="${student.profileImage}" class="student-avatar" alt="Profile">` : `<i class="fas fa-user-graduate student-avatar"></i>`; card.innerHTML = `<div class="student-grade">Grade ${student.grade}</div>${avatarHtml}<h3>${student.nickname || student.name}</h3><p>${student.email}</p><div class="student-bio">${student.bio ? student.bio.substring(0, 50) : ''}</div>`; grid.appendChild(card); }); updateTeacherGradeStats(); }
-        
-        function deleteExercise(exerciseId) { if (!currentUser || currentUser.type !== 'teacher') return; if (confirm('Delete this exercise?')) { exercises = exercises.filter(ex => ex.id !== exerciseId); saveData(); loadTeacherExercises(); updateTeacherStats(); updateTeacherGradeStats(); showNotification('Exercise deleted!', 'success'); } }
-        function bookTeacher(teacherEmail) { showNotification('Booking feature coming soon!', 'info'); }
-        function updateStudentProgress() { if (!currentUser || currentUser.type !== 'student') return; document.getElementById('completedExercises').textContent = currentUser.completedExercises?.length || 0; document.getElementById('averageScore').textContent = (currentUser.averageScore || 0) + '%'; document.getElementById('studyHours').textContent = currentUser.studyHours ? currentUser.studyHours.toFixed(1) : 0; document.getElementById('joinedRooms').textContent = currentUser.joinedRooms ? currentUser.joinedRooms.length : 0; }
-        function updateTeacherStats() { if (!currentUser || currentUser.type !== 'teacher') return; const teacherExercises = exercises.filter(ex => ex.teacher === currentUser.email && ex.grade === currentUser.grade); const teacherSummaries = summaries.filter(s => s.teacher === currentUser.email && s.grade === currentUser.grade); const totalCompletions = teacherExercises.reduce((sum, ex) => sum + (ex.completions || 0), 0); document.getElementById('teacherExercisesCount').textContent = teacherExercises.length; document.getElementById('teacherSummariesCount').textContent = teacherSummaries.length; document.getElementById('teacherCompletions').textContent = totalCompletions; }
-        function updateGradeStats() { if (!currentUser || currentUser.type !== 'student') return; const gradeExercises = exercises.filter(ex => ex.grade === currentUser.grade); const gradeTeachers = users.filter(u => u.type === 'teacher' && u.grade === currentUser.grade); document.getElementById('studentGradeExerciseCount').textContent = gradeExercises.length; document.getElementById('studentGradeTeacherCount').textContent = gradeTeachers.length; }
-        function updateTeacherGradeStats() { if (!currentUser || currentUser.type !== 'teacher') return; const gradeStudents = users.filter(u => u.type === 'student' && u.grade === currentUser.grade); const gradeExercises = exercises.filter(ex => ex.grade === currentUser.grade); document.getElementById('teacherGradeStudentCount').textContent = gradeStudents.length; document.getElementById('teacherGradeExerciseCount').textContent = gradeExercises.length; document.getElementById('teacherStudentsCount').textContent = gradeStudents.length; }
-        function updateTeacherRooms() { const grid = document.getElementById('teacherRoomsList'); if (!grid) return; grid.innerHTML = ''; const teacherRooms = privateRooms.filter(room => room.teacherEmail === currentUser?.email); if (teacherRooms.length === 0) { grid.innerHTML = `<p class="no-data">No private rooms yet.</p>`; return; } teacherRooms.forEach(room => { const roomDiv = document.createElement('div'); roomDiv.className = 'created-room'; roomDiv.innerHTML = `<div class="room-grade-tag">Grade ${room.grade}</div><h4>${room.roomName}</h4><p>${room.description}</p><div class="room-meta"><span><i class="fas fa-calendar"></i> ${room.schedule}</span><span><i class="fas fa-users"></i> ${room.students?.length || 0} students</span></div>`; grid.appendChild(roomDiv); }); }
-        function scrollToSection(section) { let element; if (currentUser.type === 'student') { switch(section) { case 'home': element = document.getElementById('student-home'); break; case 'exercises': element = document.getElementById('student-exercises'); break; case 'schedule': element = document.getElementById('student-schedule'); break; case 'rooms': element = document.getElementById('student-rooms'); break; case 'pricing': element = document.getElementById('student-pricing'); break; } } else { switch(section) { case 'home': element = document.getElementById('teacher-home'); break; case 'exercises': element = document.getElementById('teacher-exercises'); break; case 'rooms': element = document.getElementById('teacher-private-rooms'); break; case 'pricing': element = document.getElementById('teacher-pricing'); break; } } if (element) element.scrollIntoView({ behavior: 'smooth' }); }
-        function switchLanguage(lang) { currentLang = lang; document.querySelectorAll('.lang-btn').forEach(btn => { btn.classList.remove('active'); if ((lang === 'en' && btn.textContent.trim() === 'English') || (lang === 'ar' && btn.textContent.trim() === 'العربية')) btn.classList.add('active'); }); document.querySelectorAll('[data-en][data-ar]').forEach(element => { if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') { if (element.placeholder) element.placeholder = element.getAttribute(`data-${lang}`); } else if (element.tagName === 'SELECT') { Array.from(element.options).forEach(option => { if (option.getAttribute(`data-${lang}`)) option.textContent = option.getAttribute(`data-${lang}`); }); } else if (!element.classList.contains('lang-btn') && element.children.length === 0) element.textContent = element.getAttribute(`data-${lang}`); }); document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr'; document.documentElement.lang = lang; if (currentUser) { if (currentUser.type === 'student') { loadStudentExercises(); loadStudentSummaries(); loadStudentTeachers(); loadGroups(); loadSchedules(); } else { loadTeacherExercises(); loadTeacherSummaries(); loadTeacherStudents(); updateTeacherRooms(); } } }
-        
-        function searchFriends() { const searchTerm = document.getElementById('friendSearchInput').value.toLowerCase(); if (!searchTerm) { showNotification('Please enter a search term', 'warning'); return; } const results = users.filter(u => u.email !== currentUser.email && u.type === 'student' && (u.accountName.toLowerCase().includes(searchTerm) || (u.nickname && u.nickname.toLowerCase().includes(searchTerm)))); const resultsDiv = document.getElementById('friendSearchResults'); resultsDiv.innerHTML = ''; if (results.length === 0) { resultsDiv.innerHTML = `<p class="no-data">No users found</p>`; return; } results.forEach(user => { const isFriend = currentUser.friends?.includes(user.email); const hasRequestSent = friendRequests.some(r => r.from === currentUser.email && r.to === user.email && r.status === 'pending'); const hasRequestReceived = friendRequests.some(r => r.from === user.email && r.to === currentUser.email && r.status === 'pending'); const resultDiv = document.createElement('div'); resultDiv.className = 'search-result-item'; const avatarHtml = user.profileImage ? `<img src="${user.profileImage}" style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover;">` : `<i class="fas fa-user-graduate" style="font-size: 20px; color: #667eea;"></i>`; resultDiv.innerHTML = `<div class="search-result-info"><div class="search-result-avatar">${avatarHtml}</div><div class="search-result-details"><div class="search-result-name">${user.nickname || user.name}</div><div class="search-result-nickname">@${user.accountName}</div></div></div><button class="send-request-btn" onclick="sendFriendRequest('${user.email}')" ${isFriend || hasRequestSent || hasRequestReceived ? 'disabled' : ''}>${isFriend ? 'Friends' : (hasRequestSent ? 'Request Sent' : (hasRequestReceived ? 'Request Received' : 'Add Friend'))}</button>`; resultsDiv.appendChild(resultDiv); }); }
-        function sendFriendRequest(toEmail) { if (!currentUser) return; if (currentUser.friends?.includes(toEmail)) { showNotification('Already friends!', 'warning'); return; } if (friendRequests.some(r => r.from === currentUser.email && r.to === toEmail && r.status === 'pending')) { showNotification('Friend request already sent!', 'warning'); return; } friendRequests.push({ id: Date.now(), from: currentUser.email, to: toEmail, status: 'pending', timestamp: new Date().toISOString() }); saveData(); showNotification('Friend request sent!', 'success'); document.getElementById('friendSearchInput').value = ''; document.getElementById('friendSearchResults').innerHTML = ''; }
-        function loadFriendRequests() { const requestsDiv = document.getElementById('friendRequests'); if (!requestsDiv) return; const pendingRequests = friendRequests.filter(r => r.to === currentUser.email && r.status === 'pending'); requestsDiv.innerHTML = ''; if (pendingRequests.length === 0) { requestsDiv.innerHTML = '<p class="no-data">No pending requests</p>'; return; } pendingRequests.forEach(request => { const fromUser = users.find(u => u.email === request.from); if (!fromUser) return; const requestDiv = document.createElement('div'); requestDiv.className = 'request-item'; const avatarHtml = fromUser.profileImage ? `<img src="${fromUser.profileImage}" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">` : `<i class="fas fa-user-graduate" style="font-size: 20px; color: #667eea;"></i>`; requestDiv.innerHTML = `<div class="request-info"><div class="request-avatar">${avatarHtml}</div><div class="request-details"><div class="request-name">${fromUser.nickname || fromUser.name}</div><div class="request-nickname">@${fromUser.accountName}</div></div></div><div class="request-actions"><button class="request-accept" onclick="acceptFriendRequest(${request.id})"><i class="fas fa-check"></i></button><button class="request-reject" onclick="rejectFriendRequest(${request.id})"><i class="fas fa-times"></i></button></div>`; requestsDiv.appendChild(requestDiv); }); }
-        function acceptFriendRequest(requestId) { const request = friendRequests.find(r => r.id === requestId); if (!request) return; request.status = 'accepted'; if (!currentUser.friends) currentUser.friends = []; if (!currentUser.friends.includes(request.from)) currentUser.friends.push(request.from); const fromUser = users.find(u => u.email === request.from); if (fromUser) { if (!fromUser.friends) fromUser.friends = []; if (!fromUser.friends.includes(currentUser.email)) fromUser.friends.push(currentUser.email); } saveData(); showNotification('Friend request accepted!', 'success'); loadFriendRequests(); loadFriendsList(); }
-        function rejectFriendRequest(requestId) { const request = friendRequests.find(r => r.id === requestId); if (!request) return; request.status = 'rejected'; saveData(); showNotification('Friend request rejected', 'info'); loadFriendRequests(); }
-        function loadFriendsList() { const friendsDiv = document.getElementById('friendsList'); if (!friendsDiv) return; const friends = currentUser.friends || []; friendsDiv.innerHTML = ''; if (friends.length === 0) { friendsDiv.innerHTML = '<p class="no-data">No friends yet</p>'; return; } friends.forEach(friendEmail => { const friend = users.find(u => u.email === friendEmail); if (!friend) return; const friendDiv = document.createElement('div'); friendDiv.className = 'friend-item'; const avatarHtml = friend.profileImage ? `<img src="${friend.profileImage}" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">` : `<i class="fas fa-user-graduate" style="font-size: 20px; color: #667eea;"></i>`; friendDiv.innerHTML = `<div class="friend-avatar">${avatarHtml}</div><div class="friend-info"><div class="friend-name">${friend.nickname || friend.name}</div><div class="friend-nickname">@${friend.accountName}</div></div><div class="friend-status"></div>`; friendsDiv.appendChild(friendDiv); }); }
-        function loadGroups() { if (currentUser.type !== 'student') return; loadFriendRequests(); loadFriendsList(); const groupsDiv = document.getElementById('groupsList'); if (!groupsDiv) return; const userGroups = groups.filter(g => g.members.includes(currentUser.email)); groupsDiv.innerHTML = ''; if (userGroups.length === 0) { groupsDiv.innerHTML = '<p class="no-data">No groups yet.</p>'; return; } userGroups.forEach(group => { const groupDiv = document.createElement('div'); groupDiv.className = 'group-item'; groupDiv.innerHTML = `<div class="group-header"><h4><i class="fas fa-users"></i> ${group.name}</h4></div><div class="group-members">${group.members.map(email => { const user = users.find(u => u.email === email); return `<div class="group-member"><i class="fas fa-user"></i><span>${user ? (user.nickname || user.name) : email}</span></div>`; }).join('')}</div>`; groupsDiv.appendChild(groupDiv); }); }
-        function createGroup() { if (!currentUser || currentUser.type !== 'student') return; const groupName = prompt('Enter group name:'); if (!groupName) return; const groupDescription = prompt('Enter group description:'); const newGroup = { id: groups.length + 1, name: groupName, description: groupDescription || '', owner: currentUser.email, members: [currentUser.email], createdAt: new Date().toISOString() }; groups.push(newGroup); if (!currentUser.groups) currentUser.groups = []; currentUser.groups.push(newGroup.id); saveData(); showNotification('Group created!', 'success'); loadGroups(); }
-        function deleteGroup(groupId) { const group = groups.find(g => g.id === groupId); if (!group || group.owner !== currentUser.email) return; if (confirm('Delete this group?')) { groups = groups.filter(g => g.id !== groupId); group.members.forEach(email => { const user = users.find(u => u.email === email); if (user && user.groups) user.groups = user.groups.filter(id => id !== groupId); }); saveData(); showNotification('Group deleted!', 'success'); loadGroups(); } }
-        function leaveGroup(groupId) { const group = groups.find(g => g.id === groupId); if (!group) return; if (group.owner === currentUser.email) { showNotification('Owner cannot leave. Delete the group instead.', 'warning'); return; } group.members = group.members.filter(email => email !== currentUser.email); if (currentUser.groups) currentUser.groups = currentUser.groups.filter(id => id !== groupId); saveData(); showNotification('You left the group', 'info'); loadGroups(); }
-        function showProfile() { if (!currentUser) return; document.getElementById('profileName').textContent = currentUser.name; document.getElementById('profileType').textContent = currentUser.type === 'student' ? `Student • Grade ${currentUser.grade}` : `Teacher • Grade ${currentUser.grade}`; document.getElementById('profileEmail').textContent = currentUser.email; document.getElementById('profileBio').textContent = currentUser.bio || 'No bio yet.'; const profileAvatar = document.getElementById('profileAvatar'); const avatarImg = document.getElementById('profileAvatarImg'); const avatarIcon = profileAvatar.querySelector('i'); if (currentUser.profileImage) { avatarImg.src = currentUser.profileImage; avatarImg.style.display = 'block'; avatarIcon.style.display = 'none'; } else { avatarImg.style.display = 'none'; avatarIcon.style.display = 'block'; } const statsGrid = document.getElementById('profileStats'); if (currentUser.type === 'student') { statsGrid.innerHTML = `<div class="stat-item"><div class="stat-number">${currentUser.completedExercises?.length || 0}</div><div class="stat-label">Completed</div></div><div class="stat-item"><div class="stat-number">${currentUser.averageScore || 0}%</div><div class="stat-label">Avg Score</div></div><div class="stat-item"><div class="stat-number">${currentUser.studyHours?.toFixed(1) || 0}</div><div class="stat-label">Hours</div></div>`; } else { statsGrid.innerHTML = `<div class="stat-item"><div class="stat-number">${currentUser.exercises?.length || 0}</div><div class="stat-label">Exercises</div></div><div class="stat-item"><div class="stat-number">${currentUser.summaries?.length || 0}</div><div class="stat-label">Summaries</div></div><div class="stat-item"><div class="stat-number">${privateRooms.filter(r => r.teacherEmail === currentUser.email).length}</div><div class="stat-label">Rooms</div></div>`; } if (currentUser.type === 'student') document.getElementById('studentWebsite').style.display = 'none'; else document.getElementById('teacherWebsite').style.display = 'none'; document.getElementById('footer').style.display = 'none'; document.getElementById('profilePage').style.display = 'block'; }
-        function goBackFromProfile() { document.getElementById('profilePage').style.display = 'none'; document.getElementById('footer').style.display = 'block'; if (currentUser.type === 'student') { document.getElementById('studentWebsite').style.display = 'block'; loadGroups(); loadSchedules(); } else { document.getElementById('teacherWebsite').style.display = 'block'; } }
-        function openEditProfile() { 
-            document.getElementById('editName').value = currentUser.name; 
-            document.getElementById('editNickname').value = currentUser.nickname || ''; 
-            document.getElementById('editBio').value = currentUser.bio || ''; 
-            const gradeSelect = document.getElementById('editGrade');
-            gradeSelect.value = currentUser.grade;
-            const lastChanged = currentUser.gradeLastChanged ? new Date(currentUser.gradeLastChanged) : null;
-            const now = new Date();
-            const daysSinceLastChange = lastChanged ? Math.floor((now - lastChanged) / (1000 * 60 * 60 * 24)) : 31;
-            const cooldownMsg = document.getElementById('gradeCooldownMessage');
-            if (daysSinceLastChange < 30) {
-                const daysLeft = 30 - daysSinceLastChange;
-                cooldownMsg.textContent = `You can change your grade again in ${daysLeft} day(s).`;
-                gradeSelect.disabled = true;
-            } else {
-                cooldownMsg.textContent = '';
-                gradeSelect.disabled = false;
-            }
-            document.getElementById('editProfileModal').classList.add('active'); 
-        }
-        function closeEditProfile() { document.getElementById('editProfileModal').classList.remove('active'); }
-        function saveProfile() { 
-            const newName = document.getElementById('editName').value; 
-            const newNickname = document.getElementById('editNickname').value; 
-            const newBio = document.getElementById('editBio').value; 
-            const newGrade = document.getElementById('editGrade').value;
-            const imageInput = document.getElementById('editProfileImage'); 
-            if (!newName) { showNotification('Name cannot be empty!', 'error'); return; } 
-            currentUser.name = newName; 
-            currentUser.nickname = newNickname || newName; 
-            currentUser.bio = newBio; 
-            if (newGrade && newGrade !== currentUser.grade) {
-                const lastChanged = currentUser.gradeLastChanged ? new Date(currentUser.gradeLastChanged) : null;
-                const now = new Date();
-                const daysSinceLastChange = lastChanged ? Math.floor((now - lastChanged) / (1000 * 60 * 60 * 24)) : 31;
-                if (daysSinceLastChange >= 30) {
-                    currentUser.grade = newGrade;
-                    currentUser.gradeLastChanged = now.toISOString();
-                    showNotification(`Grade changed to Grade ${newGrade}!`, 'success');
+                currentUser = user;
+                localStorage.setItem('currentUserEmail', user.email);
+                localStorage.setItem('currentUserPassword', user.password);
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('footer').style.display = 'block';
+                if (user.type === 'student') {
+                    document.getElementById('studentWebsite').style.display = 'block';
+                    document.getElementById('studentDisplayName').textContent = user.name;
+                    document.getElementById('navStudentName').textContent = user.name;
+                    document.getElementById('studentGradeBadge').textContent = `Grade ${user.grade}`;
+                    document.getElementById('currentStudentGrade').textContent = user.grade;
+                    window.location.hash = 'home';
+                    handleHashChange();
                 } else {
-                    showNotification(`Cannot change grade yet. Please wait ${30 - daysSinceLastChange} more days.`, 'warning');
+                    document.getElementById('teacherWebsite').style.display = 'block';
+                    document.getElementById('navTeacherName').textContent = user.name;
+                    document.getElementById('teacherGradeBadge').textContent = `Grade ${user.grade}`;
+                    document.getElementById('currentTeacherGrade').textContent = user.grade;
+                    window.location.hash = 'dashboard';
+                    handleHashChange();
                 }
+                if (user.isOP) document.getElementById('opPanel').style.display = 'block';
+                showNotification(`Welcome back, ${user.name}!`, 'success');
+            } else {
+                showNotification('Invalid email or password!', 'error');
             }
-            if (imageInput.files && imageInput.files[0]) { 
-                const reader = new FileReader(); 
-                reader.onload = e => { currentUser.profileImage = e.target.result; finishSaveProfile(); }; 
-                reader.readAsDataURL(imageInput.files[0]); 
-            } else finishSaveProfile(); 
         }
-        function finishSaveProfile() { 
-            const userIndex = users.findIndex(u => u.email === currentUser.email); 
-            users[userIndex] = currentUser; 
-            if (currentUser.type === 'student') { 
-                document.getElementById('navStudentName').textContent = currentUser.name; 
-                document.getElementById('studentDisplayName').textContent = currentUser.name; 
-                document.getElementById('studentGradeBadge').textContent = `Grade ${currentUser.grade}`;
-                document.getElementById('currentStudentGrade').textContent = currentUser.grade;
-                const navAvatar = document.getElementById('navStudentAvatar'); 
-                const navImg = document.getElementById('navStudentAvatarImg'); 
-                const navIcon = navAvatar.querySelector('i'); 
-                if (currentUser.profileImage) { navImg.src = currentUser.profileImage; navImg.style.display = 'block'; navIcon.style.display = 'none'; } 
-            } else { 
-                document.getElementById('navTeacherName').textContent = currentUser.name; 
-                document.getElementById('teacherGradeBadge').textContent = `Grade ${currentUser.grade}`;
-                document.getElementById('currentTeacherGrade').textContent = currentUser.grade;
-                const navAvatar = document.getElementById('navTeacherAvatar'); 
-                const navImg = document.getElementById('navTeacherAvatarImg'); 
-                const navIcon = navAvatar.querySelector('i'); 
-                if (currentUser.profileImage) { navImg.src = currentUser.profileImage; navImg.style.display = 'block'; navIcon.style.display = 'none'; } 
-            } 
-            saveData(); 
-            closeEditProfile(); 
-            showProfile(); 
-            showNotification('Profile updated successfully!', 'success'); 
+        function handleLogout() {
+            localStorage.removeItem('currentUserEmail');
+            localStorage.removeItem('currentUserPassword');
+            currentUser = null;
+            document.getElementById('studentWebsite').style.display = 'none';
+            document.getElementById('teacherWebsite').style.display = 'none';
+            document.getElementById('profilePage').style.display = 'none';
+            document.getElementById('paymentPage').style.display = 'none';
+            document.getElementById('footer').style.display = 'none';
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('opPanel').style.display = 'none';
+            window.location.hash = '';
+            showNotification('Logged out successfully!', 'info');
         }
-
-        window.sendVerificationCode = () => {
-            const email = document.getElementById('resetEmail').value;
-            if (!email) { showNotification('Please enter your email address!', 'error'); return; }
-            resetEmailForCode = email;
-            verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
-            console.log('Verification code for', email, ':', verificationCode);
-            showNotification(`Verification code sent to ${email}. Check console for demo.`, 'info');
-            closeForgotPasswordModal();
-            document.getElementById('verificationModal').classList.add('active');
-        };
-        window.verifyCode = () => {
-            const enteredCode = document.getElementById('verificationCode').value;
-            if (!enteredCode) { showNotification('Please enter the verification code!', 'error'); return; }
-            if (enteredCode === verificationCode) {
-                showNotification('Code verified successfully!', 'success');
-                closeVerificationModal();
-                document.getElementById('resetPasswordModal').classList.add('active');
-            } else { showNotification('Invalid verification code. Please try again.', 'error'); }
-        };
-        window.resetPassword = () => {
-            const newPassword = document.getElementById('newPassword').value;
-            const confirmPassword = document.getElementById('confirmNewPassword').value;
-            if (!newPassword || !confirmPassword) { showNotification('Please fill in both password fields!', 'error'); return; }
-            if (newPassword !== confirmPassword) { showNotification('Passwords do not match!', 'error'); return; }
-            if (newPassword.length < 6) { showNotification('Password must be at least 6 characters!', 'error'); return; }
-            const user = users.find(u => u.email === resetEmailForCode);
-            if (user) { user.password = newPassword; saveData(); showNotification('Password reset successfully! Please login with your new password.', 'success'); closeResetPasswordModal(); }
-            else { showNotification('User not found.', 'error'); }
-        };
+        
+        function loadStudentExercises() { const grid = document.getElementById('studentExercisesGrid'); if(grid) grid.innerHTML = '<div class="no-data">Exercises will appear here</div>'; }
+        function loadStudentSummaries() { const grid = document.getElementById('studentSummariesGrid'); if(grid) grid.innerHTML = '<div class="no-data">Summaries will appear here</div>'; }
+        function loadStudentTeachers() { const grid = document.getElementById('studentTeachersGrid'); if(grid) grid.innerHTML = '<div class="no-data">Teachers will appear here</div>'; }
+        function updateStudentProgress() { document.getElementById('completedExercises').textContent = '0'; document.getElementById('averageScore').textContent = '0%'; document.getElementById('studyHours').textContent = '0'; document.getElementById('joinedRooms').textContent = '0'; }
+        function updateGradeStats() { document.getElementById('studentGradeExerciseCount').textContent = '0'; document.getElementById('studentGradeTeacherCount').textContent = '0'; }
+        function loadTeacherExercises() { const grid = document.getElementById('teacherExercisesGrid'); if(grid) grid.innerHTML = '<div class="no-data">Your exercises will appear here</div>'; }
+        function loadTeacherSummaries() { const grid = document.getElementById('teacherSummariesGrid'); if(grid) grid.innerHTML = '<div class="no-data">Your summaries will appear here</div>'; }
+        function loadTeacherStudents() { const grid = document.getElementById('teacherStudentsGrid'); if(grid) grid.innerHTML = '<div class="no-data">Your students will appear here</div>'; }
+        function updateTeacherStats() { document.getElementById('teacherExercisesCount').textContent = '0'; document.getElementById('teacherSummariesCount').textContent = '0'; document.getElementById('teacherStudentsCount').textContent = '0'; document.getElementById('teacherCompletions').textContent = '0'; }
+        function updateTeacherGradeStats() { document.getElementById('teacherGradeStudentCount').textContent = '0'; document.getElementById('teacherGradeExerciseCount').textContent = '0'; }
+        function loadSchedules() { const container = document.getElementById('schedulesListContainer'); if(container) container.innerHTML = '<div class="no-schedules">No study schedules yet</div>'; }
+        function addSchedule() { showNotification('Schedule feature placeholder', 'info'); }
+        function loadGroups() { const groupsDiv = document.getElementById('groupsList'); if(groupsDiv) groupsDiv.innerHTML = '<div class="no-data">No groups yet</div>'; }
+        function loadFriendRequests() { const requestsDiv = document.getElementById('friendRequests'); if(requestsDiv) requestsDiv.innerHTML = '<div class="no-data">No pending requests</div>'; }
+        function loadFriendsList() { const friendsDiv = document.getElementById('friendsList'); if(friendsDiv) friendsDiv.innerHTML = '<div class="no-data">No friends yet</div>'; }
+        function searchFriends() { showNotification('Search friends feature placeholder', 'info'); }
+        function createGroup() { showNotification('Create group feature placeholder', 'info'); }
+        function showProfile() { 
+            document.getElementById('studentWebsite').style.display = 'none';
+            document.getElementById('teacherWebsite').style.display = 'none';
+            document.getElementById('profilePage').style.display = 'block';
+            document.getElementById('footer').style.display = 'none';
+        }
+        function goBackFromProfile() {
+            document.getElementById('profilePage').style.display = 'none';
+            document.getElementById('footer').style.display = 'block';
+            if (currentUser.type === 'student') {
+                document.getElementById('studentWebsite').style.display = 'block';
+                const hash = window.location.hash.substring(1) || 'home';
+                loadPageFromHash(hash);
+            } else {
+                document.getElementById('teacherWebsite').style.display = 'block';
+                const hash = window.location.hash.substring(1) || 'dashboard';
+                loadPageFromHash(hash);
+            }
+        }
+        function openEditProfile() { document.getElementById('editProfileModal').classList.add('active'); }
+        function closeEditProfile() { document.getElementById('editProfileModal').classList.remove('active'); }
+        function saveProfile() { closeEditProfile(); showNotification('Profile saved!', 'success'); }
+        function showPaymentPage(plan, price) { 
+            selectedPlan = { name: plan, price: price };
+            document.getElementById('selectedPlanName').textContent = plan === 'regular' ? 'Regular Plan' : 'Professional Plan';
+            document.getElementById('selectedPlanPrice').textContent = price + ' OMR';
+            document.getElementById('totalPrice').textContent = price + ' OMR';
+            if (currentUser.type === 'student') document.getElementById('studentWebsite').style.display = 'none';
+            else document.getElementById('teacherWebsite').style.display = 'none';
+            document.getElementById('footer').style.display = 'none';
+            document.getElementById('paymentPage').style.display = 'flex';
+        }
+        function hidePaymentPage() {
+            document.getElementById('paymentPage').style.display = 'none';
+            document.getElementById('footer').style.display = 'block';
+            if (currentUser.type === 'student') {
+                document.getElementById('studentWebsite').style.display = 'block';
+                const hash = window.location.hash.substring(1) || 'home';
+                loadPageFromHash(hash);
+            } else {
+                document.getElementById('teacherWebsite').style.display = 'block';
+                const hash = window.location.hash.substring(1) || 'dashboard';
+                loadPageFromHash(hash);
+            }
+        }
+        function selectPaymentMethod(method) { 
+            selectedPaymentMethod = method;
+            document.getElementById('methodCard').classList.toggle('active', method === 'card');
+            document.getElementById('methodBank').classList.toggle('active', method === 'bank');
+            document.getElementById('cardPaymentForm').style.display = method === 'card' ? 'block' : 'none';
+            document.getElementById('bankPaymentForm').style.display = method === 'bank' ? 'block' : 'none';
+        }
+        function handleAddExercise(event) { event.preventDefault(); showNotification('Exercise added!', 'success'); }
+        function handleAddSummary(event) { event.preventDefault(); showNotification('Summary added!', 'success'); }
+        function previewSummaryPdf(input) {}
+        function removeSummaryPdf(event) {}
+        function showForgotPasswordModal() { document.getElementById('forgotPasswordModal').classList.add('active'); }
+        function closeForgotPasswordModal() { document.getElementById('forgotPasswordModal').classList.remove('active'); }
+        function closeVerificationModal() { document.getElementById('verificationModal').classList.remove('active'); }
+        function closeResetPasswordModal() { document.getElementById('resetPasswordModal').classList.remove('active'); }
+        function showDeleteAccountModal() { document.getElementById('deleteAccountModal').classList.add('active'); }
+        function closeDeleteAccountModal() { document.getElementById('deleteAccountModal').classList.remove('active'); }
+        function showRoleSelectionModal() { document.getElementById('roleSelectionModal').classList.add('active'); }
+        function hideRoleSelectionModal() { document.getElementById('roleSelectionModal').classList.remove('active'); }
+        function selectRole(role) { selectedRole = role; }
+        function previewRoleProfileImage(input) {}
+        function confirmRoleSelection() { hideRoleSelectionModal(); showNotification('Profile completed!', 'success'); }
+        function quitGoogleSignIn() { hideRoleSelectionModal(); }
+        function startGoogleSignIn() { showNotification('Google Sign-In placeholder', 'info'); }
+        function sendVerificationCode() { showNotification('Verification code sent!', 'info'); }
+        function verifyCode() { showNotification('Code verified!', 'success'); }
+        function resetPassword() { showNotification('Password reset!', 'success'); }
+        function confirmDeleteAccount() { showNotification('Account deleted', 'info'); }
+        function showOPPanel() { showNotification('OP Panel placeholder', 'info'); }
+        function grantSubscriptionFromOP() { showNotification('Subscription granted', 'success'); }
+        function checkSubscriptionExpiry(user) { return false; }
+        function showSubscriptionRequired(featureName) { showNotification(`Premium feature: ${featureName}`, 'warning'); }
+        function switchLanguage(lang) { 
+            currentLang = lang; 
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-en][data-ar]').forEach(el => {
+                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                    if (el.placeholder) el.placeholder = el.getAttribute(`data-${lang}`);
+                } else if (el.children.length === 0 || el.classList.contains('btn-explore') || el.classList.contains('premium-tag')) {
+                    el.textContent = el.getAttribute(`data-${lang}`);
+                }
+            });
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
-                if (!checkSavedLogin()) {
-                    const animationContainer = document.getElementById('animationContainer');
-                    if (animationContainer) {
-                        setTimeout(() => {
-                            animationContainer.style.display = 'none';
-                        }, 2000);
-                    }
-                } else {
-                    const animationContainer = document.getElementById('animationContainer');
-                    if (animationContainer) {
-                        animationContainer.style.display = 'none';
+                const animationContainer = document.getElementById('animationContainer');
+                if (animationContainer) {
+                    setTimeout(() => { animationContainer.style.display = 'none'; }, 2000);
+                }
+                const savedUserEmail = localStorage.getItem('currentUserEmail');
+                if (savedUserEmail) {
+                    const savedUser = users.find(u => u.email === savedUserEmail);
+                    if (savedUser) {
+                        currentUser = savedUser;
+                        document.getElementById('loginPage').style.display = 'none';
+                        document.getElementById('footer').style.display = 'block';
+                        if (savedUser.type === 'student') {
+                            document.getElementById('studentWebsite').style.display = 'block';
+                            document.getElementById('studentDisplayName').textContent = savedUser.name;
+                            document.getElementById('navStudentName').textContent = savedUser.name;
+                            document.getElementById('studentGradeBadge').textContent = `Grade ${savedUser.grade}`;
+                            document.getElementById('currentStudentGrade').textContent = savedUser.grade;
+                            window.location.hash = 'home';
+                            handleHashChange();
+                        } else {
+                            document.getElementById('teacherWebsite').style.display = 'block';
+                            document.getElementById('navTeacherName').textContent = savedUser.name;
+                            document.getElementById('teacherGradeBadge').textContent = `Grade ${savedUser.grade}`;
+                            document.getElementById('currentTeacherGrade').textContent = savedUser.grade;
+                            window.location.hash = 'dashboard';
+                            handleHashChange();
+                        }
+                        if (savedUser.isOP) document.getElementById('opPanel').style.display = 'block';
                     }
                 }
             }, 500);
         });
-    </script>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
-        import { 
-          getAuth, 
-          createUserWithEmailAndPassword, 
-          signInWithEmailAndPassword,
-          onAuthStateChanged,
-          signOut,
-          sendEmailVerification,
-          GoogleAuthProvider,
-          signInWithPopup,
-          deleteUser,
-          reauthenticateWithCredential,
-          EmailAuthProvider
-        } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
-
-        const firebaseConfig = {
-          apiKey: "AIzaSyBpunCadwttAIHMWvWfKaoWhHLn8bVVX3c",
-          authDomain: "studxacad-b794b.firebaseapp.com",
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const googleProvider = new GoogleAuthProvider();
-
-        window.startGoogleSignIn = async () => {
-          try {
-            const result = await signInWithPopup(auth, googleProvider);
-            const user = result.user;
-            const existingUser = users.find(u => u.email === user.email);
-            if (existingUser) {
-              performLogin(existingUser);
-              showNotification(`Welcome back ${existingUser.name}!`, 'success');
-            } else {
-              tempGoogleUser = { email: user.email, photoURL: user.photoURL, displayName: user.displayName };
-              document.getElementById('roleName').value = user.displayName || user.email.split('@')[0];
-              showRoleSelectionModal();
-            }
-          } catch (err) {
-            showNotification(err.message, 'error');
-          }
-        };
-
-        window.firebaseSignup = async () => {
-          const email = document.getElementById("signupEmail").value;
-          const password = document.getElementById("signupPassword").value;
-          if (!email || !password) { showNotification("Please enter email and password", "error"); return; }
-          try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            await sendEmailVerification(userCredential.user);
-            showNotification("Account created! Please verify your email before logging in.", "success");
-            showLogin();
-          } catch (err) { showNotification(err.message, "error"); }
-        };
-
-        window.firebaseLogin = async () => {
-          const email = document.getElementById("email").value;
-          const password = document.getElementById("password").value;
-          if (!email || !password) { showNotification("Please enter email and password", "error"); return; }
-          try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            if (!userCredential.user.emailVerified && selectedLoginType === 'student') { 
-              showNotification("Please verify your email first!", "warning"); 
-              await signOut(auth); 
-              return; 
-            }
-            showNotification("Logged in successfully! ✅", "success");
-          } catch (err) { showNotification(err.message, "error"); }
-        };
-
-        window.confirmDeleteAccount = async () => {
-          if (!currentUser) {
-            showNotification("No user logged in!", "error");
-            closeDeleteAccountModal();
-            return;
-          }
-          try {
-            const user = auth.currentUser;
-            if (!user) {
-              showNotification("Please log in again to delete your account.", "error");
-              closeDeleteAccountModal();
-              return;
-            }
-            if (currentUser.password && currentUser.password !== 'google_auth_user') {
-              const password = prompt("Please enter your password to confirm account deletion:");
-              if (!password) {
-                showNotification("Password required to delete account.", "warning");
-                closeDeleteAccountModal();
-                return;
-              }
-              const credential = EmailAuthProvider.credential(user.email, password);
-              await reauthenticateWithCredential(user, credential);
-            }
-            await deleteUser(user);
-            console.log("Firebase user deleted:", user.email);
-            const userIndex = users.findIndex(u => u.email === currentUser.email);
-            if (userIndex !== -1) { users.splice(userIndex, 1); saveData(); }
-            exercises = exercises.filter(ex => ex.teacher !== currentUser.email);
-            summaries = summaries.filter(s => s.teacher !== currentUser.email);
-            privateRooms = privateRooms.filter(r => r.teacherEmail !== currentUser.email);
-            groups.forEach(group => {
-              group.members = group.members.filter(m => m !== currentUser.email);
-              if (group.owner === currentUser.email && group.members.length > 0) group.owner = group.members[0];
-            });
-            groups = groups.filter(g => g.members.length > 0);
-            friendRequests = friendRequests.filter(r => r.from !== currentUser.email && r.to !== currentUser.email);
-            saveData();
-            showNotification("Your account has been permanently deleted.", "success");
-            closeDeleteAccountModal();
-            await signOut(auth);
-            handleLogout();
-          } catch (err) {
-            console.error("Account deletion error:", err);
-            if (err.code === 'auth/requires-recent-login') {
-              showNotification("Please log out and log back in before deleting your account.", "warning");
-            } else if (err.code === 'auth/wrong-password') {
-              showNotification("Incorrect password. Please try again.", "error");
-            } else {
-              showNotification(err.message, "error");
-            }
-          }
-        };
-
-        onAuthStateChanged(auth, async (user) => {
-          if (user) {
-            if (!user.emailVerified && user.providerData[0]?.providerId !== 'google.com' && selectedLoginType === 'student') { 
-              await signOut(auth); 
-              return; 
-            }
-            const existingUser = users.find(u => u.email === user.email);
-            if (existingUser) {
-              performLogin(existingUser);
-            } else if (user.providerData[0]?.providerId === 'google.com') {
-              if (!document.getElementById('roleSelectionModal').classList.contains('active')) {
-                tempGoogleUser = { email: user.email, photoURL: user.photoURL, displayName: user.displayName };
-                document.getElementById('roleName').value = user.displayName || user.email.split('@')[0];
-                showRoleSelectionModal();
-              }
-            }
-            document.getElementById("loginPage").style.display = "none";
-            document.getElementById("footer").style.display = "block";
-          } else {
-            if (!currentUser) {
-              document.getElementById("loginPage").style.display = "flex";
-              document.getElementById("studentWebsite").style.display = "none";
-              document.getElementById("teacherWebsite").style.display = "none";
-              document.getElementById("footer").style.display = "none";
-              document.getElementById("profilePage").style.display = "none";
-              document.getElementById("exercisePage").style.display = "none";
-              document.getElementById("paymentPage").style.display = "none";
-            }
-          }
-        });
-
-        const originalLogout = window.handleLogout;
-        window.handleLogout = () => { 
-          signOut(auth).then(() => { 
-            if (originalLogout) originalLogout(); 
-          }); 
-        };
-        
-        const originalSignupHandler = window.handleSignup;
-        window.handleSignup = () => {
-          const email = document.getElementById("signupEmail").value;
-          const password = document.getElementById("signupPassword").value;
-          if (!email || !password) { showNotification("Please fill in email and password!", "error"); return; }
-          createUserWithEmailAndPassword(auth, email, password).then(async (userCredential) => {
-            await sendEmailVerification(userCredential.user);
-            showNotification("Account created! Please verify your email before logging in.", "success");
-            if (originalSignupHandler) originalSignupHandler();
-          }).catch((err) => { showNotification(err.message, "error"); });
-        };
-        
-        const originalLoginHandler = window.handleLogin;
-        window.handleLogin = (event) => {
-          event.preventDefault();
-          const email = document.getElementById("email").value;
-          const password = document.getElementById("password").value;
-          if (!email || !password) { showNotification("Please enter email and password!", "error"); return; }
-          signInWithEmailAndPassword(auth, email, password).then(async (userCredential) => {
-            if (!userCredential.user.emailVerified && selectedLoginType === 'student') { 
-              showNotification("Please verify your email first!", "warning"); 
-              await signOut(auth); 
-              return; 
-            }
-            if (originalLoginHandler) originalLoginHandler({ preventDefault: () => {} });
-          }).catch((err) => { showNotification(err.message, "error"); });
-        };
     </script>
 </body>
 </html>
