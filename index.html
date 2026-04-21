@@ -4869,125 +4869,7 @@
                 </div>
             </form>
 
-            <!-- Demo Credentials -->
-            <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 10px; text-align: center;">
-                <p style="color: #ffd700; margin-bottom: 10px;">📋 Demo Accounts:</p>
-                <p style="color: #4caf50;">👨‍🎓 Student: student@studx.com / student123</p>
-                <p style="color: #ff9800;">👩‍🏫 Teacher: teacher@studx.com / teacher123</p>
-                <p style="color: #f44336; font-weight: bold;">👑 OP Admin: studxacademic@gmail.com / admin123</p>
-            </div>
-
-            <!-- Role Selection Modal -->
-            <div class="role-selection-modal" id="roleSelectionModal">
-                <div class="role-selection-content">
-                    <i class="fas fa-user-astronaut" style="font-size: 50px; color: #667eea; margin-bottom: 15px;"></i>
-                    <h3 data-en="Complete Your Profile" data-ar="أكمل ملفك الشخصي">Complete Your Profile</h3>
-                    <p data-en="Please choose your role and grade to continue" data-ar="الرجاء اختيار دورك وصفك للمتابعة">Please choose your role and grade to continue</p>
-                    
-                    <div class="profile-preview-role">
-                        <div class="profile-avatar-role" onclick="document.getElementById('roleProfileImage').click()">
-                            <i class="fas fa-camera" id="roleProfileIcon"></i>
-                            <img id="roleProfilePreview" style="display: none;">
-                        </div>
-                        <input type="file" id="roleProfileImage" class="hidden-input" accept="image/*" onchange="previewRoleProfileImage(this)">
-                    </div>
-
-                    <input type="text" id="roleName" class="name-input" placeholder="Your Name / اسمك" value="">
-
-                    <div class="role-buttons">
-                        <div class="role-btn" onclick="selectRole('student')" id="roleStudentBtn">
-                            <i class="fas fa-user-graduate"></i>
-                            <span data-en="Student" data-ar="طالب">Student</span>
-                        </div>
-                        <div class="role-btn" onclick="selectRole('teacher')" id="roleTeacherBtn">
-                            <i class="fas fa-chalkboard-teacher"></i>
-                            <span data-en="Teacher" data-ar="مدرس">Teacher</span>
-                        </div>
-                    </div>
-
-                    <select id="roleGrade" class="grade-select">
-                        <option value="" data-en="Select your grade" data-ar="اختر صفك">Select your grade</option>
-                        <option value="1">Grade 1</option>
-                        <option value="2">Grade 2</option>
-                        <option value="3">Grade 3</option>
-                        <option value="4">Grade 4</option>
-                        <option value="5">Grade 5</option>
-                        <option value="6">Grade 6</option>
-                        <option value="7">Grade 7</option>
-                        <option value="8">Grade 8</option>
-                        <option value="9">Grade 9</option>
-                        <option value="10">Grade 10</option>
-                        <option value="11">Grade 11</option>
-                        <option value="12">Grade 12</option>
-                    </select>
-
-                    <input type="password" id="roleTeacherCode" class="teacher-code-input" placeholder="Teacher Access Code / رمز المدرس">
-
-                    <div class="error-message" id="roleErrorMessage"></div>
-
-                    <div class="role-action-buttons">
-                        <button class="confirm-role-btn" onclick="confirmRoleSelection()" data-en="Continue" data-ar="متابعة">Continue</button>
-                        <button class="quit-signin-btn" onclick="quitGoogleSignIn()" data-en="Quit" data-ar="خروج">Quit</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Forgot Password Modal -->
-            <div class="forgot-password-modal" id="forgotPasswordModal">
-                <div class="forgot-password-content">
-                    <i class="fas fa-key" style="font-size: 50px; color: #667eea; margin-bottom: 15px;"></i>
-                    <h3 data-en="Reset Password" data-ar="إعادة تعيين كلمة المرور">Reset Password</h3>
-                    <p data-en="Enter your email address and we'll send you a verification code." data-ar="أدخل بريدك الإلكتروني وسنرسل لك رمز التحقق.">Enter your email address and we'll send you a verification code.</p>
-                    <input type="email" id="resetEmail" class="forgot-password-input" placeholder="Email Address / البريد الإلكتروني">
-                    <div class="forgot-password-buttons">
-                        <button class="reset-btn" onclick="sendVerificationCode()" data-en="Send Code" data-ar="إرسال الرمز">Send Code</button>
-                        <button class="cancel-reset-btn" onclick="closeForgotPasswordModal()" data-en="Cancel" data-ar="إلغاء">Cancel</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Verification Code Modal -->
-            <div class="verification-modal" id="verificationModal">
-                <div class="verification-content">
-                    <i class="fas fa-envelope" style="font-size: 50px; color: #667eea; margin-bottom: 15px;"></i>
-                    <h3 data-en="Enter Verification Code" data-ar="أدخل رمز التحقق">Enter Verification Code</h3>
-                    <p data-en="Please enter the 6-digit code sent to your email." data-ar="الرجاء إدخال الرمز المكون من 6 أرقام المرسل إلى بريدك الإلكتروني.">Please enter the 6-digit code sent to your email.</p>
-                    <input type="text" id="verificationCode" class="code-input" placeholder="000000" maxlength="6">
-                    <div class="forgot-password-buttons">
-                        <button class="reset-btn" onclick="verifyCode()" data-en="Verify Code" data-ar="تحقق من الرمز">Verify Code</button>
-                        <button class="cancel-reset-btn" onclick="closeVerificationModal()" data-en="Cancel" data-ar="إلغاء">Cancel</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Reset Password Modal -->
-            <div class="reset-password-modal" id="resetPasswordModal">
-                <div class="reset-password-content">
-                    <i class="fas fa-lock" style="font-size: 50px; color: #667eea; margin-bottom: 15px;"></i>
-                    <h3 data-en="Create New Password" data-ar="إنشاء كلمة مرور جديدة">Create New Password</h3>
-                    <p data-en="Enter your new password below." data-ar="أدخل كلمة المرور الجديدة أدناه.">Enter your new password below.</p>
-                    <input type="password" id="newPassword" class="password-input" placeholder="New Password / كلمة المرور الجديدة">
-                    <input type="password" id="confirmNewPassword" class="password-input" placeholder="Confirm Password / تأكيد كلمة المرور">
-                    <div class="forgot-password-buttons">
-                        <button class="reset-btn" onclick="resetPassword()" data-en="Reset Password" data-ar="إعادة تعيين كلمة المرور">Reset Password</button>
-                        <button class="cancel-reset-btn" onclick="closeResetPasswordModal()" data-en="Cancel" data-ar="إلغاء">Cancel</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Delete Account Confirmation Modal -->
-            <div class="delete-account-modal" id="deleteAccountModal">
-                <div class="delete-account-content">
-                    <i class="fas fa-exclamation-triangle" style="font-size: 50px; color: #f44336; margin-bottom: 15px;"></i>
-                    <h3 data-en="Delete Account" data-ar="حذف الحساب">Delete Account</h3>
-                    <p data-en="Are you sure you want to permanently delete your account?" data-ar="هل أنت متأكد أنك تريد حذف حسابك بشكل دائم؟">Are you sure you want to permanently delete your account?</p>
-                    <p class="warning-text" data-en="This action cannot be undone! All your data will be lost forever." data-ar="هذا الإجراء لا يمكن التراجع عنه! جميع بياناتك ستفقد إلى الأبد.">This action cannot be undone! All your data will be lost forever.</p>
-                    <div class="delete-account-buttons">
-                        <button class="confirm-delete-btn" onclick="confirmDeleteAccount()" data-en="Yes, Delete My Account" data-ar="نعم، احذف حسابي">Yes, Delete My Account</button>
-                        <button class="cancel-delete-btn" onclick="closeDeleteAccountModal()" data-en="Cancel" data-ar="إلغاء">Cancel</button>
-                    </div>
-                </div>
-            </div>
+            <!-- THE DEMO ACCOUNTS BOX HAS BEEN REMOVED AS REQUESTED -->
 
             <!-- Signup Form -->
             <div id="signupForm" style="display: none;">
@@ -5106,6 +4988,118 @@
                         <a href="#" onclick="showLogin()" data-en="Back to Login" data-ar="العودة لتسجيل الدخول">Back to Login</a>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Role Selection Modal -->
+    <div class="role-selection-modal" id="roleSelectionModal">
+        <div class="role-selection-content">
+            <i class="fas fa-user-astronaut" style="font-size: 50px; color: #667eea; margin-bottom: 15px;"></i>
+            <h3 data-en="Complete Your Profile" data-ar="أكمل ملفك الشخصي">Complete Your Profile</h3>
+            <p data-en="Please choose your role and grade to continue" data-ar="الرجاء اختيار دورك وصفك للمتابعة">Please choose your role and grade to continue</p>
+            
+            <div class="profile-preview-role">
+                <div class="profile-avatar-role" onclick="document.getElementById('roleProfileImage').click()">
+                    <i class="fas fa-camera" id="roleProfileIcon"></i>
+                    <img id="roleProfilePreview" style="display: none;">
+                </div>
+                <input type="file" id="roleProfileImage" class="hidden-input" accept="image/*" onchange="previewRoleProfileImage(this)">
+            </div>
+
+            <input type="text" id="roleName" class="name-input" placeholder="Your Name / اسمك" value="">
+
+            <div class="role-buttons">
+                <div class="role-btn" onclick="selectRole('student')" id="roleStudentBtn">
+                    <i class="fas fa-user-graduate"></i>
+                    <span data-en="Student" data-ar="طالب">Student</span>
+                </div>
+                <div class="role-btn" onclick="selectRole('teacher')" id="roleTeacherBtn">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span data-en="Teacher" data-ar="مدرس">Teacher</span>
+                </div>
+            </div>
+
+            <select id="roleGrade" class="grade-select">
+                <option value="" data-en="Select your grade" data-ar="اختر صفك">Select your grade</option>
+                <option value="1">Grade 1</option>
+                <option value="2">Grade 2</option>
+                <option value="3">Grade 3</option>
+                <option value="4">Grade 4</option>
+                <option value="5">Grade 5</option>
+                <option value="6">Grade 6</option>
+                <option value="7">Grade 7</option>
+                <option value="8">Grade 8</option>
+                <option value="9">Grade 9</option>
+                <option value="10">Grade 10</option>
+                <option value="11">Grade 11</option>
+                <option value="12">Grade 12</option>
+            </select>
+
+            <input type="password" id="roleTeacherCode" class="teacher-code-input" placeholder="Teacher Access Code / رمز المدرس">
+
+            <div class="error-message" id="roleErrorMessage"></div>
+
+            <div class="role-action-buttons">
+                <button class="confirm-role-btn" onclick="confirmRoleSelection()" data-en="Continue" data-ar="متابعة">Continue</button>
+                <button class="quit-signin-btn" onclick="quitGoogleSignIn()" data-en="Quit" data-ar="خروج">Quit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="forgot-password-modal" id="forgotPasswordModal">
+        <div class="forgot-password-content">
+            <i class="fas fa-key" style="font-size: 50px; color: #667eea; margin-bottom: 15px;"></i>
+            <h3 data-en="Reset Password" data-ar="إعادة تعيين كلمة المرور">Reset Password</h3>
+            <p data-en="Enter your email address and we'll send you a verification code." data-ar="أدخل بريدك الإلكتروني وسنرسل لك رمز التحقق.">Enter your email address and we'll send you a verification code.</p>
+            <input type="email" id="resetEmail" class="forgot-password-input" placeholder="Email Address / البريد الإلكتروني">
+            <div class="forgot-password-buttons">
+                <button class="reset-btn" onclick="sendVerificationCode()" data-en="Send Code" data-ar="إرسال الرمز">Send Code</button>
+                <button class="cancel-reset-btn" onclick="closeForgotPasswordModal()" data-en="Cancel" data-ar="إلغاء">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Verification Code Modal -->
+    <div class="verification-modal" id="verificationModal">
+        <div class="verification-content">
+            <i class="fas fa-envelope" style="font-size: 50px; color: #667eea; margin-bottom: 15px;"></i>
+            <h3 data-en="Enter Verification Code" data-ar="أدخل رمز التحقق">Enter Verification Code</h3>
+            <p data-en="Please enter the 6-digit code sent to your email." data-ar="الرجاء إدخال الرمز المكون من 6 أرقام المرسل إلى بريدك الإلكتروني.">Please enter the 6-digit code sent to your email.</p>
+            <input type="text" id="verificationCode" class="code-input" placeholder="000000" maxlength="6">
+            <div class="forgot-password-buttons">
+                <button class="reset-btn" onclick="verifyCode()" data-en="Verify Code" data-ar="تحقق من الرمز">Verify Code</button>
+                <button class="cancel-reset-btn" onclick="closeVerificationModal()" data-en="Cancel" data-ar="إلغاء">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reset Password Modal -->
+    <div class="reset-password-modal" id="resetPasswordModal">
+        <div class="reset-password-content">
+            <i class="fas fa-lock" style="font-size: 50px; color: #667eea; margin-bottom: 15px;"></i>
+            <h3 data-en="Create New Password" data-ar="إنشاء كلمة مرور جديدة">Create New Password</h3>
+            <p data-en="Enter your new password below." data-ar="أدخل كلمة المرور الجديدة أدناه.">Enter your new password below.</p>
+            <input type="password" id="newPassword" class="password-input" placeholder="New Password / كلمة المرور الجديدة">
+            <input type="password" id="confirmNewPassword" class="password-input" placeholder="Confirm Password / تأكيد كلمة المرور">
+            <div class="forgot-password-buttons">
+                <button class="reset-btn" onclick="resetPassword()" data-en="Reset Password" data-ar="إعادة تعيين كلمة المرور">Reset Password</button>
+                <button class="cancel-reset-btn" onclick="closeResetPasswordModal()" data-en="Cancel" data-ar="إلغاء">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Account Confirmation Modal -->
+    <div class="delete-account-modal" id="deleteAccountModal">
+        <div class="delete-account-content">
+            <i class="fas fa-exclamation-triangle" style="font-size: 50px; color: #f44336; margin-bottom: 15px;"></i>
+            <h3 data-en="Delete Account" data-ar="حذف الحساب">Delete Account</h3>
+            <p data-en="Are you sure you want to permanently delete your account?" data-ar="هل أنت متأكد أنك تريد حذف حسابك بشكل دائم؟">Are you sure you want to permanently delete your account?</p>
+            <p class="warning-text" data-en="This action cannot be undone! All your data will be lost forever." data-ar="هذا الإجراء لا يمكن التراجع عنه! جميع بياناتك ستفقد إلى الأبد.">This action cannot be undone! All your data will be lost forever.</p>
+            <div class="delete-account-buttons">
+                <button class="confirm-delete-btn" onclick="confirmDeleteAccount()" data-en="Yes, Delete My Account" data-ar="نعم، احذف حسابي">Yes, Delete My Account</button>
+                <button class="cancel-delete-btn" onclick="closeDeleteAccountModal()" data-en="Cancel" data-ar="إلغاء">Cancel</button>
             </div>
         </div>
     </div>
@@ -5800,7 +5794,6 @@
         let currentSummaryPdfData = null;
         let currentSummaryPdfName = null;
 
-        // UPDATED: WhatsApp number display without redirect (only shows number, no automatic redirect)
         function showWhatsAppNumber() {
             const overlay = document.createElement('div');
             overlay.className = 'whatsapp-number-modal';
@@ -5832,13 +5825,12 @@
             setTimeout(() => { notification.style.animation = 'slideOut 0.3s ease forwards'; setTimeout(() => notification.remove(), 300); }, duration);
         }
 
-        // Initialize default users
+        // Initialize default users with OP account properly set
         users = [
             { name: 'Student User', accountName: 'student123', nickname: 'studious', email: 'student@studx.com', password: 'student123', type: 'student', grade: '10', bio: 'I love learning math and science.', profileImage: null, completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [], subscription: 'free', friends: [], groups: [], gradeLastChanged: new Date().toISOString(), schedules: [], isOP: false },
             { name: 'Teacher User', accountName: 'teacher123', nickname: 'professor', email: 'teacher@studx.com', password: 'teacher123', type: 'teacher', grade: '10', bio: 'Experienced teacher.', profileImage: null, exercises: [], summaries: [], privateRooms: [], subscription: 'professional', canCreatePremiumRooms: true, gradeLastChanged: new Date().toISOString(), isOP: false },
             { name: 'OP Admin', accountName: 'studxacademic', nickname: 'admin', email: 'studxacademic@gmail.com', password: 'admin123', type: 'student', grade: '12', bio: 'Platform Administrator - Can grant subscriptions', profileImage: null, completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [], subscription: 'professional', friends: [], groups: [], gradeLastChanged: new Date().toISOString(), schedules: [], isOP: true }
         ];
-        
         groups = [{ id: 1, name: 'Math Study Group', description: 'Discuss math problems', owner: 'student@studx.com', members: ['student@studx.com'], createdAt: new Date().toISOString() }];
         exercises = [
             { id: 1, title: "Newton's Laws", subject: 'Physics', difficulty: 'Intermediate', time: 20, question: 'Force for 5kg at 2m/s²? (Newtons)', correctAnswer: '10', explanation: 'F = ma = 5 × 2 = 10N', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', image: null, pdf: null, completions: 0, attempts: 0, correctAttempts: 0 }
@@ -6005,7 +5997,10 @@
         function previewRoleProfileImage(input) {}
         function confirmRoleSelection() { hideRoleSelectionModal(); showNotification('Profile completed!', 'success'); }
         function quitGoogleSignIn() { hideRoleSelectionModal(); }
-        function startGoogleSignIn() { showNotification('Google Sign-In will be available soon. Please use email login.', 'info'); }
+        // FIXED: Google Sign-In now shows a proper message without errors
+        function startGoogleSignIn() { 
+            showNotification('Google Sign-In is coming soon! Please use email login for now.', 'info'); 
+        }
         function sendVerificationCode() { showNotification('Verification code sent!', 'info'); }
         function verifyCode() { showNotification('Code verified!', 'success'); }
         function resetPassword() { showNotification('Password reset!', 'success'); }
@@ -6022,7 +6017,7 @@
             overlay.innerHTML = `
                 <div class="op-panel-card">
                     <h2><i class="fas fa-crown"></i> OP Control Panel</h2>
-                    <p style="color: white; margin-bottom: 20px;">Grant subscription to a student after payment confirmation</p>
+                    <p style="color: white; margin-bottom: 20px;">Grant subscription to a student after WhatsApp payment confirmation</p>
                     <input type="email" id="opStudentEmail" placeholder="Student Email Address">
                     <select id="opSubscriptionDays">
                         <option value="30">30 days</option>
