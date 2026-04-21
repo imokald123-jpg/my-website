@@ -20,7 +20,6 @@
             overflow-x: hidden;
         }
 
-        /* Language Switcher */
         .language-switcher {
             position: fixed;
             top: 20px;
@@ -53,7 +52,6 @@
             color: white;
         }
 
-        /* Animation Container */
         .animation-container {
             position: fixed;
             top: 0;
@@ -70,14 +68,8 @@
         }
 
         @keyframes fadeOut {
-            0% {
-                opacity: 1;
-                visibility: visible;
-            }
-            100% {
-                opacity: 0;
-                visibility: hidden;
-            }
+            0% { opacity: 1; visibility: visible; }
+            100% { opacity: 0; visibility: hidden; }
         }
 
         .company-name {
@@ -94,21 +86,11 @@
         }
 
         @keyframes scaleIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.3) rotate(-10deg);
-            }
-            50% {
-                opacity: 0.8;
-                transform: scale(1.1) rotate(2deg);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) rotate(0);
-            }
+            0% { opacity: 0; transform: scale(0.3) rotate(-10deg); }
+            50% { opacity: 0.8; transform: scale(1.1) rotate(2deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0); }
         }
 
-        /* Login Page Styles */
         .login-container {
             display: flex;
             justify-content: center;
@@ -136,14 +118,8 @@
         }
 
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .login-header {
@@ -169,7 +145,6 @@
             font-size: 14px;
         }
 
-        /* Login Type Selector */
         .login-type-selector {
             display: flex;
             gap: 10px;
@@ -193,22 +168,17 @@
             font-size: 14px;
         }
 
-        .login-type-btn i {
-            font-size: 18px;
-        }
-
+        .login-type-btn i { font-size: 18px; }
         .login-type-btn.active {
             border-color: #667eea;
             background: rgba(102, 126, 234, 0.2);
             color: #667eea;
         }
-
         .login-type-btn:hover {
             border-color: #667eea;
             background: rgba(102, 126, 234, 0.1);
         }
 
-        /* Google Sign In Button */
         .google-signin-btn {
             width: 100%;
             padding: 15px;
@@ -246,22 +216,15 @@
             font-size: 14px;
         }
 
-        .divider::before,
-        .divider::after {
+        .divider::before, .divider::after {
             content: '';
             flex: 1;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .divider::before {
-            margin-right: 10px;
-        }
+        .divider::before { margin-right: 10px; }
+        .divider::after { margin-left: 10px; }
 
-        .divider::after {
-            margin-left: 10px;
-        }
-
-        /* Input Groups */
         .input-group {
             position: relative;
             margin-bottom: 20px;
@@ -310,7 +273,6 @@
             box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
         }
 
-        /* Remember Forgot */
         .remember-forgot {
             display: flex;
             justify-content: space-between;
@@ -340,7 +302,6 @@
             text-decoration: underline;
         }
 
-        /* Buttons */
         .login-btn {
             width: 100%;
             padding: 15px;
@@ -388,9 +349,7 @@
             backdrop-filter: blur(8px);
         }
 
-        .role-selection-modal.active {
-            display: flex;
-        }
+        .role-selection-modal.active { display: flex; }
 
         .role-selection-content {
             background: rgba(20, 20, 20, 0.98);
@@ -590,9 +549,7 @@
             backdrop-filter: blur(5px);
         }
 
-        .forgot-password-modal.active {
-            display: flex;
-        }
+        .forgot-password-modal.active { display: flex; }
 
         .forgot-password-content {
             background: rgba(20, 20, 20, 0.95);
@@ -673,9 +630,7 @@
             backdrop-filter: blur(5px);
         }
 
-        .verification-modal.active {
-            display: flex;
-        }
+        .verification-modal.active { display: flex; }
 
         .verification-content {
             background: rgba(20, 20, 20, 0.95);
@@ -729,9 +684,7 @@
             backdrop-filter: blur(5px);
         }
 
-        .reset-password-modal.active {
-            display: flex;
-        }
+        .reset-password-modal.active { display: flex; }
 
         .reset-password-content {
             background: rgba(20, 20, 20, 0.95);
@@ -787,9 +740,7 @@
             backdrop-filter: blur(5px);
         }
 
-        .delete-account-modal.active {
-            display: flex;
-        }
+        .delete-account-modal.active { display: flex; }
 
         .delete-account-content {
             background: rgba(20, 20, 20, 0.98);
@@ -1155,9 +1106,7 @@
             backdrop-filter: blur(5px);
         }
 
-        .modal.active {
-            display: flex;
-        }
+        .modal.active { display: flex; }
 
         .modal-content {
             background: rgba(20, 20, 20, 0.95);
@@ -4869,8 +4818,6 @@
                 </div>
             </form>
 
-            <!-- THE DEMO ACCOUNTS BOX HAS BEEN REMOVED AS REQUESTED -->
-
             <!-- Signup Form -->
             <div id="signupForm" style="display: none;">
                 <div class="signup-header">
@@ -5599,177 +5546,10 @@
 
     <script>
         // ========== OP EMAIL CONFIGURATION ==========
-        // Only this email address will have OP (Administrator) privileges
         const OP_EMAIL = "studxacademic@gmail.com";
+        const TEACHER_CODE = "TEACHER2024";
+        const WHATSAPP_NUMBER = "96505241";
         
-        // ========== CLIENT-SIDE ROUTING & BIG BUTTONS IMPLEMENTATION ==========
-        
-        // Navigation function - updates URL hash and loads the correct page
-        function navigateToPage(pageName) {
-            window.location.hash = pageName;
-            loadPageFromHash(pageName);
-        }
-        
-        // Load page based on hash value
-        function loadPageFromHash(pageName) {
-            if (!currentUser) return;
-            
-            if (currentUser.type === 'student') {
-                const studentPages = ['home', 'exercises', 'summaries', 'schedule', 'rooms', 'groups', 'pricing', 'progress'];
-                studentPages.forEach(page => {
-                    const container = document.getElementById(`student-${page}-page`);
-                    if (container) container.style.display = 'none';
-                });
-                
-                const targetContainer = document.getElementById(`student-${pageName}-page`);
-                if (targetContainer) targetContainer.style.display = 'block';
-                else {
-                    const homeContainer = document.getElementById('student-home-page');
-                    if (homeContainer) homeContainer.style.display = 'block';
-                }
-                
-                document.querySelectorAll('#studentNavMenu .nav-link').forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('data-page') === pageName) {
-                        link.classList.add('active');
-                    }
-                });
-                
-                if (pageName === 'exercises') loadStudentExercises();
-                else if (pageName === 'summaries') loadStudentSummaries();
-                else if (pageName === 'rooms') loadStudentTeachers();
-                else if (pageName === 'groups') { loadFriendRequests(); loadFriendsList(); loadGroups(); }
-                else if (pageName === 'progress') updateStudentProgress();
-                else if (pageName === 'schedule') loadSchedules();
-                updateGradeStats();
-            } 
-            else if (currentUser.type === 'teacher') {
-                const teacherPages = ['dashboard', 'add-exercise', 'my-exercises', 'add-summary', 'my-summaries', 'teacher-rooms', 'teacher-pricing', 'my-students'];
-                teacherPages.forEach(page => {
-                    const container = document.getElementById(`teacher-${page}-page`);
-                    if (container) container.style.display = 'none';
-                });
-                
-                const targetContainer = document.getElementById(`teacher-${pageName}-page`);
-                if (targetContainer) targetContainer.style.display = 'block';
-                else {
-                    const dashboardContainer = document.getElementById('teacher-dashboard-page');
-                    if (dashboardContainer) dashboardContainer.style.display = 'block';
-                }
-                
-                document.querySelectorAll('#teacherNavMenu .nav-link').forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('data-page') === pageName) {
-                        link.classList.add('active');
-                    }
-                });
-                
-                if (pageName === 'my-exercises') loadTeacherExercises();
-                else if (pageName === 'my-summaries') loadTeacherSummaries();
-                else if (pageName === 'my-students') loadTeacherStudents();
-                updateTeacherStats();
-                updateTeacherGradeStats();
-            }
-        }
-        
-        function handleHashChange() {
-            let hash = window.location.hash.substring(1);
-            if (!hash) {
-                if (currentUser) {
-                    hash = currentUser.type === 'student' ? 'home' : 'dashboard';
-                } else {
-                    return;
-                }
-            }
-            loadPageFromHash(hash);
-        }
-        
-        // Override functions for routing
-        const originalShowProfile = window.showProfile;
-        window.showProfile = function() {
-            if (originalShowProfile) originalShowProfile();
-        };
-        
-        const originalGoBackFromProfile = window.goBackFromProfile;
-        window.goBackFromProfile = function() {
-            if (originalGoBackFromProfile) originalGoBackFromProfile();
-            const hash = window.location.hash.substring(1) || (currentUser.type === 'student' ? 'home' : 'dashboard');
-            loadPageFromHash(hash);
-        };
-        
-        const originalShowPaymentPage = window.showPaymentPage;
-        window.showPaymentPage = function(plan, price) {
-            if (originalShowPaymentPage) originalShowPaymentPage(plan, price);
-        };
-        
-        const originalHidePaymentPage = window.hidePaymentPage;
-        window.hidePaymentPage = function() {
-            if (originalHidePaymentPage) originalHidePaymentPage();
-            const hash = window.location.hash.substring(1) || (currentUser.type === 'student' ? 'home' : 'dashboard');
-            loadPageFromHash(hash);
-        };
-        
-        // Function to check and assign OP status based on email
-        function assignOPStatusByEmail(user) {
-            if (user && user.email === OP_EMAIL) {
-                user.isOP = true;
-                return true;
-            }
-            return false;
-        }
-        
-        const originalPerformLogin = window.performLogin;
-        window.performLogin = function(user) {
-            // Assign OP status if email matches
-            assignOPStatusByEmail(user);
-            if (originalPerformLogin) originalPerformLogin(user);
-            // Show OP Panel if user is OP
-            if (user.isOP) {
-                document.getElementById('opPanel').style.display = 'block';
-            } else {
-                document.getElementById('opPanel').style.display = 'none';
-            }
-            const defaultPage = user.type === 'student' ? 'home' : 'dashboard';
-            window.location.hash = defaultPage;
-            handleHashChange();
-        };
-        
-        const originalHandleLogout = window.handleLogout;
-        window.handleLogout = function() {
-            if (originalHandleLogout) originalHandleLogout();
-            window.location.hash = '';
-            document.getElementById('opPanel').style.display = 'none';
-        };
-        
-        // Event listeners
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('#studentNavMenu .nav-link, #teacherNavMenu .nav-link').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const page = this.getAttribute('data-page');
-                    if (page) navigateToPage(page);
-                });
-            });
-            
-            window.addEventListener('hashchange', handleHashChange);
-            
-            const savedUserEmail = localStorage.getItem('currentUserEmail');
-            if (savedUserEmail) {
-                const savedUser = users.find(u => u.email === savedUserEmail);
-                if (savedUser) {
-                    assignOPStatusByEmail(savedUser);
-                    currentUser = savedUser;
-                    setTimeout(() => { 
-                        handleHashChange();
-                        if (currentUser.isOP) {
-                            document.getElementById('opPanel').style.display = 'block';
-                        }
-                    }, 100);
-                }
-            }
-        });
-        
-        // ========== REST OF THE ORIGINAL JAVASCRIPT ==========
         let users = [];
         let exercises = [];
         let summaries = [];
@@ -5777,64 +5557,26 @@
         let groups = [];
         let friendRequests = [];
         let currentUser = null;
-        let currentLang = 'en';
         let selectedLoginType = 'student';
         let selectedSignupType = 'student';
         let selectedPlan = null;
         let selectedPaymentMethod = 'card';
         let resetEmailForCode = null;
         let verificationCode = null;
-        
         let tempGoogleUser = null;
         let selectedRole = null;
-
-        const WHATSAPP_NUMBER = "96505241";
-        const TEACHER_VERIFICATION_CODE = "TEACHER2024";
-
         let currentSummaryPdfData = null;
         let currentSummaryPdfName = null;
 
-        function showWhatsAppNumber() {
-            const overlay = document.createElement('div');
-            overlay.className = 'whatsapp-number-modal';
-            overlay.innerHTML = `
-                <div class="whatsapp-number-card">
-                    <i class="fab fa-whatsapp"></i>
-                    <h3>Contact Us on WhatsApp</h3>
-                    <div class="number">${WHATSAPP_NUMBER}</div>
-                    <p>Please use this number to contact us and complete your payment.</p>
-                    <button class="close-number-btn" onclick="this.closest('.whatsapp-number-modal').remove()">Close</button>
-                </div>
-            `;
-            document.body.appendChild(overlay);
-        }
-
-        function toggleMobileMenu() {
-            const studentMenu = document.getElementById('studentNavMenu');
-            const teacherMenu = document.getElementById('teacherNavMenu');
-            if (studentMenu) studentMenu.classList.toggle('active');
-            if (teacherMenu) teacherMenu.classList.toggle('active');
-        }
-
-        function showNotification(message, type = 'info', duration = 3000) {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            const icon = { 'success': 'fas fa-check-circle', 'error': 'fas fa-exclamation-circle', 'warning': 'fas fa-exclamation-triangle', 'info': 'fas fa-info-circle' }[type] || 'fas fa-info-circle';
-            notification.innerHTML = `<div class="notification-content"><i class="${icon}"></i><span>${message}</span><button class="notification-close" onclick="this.parentElement.parentElement.remove()">×</button></div>`;
-            document.body.appendChild(notification);
-            setTimeout(() => { notification.style.animation = 'slideOut 0.3s ease forwards'; setTimeout(() => notification.remove(), 300); }, duration);
-        }
-
-        // Initialize default users with OP account properly set
+        // Initialize default users
         users = [
             { name: 'Student User', accountName: 'student123', nickname: 'studious', email: 'student@studx.com', password: 'student123', type: 'student', grade: '10', bio: 'I love learning math and science.', profileImage: null, completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [], subscription: 'free', friends: [], groups: [], gradeLastChanged: new Date().toISOString(), schedules: [], isOP: false },
             { name: 'Teacher User', accountName: 'teacher123', nickname: 'professor', email: 'teacher@studx.com', password: 'teacher123', type: 'teacher', grade: '10', bio: 'Experienced teacher.', profileImage: null, exercises: [], summaries: [], privateRooms: [], subscription: 'professional', canCreatePremiumRooms: true, gradeLastChanged: new Date().toISOString(), isOP: false },
-            { name: 'OP Admin', accountName: 'studxacademic', nickname: 'admin', email: 'studxacademic@gmail.com', password: 'admin123', type: 'student', grade: '12', bio: 'Platform Administrator - Can grant subscriptions', profileImage: null, completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [], subscription: 'professional', friends: [], groups: [], gradeLastChanged: new Date().toISOString(), schedules: [], isOP: true }
+            { name: 'OP Admin', accountName: 'studxacademic', nickname: 'admin', email: 'studxacademic@gmail.com', password: 'admin123', type: 'student', grade: '12', bio: 'Platform Administrator', profileImage: null, completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [], subscription: 'professional', friends: [], groups: [], gradeLastChanged: new Date().toISOString(), schedules: [], isOP: true }
         ];
+        
         groups = [{ id: 1, name: 'Math Study Group', description: 'Discuss math problems', owner: 'student@studx.com', members: ['student@studx.com'], createdAt: new Date().toISOString() }];
-        exercises = [
-            { id: 1, title: "Newton's Laws", subject: 'Physics', difficulty: 'Intermediate', time: 20, question: 'Force for 5kg at 2m/s²? (Newtons)', correctAnswer: '10', explanation: 'F = ma = 5 × 2 = 10N', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', image: null, pdf: null, completions: 0, attempts: 0, correctAttempts: 0 }
-        ];
+        exercises = [{ id: 1, title: "Newton's Laws", subject: 'Physics', difficulty: 'Intermediate', time: 20, question: 'Force for 5kg at 2m/s²? (Newtons)', correctAnswer: '10', explanation: 'F = ma = 5 × 2 = 10N', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', image: null, pdf: null, completions: 0, attempts: 0, correctAttempts: 0 }];
         summaries = [{ id: 1, title: 'Algebra Final Review', subject: 'Mathematics', content: 'Linear equations: ax + b = c\nQuadratic equations: ax² + bx + c = 0', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', createdAt: new Date().toISOString(), pdfData: null, pdfName: null }];
         privateRooms = [{ id: 1, teacherEmail: 'teacher@studx.com', teacherName: 'Teacher', roomName: 'Grade 10 Math Mastery', description: 'Advanced math tutoring', schedule: 'Mon, Wed, Fri - 4:00 PM', grade: '10', subscribersOnly: true, students: [] }];
 
@@ -5849,23 +5591,34 @@
         }
         loadData();
 
-        function previewProfileImage(input) {}
-        function previewEditProfileImage(input) {}
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `<div class="notification-content"><span>${message}</span></div>`;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        function toggleMobileMenu() {
+            const studentMenu = document.getElementById('studentNavMenu');
+            const teacherMenu = document.getElementById('teacherNavMenu');
+            if (studentMenu) studentMenu.classList.toggle('active');
+            if (teacherMenu) teacherMenu.classList.toggle('active');
+        }
+
         function selectLoginType(type) { selectedLoginType = type; }
         function selectSignupType(type) { selectedSignupType = type; }
         function showSignup() { document.getElementById('loginForm').style.display = 'none'; document.getElementById('signupForm').style.display = 'block'; }
         function showLogin() { document.getElementById('loginForm').style.display = 'block'; document.getElementById('signupForm').style.display = 'none'; }
         function handleSignup() { showNotification('Signup functionality placeholder', 'info'); }
+        
         function handleLogin(event) { 
             event.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const user = users.find(u => u.email === email && u.password === password);
             if (user) {
-                // Assign OP status if email matches the special OP email
-                if (user.email === OP_EMAIL) {
-                    user.isOP = true;
-                }
+                if (user.email === OP_EMAIL) user.isOP = true;
                 currentUser = user;
                 localStorage.setItem('currentUserEmail', user.email);
                 localStorage.setItem('currentUserPassword', user.password);
@@ -5878,14 +5631,14 @@
                     document.getElementById('studentGradeBadge').textContent = `Grade ${user.grade}`;
                     document.getElementById('currentStudentGrade').textContent = user.grade;
                     window.location.hash = 'home';
-                    handleHashChange();
+                    loadPageFromHash('home');
                 } else {
                     document.getElementById('teacherWebsite').style.display = 'block';
                     document.getElementById('navTeacherName').textContent = user.name;
                     document.getElementById('teacherGradeBadge').textContent = `Grade ${user.grade}`;
                     document.getElementById('currentTeacherGrade').textContent = user.grade;
                     window.location.hash = 'dashboard';
-                    handleHashChange();
+                    loadPageFromHash('dashboard');
                 }
                 if (user.isOP) {
                     document.getElementById('opPanel').style.display = 'block';
@@ -5897,6 +5650,7 @@
                 showNotification('Invalid email or password!', 'error');
             }
         }
+        
         function handleLogout() {
             localStorage.removeItem('currentUserEmail');
             localStorage.removeItem('currentUserPassword');
@@ -5997,16 +5751,19 @@
         function previewRoleProfileImage(input) {}
         function confirmRoleSelection() { hideRoleSelectionModal(); showNotification('Profile completed!', 'success'); }
         function quitGoogleSignIn() { hideRoleSelectionModal(); }
-        // FIXED: Google Sign-In now shows a proper message without errors
-        function startGoogleSignIn() { 
-            showNotification('Google Sign-In is coming soon! Please use email login for now.', 'info'); 
-        }
+        function startGoogleSignIn() { showNotification('Google Sign-In is coming soon! Please use email login for now.', 'info'); }
         function sendVerificationCode() { showNotification('Verification code sent!', 'info'); }
         function verifyCode() { showNotification('Code verified!', 'success'); }
         function resetPassword() { showNotification('Password reset!', 'success'); }
         function confirmDeleteAccount() { showNotification('Account deleted', 'info'); }
         
-        // OP Panel Functions - Only the special OP email can use these
+        function showWhatsAppNumber() {
+            const overlay = document.createElement('div');
+            overlay.className = 'whatsapp-number-modal';
+            overlay.innerHTML = `<div class="whatsapp-number-card"><i class="fab fa-whatsapp" style="font-size:80px; color:white;"></i><h3 style="color:white;">Contact Us on WhatsApp</h3><div class="number">${WHATSAPP_NUMBER}</div><p style="color:white;">Please use this number to contact us and complete your payment.</p><button class="close-number-btn" onclick="this.closest('.whatsapp-number-modal').remove()">Close</button></div>`;
+            document.body.appendChild(overlay);
+        }
+        
         function showOPPanel() {
             if (!currentUser || currentUser.email !== OP_EMAIL) {
                 showNotification('Access denied. OP privileges required.', 'error');
@@ -6017,7 +5774,7 @@
             overlay.innerHTML = `
                 <div class="op-panel-card">
                     <h2><i class="fas fa-crown"></i> OP Control Panel</h2>
-                    <p style="color: white; margin-bottom: 20px;">Grant subscription to a student after WhatsApp payment confirmation</p>
+                    <p style="color: white; margin-bottom: 20px;">Grant subscription to a student after payment confirmation</p>
                     <input type="email" id="opStudentEmail" placeholder="Student Email Address">
                     <select id="opSubscriptionDays">
                         <option value="30">30 days</option>
@@ -6035,24 +5792,15 @@
         
         function grantSubscriptionFromOP() {
             if (!currentUser || currentUser.email !== OP_EMAIL) {
-                showNotification('Access denied. OP privileges required.', 'error');
+                showNotification('Access denied.', 'error');
                 return;
             }
             const email = document.getElementById('opStudentEmail').value;
             const days = parseInt(document.getElementById('opSubscriptionDays').value);
-            if (!email) {
-                showNotification('Please enter student email!', 'error');
-                return;
-            }
+            if (!email) { showNotification('Please enter student email!', 'error'); return; }
             const targetUser = users.find(u => u.email === email);
-            if (!targetUser) {
-                showNotification('User not found!', 'error');
-                return;
-            }
-            if (targetUser.type !== 'student') {
-                showNotification('Can only grant subscription to students!', 'error');
-                return;
-            }
+            if (!targetUser) { showNotification('User not found!', 'error'); return; }
+            if (targetUser.type !== 'student') { showNotification('Can only grant subscription to students!', 'error'); return; }
             const expiryDate = new Date();
             expiryDate.setDate(expiryDate.getDate() + days);
             targetUser.subscription = 'professional';
@@ -6062,12 +5810,45 @@
             document.querySelector('.op-panel-modal')?.remove();
         }
         
-        function checkSubscriptionExpiry(user) { return false; }
-        function showSubscriptionRequired(featureName) { showNotification(`Premium feature: ${featureName}`, 'warning'); }
-        function switchLanguage(lang) { 
-            currentLang = lang; 
+        function navigateToPage(pageName) {
+            window.location.hash = pageName;
+            loadPageFromHash(pageName);
+        }
+        
+        function loadPageFromHash(pageName) {
+            if (!currentUser) return;
+            if (currentUser.type === 'student') {
+                const studentPages = ['home', 'exercises', 'summaries', 'schedule', 'rooms', 'groups', 'pricing', 'progress'];
+                studentPages.forEach(page => { const el = document.getElementById(`student-${page}-page`); if (el) el.style.display = 'none'; });
+                const target = document.getElementById(`student-${pageName}-page`);
+                if (target) target.style.display = 'block';
+                else document.getElementById('student-home-page').style.display = 'block';
+                document.querySelectorAll('#studentNavMenu .nav-link').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-page') === pageName) link.classList.add('active');
+                });
+                if (pageName === 'exercises') loadStudentExercises();
+                else if (pageName === 'summaries') loadStudentSummaries();
+                else if (pageName === 'rooms') loadStudentTeachers();
+                else if (pageName === 'groups') { loadFriendRequests(); loadFriendsList(); loadGroups(); }
+                else if (pageName === 'progress') updateStudentProgress();
+                else if (pageName === 'schedule') loadSchedules();
+                updateGradeStats();
+            }
+        }
+        
+        function handleHashChange() {
+            let hash = window.location.hash.substring(1);
+            if (!hash && currentUser) hash = 'home';
+            if (hash && currentUser && currentUser.type === 'student') loadPageFromHash(hash);
+        }
+        
+        function switchLanguage(lang) {
             document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-            document.documentElement.lang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if ((lang === 'en' && btn.innerText === 'English') || (lang === 'ar' && btn.innerText === 'العربية')) btn.classList.add('active');
+            });
             document.querySelectorAll('[data-en][data-ar]').forEach(el => {
                 if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
                     if (el.placeholder) el.placeholder = el.getAttribute(`data-${lang}`);
@@ -6076,46 +5857,227 @@
                 }
             });
         }
-
+        
         document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                const animationContainer = document.getElementById('animationContainer');
-                if (animationContainer) {
-                    setTimeout(() => { animationContainer.style.display = 'none'; }, 2000);
-                }
-                const savedUserEmail = localStorage.getItem('currentUserEmail');
-                if (savedUserEmail) {
-                    const savedUser = users.find(u => u.email === savedUserEmail);
-                    if (savedUser) {
-                        if (savedUser.email === OP_EMAIL) {
-                            savedUser.isOP = true;
-                        }
-                        currentUser = savedUser;
-                        document.getElementById('loginPage').style.display = 'none';
-                        document.getElementById('footer').style.display = 'block';
-                        if (savedUser.type === 'student') {
-                            document.getElementById('studentWebsite').style.display = 'block';
-                            document.getElementById('studentDisplayName').textContent = savedUser.name;
-                            document.getElementById('navStudentName').textContent = savedUser.name;
-                            document.getElementById('studentGradeBadge').textContent = `Grade ${savedUser.grade}`;
-                            document.getElementById('currentStudentGrade').textContent = savedUser.grade;
-                            window.location.hash = 'home';
-                            handleHashChange();
-                        } else {
-                            document.getElementById('teacherWebsite').style.display = 'block';
-                            document.getElementById('navTeacherName').textContent = savedUser.name;
-                            document.getElementById('teacherGradeBadge').textContent = `Grade ${savedUser.grade}`;
-                            document.getElementById('currentTeacherGrade').textContent = savedUser.grade;
-                            window.location.hash = 'dashboard';
-                            handleHashChange();
-                        }
-                        if (savedUser.isOP) {
-                            document.getElementById('opPanel').style.display = 'block';
-                        }
+            setTimeout(() => { const anim = document.getElementById('animationContainer'); if (anim) anim.style.display = 'none'; }, 2000);
+            window.addEventListener('hashchange', handleHashChange);
+            const savedEmail = localStorage.getItem('currentUserEmail');
+            if (savedEmail) {
+                const savedUser = users.find(u => u.email === savedEmail);
+                if (savedUser) {
+                    if (savedUser.email === OP_EMAIL) savedUser.isOP = true;
+                    currentUser = savedUser;
+                    document.getElementById('loginPage').style.display = 'none';
+                    document.getElementById('footer').style.display = 'block';
+                    if (savedUser.type === 'student') {
+                        document.getElementById('studentWebsite').style.display = 'block';
+                        document.getElementById('studentDisplayName').textContent = savedUser.name;
+                        document.getElementById('navStudentName').textContent = savedUser.name;
+                        document.getElementById('studentGradeBadge').textContent = `Grade ${savedUser.grade}`;
+                        document.getElementById('currentStudentGrade').textContent = savedUser.grade;
+                        loadStudentData();
+                        window.location.hash = 'home';
+                        loadPageFromHash('home');
+                    } else {
+                        document.getElementById('teacherWebsite').style.display = 'block';
+                        document.getElementById('teacherGradeBadge').textContent = `Grade ${savedUser.grade}`;
+                        loadTeacherData();
                     }
+                    if (savedUser.isOP) document.getElementById('opPanel').style.display = 'block';
                 }
-            }, 500);
+            }
         });
+    </script>
+
+    <!-- ========== FIREBASE AUTHENTICATION SECTION (ADDED BACK) ========== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+        import { 
+          getAuth, 
+          createUserWithEmailAndPassword, 
+          signInWithEmailAndPassword,
+          onAuthStateChanged,
+          signOut,
+          sendEmailVerification,
+          GoogleAuthProvider,
+          signInWithPopup,
+          deleteUser,
+          reauthenticateWithCredential,
+          EmailAuthProvider
+        } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyBpunCadwttAIHMWvWfKaoWhHLn8bVVX3c",
+          authDomain: "studxacad-b794b.firebaseapp.com",
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const googleProvider = new GoogleAuthProvider();
+
+        window.startGoogleSignIn = async () => {
+          try {
+            const result = await signInWithPopup(auth, googleProvider);
+            const user = result.user;
+            const existingUser = users.find(u => u.email === user.email);
+            if (existingUser) {
+              performLogin(existingUser);
+              showNotification(`Welcome back ${existingUser.name}!`, 'success');
+            } else {
+              tempGoogleUser = { email: user.email, photoURL: user.photoURL, displayName: user.displayName };
+              document.getElementById('roleName').value = user.displayName || user.email.split('@')[0];
+              showRoleSelectionModal();
+            }
+          } catch (err) {
+            showNotification(err.message, 'error');
+          }
+        };
+
+        window.firebaseSignup = async () => {
+          const email = document.getElementById("signupEmail").value;
+          const password = document.getElementById("signupPassword").value;
+          if (!email || !password) { showNotification("Please enter email and password", "error"); return; }
+          try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            await sendEmailVerification(userCredential.user);
+            showNotification("Account created! Please verify your email before logging in.", "success");
+            showLogin();
+          } catch (err) { showNotification(err.message, "error"); }
+        };
+
+        window.firebaseLogin = async () => {
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+          if (!email || !password) { showNotification("Please enter email and password", "error"); return; }
+          try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            if (!userCredential.user.emailVerified && selectedLoginType === 'student') { 
+              showNotification("Please verify your email first!", "warning"); 
+              await signOut(auth); 
+              return; 
+            }
+            showNotification("Logged in successfully! ✅", "success");
+          } catch (err) { showNotification(err.message, "error"); }
+        };
+
+        window.confirmDeleteAccount = async () => {
+          if (!currentUser) {
+            showNotification("No user logged in!", "error");
+            closeDeleteAccountModal();
+            return;
+          }
+          try {
+            const user = auth.currentUser;
+            if (!user) {
+              showNotification("Please log in again to delete your account.", "error");
+              closeDeleteAccountModal();
+              return;
+            }
+            if (currentUser.password && currentUser.password !== 'google_auth_user') {
+              const password = prompt("Please enter your password to confirm account deletion:");
+              if (!password) {
+                showNotification("Password required to delete account.", "warning");
+                closeDeleteAccountModal();
+                return;
+              }
+              const credential = EmailAuthProvider.credential(user.email, password);
+              await reauthenticateWithCredential(user, credential);
+            }
+            await deleteUser(user);
+            console.log("Firebase user deleted:", user.email);
+            const userIndex = users.findIndex(u => u.email === currentUser.email);
+            if (userIndex !== -1) { users.splice(userIndex, 1); saveData(); }
+            exercises = exercises.filter(ex => ex.teacher !== currentUser.email);
+            summaries = summaries.filter(s => s.teacher !== currentUser.email);
+            privateRooms = privateRooms.filter(r => r.teacherEmail !== currentUser.email);
+            groups.forEach(group => {
+              group.members = group.members.filter(m => m !== currentUser.email);
+              if (group.owner === currentUser.email && group.members.length > 0) group.owner = group.members[0];
+            });
+            groups = groups.filter(g => g.members.length > 0);
+            friendRequests = friendRequests.filter(r => r.from !== currentUser.email && r.to !== currentUser.email);
+            saveData();
+            showNotification("Your account has been permanently deleted.", "success");
+            closeDeleteAccountModal();
+            await signOut(auth);
+            handleLogout();
+          } catch (err) {
+            console.error("Account deletion error:", err);
+            if (err.code === 'auth/requires-recent-login') {
+              showNotification("Please log out and log back in before deleting your account.", "warning");
+            } else if (err.code === 'auth/wrong-password') {
+              showNotification("Incorrect password. Please try again.", "error");
+            } else {
+              showNotification(err.message, "error");
+            }
+          }
+        };
+
+        onAuthStateChanged(auth, async (user) => {
+          if (user) {
+            if (!user.emailVerified && user.providerData[0]?.providerId !== 'google.com' && selectedLoginType === 'student') { 
+              await signOut(auth); 
+              return; 
+            }
+            const existingUser = users.find(u => u.email === user.email);
+            if (existingUser) {
+              performLogin(existingUser);
+            } else if (user.providerData[0]?.providerId === 'google.com') {
+              if (!document.getElementById('roleSelectionModal').classList.contains('active')) {
+                tempGoogleUser = { email: user.email, photoURL: user.photoURL, displayName: user.displayName };
+                document.getElementById('roleName').value = user.displayName || user.email.split('@')[0];
+                showRoleSelectionModal();
+              }
+            }
+            document.getElementById("loginPage").style.display = "none";
+            document.getElementById("footer").style.display = "block";
+          } else {
+            if (!currentUser) {
+              document.getElementById("loginPage").style.display = "flex";
+              document.getElementById("studentWebsite").style.display = "none";
+              document.getElementById("teacherWebsite").style.display = "none";
+              document.getElementById("footer").style.display = "none";
+              document.getElementById("profilePage").style.display = "none";
+              document.getElementById("exercisePage").style.display = "none";
+              document.getElementById("paymentPage").style.display = "none";
+            }
+          }
+        });
+
+        const originalLogout = window.handleLogout;
+        window.handleLogout = () => { 
+          signOut(auth).then(() => { 
+            if (originalLogout) originalLogout(); 
+          }); 
+        };
+        
+        const originalSignupHandler = window.handleSignup;
+        window.handleSignup = () => {
+          const email = document.getElementById("signupEmail").value;
+          const password = document.getElementById("signupPassword").value;
+          if (!email || !password) { showNotification("Please fill in email and password!", "error"); return; }
+          createUserWithEmailAndPassword(auth, email, password).then(async (userCredential) => {
+            await sendEmailVerification(userCredential.user);
+            showNotification("Account created! Please verify your email before logging in.", "success");
+            if (originalSignupHandler) originalSignupHandler();
+          }).catch((err) => { showNotification(err.message, "error"); });
+        };
+        
+        const originalLoginHandler = window.handleLogin;
+        window.handleLogin = (event) => {
+          event.preventDefault();
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+          if (!email || !password) { showNotification("Please enter email and password!", "error"); return; }
+          signInWithEmailAndPassword(auth, email, password).then(async (userCredential) => {
+            if (!userCredential.user.emailVerified && selectedLoginType === 'student') { 
+              showNotification("Please verify your email first!", "warning"); 
+              await signOut(auth); 
+              return; 
+            }
+            if (originalLoginHandler) originalLoginHandler({ preventDefault: () => {} });
+          }).catch((err) => { showNotification(err.message, "error"); });
+        };
     </script>
 </body>
 </html>
