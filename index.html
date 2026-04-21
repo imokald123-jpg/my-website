@@ -4707,7 +4707,7 @@
             background: rgba(255, 255, 255, 0.2);
         }
 
-        /* WhatsApp Number Modal */
+        /* WhatsApp Number Modal - Updated to just show number without redirect */
         .whatsapp-number-modal {
             position: fixed;
             top: 0;
@@ -4755,6 +4755,7 @@
             font-size: 80px;
             color: white;
             margin-bottom: 20px;
+            animation: pulse 0.8s infinite;
         }
 
         .whatsapp-number-card h3 {
@@ -4780,6 +4781,12 @@
             color: rgba(255, 255, 255, 0.9);
             font-size: 14px;
             margin-bottom: 20px;
+        }
+
+        .whatsapp-number-card .redirecting {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+            margin-top: 15px;
         }
 
         .close-number-btn {
@@ -4861,6 +4868,14 @@
                     <a href="#" onclick="showSignup()" data-en="Sign up" data-ar="إنشاء حساب">Sign up</a>
                 </div>
             </form>
+
+            <!-- Demo Credentials -->
+            <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 10px; text-align: center;">
+                <p style="color: #ffd700; margin-bottom: 10px;">📋 Demo Accounts:</p>
+                <p style="color: #4caf50;">👨‍🎓 Student: student@studx.com / student123</p>
+                <p style="color: #ff9800;">👩‍🏫 Teacher: teacher@studx.com / teacher123</p>
+                <p style="color: #f44336; font-weight: bold;">👑 OP Admin: studxacademic@gmail.com / admin123</p>
+            </div>
 
             <!-- Role Selection Modal -->
             <div class="role-selection-modal" id="roleSelectionModal">
@@ -5785,6 +5800,7 @@
         let currentSummaryPdfData = null;
         let currentSummaryPdfName = null;
 
+        // UPDATED: WhatsApp number display without redirect (only shows number, no automatic redirect)
         function showWhatsAppNumber() {
             const overlay = document.createElement('div');
             overlay.className = 'whatsapp-number-modal';
@@ -5816,11 +5832,13 @@
             setTimeout(() => { notification.style.animation = 'slideOut 0.3s ease forwards'; setTimeout(() => notification.remove(), 300); }, duration);
         }
 
+        // Initialize default users
         users = [
-            { name: 'Student', accountName: 'student123', nickname: 'studious', email: 'student@studx.com', password: 'student123', type: 'student', grade: '10', bio: 'I love learning math and science.', profileImage: null, completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [], subscription: 'free', friends: [], groups: [], gradeLastChanged: new Date().toISOString(), schedules: [], isOP: false },
-            { name: 'Teacher', accountName: 'teacher123', nickname: 'professor', email: 'teacher@studx.com', password: 'teacher123', type: 'teacher', grade: '10', bio: 'Experienced teacher.', profileImage: null, exercises: [], summaries: [], privateRooms: [], subscription: 'professional', canCreatePremiumRooms: true, gradeLastChanged: new Date().toISOString(), isOP: false },
-            { name: 'OP Admin', accountName: 'studxacademic', nickname: 'admin', email: 'studxacademic@gmail.com', password: 'admin123', type: 'student', grade: '12', bio: 'Platform Administrator', profileImage: null, completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [], subscription: 'professional', friends: [], groups: [], gradeLastChanged: new Date().toISOString(), schedules: [], isOP: true }
+            { name: 'Student User', accountName: 'student123', nickname: 'studious', email: 'student@studx.com', password: 'student123', type: 'student', grade: '10', bio: 'I love learning math and science.', profileImage: null, completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [], subscription: 'free', friends: [], groups: [], gradeLastChanged: new Date().toISOString(), schedules: [], isOP: false },
+            { name: 'Teacher User', accountName: 'teacher123', nickname: 'professor', email: 'teacher@studx.com', password: 'teacher123', type: 'teacher', grade: '10', bio: 'Experienced teacher.', profileImage: null, exercises: [], summaries: [], privateRooms: [], subscription: 'professional', canCreatePremiumRooms: true, gradeLastChanged: new Date().toISOString(), isOP: false },
+            { name: 'OP Admin', accountName: 'studxacademic', nickname: 'admin', email: 'studxacademic@gmail.com', password: 'admin123', type: 'student', grade: '12', bio: 'Platform Administrator - Can grant subscriptions', profileImage: null, completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [], subscription: 'professional', friends: [], groups: [], gradeLastChanged: new Date().toISOString(), schedules: [], isOP: true }
         ];
+        
         groups = [{ id: 1, name: 'Math Study Group', description: 'Discuss math problems', owner: 'student@studx.com', members: ['student@studx.com'], createdAt: new Date().toISOString() }];
         exercises = [
             { id: 1, title: "Newton's Laws", subject: 'Physics', difficulty: 'Intermediate', time: 20, question: 'Force for 5kg at 2m/s²? (Newtons)', correctAnswer: '10', explanation: 'F = ma = 5 × 2 = 10N', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', image: null, pdf: null, completions: 0, attempts: 0, correctAttempts: 0 }
@@ -5879,7 +5897,7 @@
                 }
                 if (user.isOP) {
                     document.getElementById('opPanel').style.display = 'block';
-                    showNotification(`Welcome OP Admin! You have full control over subscriptions.`, 'success');
+                    showNotification(`👑 Welcome OP Admin! You have full control over subscriptions.`, 'success');
                 } else {
                     showNotification(`Welcome back, ${user.name}!`, 'success');
                 }
@@ -5987,7 +6005,7 @@
         function previewRoleProfileImage(input) {}
         function confirmRoleSelection() { hideRoleSelectionModal(); showNotification('Profile completed!', 'success'); }
         function quitGoogleSignIn() { hideRoleSelectionModal(); }
-        function startGoogleSignIn() { showNotification('Google Sign-In placeholder', 'info'); }
+        function startGoogleSignIn() { showNotification('Google Sign-In will be available soon. Please use email login.', 'info'); }
         function sendVerificationCode() { showNotification('Verification code sent!', 'info'); }
         function verifyCode() { showNotification('Code verified!', 'success'); }
         function resetPassword() { showNotification('Password reset!', 'success'); }
@@ -6004,7 +6022,7 @@
             overlay.innerHTML = `
                 <div class="op-panel-card">
                     <h2><i class="fas fa-crown"></i> OP Control Panel</h2>
-                    <p style="color: white; margin-bottom: 20px;">Grant subscription to a student after WhatsApp payment confirmation</p>
+                    <p style="color: white; margin-bottom: 20px;">Grant subscription to a student after payment confirmation</p>
                     <input type="email" id="opStudentEmail" placeholder="Student Email Address">
                     <select id="opSubscriptionDays">
                         <option value="30">30 days</option>
@@ -6045,7 +6063,7 @@
             targetUser.subscription = 'professional';
             targetUser.subscriptionExpiry = expiryDate.toISOString();
             saveData();
-            showNotification(`Subscription granted to ${targetUser.name} for ${days} days!`, 'success');
+            showNotification(`✅ Subscription granted to ${targetUser.name} for ${days} days!`, 'success');
             document.querySelector('.op-panel-modal')?.remove();
         }
         
