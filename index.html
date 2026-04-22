@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>StudX - منصة التعلم التفاعلية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <style>
-        /* Your existing CSS remains exactly the same */
         * {
             margin: 0;
             padding: 0;
@@ -3619,6 +3621,21 @@
     </footer>
 
     <script>
+        // Firebase Configuration - REPLACE WITH YOUR OWN FIREBASE CONFIG
+        const firebaseConfig = {
+            apiKey: "AIzaSyBpunCadwttAIHMWvWfKaoWhHLn8bVVX3c",
+            authDomain: "studxacad-b794b.firebaseapp.com",
+            projectId: "studxacad-b794b",
+            storageBucket: "studxacad-b794b.firebasestorage.app",
+            messagingSenderId: "68013006076",
+            appId: "1:68013006076:web:4ca1738c194c2d52aacb79"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const provider = new firebase.auth.GoogleAuthProvider();
+
         let users = [];
         let exercises = [];
         let summaries = [];
@@ -3784,140 +3801,69 @@
         function previewRoleProfileImage(input) {}
         function confirmRoleSelection() { hideRoleSelectionModal(); showNotification('Profile completed!', 'success'); }
         function quitGoogleSignIn() { hideRoleSelectionModal(); tempGoogleUser = null; }
-        function startGoogleSignIn() { showNotification('Google Sign-In is coming soon! Please use email login for now.', 'info'); }
-        function sendVerificationCode() { showNotification('Verification code sent!', 'info'); }
-        function verifyCode() { showNotification('Code verified!', 'success'); }
-        function resetPassword() { showNotification('Password reset!', 'success'); }
-        function confirmDeleteAccount() { showNotification('Account deleted', 'info'); }
         
-        function showWhatsAppNumber() {
-            const overlay = document.createElement('div');
-            overlay.className = 'whatsapp-number-modal';
-            overlay.innerHTML = `<div class="whatsapp-number-card"><i class="fab fa-whatsapp" style="font-size:80px; color:white;"></i><h3 style="color:white;">Contact Us on WhatsApp</h3><div class="number">${WHATSAPP_NUMBER}</div><p style="color:white;">Please use this number to contact us and complete your payment.</p><button class="close-number-btn" onclick="this.closest('.whatsapp-number-modal').remove()">Close</button></div>`;
-            document.body.appendChild(overlay);
-        }
-        
-        function showOPPanel() {
-            if (!currentUser || (currentUser.email !== 'studxacademic@gmail.com' && !currentUser.isOP)) { showNotification('Access denied. OP privileges required.', 'error'); return; }
-            const overlay = document.createElement('div');
-            overlay.className = 'op-panel-modal';
-            overlay.innerHTML = `<div class="op-panel-card"><h2><i class="fas fa-crown"></i> OP Control Panel</h2><p style="color: white; margin-bottom: 20px;">Grant subscription to a student after payment confirmation</p><input type="email" id="opStudentEmail" placeholder="Student Email Address"><select id="opSubscriptionDays"><option value="30">30 days</option><option value="60">60 days</option><option value="90">90 days</option><option value="180">180 days</option><option value="365">365 days</option></select><button onclick="grantSubscriptionFromOP()">Grant Subscription</button><button class="close-op" onclick="this.closest('.op-panel-modal').remove()">Close</button></div>`;
-            document.body.appendChild(overlay);
-        }
-        
-        function grantSubscriptionFromOP() {
-            if (!currentUser || (currentUser.email !== 'studxacademic@gmail.com' && !currentUser.isOP)) { showNotification('Access denied.', 'error'); return; }
-            const email = document.getElementById('opStudentEmail').value;
-            const days = parseInt(document.getElementById('opSubscriptionDays').value);
-            if (!email) { showNotification('Please enter student email!', 'error'); return; }
-            const targetUser = users.find(u => u.email === email);
-            if (!targetUser) { showNotification('User not found!', 'error'); return; }
-            if (targetUser.type !== 'student') { showNotification('Can only grant subscription to students!', 'error'); return; }
-            const expiryDate = new Date(); expiryDate.setDate(expiryDate.getDate() + days);
-            targetUser.subscription = 'professional';
-            targetUser.subscriptionExpiry = expiryDate.toISOString();
-            saveData();
-            showNotification(`✅ Subscription granted to ${targetUser.name} for ${days} days!`, 'success');
-            document.querySelector('.op-panel-modal')?.remove();
-        }
-        
-        function navigateToPage(pageName) { window.location.hash = pageName; loadPageFromHash(pageName); }
-        
-        function loadPageFromHash(pageName) {
-            if (!currentUser) return;
-            if (currentUser.type === 'student') {
-                const pages = ['home', 'exercises', 'summaries', 'schedule', 'rooms', 'groups', 'pricing', 'progress'];
-                pages.forEach(page => { const el = document.getElementById(`student-${page}-page`); if (el) el.style.display = 'none'; });
-                const target = document.getElementById(`student-${pageName}-page`);
-                if (target) target.style.display = 'block';
-                else document.getElementById('student-home-page').style.display = 'block';
-                document.querySelectorAll('#studentNavMenu .nav-link').forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('data-page') === pageName) link.classList.add('active');
-                });
-                if (pageName === 'exercises') loadStudentExercises();
-                else if (pageName === 'summaries') loadStudentSummaries();
-                else if (pageName === 'rooms') loadStudentTeachers();
-                else if (pageName === 'groups') { loadFriendRequests(); loadFriendsList(); loadGroups(); }
-                else if (pageName === 'progress') updateStudentProgress();
-                else if (pageName === 'schedule') loadSchedules();
-                updateGradeStats();
-            }
-        }
-        
-        function handleHashChange() { let hash = window.location.hash.substring(1); if (!hash && currentUser) hash = 'home'; if (hash && currentUser && currentUser.type === 'student') loadPageFromHash(hash); }
-        
-        function previewProfileImage(input) {}
-        function previewEditProfileImage(input) {}
-        function updateStudentProgress() { document.getElementById('completedExercises').textContent = '0'; document.getElementById('averageScore').textContent = '0%'; document.getElementById('studyHours').textContent = '0'; document.getElementById('joinedRooms').textContent = '0'; }
-        function updateGradeStats() { document.getElementById('studentGradeExerciseCount').textContent = '0'; document.getElementById('studentGradeTeacherCount').textContent = '0'; }
-        function loadFriendRequests() {}
-        function loadFriendsList() {}
-        
-        function switchLanguage(lang) {
-            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-            document.querySelectorAll('.lang-btn').forEach(btn => { btn.classList.remove('active'); if ((lang === 'en' && btn.innerText === 'English') || (lang === 'ar' && btn.innerText === 'العربية')) btn.classList.add('active'); });
-            document.querySelectorAll('[data-en][data-ar]').forEach(el => {
-                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') { if (el.placeholder) el.placeholder = el.getAttribute(`data-${lang}`); }
-                else if (el.children.length === 0 || el.classList.contains('btn-explore') || el.classList.contains('premium-tag')) { el.textContent = el.getAttribute(`data-${lang}`); }
-            });
-        }
-        
-        // ========== ADDED GOOGLE SIGN-IN WITH NAME, GRADE, AND TEACHER PIN ==========
+        // ========== FIREBASE GOOGLE SIGN-IN METHOD ==========
         window.startGoogleSignIn = function() {
-            // Simulate Google Sign-In (in real implementation, this would get user data from Google)
-            const googleEmail = prompt("Enter your Google email to simulate sign-in:");
-            if (!googleEmail) return;
-            
-            // Check if user already exists
-            let existingUser = users.find(u => u.email === googleEmail);
-            if (existingUser) {
-                // Log them in directly
-                currentUser = existingUser;
-                localStorage.setItem('currentUserEmail', existingUser.email);
-                localStorage.setItem('currentUserPassword', existingUser.password);
-                document.getElementById('loginPage').style.display = 'none';
-                document.getElementById('footer').style.display = 'block';
-                if (existingUser.type === 'student') {
-                    document.getElementById('studentWebsite').style.display = 'block';
-                    document.getElementById('studentDisplayName').textContent = existingUser.name;
-                    document.getElementById('navStudentName').textContent = existingUser.name;
-                    document.getElementById('studentGradeBadge').textContent = `Grade ${existingUser.grade}`;
-                    document.getElementById('currentStudentGrade').textContent = existingUser.grade;
-                    loadStudentData();
-                    window.location.hash = 'home';
-                    loadPageFromHash('home');
-                } else {
-                    document.getElementById('teacherWebsite').style.display = 'block';
-                    document.getElementById('navTeacherName').textContent = existingUser.name;
-                    document.getElementById('teacherGradeBadge').textContent = `Grade ${existingUser.grade}`;
-                    document.getElementById('currentTeacherGrade').textContent = existingUser.grade;
-                    loadTeacherData();
-                    window.location.hash = 'dashboard';
-                    loadPageFromHash('dashboard');
-                }
-                if (existingUser.isOP) document.getElementById('opPanel').style.display = 'block';
-                showNotification(`Welcome back, ${existingUser.name}!`, 'success');
-                return;
-            }
-            
-            // New user: store temp data and show role selection modal with name field
-            tempGoogleUser = { email: googleEmail, fromGoogle: true };
-            // Clear any previously selected role
-            selectedRole = null;
-            // Reset the name input field
-            document.getElementById('roleName').value = '';
-            // Reset grade and teacher code field
-            document.getElementById('roleGrade').value = '';
-            document.getElementById('roleTeacherCode').value = '';
-            document.getElementById('roleTeacherCode').classList.remove('active');
-            document.getElementById('roleErrorMessage').classList.remove('show');
-            document.getElementById('roleErrorMessage').innerHTML = '';
-            // Reset role buttons visual
-            document.getElementById('roleStudentBtn').classList.remove('selected');
-            document.getElementById('roleTeacherBtn').classList.remove('selected');
-            // Show modal
-            document.getElementById('roleSelectionModal').classList.add('active');
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    const user = result.user;
+                    const googleEmail = user.email;
+                    const googleName = user.displayName;
+                    
+                    // Check if user already exists in your system
+                    let existingUser = users.find(u => u.email === googleEmail);
+                    if (existingUser) {
+                        // Log them in directly
+                        currentUser = existingUser;
+                        localStorage.setItem('currentUserEmail', existingUser.email);
+                        localStorage.setItem('currentUserPassword', existingUser.password);
+                        document.getElementById('loginPage').style.display = 'none';
+                        document.getElementById('footer').style.display = 'block';
+                        if (existingUser.type === 'student') {
+                            document.getElementById('studentWebsite').style.display = 'block';
+                            document.getElementById('studentDisplayName').textContent = existingUser.name;
+                            document.getElementById('navStudentName').textContent = existingUser.name;
+                            document.getElementById('studentGradeBadge').textContent = `Grade ${existingUser.grade}`;
+                            document.getElementById('currentStudentGrade').textContent = existingUser.grade;
+                            loadStudentData();
+                            window.location.hash = 'home';
+                            loadPageFromHash('home');
+                        } else {
+                            document.getElementById('teacherWebsite').style.display = 'block';
+                            document.getElementById('navTeacherName').textContent = existingUser.name;
+                            document.getElementById('teacherGradeBadge').textContent = `Grade ${existingUser.grade}`;
+                            document.getElementById('currentTeacherGrade').textContent = existingUser.grade;
+                            loadTeacherData();
+                            window.location.hash = 'dashboard';
+                            loadPageFromHash('dashboard');
+                        }
+                        if (existingUser.isOP) document.getElementById('opPanel').style.display = 'block';
+                        showNotification(`Welcome back, ${existingUser.name}!`, 'success');
+                        return;
+                    }
+                    
+                    // New user: store temp data and show role selection modal with name field
+                    tempGoogleUser = { email: googleEmail, name: googleName, fromGoogle: true };
+                    // Clear any previously selected role
+                    selectedRole = null;
+                    // Reset the name input field with Google name
+                    document.getElementById('roleName').value = googleName || '';
+                    // Reset grade and teacher code field
+                    document.getElementById('roleGrade').value = '';
+                    document.getElementById('roleTeacherCode').value = '';
+                    document.getElementById('roleTeacherCode').classList.remove('active');
+                    document.getElementById('roleErrorMessage').classList.remove('show');
+                    document.getElementById('roleErrorMessage').innerHTML = '';
+                    // Reset role buttons visual
+                    document.getElementById('roleStudentBtn').classList.remove('selected');
+                    document.getElementById('roleTeacherBtn').classList.remove('selected');
+                    // Show modal
+                    document.getElementById('roleSelectionModal').classList.add('active');
+                })
+                .catch((error) => {
+                    console.error(error);
+                    showNotification('Google Sign-In failed: ' + error.message, 'error');
+                });
         };
 
         window.confirmRoleSelection = function() {
@@ -4037,7 +3983,88 @@
             }
             document.getElementById('roleErrorMessage').classList.remove('show');
         };
-        // ========== END OF ADDED GOOGLE SIGN-IN CODE ==========
+        // ========== END OF FIREBASE GOOGLE SIGN-IN ==========
+
+        function sendVerificationCode() { showNotification('Verification code sent!', 'info'); }
+        function verifyCode() { showNotification('Code verified!', 'success'); }
+        function resetPassword() { showNotification('Password reset!', 'success'); }
+        function confirmDeleteAccount() { showNotification('Account deleted', 'info'); }
+        
+        function showWhatsAppNumber() {
+            const overlay = document.createElement('div');
+            overlay.className = 'whatsapp-number-modal';
+            overlay.innerHTML = `<div class="whatsapp-number-card"><i class="fab fa-whatsapp" style="font-size:80px; color:white;"></i><h3 style="color:white;">Contact Us on WhatsApp</h3><div class="number">${WHATSAPP_NUMBER}</div><p style="color:white;">Please use this number to contact us and complete your payment.</p><button class="close-number-btn" onclick="this.closest('.whatsapp-number-modal').remove()">Close</button></div>`;
+            document.body.appendChild(overlay);
+        }
+        
+        function showOPPanel() {
+            if (!currentUser || (currentUser.email !== 'studxacademic@gmail.com' && !currentUser.isOP)) { showNotification('Access denied. OP privileges required.', 'error'); return; }
+            const overlay = document.createElement('div');
+            overlay.className = 'op-panel-modal';
+            overlay.innerHTML = `<div class="op-panel-card"><h2><i class="fas fa-crown"></i> OP Control Panel</h2><p style="color: white; margin-bottom: 20px;">Grant subscription to a student after payment confirmation</p><input type="email" id="opStudentEmail" placeholder="Student Email Address"><select id="opSubscriptionDays"><option value="30">30 days</option><option value="60">60 days</option><option value="90">90 days</option><option value="180">180 days</option><option value="365">365 days</option></select><button onclick="grantSubscriptionFromOP()">Grant Subscription</button><button class="close-op" onclick="this.closest('.op-panel-modal').remove()">Close</button></div>`;
+            document.body.appendChild(overlay);
+        }
+        
+        function grantSubscriptionFromOP() {
+            if (!currentUser || (currentUser.email !== 'studxacademic@gmail.com' && !currentUser.isOP)) { showNotification('Access denied.', 'error'); return; }
+            const email = document.getElementById('opStudentEmail').value;
+            const days = parseInt(document.getElementById('opSubscriptionDays').value);
+            if (!email) { showNotification('Please enter student email!', 'error'); return; }
+            const targetUser = users.find(u => u.email === email);
+            if (!targetUser) { showNotification('User not found!', 'error'); return; }
+            if (targetUser.type !== 'student') { showNotification('Can only grant subscription to students!', 'error'); return; }
+            const expiryDate = new Date(); expiryDate.setDate(expiryDate.getDate() + days);
+            targetUser.subscription = 'professional';
+            targetUser.subscriptionExpiry = expiryDate.toISOString();
+            saveData();
+            showNotification(`✅ Subscription granted to ${targetUser.name} for ${days} days!`, 'success');
+            document.querySelector('.op-panel-modal')?.remove();
+        }
+        
+        function navigateToPage(pageName) { window.location.hash = pageName; loadPageFromHash(pageName); }
+        
+        function loadPageFromHash(pageName) {
+            if (!currentUser) return;
+            if (currentUser.type === 'student') {
+                const pages = ['home', 'exercises', 'summaries', 'schedule', 'rooms', 'groups', 'pricing', 'progress'];
+                pages.forEach(page => { const el = document.getElementById(`student-${page}-page`); if (el) el.style.display = 'none'; });
+                const target = document.getElementById(`student-${pageName}-page`);
+                if (target) target.style.display = 'block';
+                else document.getElementById('student-home-page').style.display = 'block';
+                document.querySelectorAll('#studentNavMenu .nav-link').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('data-page') === pageName) link.classList.add('active');
+                });
+                if (pageName === 'exercises') loadStudentExercises();
+                else if (pageName === 'summaries') loadStudentSummaries();
+                else if (pageName === 'rooms') loadStudentTeachers();
+                else if (pageName === 'groups') { loadFriendRequests(); loadFriendsList(); loadGroups(); }
+                else if (pageName === 'progress') updateStudentProgress();
+                else if (pageName === 'schedule') loadSchedules();
+                updateGradeStats();
+            }
+        }
+        
+        function handleHashChange() { let hash = window.location.hash.substring(1); if (!hash && currentUser) hash = 'home'; if (hash && currentUser && currentUser.type === 'student') loadPageFromHash(hash); }
+        
+        function previewProfileImage(input) {}
+        function previewEditProfileImage(input) {}
+        function updateStudentProgress() { document.getElementById('completedExercises').textContent = '0'; document.getElementById('averageScore').textContent = '0%'; document.getElementById('studyHours').textContent = '0'; document.getElementById('joinedRooms').textContent = '0'; }
+        function updateGradeStats() { document.getElementById('studentGradeExerciseCount').textContent = '0'; document.getElementById('studentGradeTeacherCount').textContent = '0'; }
+        function loadFriendRequests() {}
+        function loadFriendsList() {}
+        function loadStudentExercises() {}
+        function loadStudentSummaries() {}
+        function loadStudentTeachers() {}
+        
+        function switchLanguage(lang) {
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            document.querySelectorAll('.lang-btn').forEach(btn => { btn.classList.remove('active'); if ((lang === 'en' && btn.innerText === 'English') || (lang === 'ar' && btn.innerText === 'العربية')) btn.classList.add('active'); });
+            document.querySelectorAll('[data-en][data-ar]').forEach(el => {
+                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') { if (el.placeholder) el.placeholder = el.getAttribute(`data-${lang}`); }
+                else if (el.children.length === 0 || el.classList.contains('btn-explore') || el.classList.contains('premium-tag')) { el.textContent = el.getAttribute(`data-${lang}`); }
+            });
+        }
         
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => { const anim = document.getElementById('animationContainer'); if (anim) anim.style.display = 'none'; }, 2000);
