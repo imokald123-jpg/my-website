@@ -3616,7 +3616,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 StudX. All rights reserved.</p>
+            <p>&copy; 2026 StudX. All rights reserved.</p>
         </div>
     </footer>
 
@@ -3810,10 +3810,8 @@
                     const googleEmail = user.email;
                     const googleName = user.displayName;
                     
-                    // Check if user already exists in your system
                     let existingUser = users.find(u => u.email === googleEmail);
                     if (existingUser) {
-                        // Log them in directly
                         currentUser = existingUser;
                         localStorage.setItem('currentUserEmail', existingUser.email);
                         localStorage.setItem('currentUserPassword', existingUser.password);
@@ -3842,22 +3840,16 @@
                         return;
                     }
                     
-                    // New user: store temp data and show role selection modal with name field
                     tempGoogleUser = { email: googleEmail, name: googleName, fromGoogle: true };
-                    // Clear any previously selected role
                     selectedRole = null;
-                    // Reset the name input field with Google name
                     document.getElementById('roleName').value = googleName || '';
-                    // Reset grade and teacher code field
                     document.getElementById('roleGrade').value = '';
                     document.getElementById('roleTeacherCode').value = '';
                     document.getElementById('roleTeacherCode').classList.remove('active');
                     document.getElementById('roleErrorMessage').classList.remove('show');
                     document.getElementById('roleErrorMessage').innerHTML = '';
-                    // Reset role buttons visual
                     document.getElementById('roleStudentBtn').classList.remove('selected');
                     document.getElementById('roleTeacherBtn').classList.remove('selected');
-                    // Show modal
                     document.getElementById('roleSelectionModal').classList.add('active');
                 })
                 .catch((error) => {
@@ -3889,7 +3881,6 @@
                 return;
             }
             
-            // If teacher, verify pin code
             if (role === 'teacher') {
                 if (!teacherCode) {
                     errorDiv.innerHTML = "Please enter the teacher PIN code.";
@@ -3903,7 +3894,6 @@
                 }
             }
             
-            // Create new user
             const newUser = {
                 name: name,
                 accountName: name.toLowerCase().replace(/\s/g, '') + Math.floor(Math.random() * 1000),
