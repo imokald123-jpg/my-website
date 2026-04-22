@@ -208,6 +208,14 @@
             background: rgba(102, 126, 234, 0.1);
         }
 
+        /* Social Login Buttons Container */
+        .social-login-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
         /* Google Sign In Button */
         .google-signin-btn {
             width: 100%;
@@ -224,7 +232,6 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            margin-bottom: 20px;
         }
 
         .google-signin-btn i {
@@ -235,6 +242,35 @@
         .google-signin-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Apple Sign In Button */
+        .apple-signin-btn {
+            width: 100%;
+            padding: 15px;
+            background: #000;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .apple-signin-btn i {
+            font-size: 20px;
+            color: white;
+        }
+
+        .apple-signin-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            background: #1a1a1a;
         }
 
         .divider {
@@ -4832,10 +4868,18 @@
                 </button>
             </div>
 
-            <button class="google-signin-btn" onclick="startGoogleSignIn()">
-                <i class="fab fa-google"></i>
-                <span data-en="Continue with Google" data-ar="المتابعة بواسطة Google">Continue with Google</span>
-            </button>
+            <!-- Social Login Buttons Container -->
+            <div class="social-login-buttons">
+                <button class="google-signin-btn" onclick="startGoogleSignIn()">
+                    <i class="fab fa-google"></i>
+                    <span data-en="Continue with Google" data-ar="المتابعة بواسطة Google">Continue with Google</span>
+                </button>
+
+                <button class="apple-signin-btn" onclick="startAppleSignIn()">
+                    <i class="fab fa-apple"></i>
+                    <span data-en="Continue with Apple" data-ar="المتابعة بواسطة Apple">Continue with Apple</span>
+                </button>
+            </div>
 
             <div class="divider">
                 <span data-en="OR" data-ar="أو">OR</span>
@@ -5750,6 +5794,7 @@
         let verificationCode = null;
         
         let tempGoogleUser = null;
+        let tempAppleUser = null;
         let selectedRole = null;
 
         const WHATSAPP_NUMBER = "96505241";
@@ -5950,11 +5995,17 @@
         function hideRoleSelectionModal() { document.getElementById('roleSelectionModal').classList.remove('active'); }
         function selectRole(role) { selectedRole = role; }
         function previewRoleProfileImage(input) {}
-        function confirmRoleSelection() { hideRoleSelectionModal(); showNotification('Profile completed!', 'success'); }
-        function quitGoogleSignIn() { hideRoleSelectionModal(); }
+        function confirmRoleSelection() { 
+            // This is now handled by the external scripts for Google/Apple Sign-In
+            hideRoleSelectionModal(); 
+            showNotification('Profile completed!', 'success'); 
+        }
+        function quitGoogleSignIn() { hideRoleSelectionModal(); tempGoogleUser = null; tempAppleUser = null; }
         function startGoogleSignIn() { 
-            // This is now handled by the Firebase script below
-            // The button click will trigger the Firebase Google Sign-In
+            // Handled by Firebase script below
+        }
+        function startAppleSignIn() {
+            // Handled by Apple Sign-In script below
         }
         function sendVerificationCode() { showNotification('Verification code sent!', 'info'); }
         function verifyCode() { showNotification('Code verified!', 'success'); }
@@ -6020,6 +6071,7 @@
           getAuth, 
           signInWithPopup,
           GoogleAuthProvider,
+          OAuthProvider,
           onAuthStateChanged,
           signOut
         } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
@@ -6032,7 +6084,9 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const googleProvider = new GoogleAuthProvider();
+        const appleProvider = new OAuthProvider('apple.com');
 
+        // Google Sign-In
         window.startGoogleSignIn = async () => {
           try {
             const result = await signInWithPopup(auth, googleProvider);
@@ -6085,7 +6139,70 @@
           }
         };
         
-        // Override the confirmRoleSelection function to work with Google Sign-In
+        // Apple Sign-In
+        window.startAppleSignIn = async () => {
+          try {
+            const result = await signInWithPopup(auth, appleProvider);
+            const user = result.user;
+            
+            // Apple provides email and name
+            const email = user.email;
+            const displayName = user.displayName || (user.email ? user.email.split('@')[0] : 'Apple User');
+            
+            // Check if user already exists
+            let existingUser = users.find(u => u.email === email);
+            
+            if (existingUser) {
+              // User exists, log them in
+              currentUser = existingUser;
+              localStorage.setItem('currentUserEmail', existingUser.email);
+              localStorage.setItem('currentUserPassword', existingUser.password || 'apple_auth');
+              document.getElementById('loginPage').style.display = 'none';
+              document.getElementById('footer').style.display = 'block';
+              
+              if (existingUser.type === 'student') {
+                document.getElementById('studentWebsite').style.display = 'block';
+                document.getElementById('studentDisplayName').textContent = existingUser.name;
+                document.getElementById('navStudentName').textContent = existingUser.name;
+                document.getElementById('studentGradeBadge').textContent = `Grade ${existingUser.grade}`;
+                document.getElementById('currentStudentGrade').textContent = existingUser.grade;
+                loadStudentData();
+                window.location.hash = 'home';
+                loadPageFromHash('home');
+              } else {
+                document.getElementById('teacherWebsite').style.display = 'block';
+                document.getElementById('navTeacherName').textContent = existingUser.name;
+                document.getElementById('teacherGradeBadge').textContent = `Grade ${existingUser.grade}`;
+                document.getElementById('currentTeacherGrade').textContent = existingUser.grade;
+                loadTeacherData();
+                window.location.hash = 'dashboard';
+                loadPageFromHash('dashboard');
+              }
+              
+              showNotification(`Welcome back, ${existingUser.name}!`, 'success');
+            } else {
+              // New user - show role selection modal
+              tempAppleUser = { 
+                email: email, 
+                photoURL: null, 
+                displayName: displayName 
+              };
+              document.getElementById('roleName').value = displayName;
+              showRoleSelectionModal();
+            }
+          } catch (err) {
+            console.error("Apple Sign-In Error:", err);
+            if (err.code === 'auth/popup-blocked') {
+              showNotification("Pop-up was blocked. Please allow pop-ups for this site and try again.", 'warning');
+            } else if (err.code === 'auth/operation-not-allowed') {
+              showNotification("Apple Sign-In is not enabled in Firebase Console. Please enable it in Authentication settings.", 'error');
+            } else {
+              showNotification(err.message || "Apple Sign-In failed. Please try again.", 'error');
+            }
+          }
+        };
+        
+        // Override the confirmRoleSelection function to work with Google/Apple Sign-In
         const originalConfirmRoleSelection = window.confirmRoleSelection;
         window.confirmRoleSelection = function() {
           const name = document.getElementById('roleName').value;
@@ -6107,16 +6224,23 @@
           
           const isOP = (teacherCode === OP_VERIFICATION_CODE);
           
+          // Determine which provider we're using
+          const providerUser = tempGoogleUser || tempAppleUser;
+          if (!providerUser) {
+            showNotification('No sign-in provider detected. Please try signing in again.', 'error');
+            return;
+          }
+          
           const newUser = {
             name: name,
             accountName: name.toLowerCase().replace(/\s/g, '') + Math.floor(Math.random() * 10000),
             nickname: name,
-            email: tempGoogleUser.email,
-            password: 'google_auth_' + Date.now(),
+            email: providerUser.email,
+            password: providerUser === tempGoogleUser ? 'google_auth_' + Date.now() : 'apple_auth_' + Date.now(),
             type: selectedRole,
             grade: grade,
             bio: '',
-            profileImage: tempGoogleUser.photoURL || null,
+            profileImage: providerUser.photoURL || null,
             completedExercises: [],
             averageScore: 0,
             studyHours: 0,
@@ -6175,6 +6299,7 @@
           }
           
           tempGoogleUser = null;
+          tempAppleUser = null;
         };
     </script>
 </body>
