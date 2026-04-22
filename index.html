@@ -3781,13 +3781,94 @@
         function hideRoleSelectionModal() { document.getElementById('roleSelectionModal').classList.remove('active'); }
         function selectRole(role) { selectedRole = role; }
         function previewRoleProfileImage(input) {}
-        function confirmRoleSelection() { hideRoleSelectionModal(); showNotification('Profile completed!', 'success'); }
+        function confirmRoleSelection() { 
+            const name = document.getElementById('roleName').value;
+            const grade = document.getElementById('roleGrade').value;
+            const teacherCode = document.getElementById('roleTeacherCode').value;
+            
+            if (!name || !selectedRole || !grade) {
+                showNotification('Please fill all fields!', 'error');
+                return;
+            }
+            
+            if (selectedRole === 'teacher' && teacherCode !== TEACHER_VERIFICATION_CODE && teacherCode !== OP_VERIFICATION_CODE) {
+                showNotification('Invalid teacher access code!', 'error');
+                return;
+            }
+            
+            const isOP = (teacherCode === OP_VERIFICATION_CODE);
+            const accountName = name.toLowerCase().replace(/\s/g, '') + Math.floor(Math.random() * 10000);
+            
+            const newUser = {
+                name: name,
+                accountName: accountName,
+                nickname: name,
+                email: tempGoogleUser.email,
+                password: 'google_auth_' + Date.now(),
+                type: selectedRole,
+                grade: grade,
+                bio: '',
+                profileImage: tempGoogleUser.photoURL || null,
+                completedExercises: [],
+                averageScore: 0,
+                studyHours: 0,
+                attempts: [],
+                joinedRooms: [],
+                subscription: selectedRole === 'teacher' ? 'professional' : 'free',
+                friends: [],
+                groups: [],
+                gradeLastChanged: new Date().toISOString(),
+                schedules: [],
+                isOP: isOP
+            };
+            
+            if (selectedRole === 'teacher') {
+                newUser.exercises = [];
+                newUser.summaries = [];
+                newUser.privateRooms = [];
+            }
+            
+            users.push(newUser);
+            saveData();
+            
+            hideRoleSelectionModal();
+            
+            currentUser = newUser;
+            localStorage.setItem('currentUserEmail', newUser.email);
+            localStorage.setItem('currentUserPassword', newUser.password);
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('footer').style.display = 'block';
+            
+            if (newUser.type === 'student') {
+                document.getElementById('studentWebsite').style.display = 'block';
+                document.getElementById('studentDisplayName').textContent = newUser.name;
+                document.getElementById('navStudentName').textContent = newUser.name;
+                document.getElementById('studentGradeBadge').textContent = `Grade ${newUser.grade}`;
+                document.getElementById('currentStudentGrade').textContent = newUser.grade;
+                loadStudentData();
+                window.location.hash = 'home';
+                loadPageFromHash('home');
+            } else {
+                document.getElementById('teacherWebsite').style.display = 'block';
+                document.getElementById('navTeacherName').textContent = newUser.name;
+                document.getElementById('teacherGradeBadge').textContent = `Grade ${newUser.grade}`;
+                document.getElementById('currentTeacherGrade').textContent = newUser.grade;
+                loadTeacherData();
+                window.location.hash = 'dashboard';
+                loadPageFromHash('dashboard');
+            }
+            
+            if (newUser.isOP) {
+                document.getElementById('opPanel').style.display = 'block';
+                showNotification(`Welcome OP Admin!`, 'success');
+            } else {
+                showNotification(`Welcome ${newUser.name}!`, 'success');
+            }
+            
+            tempGoogleUser = null;
+        }
+        
         function quitGoogleSignIn() { hideRoleSelectionModal(); tempGoogleUser = null; }
-        function startGoogleSignIn() { showNotification('Google Sign-In is coming soon! Please use email login for now.', 'info'); }
-        function sendVerificationCode() { showNotification('Verification code sent!', 'info'); }
-        function verifyCode() { showNotification('Code verified!', 'success'); }
-        function resetPassword() { showNotification('Password reset!', 'success'); }
-        function confirmDeleteAccount() { showNotification('Account deleted', 'info'); }
         
         function showWhatsAppNumber() {
             const overlay = document.createElement('div');
@@ -3895,6 +3976,69 @@
                 }
             }
         });
+    </script>
+
+    <!-- Firebase Google Sign-In -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBpunCadwttAIHMWvWfKaoWhHLn8bVVX3c",
+            authDomain: "studxacad-b794b.firebaseapp.com",
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        window.startGoogleSignIn = async () => {
+            try {
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+                
+                const existingUser = users.find(u => u.email === user.email);
+                
+                if (existingUser) {
+                    currentUser = existingUser;
+                    localStorage.setItem('currentUserEmail', existingUser.email);
+                    localStorage.setItem('currentUserPassword', existingUser.password || 'google_auth');
+                    document.getElementById('loginPage').style.display = 'none';
+                    document.getElementById('footer').style.display = 'block';
+                    
+                    if (existingUser.type === 'student') {
+                        document.getElementById('studentWebsite').style.display = 'block';
+                        document.getElementById('studentDisplayName').textContent = existingUser.name;
+                        document.getElementById('navStudentName').textContent = existingUser.name;
+                        document.getElementById('studentGradeBadge').textContent = `Grade ${existingUser.grade}`;
+                        document.getElementById('currentStudentGrade').textContent = existingUser.grade;
+                        loadStudentData();
+                        window.location.hash = 'home';
+                        loadPageFromHash('home');
+                    } else {
+                        document.getElementById('teacherWebsite').style.display = 'block';
+                        document.getElementById('navTeacherName').textContent = existingUser.name;
+                        document.getElementById('teacherGradeBadge').textContent = `Grade ${existingUser.grade}`;
+                        document.getElementById('currentTeacherGrade').textContent = existingUser.grade;
+                        loadTeacherData();
+                        window.location.hash = 'dashboard';
+                        loadPageFromHash('dashboard');
+                    }
+                    
+                    if (existingUser.isOP) document.getElementById('opPanel').style.display = 'block';
+                    showNotification(`Welcome back, ${existingUser.name}!`, 'success');
+                } else {
+                    tempGoogleUser = { email: user.email, photoURL: user.photoURL, displayName: user.displayName || user.email.split('@')[0] };
+                    document.getElementById('roleName').value = user.displayName || user.email.split('@')[0];
+                    document.getElementById('roleStudentBtn').classList.add('selected');
+                    selectedRole = 'student';
+                    showRoleSelectionModal();
+                }
+            } catch (err) {
+                console.error("Google Sign-In Error:", err);
+                showNotification(err.message || "Google Sign-In failed. Please try again.", 'error');
+            }
+        };
     </script>
 </body>
 </html>
