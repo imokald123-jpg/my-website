@@ -3621,7 +3621,9 @@
     </footer>
 
     <script>
-        // Firebase Configuration - REPLACE WITH YOUR OWN FIREBASE CONFIG
+        // ========== FIREBASE CONFIGURATION - REPLACE WITH YOUR OWN ==========
+        // Go to https://console.firebase.google.com/ -> Project Settings -> Your apps -> Web (</>)
+        // Copy your firebaseConfig here:
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_AUTH_DOMAIN",
@@ -3630,6 +3632,7 @@
             messagingSenderId: "YOUR_SENDER_ID",
             appId: "YOUR_APP_ID"
         };
+        // ====================================================================
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
@@ -3762,7 +3765,6 @@
         }
         
         function loadTeacherData() {
-            // Load teacher's own exercises
             const teacherExercises = exercises.filter(ex => ex.teacher === currentUser.email);
             const teacherExercisesGrid = document.getElementById('teacherExercisesGrid');
             if(teacherExercisesGrid) {
@@ -3779,7 +3781,6 @@
                 `).join('') : '<div class="no-data">No exercises created yet.</div>';
             }
             
-            // Load teacher's own summaries
             const teacherSummaries = summaries.filter(s => s.teacher === currentUser.email);
             const teacherSummariesGrid = document.getElementById('teacherSummariesGrid');
             if(teacherSummariesGrid) {
@@ -3796,7 +3797,6 @@
                 `).join('') : '<div class="no-data">No summaries created yet.</div>';
             }
             
-            // Load students in teacher's grade
             const students = users.filter(u => u.type === 'student' && u.grade === currentUser.grade);
             const studentsGrid = document.getElementById('teacherStudentsGrid');
             if(studentsGrid) studentsGrid.innerHTML = students.length ? students.map(s => `<div class="student-card"><h3>${s.name}</h3><p>${s.email}</p><div class="student-bio">${s.bio ? s.bio.substring(0,50) : ''}</div><div class="student-stats">Completed: ${s.completedExercises?.length || 0} exercises</div></div>`).join('') : '<div class="no-data">No students in your grade yet.</div>';
@@ -3806,7 +3806,6 @@
             document.getElementById('teacherSummariesCount').textContent = teacherSummaries.length;
             document.getElementById('teacherStudentsCount').textContent = students.length;
             
-            // Calculate total completions from teacher's exercises
             const totalCompletions = teacherExercises.reduce((sum, ex) => sum + (ex.completions || 0), 0);
             document.getElementById('teacherCompletions').textContent = totalCompletions;
             document.getElementById('teacherGradeExerciseCount').textContent = teacherExercises.length;
@@ -3857,7 +3856,6 @@
             showNotification('Exercise published successfully!', 'success');
             document.getElementById('addExerciseForm').reset();
             loadTeacherData();
-            // Switch to my exercises page
             document.querySelectorAll('#teacherNavMenu .nav-link').forEach(link => link.classList.remove('active'));
             document.querySelector('#teacherNavMenu .nav-link[data-page="my-exercises"]').classList.add('active');
             document.getElementById('teacher-add-exercise-page').style.display = 'none';
@@ -3889,7 +3887,6 @@
             document.getElementById('summaryPdfName').style.display = 'none';
             document.getElementById('removeSummaryPdfBtn').style.display = 'none';
             loadTeacherData();
-            // Switch to my summaries page
             document.querySelectorAll('#teacherNavMenu .nav-link').forEach(link => link.classList.remove('active'));
             document.querySelector('#teacherNavMenu .nav-link[data-page="my-summaries"]').classList.add('active');
             document.getElementById('teacher-add-summary-page').style.display = 'none';
@@ -3956,8 +3953,6 @@
         function showPaymentPage(plan, price) { selectedPlan = { name: plan, price: price }; document.getElementById('selectedPlanName').textContent = plan === 'regular' ? 'Regular Plan' : 'Professional Plan'; document.getElementById('selectedPlanPrice').textContent = price + ' OMR'; document.getElementById('totalPrice').textContent = price + ' OMR'; if(currentUser.type === 'student') document.getElementById('studentWebsite').style.display = 'none'; else document.getElementById('teacherWebsite').style.display = 'none'; document.getElementById('footer').style.display = 'none'; document.getElementById('paymentPage').style.display = 'flex'; }
         function hidePaymentPage() { document.getElementById('paymentPage').style.display = 'none'; document.getElementById('footer').style.display = 'block'; if(currentUser.type === 'student') { document.getElementById('studentWebsite').style.display = 'block'; loadPageFromHash(window.location.hash.substring(1) || 'home'); } else { document.getElementById('teacherWebsite').style.display = 'block'; } }
         function selectPaymentMethod(method) { selectedPaymentMethod = method; document.getElementById('methodCard').classList.toggle('active', method === 'card'); document.getElementById('methodBank').classList.toggle('active', method === 'bank'); document.getElementById('cardPaymentForm').style.display = method === 'card' ? 'block' : 'none'; document.getElementById('bankPaymentForm').style.display = method === 'bank' ? 'block' : 'none'; }
-        function previewSummaryPdf(input) {}
-        function removeSummaryPdf(event) {}
         function showForgotPasswordModal() { document.getElementById('forgotPasswordModal').classList.add('active'); }
         function closeForgotPasswordModal() { document.getElementById('forgotPasswordModal').classList.remove('active'); }
         function closeVerificationModal() { document.getElementById('verificationModal').classList.remove('active'); }
@@ -3971,7 +3966,7 @@
         function confirmRoleSelection() { hideRoleSelectionModal(); showNotification('Profile completed!', 'success'); }
         function quitGoogleSignIn() { hideRoleSelectionModal(); tempGoogleUser = null; }
         
-        // ========== FIREBASE GOOGLE SIGN-IN METHOD ==========
+        // ========== WORKING FIREBASE GOOGLE SIGN-IN ==========
         window.startGoogleSignIn = function() {
             auth.signInWithPopup(provider)
                 .then((result) => {
@@ -4023,7 +4018,13 @@
                 })
                 .catch((error) => {
                     console.error(error);
-                    showNotification('Google Sign-In failed: ' + error.message, 'error');
+                    if (error.code === 'auth/popup-blocked') {
+                        showNotification('Popup was blocked. Please allow popups for this site.', 'error');
+                    } else if (error.code === 'auth/unauthorized-domain') {
+                        showNotification('Please add this domain to Firebase authorized domains in Firebase Console.', 'error');
+                    } else {
+                        showNotification('Google Sign-In failed: ' + error.message, 'error');
+                    }
                 });
         };
 
