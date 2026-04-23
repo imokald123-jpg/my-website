@@ -2774,6 +2774,265 @@
             color: rgba(255, 255, 255, 0.7);
         }
 
+        /* ========== CUSTOM SCHEDULE SECTION CSS ========== */
+        .schedule-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .schedule-container {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 30px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.05));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .add-schedule-card {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(102, 126, 234, 0.1));
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .add-schedule-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .add-schedule-card h3 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .add-schedule-card h3 i {
+            color: #667eea;
+            font-size: 24px;
+        }
+
+        .schedule-time-input {
+            margin-bottom: 15px;
+        }
+
+        .schedule-time-input input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .schedule-time-input input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .schedule-subject-select {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .schedule-subject-select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .schedule-subject-select option {
+            background: #1a1a2e;
+            color: #fff;
+        }
+
+        .add-schedule-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .add-schedule-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .schedules-list {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(102, 126, 234, 0.05));
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .schedules-list h3 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .schedules-list h3 i {
+            color: #667eea;
+            font-size: 22px;
+        }
+
+        .schedule-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 14px;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .schedule-item:hover {
+            background: rgba(102, 126, 234, 0.15);
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .schedule-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .schedule-time {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 6px 14px;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .schedule-time i {
+            font-size: 12px;
+        }
+
+        .schedule-subject {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .schedule-subject i {
+            color: #667eea;
+            font-size: 16px;
+        }
+
+        .delete-schedule-btn {
+            background: rgba(244, 67, 54, 0.15);
+            border: 1px solid rgba(244, 67, 54, 0.3);
+            color: #f44336;
+            padding: 8px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+        }
+
+        .delete-schedule-btn:hover {
+            background: #f44336;
+            color: white;
+            border-color: #f44336;
+            transform: scale(1.02);
+        }
+
+        .no-schedules {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            padding: 40px 20px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .schedule-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .schedule-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .schedule-item {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .delete-schedule-btn {
+                align-self: flex-end;
+            }
+        }
+        /* ========== END OF SCHEDULE CSS ========== */
+
         @media (max-width: 768px) {
             .mobile-menu-btn { display: block; }
             .nav-menu {
@@ -3371,10 +3630,10 @@
                             <option>Mathematics</option><option>Physics</option><option>Chemistry</option>
                             <option>Biology</option><option>English</option><option>History</option>
                         </select>
-                        <button class="add-schedule-btn" onclick="addSchedule()">Set Reminder</button>
+                        <button class="add-schedule-btn" onclick="addSchedule()"><i class="fas fa-bell"></i> Set Reminder</button>
                     </div>
                     <div class="schedules-list">
-                        <h3>Your Study Schedule</h3>
+                        <h3><i class="fas fa-list"></i> Your Study Schedule</h3>
                         <div id="schedulesListContainer"></div>
                     </div>
                 </div>
@@ -3622,8 +3881,6 @@
 
     <script>
         // ========== FIREBASE CONFIGURATION - REPLACE WITH YOUR OWN ==========
-        // Go to https://console.firebase.google.com/ -> Project Settings -> Your apps -> Web (</>)
-        // Copy your firebaseConfig here:
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
             authDomain: "YOUR_AUTH_DOMAIN",
@@ -3634,7 +3891,6 @@
         };
         // ====================================================================
 
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const provider = new firebase.auth.GoogleAuthProvider();
@@ -3921,8 +4177,56 @@
             document.getElementById('summaryPdf').value = '';
         }
         
-        function loadSchedules() { const container = document.getElementById('schedulesListContainer'); if(container) container.innerHTML = '<div class="no-schedules">No study schedules yet</div>'; }
-        function addSchedule() { showNotification('Schedule feature placeholder', 'info'); }
+        function loadSchedules() { 
+            const container = document.getElementById('schedulesListContainer'); 
+            if(!container) return;
+            const schedules = currentUser.schedules || [];
+            if (schedules.length === 0) {
+                container.innerHTML = '<div class="no-schedules"><i class="fas fa-calendar-day"></i> No study schedules yet. Add your first schedule!</div>';
+                return;
+            }
+            container.innerHTML = schedules.map((s, index) => `
+                <div class="schedule-item">
+                    <div class="schedule-info">
+                        <span class="schedule-time"><i class="fas fa-clock"></i> ${s.time}</span>
+                        <span class="schedule-subject"><i class="fas fa-book-open"></i> ${s.subject}</span>
+                    </div>
+                    <button class="delete-schedule-btn" onclick="deleteSchedule(${index})"><i class="fas fa-trash-alt"></i> Delete</button>
+                </div>
+            `).join('');
+        }
+        
+        function addSchedule() { 
+            if (currentUser.subscription !== 'professional') {
+                showNotification('This is a premium feature. Please upgrade to Professional plan.', 'error');
+                navigateToPage('pricing');
+                return;
+            }
+            const time = document.getElementById('scheduleTime').value;
+            const subject = document.getElementById('scheduleSubject').value;
+            if (!time) {
+                showNotification('Please select a time', 'error');
+                return;
+            }
+            if (!currentUser.schedules) currentUser.schedules = [];
+            currentUser.schedules.push({ time, subject });
+            const userIndex = users.findIndex(u => u.email === currentUser.email);
+            users[userIndex] = currentUser;
+            saveData();
+            loadSchedules();
+            showNotification('Study schedule added!', 'success');
+            document.getElementById('scheduleTime').value = '';
+        }
+        
+        function deleteSchedule(index) {
+            currentUser.schedules.splice(index, 1);
+            const userIndex = users.findIndex(u => u.email === currentUser.email);
+            users[userIndex] = currentUser;
+            saveData();
+            loadSchedules();
+            showNotification('Schedule removed', 'info');
+        }
+        
         function loadGroups() { const groupsDiv = document.getElementById('groupsList'); if(groupsDiv) groupsDiv.innerHTML = '<div class="no-data">No groups yet</div>'; }
         function loadFriends() { const friendsDiv = document.getElementById('friendsList'); if(friendsDiv) friendsDiv.innerHTML = '<div class="no-data">No friends yet</div>'; const reqDiv = document.getElementById('friendRequests'); if(reqDiv) reqDiv.innerHTML = '<div class="no-data">No pending requests</div>'; }
         function searchFriends() { showNotification('Search friends feature placeholder', 'info'); }
@@ -3966,7 +4270,7 @@
         function confirmRoleSelection() { hideRoleSelectionModal(); showNotification('Profile completed!', 'success'); }
         function quitGoogleSignIn() { hideRoleSelectionModal(); tempGoogleUser = null; }
         
-        // ========== WORKING FIREBASE GOOGLE SIGN-IN ==========
+        // ========== FIREBASE GOOGLE SIGN-IN ==========
         window.startGoogleSignIn = function() {
             auth.signInWithPopup(provider)
                 .then((result) => {
@@ -4018,13 +4322,7 @@
                 })
                 .catch((error) => {
                     console.error(error);
-                    if (error.code === 'auth/popup-blocked') {
-                        showNotification('Popup was blocked. Please allow popups for this site.', 'error');
-                    } else if (error.code === 'auth/unauthorized-domain') {
-                        showNotification('Please add this domain to Firebase authorized domains in Firebase Console.', 'error');
-                    } else {
-                        showNotification('Google Sign-In failed: ' + error.message, 'error');
-                    }
+                    showNotification('Google Sign-In failed: ' + error.message, 'error');
                 });
         };
 
