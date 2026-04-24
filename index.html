@@ -3033,6 +3033,390 @@
         }
         /* ========== END OF SCHEDULE CSS ========== */
 
+        /* ========== BEAUTIFUL ADD FRIEND SECTION CSS ========== */
+        .groups-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .groups-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.05));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .groups-sidebar {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(102, 126, 234, 0.1));
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .groups-sidebar h3 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .groups-sidebar h3 i {
+            color: #667eea;
+        }
+
+        .groups-main {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(102, 126, 234, 0.05));
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .groups-main h3 {
+            color: #fff;
+            margin: 20px 0 15px 0;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .groups-main h3 i {
+            color: #667eea;
+        }
+
+        .groups-main h3:first-of-type {
+            margin-top: 0;
+        }
+
+        /* Beautiful Add Friend Form */
+        .add-friend-form {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.1));
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .add-friend-form:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .add-friend-form h4 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .add-friend-form h4 i {
+            color: #667eea;
+            font-size: 20px;
+        }
+
+        .friend-search {
+            display: flex;
+            gap: 12px;
+            position: relative;
+        }
+
+        .friend-search input {
+            flex: 1;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 14px;
+            color: #fff;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .friend-search input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .friend-search input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .friend-search button {
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .friend-search button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .friend-search button i {
+            font-size: 14px;
+        }
+
+        /* Search Results */
+        #friendSearchResults {
+            margin-top: 20px;
+        }
+
+        .search-result-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .search-result-item:hover {
+            background: rgba(102, 126, 234, 0.15);
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .search-result-item span {
+            color: #fff;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-result-item span i {
+            color: #667eea;
+            font-size: 16px;
+        }
+
+        .add-friend-btn {
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .add-friend-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 3px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        /* Friend Requests */
+        .friend-request-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 165, 0, 0.3);
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .friend-request-item:hover {
+            background: rgba(255, 165, 0, 0.1);
+            border-color: #ffa500;
+        }
+
+        .friend-request-item .friend-name {
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .friend-request-item .friend-name i {
+            color: #ffa500;
+        }
+
+        .accept-btn {
+            padding: 6px 16px;
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-left: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .accept-btn:hover {
+            transform: scale(1.02);
+        }
+
+        .reject-btn {
+            padding: 6px 16px;
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-left: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .reject-btn:hover {
+            transform: scale(1.02);
+        }
+
+        /* Friends List */
+        .friend-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .friend-item:hover {
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateX(5px);
+        }
+
+        .friend-item .friend-name {
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .friend-item .friend-name i {
+            color: #667eea;
+        }
+
+        /* Groups List */
+        .group-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .group-item:hover {
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateX(5px);
+        }
+
+        .group-item .group-name {
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .group-item .group-name i {
+            color: #667eea;
+        }
+
+        .group-item .group-name small {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .create-group-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 15px;
+        }
+
+        .create-group-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .groups-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .friend-search {
+                flex-direction: column;
+            }
+            
+            .friend-search button {
+                justify-content: center;
+            }
+            
+            .friend-request-item, .friend-item, .group-item, .search-result-item {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            
+            .accept-btn, .reject-btn {
+                margin-left: 0;
+            }
+        }
+        /* ========== END OF ADD FRIEND SECTION CSS ========== */
+
         @media (max-width: 768px) {
             .mobile-menu-btn { display: block; }
             .nav-menu {
@@ -3652,23 +4036,23 @@
                 <h2 class="section-title">Friends & Groups</h2>
                 <div class="groups-container">
                     <div class="groups-sidebar">
-                        <h3>Friend Requests</h3>
+                        <h3><i class="fas fa-user-plus"></i> Friend Requests</h3>
                         <div id="friendRequests"></div>
-                        <h3>My Friends</h3>
+                        <h3><i class="fas fa-users"></i> My Friends</h3>
                         <div id="friendsList"></div>
                     </div>
                     <div class="groups-main">
                         <div class="add-friend-form">
-                            <h4>Add Friend</h4>
+                            <h4><i class="fas fa-user-friends"></i> Add New Friend</h4>
                             <div class="friend-search">
-                                <input type="text" id="friendSearchInput" placeholder="Search by name">
-                                <button onclick="searchFriends()">Search</button>
+                                <input type="text" id="friendSearchInput" placeholder="Search by name or account name...">
+                                <button onclick="searchFriends()"><i class="fas fa-search"></i> Search</button>
                             </div>
                             <div id="friendSearchResults"></div>
                         </div>
-                        <h3>My Groups</h3>
+                        <h3><i class="fas fa-layer-group"></i> My Groups</h3>
                         <div id="groupsList"></div>
-                        <button class="create-group-btn" onclick="createGroup()">Create New Group</button>
+                        <button class="create-group-btn" onclick="createGroup()"><i class="fas fa-plus-circle"></i> Create New Group</button>
                     </div>
                 </div>
             </div>
@@ -4129,7 +4513,18 @@
             document.getElementById('joinedRooms').textContent = currentUser.joinedRooms?.length || 0;
             document.getElementById('studentGradeExerciseCount').textContent = gradeExercises.length;
             document.getElementById('studentGradeTeacherCount').textContent = teachers.length;
-            loadSchedules(); loadGroups(); loadFriends();
+            loadSchedules(); 
+            
+            // Only load groups and friends if premium
+            if (currentUser.subscription === 'professional') {
+                loadGroups(); 
+                loadFriends();
+            } else {
+                const groupsDiv = document.getElementById('groupsList');
+                if(groupsDiv) groupsDiv.innerHTML = '<div class="no-data"><i class="fas fa-crown"></i> Premium feature - Upgrade to access groups</div>';
+                const friendsDiv = document.getElementById('friendsList');
+                if(friendsDiv) friendsDiv.innerHTML = '<div class="no-data"><i class="fas fa-crown"></i> Premium feature - Upgrade to add friends</div>';
+            }
         }
         
         function loadTeacherData() {
@@ -4292,6 +4687,10 @@
         function loadSchedules() { 
             const container = document.getElementById('schedulesListContainer'); 
             if(!container) return;
+            if (currentUser.subscription !== 'professional') {
+                container.innerHTML = '<div class="no-schedules"><i class="fas fa-crown"></i> Premium feature - Upgrade to create study schedule</div>';
+                return;
+            }
             const schedules = currentUser.schedules || [];
             if (schedules.length === 0) {
                 container.innerHTML = '<div class="no-schedules"><i class="fas fa-calendar-day"></i> No study schedules yet. Add your first schedule!</div>';
@@ -4349,6 +4748,11 @@
                     users[userIndex] = currentUser;
                     saveData();
                     showNotification('Payment successful! You now have Professional access!', 'success');
+                    // Refresh the page to show premium features
+                    hidePaymentPage();
+                    if (currentUser.type === 'student') {
+                        loadStudentData();
+                    }
                 } else if (selectedPlan && selectedPlan.name === 'regular') {
                     currentUser.subscription = 'regular';
                     currentUser.subscriptionExpiry = new Date(Date.now() + 30*24*60*60*1000).toISOString();
@@ -4356,17 +4760,180 @@
                     users[userIndex] = currentUser;
                     saveData();
                     showNotification('Payment successful! Thank you for subscribing!', 'success');
+                    hidePaymentPage();
                 } else {
                     showNotification('Payment failed. Please try again.', 'error');
                 }
-                hidePaymentPage();
             }, 1500);
         }
         
-        function loadGroups() { const groupsDiv = document.getElementById('groupsList'); if(groupsDiv) groupsDiv.innerHTML = '<div class="no-data">No groups yet</div>'; }
-        function loadFriends() { const friendsDiv = document.getElementById('friendsList'); if(friendsDiv) friendsDiv.innerHTML = '<div class="no-data">No friends yet</div>'; const reqDiv = document.getElementById('friendRequests'); if(reqDiv) reqDiv.innerHTML = '<div class="no-data">No pending requests</div>'; }
-        function searchFriends() { showNotification('Search friends feature placeholder', 'info'); }
-        function createGroup() { showNotification('Create group feature placeholder', 'info'); }
+        function loadGroups() { 
+            const groupsDiv = document.getElementById('groupsList'); 
+            if(!groupsDiv) return;
+            if (currentUser.subscription !== 'professional') {
+                groupsDiv.innerHTML = '<div class="no-data"><i class="fas fa-crown"></i> Premium feature - Upgrade to access groups</div>';
+                return;
+            }
+            const userGroups = groups.filter(g => g.members.includes(currentUser.email));
+            if (userGroups.length === 0) {
+                groupsDiv.innerHTML = '<div class="no-data"><i class="fas fa-users"></i> No groups yet. Create your first group!</div>';
+                return;
+            }
+            groupsDiv.innerHTML = userGroups.map(g => `
+                <div class="group-item">
+                    <div class="group-name">
+                        <i class="fas fa-layer-group"></i>
+                        <div>
+                            <strong>${g.name}</strong><br>
+                            <small>${g.description || 'No description'}</small>
+                        </div>
+                    </div>
+                    <button class="accept-btn" onclick="viewGroup(${g.id})">View</button>
+                </div>
+            `).join('');
+        }
+        
+        function viewGroup(groupId) {
+            const group = groups.find(g => g.id === groupId);
+            if (group) {
+                alert(`Group: ${group.name}\nDescription: ${group.description || 'No description'}\nMembers: ${group.members.length}\nOwner: ${group.owner === currentUser.email ? 'You' : group.owner}`);
+            }
+        }
+        
+        function loadFriends() { 
+            const friendsDiv = document.getElementById('friendsList'); 
+            if(!friendsDiv) return;
+            if (currentUser.subscription !== 'professional') {
+                friendsDiv.innerHTML = '<div class="no-data"><i class="fas fa-crown"></i> Premium feature - Upgrade to add friends</div>';
+                return;
+            }
+            const friends = currentUser.friends || [];
+            if (friends.length === 0) {
+                friendsDiv.innerHTML = '<div class="no-data"><i class="fas fa-user-friends"></i> No friends yet. Search and add friends above!</div>';
+                return;
+            }
+            friendsDiv.innerHTML = friends.map(f => `<div class="friend-item"><div class="friend-name"><i class="fas fa-user-circle"></i> ${f.name || f.email}</div></div>`).join('');
+            
+            const requests = friendRequests.filter(r => r.to === currentUser.email && r.status === 'pending');
+            const requestsDiv = document.getElementById('friendRequests');
+            if (!requestsDiv) return;
+            if (requests.length === 0) {
+                requestsDiv.innerHTML = '<div class="no-data"><i class="fas fa-inbox"></i> No pending friend requests</div>';
+            } else {
+                requestsDiv.innerHTML = requests.map(r => {
+                    const fromUser = users.find(u => u.email === r.from);
+                    return `<div class="friend-request-item">
+                        <div class="friend-name"><i class="fas fa-user-plus"></i> ${fromUser ? fromUser.name : r.from}</div>
+                        <div>
+                            <button class="accept-btn" onclick="acceptFriendRequest('${r.from}')"><i class="fas fa-check"></i> Accept</button>
+                            <button class="reject-btn" onclick="rejectFriendRequest('${r.from}')"><i class="fas fa-times"></i> Reject</button>
+                        </div>
+                    </div>`;
+                }).join('');
+            }
+        }
+        
+        function searchFriends() {
+            if (currentUser.subscription !== 'professional') {
+                showNotification('This is a premium feature. Please upgrade to Professional plan.', 'error');
+                navigateToPage('pricing');
+                return;
+            }
+            const searchTerm = document.getElementById('friendSearchInput').value.toLowerCase();
+            if (!searchTerm) {
+                showNotification('Please enter a name to search', 'warning');
+                return;
+            }
+            const results = users.filter(u => u.type === 'student' && u.email !== currentUser.email && (u.name.toLowerCase().includes(searchTerm) || u.accountName.toLowerCase().includes(searchTerm)));
+            const resultsDiv = document.getElementById('friendSearchResults');
+            if (results.length === 0) {
+                resultsDiv.innerHTML = '<div class="no-data"><i class="fas fa-search"></i> No users found</div>';
+            } else {
+                resultsDiv.innerHTML = results.map(u => `
+                    <div class="search-result-item">
+                        <span><i class="fas fa-user-circle"></i> ${u.name} (@${u.accountName})</span>
+                        <button class="add-friend-btn" onclick="sendFriendRequest('${u.email}')"><i class="fas fa-user-plus"></i> Add Friend</button>
+                    </div>
+                `).join('');
+            }
+        }
+        
+        function sendFriendRequest(toEmail) {
+            const existing = friendRequests.find(r => r.from === currentUser.email && r.to === toEmail);
+            if (existing) {
+                showNotification('Friend request already sent!', 'warning');
+                return;
+            }
+            const alreadyFriend = currentUser.friends?.some(f => f.email === toEmail);
+            if (alreadyFriend) {
+                showNotification('Already friends with this user!', 'warning');
+                return;
+            }
+            friendRequests.push({ from: currentUser.email, to: toEmail, status: 'pending' });
+            saveData();
+            showNotification('Friend request sent!', 'success');
+            document.getElementById('friendSearchInput').value = '';
+            document.getElementById('friendSearchResults').innerHTML = '';
+        }
+        
+        function acceptFriendRequest(fromEmail) {
+            const request = friendRequests.find(r => r.from === fromEmail && r.to === currentUser.email);
+            if (request) {
+                request.status = 'accepted';
+                if (!currentUser.friends) currentUser.friends = [];
+                currentUser.friends.push({ email: fromEmail, name: users.find(u => u.email === fromEmail)?.name || fromEmail });
+                const fromUser = users.find(u => u.email === fromEmail);
+                if (fromUser) {
+                    if (!fromUser.friends) fromUser.friends = [];
+                    fromUser.friends.push({ email: currentUser.email, name: currentUser.name });
+                    const fromIndex = users.findIndex(u => u.email === fromEmail);
+                    users[fromIndex] = fromUser;
+                }
+                const userIndex = users.findIndex(u => u.email === currentUser.email);
+                users[userIndex] = currentUser;
+                saveData();
+                loadFriends();
+                showNotification('Friend request accepted!', 'success');
+            }
+        }
+        
+        function rejectFriendRequest(fromEmail) {
+            const index = friendRequests.findIndex(r => r.from === fromEmail && r.to === currentUser.email);
+            if (index !== -1) {
+                friendRequests.splice(index, 1);
+                saveData();
+                loadFriends();
+                showNotification('Friend request rejected', 'info');
+            }
+        }
+        
+        function createGroup() {
+            if (currentUser.subscription !== 'professional') {
+                showNotification('This is a premium feature. Please upgrade to Professional plan.', 'error');
+                navigateToPage('pricing');
+                return;
+            }
+            const groupName = prompt('Enter group name:');
+            if (!groupName) return;
+            const description = prompt('Enter group description (optional):');
+            const newGroup = {
+                id: Date.now(),
+                name: groupName,
+                description: description || '',
+                owner: currentUser.email,
+                members: [currentUser.email],
+                createdAt: new Date().toISOString()
+            };
+            groups.push(newGroup);
+            if (!currentUser.groups) currentUser.groups = [];
+            currentUser.groups.push(newGroup.id);
+            const userIndex = users.findIndex(u => u.email === currentUser.email);
+            users[userIndex] = currentUser;
+            saveData();
+            loadGroups();
+            showNotification('Group created!', 'success');
+        }
+        
         function showProfile() { 
             document.getElementById('studentWebsite').style.display = 'none'; 
             document.getElementById('teacherWebsite').style.display = 'none'; 
@@ -4637,9 +5204,31 @@
                 if (pageName === 'exercises') loadStudentExercises();
                 else if (pageName === 'summaries') loadStudentSummaries();
                 else if (pageName === 'rooms') loadStudentTeachers();
-                else if (pageName === 'groups') { loadFriendRequests(); loadFriendsList(); loadGroups(); }
+                else if (pageName === 'groups') { 
+                    if (currentUser.subscription === 'professional') {
+                        loadFriends(); 
+                        loadGroups();
+                        // Also reset search results
+                        document.getElementById('friendSearchResults').innerHTML = '';
+                        document.getElementById('friendSearchInput').value = '';
+                    } else {
+                        const groupsContainer = document.querySelector('#student-groups-page .groups-container');
+                        if (groupsContainer) {
+                            groupsContainer.innerHTML = '<div class="premium-locked" style="text-align:center; padding:60px;"><i class="fas fa-crown" style="font-size:60px; color:#ffd700;"></i><h3 style="margin-top:20px;">Premium Feature</h3><p>Friends and Groups are only available for Professional plan subscribers.</p><button class="btn-primary" onclick="navigateToPage(\'pricing\')" style="margin-top:20px;">Upgrade Now</button></div>';
+                        }
+                    }
+                }
                 else if (pageName === 'progress') updateStudentProgress();
-                else if (pageName === 'schedule') loadSchedules();
+                else if (pageName === 'schedule') {
+                    if (currentUser.subscription !== 'professional') {
+                        const scheduleContainer = document.querySelector('#student-schedule-page .schedule-container');
+                        if (scheduleContainer) {
+                            scheduleContainer.innerHTML = '<div class="premium-locked" style="text-align:center; padding:60px;"><i class="fas fa-crown" style="font-size:60px; color:#ffd700;"></i><h3 style="margin-top:20px;">Premium Feature</h3><p>Study Schedule is only available for Professional plan subscribers.</p><button class="btn-primary" onclick="navigateToPage(\'pricing\')" style="margin-top:20px;">Upgrade Now</button></div>';
+                        }
+                    } else {
+                        loadSchedules();
+                    }
+                }
                 updateGradeStats();
             } else if (currentUser.type === 'teacher') {
                 const pages = ['dashboard', 'my-exercises', 'add-exercise', 'my-summaries', 'add-summary', 'teacher-rooms', 'teacher-pricing', 'my-students'];
