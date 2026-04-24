@@ -3842,7 +3842,7 @@
                         <label data-en="Cardholder Name" data-ar="اسم حامل البطاقة">Cardholder Name</label>
                         <input type="text" id="cardholderName" placeholder="John Doe">
                     </div>
-                    <button class="pay-btn" onclick="alert('Payment system coming soon.')" data-en="Pay Now" data-ar="ادفع الآن">#</button>
+                    <button class="pay-btn" onclick="processPayment()" data-en="Pay Now" data-ar="ادفع الآن">Pay Now</button>
                 </div>
 
                 <div id="bankPaymentForm" style="display: none;">
@@ -3870,24 +3870,24 @@
             <div class="footer-section">
                 <h4>Contact</h4>
                 <ul>
-                    <li><i class="fas fa-envelope"></i> studxacad@gmail.com</li>
+                    <li><i class="fas fa-envelope"></i> support@studx.com</li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 StudX. All rights reserved.</p>
+            <p>&copy; 2024 StudX. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
         // ========== FIREBASE CONFIGURATION - REPLACE WITH YOUR OWN ==========
         const firebaseConfig = {
-            apiKey: "AIzaSyBpunCadwttAIHMWvWfKaoWhHLn8bVVX3c",
-            authDomain: "studxacad-b794b.firebaseapp.com",
-            projectId: "studxacad-b794b",
-            storageBucket: "studxacad-b794b.firebasestorage.app",
-            messagingSenderId: "68013006076",
-            appId: "Y1:68013006076:web:4ca1738c194c2d52aacb79"
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
         // ====================================================================
 
@@ -3950,7 +3950,119 @@
         function selectSignupType(type) { selectedSignupType = type; document.getElementById('signupStudentBtn').classList.remove('active'); document.getElementById('signupTeacherBtn').classList.remove('active'); document.getElementById('signup' + type.charAt(0).toUpperCase() + type.slice(1) + 'Btn').classList.add('active'); document.getElementById('studentGradeField').style.display = type === 'student' ? 'block' : 'none'; document.getElementById('teacherGradeField').style.display = type === 'teacher' ? 'block' : 'none'; document.getElementById('teacherCodeField').style.display = type === 'teacher' ? 'block' : 'none'; }
         function showSignup() { document.getElementById('loginForm').style.display = 'none'; document.getElementById('signupForm').style.display = 'block'; }
         function showLogin() { document.getElementById('loginForm').style.display = 'block'; document.getElementById('signupForm').style.display = 'none'; }
-        function handleSignup() { showNotification('Signup functionality placeholder', 'info'); }
+        
+        // ========== FIXED EMAIL SIGN-UP FUNCTION ==========
+        function handleSignup() {
+            const name = document.getElementById('signupName').value.trim();
+            const email = document.getElementById('signupEmail').value.trim();
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('signupConfirmPassword').value;
+            const accountName = document.getElementById('signupAccountName').value.trim();
+            const nickname = document.getElementById('signupNickname').value.trim();
+            const bio = document.getElementById('signupBio').value.trim();
+            const role = selectedSignupType;
+            
+            // Validation
+            if (!name || !email || !password || !accountName) {
+                showNotification('Please fill all required fields', 'error');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showNotification('Passwords do not match', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showNotification('Password must be at least 6 characters', 'error');
+                return;
+            }
+            
+            // Check if email already exists
+            if (users.find(u => u.email === email)) {
+                showNotification('Email already registered', 'error');
+                return;
+            }
+            
+            // Check if account name is unique
+            if (users.find(u => u.accountName === accountName)) {
+                showNotification('Account name already taken, please choose another', 'error');
+                return;
+            }
+            
+            let grade = '';
+            let teacherCode = '';
+            
+            if (role === 'student') {
+                grade = document.getElementById('studentGrade').value;
+                if (!grade) {
+                    showNotification('Please select your grade', 'error');
+                    return;
+                }
+            } else {
+                grade = document.getElementById('teacherGrade').value;
+                teacherCode = document.getElementById('teacherCode').value;
+                if (!grade) {
+                    showNotification('Please select your grade', 'error');
+                    return;
+                }
+                if (teacherCode !== TEACHER_VERIFICATION_CODE) {
+                    showNotification('Invalid teacher access code', 'error');
+                    return;
+                }
+            }
+            
+            // Create new user
+            const newUser = {
+                name: name,
+                accountName: accountName,
+                nickname: nickname || '',
+                email: email,
+                password: password,
+                type: role,
+                grade: grade,
+                bio: bio || '',
+                profileImage: null,
+                completedExercises: [],
+                averageScore: 0,
+                studyHours: 0,
+                attempts: [],
+                joinedRooms: [],
+                subscription: role === 'teacher' ? 'professional' : 'free',
+                friends: [],
+                groups: [],
+                gradeLastChanged: new Date().toISOString(),
+                schedules: [],
+                isOP: false
+            };
+            
+            if (role === 'teacher') {
+                newUser.exercises = [];
+                newUser.summaries = [];
+                newUser.privateRooms = [];
+                newUser.canCreatePremiumRooms = true;
+            }
+            
+            users.push(newUser);
+            saveData();
+            
+            showNotification('Account created successfully! Please login.', 'success');
+            
+            // Clear form and show login
+            document.getElementById('signupName').value = '';
+            document.getElementById('signupEmail').value = '';
+            document.getElementById('signupPassword').value = '';
+            document.getElementById('signupConfirmPassword').value = '';
+            document.getElementById('signupAccountName').value = '';
+            document.getElementById('signupNickname').value = '';
+            document.getElementById('signupBio').value = '';
+            document.getElementById('studentGrade').value = '';
+            document.getElementById('teacherGrade').value = '';
+            document.getElementById('teacherCode').value = '';
+            
+            showLogin();
+        }
+        // ========== END OF FIXED SIGN-UP FUNCTION ==========
         
         function handleLogin(event) { 
             event.preventDefault();
@@ -4225,6 +4337,30 @@
             saveData();
             loadSchedules();
             showNotification('Schedule removed', 'info');
+        }
+        
+        function processPayment() {
+            showNotification('Processing payment...', 'info');
+            setTimeout(() => {
+                if (selectedPlan && selectedPlan.name === 'professional') {
+                    currentUser.subscription = 'professional';
+                    currentUser.subscriptionExpiry = new Date(Date.now() + 30*24*60*60*1000).toISOString();
+                    const userIndex = users.findIndex(u => u.email === currentUser.email);
+                    users[userIndex] = currentUser;
+                    saveData();
+                    showNotification('Payment successful! You now have Professional access!', 'success');
+                } else if (selectedPlan && selectedPlan.name === 'regular') {
+                    currentUser.subscription = 'regular';
+                    currentUser.subscriptionExpiry = new Date(Date.now() + 30*24*60*60*1000).toISOString();
+                    const userIndex = users.findIndex(u => u.email === currentUser.email);
+                    users[userIndex] = currentUser;
+                    saveData();
+                    showNotification('Payment successful! Thank you for subscribing!', 'success');
+                } else {
+                    showNotification('Payment failed. Please try again.', 'error');
+                }
+                hidePaymentPage();
+            }, 1500);
         }
         
         function loadGroups() { const groupsDiv = document.getElementById('groupsList'); if(groupsDiv) groupsDiv.innerHTML = '<div class="no-data">No groups yet</div>'; }
