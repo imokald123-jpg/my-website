@@ -4652,7 +4652,7 @@
         }
         
         function loadTeacherData() {
-            // Load exercises created by this teacher
+            // FIXED: Filter exercises by teacher email
             const teacherExercises = exercises.filter(ex => ex.teacher === currentUser.email);
             const teacherExercisesGrid = document.getElementById('teacherExercisesGrid');
             if(teacherExercisesGrid) {
@@ -4662,7 +4662,7 @@
                     teacherExercisesGrid.innerHTML = teacherExercises.map(ex => `
                         <div class="exercise-card">
                             <h3>${ex.title}</h3>
-                            <p>${ex.question.substring(0,80)}...</p>
+                            <p>${ex.question ? ex.question.substring(0,80) : 'No question'}...</p>
                             <div class="exercise-meta">
                                 <span><i class="fas fa-signal"></i> ${ex.difficulty}</span>
                                 <span><i class="fas fa-chart-line"></i> Completions: ${ex.completions || 0}</span>
@@ -4673,7 +4673,7 @@
                 }
             }
             
-            // Load summaries created by this teacher
+            // FIXED: Filter summaries by teacher email
             const teacherSummaries = summaries.filter(s => s.teacher === currentUser.email);
             const teacherSummariesGrid = document.getElementById('teacherSummariesGrid');
             if(teacherSummariesGrid) {
@@ -4683,7 +4683,7 @@
                     teacherSummariesGrid.innerHTML = teacherSummaries.map(sum => `
                         <div class="summary-card">
                             <h3>${sum.title}</h3>
-                            <p>${sum.content.substring(0,100)}...</p>
+                            <p>${sum.content ? sum.content.substring(0,100) : 'No content'}...</p>
                             <div class="summary-meta">
                                 <span><i class="fas fa-book"></i> ${sum.subject}</span>
                                 <span><i class="fas fa-download"></i> ${sum.pdfName ? 'Has PDF' : 'No PDF'}</span>
@@ -4723,6 +4723,8 @@
                 saveData();
                 loadTeacherData();
                 showNotification('Exercise deleted!', 'success');
+            } else {
+                showNotification('You can only delete your own exercises!', 'error');
             }
         }
         
@@ -4733,6 +4735,8 @@
                 saveData();
                 loadTeacherData();
                 showNotification('Summary deleted!', 'success');
+            } else {
+                showNotification('You can only delete your own summaries!', 'error');
             }
         }
         
