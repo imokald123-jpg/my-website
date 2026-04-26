@@ -4652,42 +4652,60 @@
         }
         
         function loadTeacherData() {
+            // Load exercises created by this teacher
             const teacherExercises = exercises.filter(ex => ex.teacher === currentUser.email);
             const teacherExercisesGrid = document.getElementById('teacherExercisesGrid');
             if(teacherExercisesGrid) {
-                teacherExercisesGrid.innerHTML = teacherExercises.length ? teacherExercises.map(ex => `
-                    <div class="exercise-card">
-                        <h3>${ex.title}</h3>
-                        <p>${ex.question.substring(0,80)}...</p>
-                        <div class="exercise-meta">
-                            <span><i class="fas fa-signal"></i> ${ex.difficulty}</span>
-                            <span><i class="fas fa-chart-line"></i> Completions: ${ex.completions || 0}</span>
+                if (teacherExercises.length === 0) {
+                    teacherExercisesGrid.innerHTML = '<div class="no-data">No exercises created yet. Click "Add Exercise" to create one.</div>';
+                } else {
+                    teacherExercisesGrid.innerHTML = teacherExercises.map(ex => `
+                        <div class="exercise-card">
+                            <h3>${ex.title}</h3>
+                            <p>${ex.question.substring(0,80)}...</p>
+                            <div class="exercise-meta">
+                                <span><i class="fas fa-signal"></i> ${ex.difficulty}</span>
+                                <span><i class="fas fa-chart-line"></i> Completions: ${ex.completions || 0}</span>
+                            </div>
+                            <button class="delete-btn" onclick="deleteExercise(${ex.id})">Delete</button>
                         </div>
-                        <button class="delete-btn" onclick="deleteExercise(${ex.id})">Delete</button>
-                    </div>
-                `).join('') : '<div class="no-data">No exercises created yet. Click "Add Exercise" to create one.</div>';
+                    `).join('');
+                }
             }
             
+            // Load summaries created by this teacher
             const teacherSummaries = summaries.filter(s => s.teacher === currentUser.email);
             const teacherSummariesGrid = document.getElementById('teacherSummariesGrid');
             if(teacherSummariesGrid) {
-                teacherSummariesGrid.innerHTML = teacherSummaries.length ? teacherSummaries.map(sum => `
-                    <div class="summary-card">
-                        <h3>${sum.title}</h3>
-                        <p>${sum.content.substring(0,100)}...</p>
-                        <div class="summary-meta">
-                            <span><i class="fas fa-book"></i> ${sum.subject}</span>
-                            <span><i class="fas fa-download"></i> ${sum.pdfName ? 'Has PDF' : 'No PDF'}</span>
+                if (teacherSummaries.length === 0) {
+                    teacherSummariesGrid.innerHTML = '<div class="no-data">No summaries created yet. Click "Add Summary" to create one.</div>';
+                } else {
+                    teacherSummariesGrid.innerHTML = teacherSummaries.map(sum => `
+                        <div class="summary-card">
+                            <h3>${sum.title}</h3>
+                            <p>${sum.content.substring(0,100)}...</p>
+                            <div class="summary-meta">
+                                <span><i class="fas fa-book"></i> ${sum.subject}</span>
+                                <span><i class="fas fa-download"></i> ${sum.pdfName ? 'Has PDF' : 'No PDF'}</span>
+                            </div>
+                            <button class="delete-summary-btn" onclick="deleteSummary(${sum.id})">Delete</button>
                         </div>
-                        <button class="delete-summary-btn" onclick="deleteSummary(${sum.id})">Delete</button>
-                    </div>
-                `).join('') : '<div class="no-data">No summaries created yet. Click "Add Summary" to create one.</div>';
+                    `).join('');
+                }
             }
             
+            // Load students in the same grade
             const students = users.filter(u => u.type === 'student' && u.grade === currentUser.grade);
             const studentsGrid = document.getElementById('teacherStudentsGrid');
-            if(studentsGrid) studentsGrid.innerHTML = students.length ? students.map(s => `<div class="student-card"><h3>${s.name}</h3><p>${s.email}</p><div class="student-bio">${s.bio ? s.bio.substring(0,50) : ''}</div><div class="student-stats">Completed: ${s.completedExercises?.length || 0} exercises</div></div>`).join('') : '<div class="no-data">No students in your grade yet.</div>';
+            if(studentsGrid) {
+                if (students.length === 0) {
+                    studentsGrid.innerHTML = '<div class="no-data">No students in your grade yet.</div>';
+                } else {
+                    studentsGrid.innerHTML = students.map(s => `<div class="student-card"><h3>${s.name}</h3><p>${s.email}</p><div class="student-bio">${s.bio ? s.bio.substring(0,50) : ''}</div><div class="student-stats">Completed: ${s.completedExercises?.length || 0} exercises</div></div>`).join('');
+                }
+            }
             
+            // Update dashboard stats
             document.getElementById('teacherGradeStudentCount').textContent = students.length;
             document.getElementById('teacherExercisesCount').textContent = teacherExercises.length;
             document.getElementById('teacherSummariesCount').textContent = teacherSummaries.length;
@@ -4737,12 +4755,11 @@
                 correctAttempts: 0
             };
             exercises.push(newExercise);
-            if (!currentUser.exercises) currentUser.exercises = [];
-            currentUser.exercises.push(newExercise.id);
             saveData();
             showNotification('Exercise published successfully!', 'success');
             document.getElementById('addExerciseForm').reset();
             loadTeacherData();
+            // Switch to My Exercises page
             document.querySelectorAll('#teacherNavMenu .nav-link').forEach(link => link.classList.remove('active'));
             document.querySelector('#teacherNavMenu .nav-link[data-page="my-exercises"]').classList.add('active');
             document.getElementById('teacher-add-exercise-page').style.display = 'none';
@@ -4764,8 +4781,6 @@
                 pdfName: currentSummaryPdfName
             };
             summaries.push(newSummary);
-            if (!currentUser.summaries) currentUser.summaries = [];
-            currentUser.summaries.push(newSummary.id);
             saveData();
             showNotification('Summary published successfully!', 'success');
             document.getElementById('addSummaryForm').reset();
@@ -4774,6 +4789,7 @@
             document.getElementById('summaryPdfName').style.display = 'none';
             document.getElementById('removeSummaryPdfBtn').style.display = 'none';
             loadTeacherData();
+            // Switch to My Summaries page
             document.querySelectorAll('#teacherNavMenu .nav-link').forEach(link => link.classList.remove('active'));
             document.querySelector('#teacherNavMenu .nav-link[data-page="my-summaries"]').classList.add('active');
             document.getElementById('teacher-add-summary-page').style.display = 'none';
