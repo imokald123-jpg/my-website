@@ -4420,17 +4420,38 @@
         const TEACHER_VERIFICATION_CODE = "TEACHER2026";
         const ADMIN_LOGIN_CODE = "ADMIN2026OMAN";
 
-        users = [
-            { name: 'Student', accountName: 'student123', nickname: 'studious', email: 'student@studx.com', password: 'student123', type: 'student', grade: '10', bio: 'I love learning math and science.', profileImage: null, completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [], subscription: 'free', friends: [], groups: [], gradeLastChanged: new Date().toISOString(), schedules: [], isOP: false },
-            { name: 'Teacher', accountName: 'teacher123', nickname: 'professor', email: 'teacher@studx.com', password: 'teacher123', type: 'teacher', grade: '10', bio: 'Experienced teacher.', profileImage: null, exercises: [], summaries: [], privateRooms: [], subscription: 'professional', canCreatePremiumRooms: true, gradeLastChanged: new Date().toISOString(), isOP: false },
-            { name: 'Admin', accountName: 'admin', nickname: 'admin', email: 'admin@studx.com', password: ADMIN_LOGIN_CODE, type: 'teacher', grade: '0', bio: 'Platform Administrator', profileImage: null, completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [], subscription: 'professional', friends: [], groups: [], gradeLastChanged: new Date().toISOString(), schedules: [], isOP: true }
-        ];
-        groups = [{ id: 1, name: 'Math Study Group', description: 'Discuss math problems', owner: 'student@studx.com', members: ['student@studx.com'], createdAt: new Date().toISOString() }];
-        exercises = [{ id: 1, title: "Newton's Laws", subject: 'Physics', difficulty: 'Intermediate', time: 20, question: 'Force for 5kg at 2m/s²? (Newtons)', correctAnswer: '10', explanation: 'F = ma = 5 × 2 = 10N', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', image: null, pdf: null, completions: 0, attempts: 0, correctAttempts: 0 }];
-        summaries = [{ id: 1, title: 'Algebra Final Review', subject: 'Mathematics', content: 'Linear equations: ax + b = c\nQuadratic equations: ax² + bx + c = 0', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', createdAt: new Date().toISOString(), pdfData: null, pdfName: null }];
-        privateRooms = [{ id: 1, teacherEmail: 'teacher@studx.com', teacherName: 'Teacher', roomName: 'Grade 10 Math Mastery', description: 'Advanced math tutoring', schedule: 'Mon, Wed, Fri - 4:00 PM', grade: '10', subscribersOnly: true, students: [] }];
+        // Initialize with default data
+        function initializeDefaultData() {
+            if (users.length === 0) {
+                users = [
+                    { name: 'Student', accountName: 'student123', nickname: 'studious', email: 'student@studx.com', password: 'student123', type: 'student', grade: '10', bio: 'I love learning math and science.', profileImage: null, completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [], subscription: 'free', friends: [], groups: [], gradeLastChanged: new Date().toISOString(), schedules: [], isOP: false },
+                    { name: 'Teacher', accountName: 'teacher123', nickname: 'professor', email: 'teacher@studx.com', password: 'teacher123', type: 'teacher', grade: '10', bio: 'Experienced teacher.', profileImage: null, exercises: [], summaries: [], privateRooms: [], subscription: 'professional', canCreatePremiumRooms: true, gradeLastChanged: new Date().toISOString(), isOP: false },
+                    { name: 'Admin', accountName: 'admin', nickname: 'admin', email: 'admin@studx.com', password: ADMIN_LOGIN_CODE, type: 'teacher', grade: '0', bio: 'Platform Administrator', profileImage: null, completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [], subscription: 'professional', friends: [], groups: [], gradeLastChanged: new Date().toISOString(), schedules: [], isOP: true }
+                ];
+            }
+            if (groups.length === 0) {
+                groups = [{ id: 1, name: 'Math Study Group', description: 'Discuss math problems', owner: 'student@studx.com', members: ['student@studx.com'], createdAt: new Date().toISOString() }];
+            }
+            if (exercises.length === 0) {
+                exercises = [{ id: 1, title: "Newton's Laws", subject: 'Physics', difficulty: 'Intermediate', time: 20, question: 'Force for 5kg at 2m/s²? (Newtons)', correctAnswer: '10', explanation: 'F = ma = 5 × 2 = 10N', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', image: null, pdf: null, completions: 0, attempts: 0, correctAttempts: 0 }];
+            }
+            if (summaries.length === 0) {
+                summaries = [{ id: 1, title: 'Algebra Final Review', subject: 'Mathematics', content: 'Linear equations: ax + b = c\nQuadratic equations: ax² + bx + c = 0', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', createdAt: new Date().toISOString(), pdfData: null, pdfName: null }];
+            }
+            if (privateRooms.length === 0) {
+                privateRooms = [{ id: 1, teacherEmail: 'teacher@studx.com', teacherName: 'Teacher', roomName: 'Grade 10 Math Mastery', description: 'Advanced math tutoring', schedule: 'Mon, Wed, Fri - 4:00 PM', grade: '10', subscribersOnly: true, students: [] }];
+            }
+        }
 
-        function saveData() { localStorage.setItem('studx_users', JSON.stringify(users)); localStorage.setItem('studx_exercises', JSON.stringify(exercises)); localStorage.setItem('studx_summaries', JSON.stringify(summaries)); localStorage.setItem('studx_rooms', JSON.stringify(privateRooms)); localStorage.setItem('studx_groups', JSON.stringify(groups)); localStorage.setItem('studx_friend_requests', JSON.stringify(friendRequests)); }
+        function saveData() { 
+            localStorage.setItem('studx_users', JSON.stringify(users)); 
+            localStorage.setItem('studx_exercises', JSON.stringify(exercises)); 
+            localStorage.setItem('studx_summaries', JSON.stringify(summaries)); 
+            localStorage.setItem('studx_rooms', JSON.stringify(privateRooms)); 
+            localStorage.setItem('studx_groups', JSON.stringify(groups)); 
+            localStorage.setItem('studx_friend_requests', JSON.stringify(friendRequests)); 
+        }
+        
         function loadData() {
             const savedUsers = localStorage.getItem('studx_users'); if (savedUsers) users = JSON.parse(savedUsers);
             const savedExercises = localStorage.getItem('studx_exercises'); if (savedExercises) exercises = JSON.parse(savedExercises);
@@ -4438,6 +4459,7 @@
             const savedRooms = localStorage.getItem('studx_rooms'); if (savedRooms) privateRooms = JSON.parse(savedRooms);
             const savedGroups = localStorage.getItem('studx_groups'); if (savedGroups) groups = JSON.parse(savedGroups);
             const savedFriendRequests = localStorage.getItem('studx_friend_requests'); if (savedFriendRequests) friendRequests = JSON.parse(savedFriendRequests);
+            initializeDefaultData();
         }
         loadData();
 
@@ -4643,7 +4665,7 @@
                         </div>
                         <button class="delete-btn" onclick="deleteExercise(${ex.id})">Delete</button>
                     </div>
-                `).join('') : '<div class="no-data">No exercises created yet.</div>';
+                `).join('') : '<div class="no-data">No exercises created yet. Click "Add Exercise" to create one.</div>';
             }
             
             const teacherSummaries = summaries.filter(s => s.teacher === currentUser.email);
@@ -4659,7 +4681,7 @@
                         </div>
                         <button class="delete-summary-btn" onclick="deleteSummary(${sum.id})">Delete</button>
                     </div>
-                `).join('') : '<div class="no-data">No summaries created yet.</div>';
+                `).join('') : '<div class="no-data">No summaries created yet. Click "Add Summary" to create one.</div>';
             }
             
             const students = users.filter(u => u.type === 'student' && u.grade === currentUser.grade);
