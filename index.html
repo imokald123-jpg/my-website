@@ -8,6 +8,7 @@
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <style>
         * {
             margin: 0;
@@ -4371,7 +4372,7 @@
             <div class="footer-section">
                 <h4>Contact</h4>
                 <ul>
-                    <li><i class="fas fa-envelope"></i> studxacademi@gmail.com</li>
+                    <li><i class="fas fa-envelope"></i> studxacademi.com</li>
                 </ul>
             </div>
         </div>
@@ -4390,12 +4391,13 @@
             messagingSenderId: "68013006076",
             appId: "1:68013006076:web:4ca1738c194c2d52aacb79"
         };
-        // ====================================================================
-
+        
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const provider = new firebase.auth.GoogleAuthProvider();
+        const db = firebase.firestore();
 
+        // Global data stores
         let users = [];
         let exercises = [];
         let summaries = [];
@@ -4418,49 +4420,185 @@
         const TEACHER_VERIFICATION_CODE = "TEACHER2026";
         const ADMIN_LOGIN_CODE = "ADMIN2026OMAN";
 
-        // Initialize with default data
-        function initializeDefaultData() {
+        // ========== FIRESTORE DATA SYNC FUNCTIONS ==========
+        async function loadUserFromFirestore(email) {
+            try {
+                const doc = await db.collection('users').doc(email).get();
+                if (doc.exists) {
+                    return doc.data();
+                }
+                return null;
+            } catch (error) {
+                console.error("Error loading user:", error);
+                return null;
+            }
+        }
+
+        async function saveUserToFirestore(user) {
+            try {
+                await db.collection('users').doc(user.email).set(user);
+                return true;
+            } catch (error) {
+                console.error("Error saving user:", error);
+                return false;
+            }
+        }
+
+        async function loadAllDataFromFirestore() {
+            try {
+                // Load users
+                const usersSnapshot = await db.collection('users').get();
+                users = [];
+                usersSnapshot.forEach(doc => {
+                    users.push(doc.data());
+                });
+                
+                // Load exercises
+                const exercisesSnapshot = await db.collection('exercises').get();
+                exercises = [];
+                exercisesSnapshot.forEach(doc => {
+                    exercises.push(doc.data());
+                });
+                
+                // Load summaries
+                const summariesSnapshot = await db.collection('summaries').get();
+                summaries = [];
+                summariesSnapshot.forEach(doc => {
+                    summaries.push(doc.data());
+                });
+                
+                // Load groups
+                const groupsSnapshot = await db.collection('groups').get();
+                groups = [];
+                groupsSnapshot.forEach(doc => {
+                    groups.push(doc.data());
+                });
+                
+                // Load friend requests
+                const requestsSnapshot = await db.collection('friendRequests').get();
+                friendRequests = [];
+                requestsSnapshot.forEach(doc => {
+                    friendRequests.push(doc.data());
+                });
+                
+                // Load private rooms
+                const roomsSnapshot = await db.collection('privateRooms').get();
+                privateRooms = [];
+                roomsSnapshot.forEach(doc => {
+                    privateRooms.push(doc.data());
+                });
+                
+                return true;
+            } catch (error) {
+                console.error("Error loading data from Firestore:", error);
+                return false;
+            }
+        }
+
+        async function saveExerciseToFirestore(exercise) {
+            try {
+                await db.collection('exercises').doc(exercise.id.toString()).set(exercise);
+                return true;
+            } catch (error) {
+                console.error("Error saving exercise:", error);
+                return false;
+            }
+        }
+
+        async function saveSummaryToFirestore(summary) {
+            try {
+                await db.collection('summaries').doc(summary.id.toString()).set(summary);
+                return true;
+            } catch (error) {
+                console.error("Error saving summary:", error);
+                return false;
+            }
+        }
+
+        async function saveGroupToFirestore(group) {
+            try {
+                await db.collection('groups').doc(group.id.toString()).set(group);
+                return true;
+            } catch (error) {
+                console.error("Error saving group:", error);
+                return false;
+            }
+        }
+
+        async function saveFriendRequestToFirestore(request) {
+            try {
+                await db.collection('friendRequests').doc(`${request.from}_${request.to}`).set(request);
+                return true;
+            } catch (error) {
+                console.error("Error saving friend request:", error);
+                return false;
+            }
+        }
+
+        async function deleteFriendRequestFromFirestore(from, to) {
+            try {
+                await db.collection('friendRequests').doc(`${from}_${to}`).delete();
+                return true;
+            } catch (error) {
+                console.error("Error deleting friend request:", error);
+                return false;
+            }
+        }
+
+        async function deleteExerciseFromFirestore(exerciseId) {
+            try {
+                await db.collection('exercises').doc(exerciseId.toString()).delete();
+                return true;
+            } catch (error) {
+                console.error("Error deleting exercise:", error);
+                return false;
+            }
+        }
+
+        async function deleteSummaryFromFirestore(summaryId) {
+            try {
+                await db.collection('summaries').doc(summaryId.toString()).delete();
+                return true;
+            } catch (error) {
+                console.error("Error deleting summary:", error);
+                return false;
+            }
+        }
+
+        // ========== INITIAL DATA ==========
+        async function initializeDefaultData() {
             if (users.length === 0) {
-                users = [
+                const defaultUsers = [
                     { name: 'Student', accountName: 'student123', nickname: 'studious', email: 'student@studx.com', password: 'student123', type: 'student', grade: '10', bio: 'I love learning math and science.', profileImage: null, completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [], subscription: 'free', friends: [], groups: [], gradeLastChanged: new Date().toISOString(), schedules: [], isOP: false },
                     { name: 'Teacher', accountName: 'teacher123', nickname: 'professor', email: 'teacher@studx.com', password: 'teacher123', type: 'teacher', grade: '10', bio: 'Experienced teacher.', profileImage: null, exercises: [], summaries: [], privateRooms: [], subscription: 'professional', canCreatePremiumRooms: true, gradeLastChanged: new Date().toISOString(), isOP: false },
                     { name: 'Admin', accountName: 'admin', nickname: 'admin', email: 'admin@studx.com', password: ADMIN_LOGIN_CODE, type: 'teacher', grade: '0', bio: 'Platform Administrator', profileImage: null, completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [], subscription: 'professional', friends: [], groups: [], gradeLastChanged: new Date().toISOString(), schedules: [], isOP: true }
                 ];
+                for (const user of defaultUsers) {
+                    await saveUserToFirestore(user);
+                    users.push(user);
+                }
             }
             if (groups.length === 0) {
-                groups = [{ id: 1, name: 'Math Study Group', description: 'Discuss math problems', owner: 'student@studx.com', members: ['student@studx.com'], createdAt: new Date().toISOString() }];
+                const defaultGroup = { id: 1, name: 'Math Study Group', description: 'Discuss math problems', owner: 'student@studx.com', members: ['student@studx.com'], createdAt: new Date().toISOString() };
+                await saveGroupToFirestore(defaultGroup);
+                groups.push(defaultGroup);
             }
             if (exercises.length === 0) {
-                exercises = [{ id: 1, title: "Newton's Laws", subject: 'Physics', difficulty: 'Intermediate', time: 20, question: 'Force for 5kg at 2m/s²? (Newtons)', correctAnswer: '10', explanation: 'F = ma = 5 × 2 = 10N', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', image: null, pdf: null, completions: 0, attempts: 0, correctAttempts: 0 }];
+                const defaultExercise = { id: 1, title: "Newton's Laws", subject: 'Physics', difficulty: 'Intermediate', time: 20, question: 'Force for 5kg at 2m/s²? (Newtons)', correctAnswer: '10', explanation: 'F = ma = 5 × 2 = 10N', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', image: null, pdf: null, completions: 0, attempts: 0, correctAttempts: 0 };
+                await saveExerciseToFirestore(defaultExercise);
+                exercises.push(defaultExercise);
             }
             if (summaries.length === 0) {
-                summaries = [{ id: 1, title: 'Algebra Final Review', subject: 'Mathematics', content: 'Linear equations: ax + b = c\nQuadratic equations: ax² + bx + c = 0', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', createdAt: new Date().toISOString(), pdfData: null, pdfName: null }];
+                const defaultSummary = { id: 1, title: 'Algebra Final Review', subject: 'Mathematics', content: 'Linear equations: ax + b = c\nQuadratic equations: ax² + bx + c = 0', teacher: 'teacher@studx.com', teacherName: 'Teacher', grade: '10', createdAt: new Date().toISOString(), pdfData: null, pdfName: null };
+                await saveSummaryToFirestore(defaultSummary);
+                summaries.push(defaultSummary);
             }
             if (privateRooms.length === 0) {
                 privateRooms = [{ id: 1, teacherEmail: 'teacher@studx.com', teacherName: 'Teacher', roomName: 'Grade 10 Math Mastery', description: 'Advanced math tutoring', schedule: 'Mon, Wed, Fri - 4:00 PM', grade: '10', subscribersOnly: true, students: [] }];
             }
         }
 
-        function saveData() { 
-            localStorage.setItem('studx_users', JSON.stringify(users)); 
-            localStorage.setItem('studx_exercises', JSON.stringify(exercises)); 
-            localStorage.setItem('studx_summaries', JSON.stringify(summaries)); 
-            localStorage.setItem('studx_rooms', JSON.stringify(privateRooms)); 
-            localStorage.setItem('studx_groups', JSON.stringify(groups)); 
-            localStorage.setItem('studx_friend_requests', JSON.stringify(friendRequests)); 
-        }
-        
-        function loadData() {
-            const savedUsers = localStorage.getItem('studx_users'); if (savedUsers) users = JSON.parse(savedUsers);
-            const savedExercises = localStorage.getItem('studx_exercises'); if (savedExercises) exercises = JSON.parse(savedExercises);
-            const savedSummaries = localStorage.getItem('studx_summaries'); if (savedSummaries) summaries = JSON.parse(savedSummaries);
-            const savedRooms = localStorage.getItem('studx_rooms'); if (savedRooms) privateRooms = JSON.parse(savedRooms);
-            const savedGroups = localStorage.getItem('studx_groups'); if (savedGroups) groups = JSON.parse(savedGroups);
-            const savedFriendRequests = localStorage.getItem('studx_friend_requests'); if (savedFriendRequests) friendRequests = JSON.parse(savedFriendRequests);
-            initializeDefaultData();
-        }
-        loadData();
-
+        // ========== UI FUNCTIONS ==========
         function showNotification(message, type = 'info') {
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
@@ -4475,7 +4613,7 @@
         function showSignup() { document.getElementById('loginForm').style.display = 'none'; document.getElementById('signupForm').style.display = 'block'; }
         function showLogin() { document.getElementById('loginForm').style.display = 'block'; document.getElementById('signupForm').style.display = 'none'; }
         
-        function handleSignup() {
+        async function handleSignup() {
             const name = document.getElementById('signupName').value.trim();
             const email = document.getElementById('signupEmail').value.trim();
             const password = document.getElementById('signupPassword').value;
@@ -4497,7 +4635,10 @@
                 showNotification('Password must be at least 6 characters', 'error');
                 return;
             }
-            if (users.find(u => u.email === email)) {
+            
+            // Check if email exists in Firestore
+            const existingUser = await loadUserFromFirestore(email);
+            if (existingUser) {
                 showNotification('Email already registered', 'error');
                 return;
             }
@@ -4558,8 +4699,8 @@
                 newUser.canCreatePremiumRooms = true;
             }
             
+            await saveUserToFirestore(newUser);
             users.push(newUser);
-            saveData();
             showNotification('Account created successfully! Please login.', 'success');
             
             document.getElementById('signupName').value = '';
@@ -4576,21 +4717,32 @@
             showLogin();
         }
         
-        function handleLogin(event) { 
+        async function handleLogin(event) { 
             event.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const user = users.find(u => u.email === email && u.password === password);
-            if (user) {
+            
+            // First try to load from Firestore
+            let user = await loadUserFromFirestore(email);
+            if (!user) {
+                // Check local users as fallback
+                user = users.find(u => u.email === email);
+            }
+            
+            if (user && user.password === password) {
                 if (user.email === 'admin@studx.com' && password === ADMIN_LOGIN_CODE) {
                     user.isOP = true;
                 }
                 if (user.email === 'studxacademic@gmail.com') user.isOP = true;
                 currentUser = user;
+                
+                // Save current user to localStorage for session persistence
                 localStorage.setItem('currentUserEmail', user.email);
                 localStorage.setItem('currentUserPassword', user.password);
+                
                 document.getElementById('loginPage').style.display = 'none';
                 document.getElementById('footer').style.display = 'block';
+                
                 if (user.type === 'student') {
                     document.getElementById('studentWebsite').style.display = 'block';
                     document.getElementById('studentDisplayName').textContent = user.name;
@@ -4614,7 +4766,7 @@
             } else { showNotification('Invalid email or password!', 'error'); }
         }
         
-        function handleLogout() {
+        async function handleLogout() {
             localStorage.removeItem('currentUserEmail'); localStorage.removeItem('currentUserPassword');
             currentUser = null;
             document.getElementById('studentWebsite').style.display = 'none';
@@ -4649,9 +4801,7 @@
             loadFriends();
         }
         
-        // ========== FIXED TEACHER FUNCTIONS ==========
         function navigateToTeacherPage(pageName) {
-            // Hide all teacher pages
             document.getElementById('teacher-dashboard-page').style.display = 'none';
             document.getElementById('teacher-my-exercises-page').style.display = 'none';
             document.getElementById('teacher-add-exercise-page').style.display = 'none';
@@ -4659,7 +4809,6 @@
             document.getElementById('teacher-add-summary-page').style.display = 'none';
             document.getElementById('teacher-my-students-page').style.display = 'none';
             
-            // Show selected page
             if (pageName === 'dashboard') {
                 document.getElementById('teacher-dashboard-page').style.display = 'block';
             } else if (pageName === 'my-exercises') {
@@ -4677,7 +4826,6 @@
                 loadTeacherStudents();
             }
             
-            // Update active class on nav links
             document.querySelectorAll('#teacherNavMenu .nav-link').forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('data-page') === pageName) {
@@ -4764,11 +4912,11 @@
             }
         }
         
-        function deleteExercise(exerciseId) {
+        async function deleteExercise(exerciseId) {
             const index = exercises.findIndex(ex => ex.id === exerciseId);
             if (index !== -1 && exercises[index].teacher === currentUser.email) {
                 exercises.splice(index, 1);
-                saveData();
+                await deleteExerciseFromFirestore(exerciseId);
                 loadTeacherExercises();
                 showNotification('Exercise deleted!', 'success');
             } else {
@@ -4776,11 +4924,11 @@
             }
         }
         
-        function deleteSummary(summaryId) {
+        async function deleteSummary(summaryId) {
             const index = summaries.findIndex(sum => sum.id === summaryId);
             if (index !== -1 && summaries[index].teacher === currentUser.email) {
                 summaries.splice(index, 1);
-                saveData();
+                await deleteSummaryFromFirestore(summaryId);
                 loadTeacherSummaries();
                 showNotification('Summary deleted!', 'success');
             } else {
@@ -4788,7 +4936,7 @@
             }
         }
         
-        function handleAddExercise(event) {
+        async function handleAddExercise(event) {
             event.preventDefault();
             const newExercise = {
                 id: Date.now(),
@@ -4807,13 +4955,13 @@
                 correctAttempts: 0
             };
             exercises.push(newExercise);
-            saveData();
+            await saveExerciseToFirestore(newExercise);
             showNotification('Exercise published successfully!', 'success');
             document.getElementById('addExerciseForm').reset();
             navigateToTeacherPage('my-exercises');
         }
         
-        function handleAddSummary(event) {
+        async function handleAddSummary(event) {
             event.preventDefault();
             const newSummary = {
                 id: Date.now(),
@@ -4828,7 +4976,7 @@
                 pdfName: currentSummaryPdfName
             };
             summaries.push(newSummary);
-            saveData();
+            await saveSummaryToFirestore(newSummary);
             showNotification('Summary published successfully!', 'success');
             document.getElementById('addSummaryForm').reset();
             currentSummaryPdfData = null;
@@ -4866,7 +5014,6 @@
             document.getElementById('summaryPdf').value = '';
         }
         
-        // Keep existing functions for other features
         function loadSchedules() { 
             const container = document.getElementById('schedulesListContainer'); 
             if(!container) return;
@@ -4895,9 +5042,7 @@
             if (!time) { showNotification('Please select a time', 'error'); return; }
             if (!currentUser.schedules) currentUser.schedules = [];
             currentUser.schedules.push({ time, subject });
-            const userIndex = users.findIndex(u => u.email === currentUser.email);
-            users[userIndex] = currentUser;
-            saveData();
+            saveUserToFirestore(currentUser);
             loadSchedules();
             showNotification('Study schedule added!', 'success');
             document.getElementById('scheduleTime').value = '';
@@ -4906,9 +5051,7 @@
         function deleteSchedule(index) {
             if (!currentUser) return;
             currentUser.schedules.splice(index, 1);
-            const userIndex = users.findIndex(u => u.email === currentUser.email);
-            users[userIndex] = currentUser;
-            saveData();
+            saveUserToFirestore(currentUser);
             loadSchedules();
             showNotification('Schedule removed', 'info');
         }
@@ -4963,20 +5106,21 @@
             }
         }
         
-        function sendFriendRequest(toEmail) {
+        async function sendFriendRequest(toEmail) {
             if (!currentUser) return;
             const existing = friendRequests.find(r => r.from === currentUser.email && r.to === toEmail);
             if (existing) { showNotification('Friend request already sent!', 'warning'); return; }
             const alreadyFriend = currentUser.friends?.some(f => f.email === toEmail);
             if (alreadyFriend) { showNotification('Already friends with this user!', 'warning'); return; }
-            friendRequests.push({ from: currentUser.email, to: toEmail, status: 'pending' });
-            saveData();
+            const newRequest = { from: currentUser.email, to: toEmail, status: 'pending' };
+            friendRequests.push(newRequest);
+            await saveFriendRequestToFirestore(newRequest);
             showNotification('Friend request sent!', 'success');
             document.getElementById('friendSearchInput').value = '';
             document.getElementById('friendSearchResults').innerHTML = '';
         }
         
-        function acceptFriendRequest(fromEmail) {
+        async function acceptFriendRequest(fromEmail) {
             if (!currentUser) return;
             const request = friendRequests.find(r => r.from === fromEmail && r.to === currentUser.email);
             if (request) {
@@ -4987,40 +5131,39 @@
                 if (fromUser) {
                     if (!fromUser.friends) fromUser.friends = [];
                     fromUser.friends.push({ email: currentUser.email, name: currentUser.name });
-                    const fromIndex = users.findIndex(u => u.email === fromEmail);
-                    users[fromIndex] = fromUser;
+                    await saveUserToFirestore(fromUser);
                 }
-                const userIndex = users.findIndex(u => u.email === currentUser.email);
-                users[userIndex] = currentUser;
-                saveData();
+                await saveUserToFirestore(currentUser);
+                await deleteFriendRequestFromFirestore(fromEmail, currentUser.email);
+                const requestIndex = friendRequests.findIndex(r => r.from === fromEmail && r.to === currentUser.email);
+                if (requestIndex !== -1) friendRequests.splice(requestIndex, 1);
                 loadFriends();
                 showNotification('Friend request accepted!', 'success');
             }
         }
         
-        function rejectFriendRequest(fromEmail) {
+        async function rejectFriendRequest(fromEmail) {
             if (!currentUser) return;
             const index = friendRequests.findIndex(r => r.from === fromEmail && r.to === currentUser.email);
             if (index !== -1) {
                 friendRequests.splice(index, 1);
-                saveData();
+                await deleteFriendRequestFromFirestore(fromEmail, currentUser.email);
                 loadFriends();
                 showNotification('Friend request rejected', 'info');
             }
         }
         
-        function createGroup() {
+        async function createGroup() {
             if (!currentUser) return;
             const groupName = prompt('Enter group name:');
             if (!groupName) return;
             const description = prompt('Enter group description (optional):');
             const newGroup = { id: Date.now(), name: groupName, description: description || '', owner: currentUser.email, members: [currentUser.email], createdAt: new Date().toISOString() };
             groups.push(newGroup);
+            await saveGroupToFirestore(newGroup);
             if (!currentUser.groups) currentUser.groups = [];
             currentUser.groups.push(newGroup.id);
-            const userIndex = users.findIndex(u => u.email === currentUser.email);
-            users[userIndex] = currentUser;
-            saveData();
+            await saveUserToFirestore(currentUser);
             loadGroups();
             showNotification('Group created!', 'success');
         }
@@ -5050,7 +5193,16 @@
         
         function openEditProfile() { document.getElementById('editName').value = currentUser.name; document.getElementById('editBio').value = currentUser.bio || ''; document.getElementById('editProfileModal').classList.add('active'); }
         function closeEditProfile() { document.getElementById('editProfileModal').classList.remove('active'); }
-        function saveProfile() { currentUser.name = document.getElementById('editName').value; currentUser.bio = document.getElementById('editBio').value; const idx = users.findIndex(u => u.email === currentUser.email); users[idx] = currentUser; saveData(); closeEditProfile(); showProfile(); showNotification('Profile saved!', 'success'); }
+        async function saveProfile() { 
+            currentUser.name = document.getElementById('editName').value; 
+            currentUser.bio = document.getElementById('editBio').value; 
+            await saveUserToFirestore(currentUser);
+            const idx = users.findIndex(u => u.email === currentUser.email);
+            if (idx !== -1) users[idx] = currentUser;
+            closeEditProfile(); 
+            showProfile(); 
+            showNotification('Profile saved!', 'success'); 
+        }
         
         function showPaymentPage(plan, price) { 
             const planDetails = document.getElementById('planDetails');
@@ -5073,24 +5225,20 @@
         
         function selectPaymentMethod(method) { selectedPaymentMethod = method; document.getElementById('methodCard').classList.toggle('active', method === 'card'); document.getElementById('methodBank').classList.toggle('active', method === 'bank'); document.getElementById('cardPaymentForm').style.display = method === 'card' ? 'block' : 'none'; document.getElementById('bankPaymentForm').style.display = method === 'bank' ? 'block' : 'none'; }
         
-        function processPayment() {
+        async function processPayment() {
             showNotification('Processing payment...', 'info');
-            setTimeout(() => {
+            setTimeout(async () => {
                 if (selectedPlan && selectedPlan.name === 'professional') {
                     currentUser.subscription = 'professional';
                     currentUser.subscriptionExpiry = new Date(Date.now() + 30*24*60*60*1000).toISOString();
-                    const userIndex = users.findIndex(u => u.email === currentUser.email);
-                    users[userIndex] = currentUser;
-                    saveData();
+                    await saveUserToFirestore(currentUser);
                     showNotification('Payment successful! You now have Professional access!', 'success');
                     hidePaymentPage();
                     if (currentUser.type === 'student') { loadSchedules(); }
                 } else if (selectedPlan && selectedPlan.name === 'regular') {
                     currentUser.subscription = 'regular';
                     currentUser.subscriptionExpiry = new Date(Date.now() + 30*24*60*60*1000).toISOString();
-                    const userIndex = users.findIndex(u => u.email === currentUser.email);
-                    users[userIndex] = currentUser;
-                    saveData();
+                    await saveUserToFirestore(currentUser);
                     showNotification('Payment successful! Thank you for subscribing!', 'success');
                     hidePaymentPage();
                 } else {
@@ -5115,10 +5263,10 @@
         function sendVerificationCode() { showNotification('Verification code sent!', 'info'); }
         function verifyCode() { showNotification('Code verified!', 'success'); }
         function resetPassword() { showNotification('Password reset!', 'success'); }
-        function confirmDeleteAccount() { 
+        async function confirmDeleteAccount() { 
             const index = users.findIndex(u => u.email === currentUser.email);
             if (index !== -1) users.splice(index, 1);
-            saveData();
+            await db.collection('users').doc(currentUser.email).delete();
             handleLogout();
             closeDeleteAccountModal();
             showNotification('Account deleted', 'info');
@@ -5139,18 +5287,21 @@
             document.body.appendChild(overlay);
         }
         
-        function grantSubscriptionFromOP() {
+        async function grantSubscriptionFromOP() {
             if (!currentUser || (!currentUser.isOP && currentUser.email !== 'admin@studx.com' && currentUser.password !== ADMIN_LOGIN_CODE)) { showNotification('Access denied.', 'error'); return; }
             const email = document.getElementById('opStudentEmail').value;
             const days = parseInt(document.getElementById('opSubscriptionDays').value);
             if (!email) { showNotification('Please enter student email!', 'error'); return; }
-            const targetUser = users.find(u => u.email === email);
+            let targetUser = users.find(u => u.email === email);
+            if (!targetUser) targetUser = await loadUserFromFirestore(email);
             if (!targetUser) { showNotification('User not found!', 'error'); return; }
             if (targetUser.type !== 'student') { showNotification('Can only grant subscription to students!', 'error'); return; }
             const expiryDate = new Date(); expiryDate.setDate(expiryDate.getDate() + days);
             targetUser.subscription = 'professional';
             targetUser.subscriptionExpiry = expiryDate.toISOString();
-            saveData();
+            await saveUserToFirestore(targetUser);
+            const userIndex = users.findIndex(u => u.email === email);
+            if (userIndex !== -1) users[userIndex] = targetUser;
             showNotification(`✅ Subscription granted to ${targetUser.name} for ${days} days!`, 'success');
             document.querySelector('.op-panel-modal')?.remove();
         }
@@ -5248,10 +5399,10 @@
         
         // ========== FIREBASE GOOGLE SIGN-IN ==========
         window.startGoogleSignIn = function() {
-            auth.signInWithPopup(provider).then((result) => {
+            auth.signInWithPopup(provider).then(async (result) => {
                 const googleEmail = result.user.email;
                 const googleName = result.user.displayName;
-                let existingUser = users.find(u => u.email === googleEmail);
+                let existingUser = await loadUserFromFirestore(googleEmail);
                 if (existingUser) {
                     currentUser = existingUser;
                     localStorage.setItem('currentUserEmail', existingUser.email);
@@ -5299,7 +5450,7 @@
             });
         };
         
-        window.confirmRoleSelection = function() {
+        window.confirmRoleSelection = async function() {
             const name = document.getElementById('roleName').value.trim();
             const grade = document.getElementById('roleGrade').value;
             const role = selectedRole;
@@ -5319,8 +5470,8 @@
                 subscription: role === 'teacher' ? 'professional' : 'free', friends: [], groups: [], gradeLastChanged: new Date().toISOString(), schedules: [], isOP: false
             };
             if (role === 'teacher') { newUser.exercises = []; newUser.summaries = []; newUser.privateRooms = []; newUser.canCreatePremiumRooms = true; }
+            await saveUserToFirestore(newUser);
             users.push(newUser);
-            saveData();
             currentUser = newUser;
             localStorage.setItem('currentUserEmail', newUser.email);
             localStorage.setItem('currentUserPassword', newUser.password);
@@ -5363,12 +5514,19 @@
             document.getElementById('roleErrorMessage').classList.remove('show');
         };
         
-        document.addEventListener('DOMContentLoaded', () => {
+        // ========== INITIALIZE APPLICATION ==========
+        document.addEventListener('DOMContentLoaded', async () => {
             setTimeout(() => { const anim = document.getElementById('animationContainer'); if (anim) anim.style.display = 'none'; }, 2000);
             window.addEventListener('hashchange', handleHashChange);
+            
+            // Load all data from Firestore
+            await loadAllDataFromFirestore();
+            await initializeDefaultData();
+            
             const savedEmail = localStorage.getItem('currentUserEmail');
             if (savedEmail) {
-                const savedUser = users.find(u => u.email === savedEmail);
+                let savedUser = await loadUserFromFirestore(savedEmail);
+                if (!savedUser) savedUser = users.find(u => u.email === savedEmail);
                 if (savedUser) {
                     if (savedUser.email === 'admin@studx.com' && savedUser.password === ADMIN_LOGIN_CODE) savedUser.isOP = true;
                     if (savedUser.email === 'studxacademic@gmail.com') savedUser.isOP = true;
