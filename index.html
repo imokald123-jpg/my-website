@@ -4207,14 +4207,12 @@
                 <div class="grade-badge" id="teacherGradeBadge">Grade 10</div>
                 <button class="mobile-menu-btn" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
                 <ul class="nav-menu" id="teacherNavMenu">
-                    <li><a href="#" data-page="dashboard" class="nav-link active" data-en="Dashboard" data-ar="لوحة التحكم">Dashboard</a></li>
-                    <li><a href="#" data-page="my-exercises" class="nav-link" data-en="My Exercises" data-ar="تماريني">My Exercises</a></li>
-                    <li><a href="#" data-page="add-exercise" class="nav-link" data-en="Add Exercise" data-ar="إضافة تمرين">Add Exercise</a></li>
-                    <li><a href="#" data-page="my-summaries" class="nav-link" data-en="My Summaries" data-ar="ملخصاتي">My Summaries</a></li>
-                    <li><a href="#" data-page="add-summary" class="nav-link" data-en="Add Summary" data-ar="إضافة ملخص">Add Summary</a></li>
-                    <li><a href="#" data-page="teacher-rooms" class="nav-link" data-en="Private Rooms" data-ar="غرف خاصة">Private Rooms</a></li>
-                    <li><a href="#" data-page="teacher-pricing" class="nav-link" data-en="Pricing" data-ar="الباقات">Pricing</a></li>
-                    <li><a href="#" data-page="my-students" class="nav-link" data-en="My Students" data-ar="طلابي">My Students</a></li>
+                    <li><a href="#" onclick="navigateToTeacherPage('dashboard')" data-page="dashboard" class="nav-link active" data-en="Dashboard" data-ar="لوحة التحكم">Dashboard</a></li>
+                    <li><a href="#" onclick="navigateToTeacherPage('my-exercises')" data-page="my-exercises" class="nav-link" data-en="My Exercises" data-ar="تماريني">My Exercises</a></li>
+                    <li><a href="#" onclick="navigateToTeacherPage('add-exercise')" data-page="add-exercise" class="nav-link" data-en="Add Exercise" data-ar="إضافة تمرين">Add Exercise</a></li>
+                    <li><a href="#" onclick="navigateToTeacherPage('my-summaries')" data-page="my-summaries" class="nav-link" data-en="My Summaries" data-ar="ملخصاتي">My Summaries</a></li>
+                    <li><a href="#" onclick="navigateToTeacherPage('add-summary')" data-page="add-summary" class="nav-link" data-en="Add Summary" data-ar="إضافة ملخص">Add Summary</a></li>
+                    <li><a href="#" onclick="navigateToTeacherPage('my-students')" data-page="my-students" class="nav-link" data-en="My Students" data-ar="طلابي">My Students</a></li>
                 </ul>
                 <div class="nav-right">
                     <div class="profile-trigger" onclick="showProfile()"><div class="avatar" id="navTeacherAvatar"><i class="fas fa-user"></i><img id="navTeacherAvatarImg" style="display: none;"></div><span class="name" id="navTeacherName">Teacher</span><span class="badge" data-en="Teacher" data-ar="مدرس">Teacher</span></div>
@@ -4373,7 +4371,7 @@
             <div class="footer-section">
                 <h4>Contact</h4>
                 <ul>
-                    <li><i class="fas fa-envelope"></i> studxacademi@gmail.com</li>
+                    <li><i class="fas fa-envelope"></i> studxacademi.com</li>
                 </ul>
             </div>
         </div>
@@ -4609,7 +4607,7 @@
                     document.getElementById('currentTeacherGrade').textContent = user.grade === '0' ? 'Admin' : user.grade;
                     loadTeacherData();
                     window.location.hash = 'dashboard';
-                    loadPageFromHash('dashboard');
+                    navigateToTeacherPage('dashboard');
                 }
                 if (user.isOP) { document.getElementById('opPanel').style.display = 'block'; showNotification(`Welcome Admin!`, 'success'); }
                 else { showNotification(`Welcome back, ${user.name}!`, 'success'); }
@@ -4651,69 +4649,119 @@
             loadFriends();
         }
         
+        // ========== FIXED TEACHER FUNCTIONS ==========
+        function navigateToTeacherPage(pageName) {
+            // Hide all teacher pages
+            document.getElementById('teacher-dashboard-page').style.display = 'none';
+            document.getElementById('teacher-my-exercises-page').style.display = 'none';
+            document.getElementById('teacher-add-exercise-page').style.display = 'none';
+            document.getElementById('teacher-my-summaries-page').style.display = 'none';
+            document.getElementById('teacher-add-summary-page').style.display = 'none';
+            document.getElementById('teacher-my-students-page').style.display = 'none';
+            
+            // Show selected page
+            if (pageName === 'dashboard') {
+                document.getElementById('teacher-dashboard-page').style.display = 'block';
+            } else if (pageName === 'my-exercises') {
+                document.getElementById('teacher-my-exercises-page').style.display = 'block';
+                loadTeacherExercises();
+            } else if (pageName === 'add-exercise') {
+                document.getElementById('teacher-add-exercise-page').style.display = 'block';
+            } else if (pageName === 'my-summaries') {
+                document.getElementById('teacher-my-summaries-page').style.display = 'block';
+                loadTeacherSummaries();
+            } else if (pageName === 'add-summary') {
+                document.getElementById('teacher-add-summary-page').style.display = 'block';
+            } else if (pageName === 'my-students') {
+                document.getElementById('teacher-my-students-page').style.display = 'block';
+                loadTeacherStudents();
+            }
+            
+            // Update active class on nav links
+            document.querySelectorAll('#teacherNavMenu .nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-page') === pageName) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        
         function loadTeacherData() {
-            // FIXED: Filter exercises by teacher email
+            loadTeacherExercises();
+            loadTeacherSummaries();
+            loadTeacherStudents();
+            
             const teacherExercises = exercises.filter(ex => ex.teacher === currentUser.email);
-            const teacherExercisesGrid = document.getElementById('teacherExercisesGrid');
-            if(teacherExercisesGrid) {
-                if (teacherExercises.length === 0) {
-                    teacherExercisesGrid.innerHTML = '<div class="no-data">No exercises created yet. Click "Add Exercise" to create one.</div>';
-                } else {
-                    teacherExercisesGrid.innerHTML = teacherExercises.map(ex => `
-                        <div class="exercise-card">
-                            <h3>${ex.title}</h3>
-                            <p>${ex.question ? ex.question.substring(0,80) : 'No question'}...</p>
-                            <div class="exercise-meta">
-                                <span><i class="fas fa-signal"></i> ${ex.difficulty}</span>
-                                <span><i class="fas fa-chart-line"></i> Completions: ${ex.completions || 0}</span>
-                            </div>
-                            <button class="delete-btn" onclick="deleteExercise(${ex.id})">Delete</button>
-                        </div>
-                    `).join('');
-                }
-            }
-            
-            // FIXED: Filter summaries by teacher email
             const teacherSummaries = summaries.filter(s => s.teacher === currentUser.email);
-            const teacherSummariesGrid = document.getElementById('teacherSummariesGrid');
-            if(teacherSummariesGrid) {
-                if (teacherSummaries.length === 0) {
-                    teacherSummariesGrid.innerHTML = '<div class="no-data">No summaries created yet. Click "Add Summary" to create one.</div>';
-                } else {
-                    teacherSummariesGrid.innerHTML = teacherSummaries.map(sum => `
-                        <div class="summary-card">
-                            <h3>${sum.title}</h3>
-                            <p>${sum.content ? sum.content.substring(0,100) : 'No content'}...</p>
-                            <div class="summary-meta">
-                                <span><i class="fas fa-book"></i> ${sum.subject}</span>
-                                <span><i class="fas fa-download"></i> ${sum.pdfName ? 'Has PDF' : 'No PDF'}</span>
-                            </div>
-                            <button class="delete-summary-btn" onclick="deleteSummary(${sum.id})">Delete</button>
-                        </div>
-                    `).join('');
-                }
-            }
-            
-            // Load students in the same grade
             const students = users.filter(u => u.type === 'student' && u.grade === currentUser.grade);
-            const studentsGrid = document.getElementById('teacherStudentsGrid');
-            if(studentsGrid) {
-                if (students.length === 0) {
-                    studentsGrid.innerHTML = '<div class="no-data">No students in your grade yet.</div>';
-                } else {
-                    studentsGrid.innerHTML = students.map(s => `<div class="student-card"><h3>${s.name}</h3><p>${s.email}</p><div class="student-bio">${s.bio ? s.bio.substring(0,50) : ''}</div><div class="student-stats">Completed: ${s.completedExercises?.length || 0} exercises</div></div>`).join('');
-                }
-            }
+            const totalCompletions = teacherExercises.reduce((sum, ex) => sum + (ex.completions || 0), 0);
             
-            // Update dashboard stats
-            document.getElementById('teacherGradeStudentCount').textContent = students.length;
             document.getElementById('teacherExercisesCount').textContent = teacherExercises.length;
             document.getElementById('teacherSummariesCount').textContent = teacherSummaries.length;
             document.getElementById('teacherStudentsCount').textContent = students.length;
-            
-            const totalCompletions = teacherExercises.reduce((sum, ex) => sum + (ex.completions || 0), 0);
             document.getElementById('teacherCompletions').textContent = totalCompletions;
+            document.getElementById('teacherGradeStudentCount').textContent = students.length;
             document.getElementById('teacherGradeExerciseCount').textContent = teacherExercises.length;
+        }
+        
+        function loadTeacherExercises() {
+            const teacherExercises = exercises.filter(ex => ex.teacher === currentUser.email);
+            const container = document.getElementById('teacherExercisesGrid');
+            if (!container) return;
+            if (teacherExercises.length === 0) {
+                container.innerHTML = '<div class="no-data">No exercises created yet. Click "Add Exercise" to create one.</div>';
+            } else {
+                container.innerHTML = teacherExercises.map(ex => `
+                    <div class="exercise-card">
+                        <h3>${ex.title}</h3>
+                        <p>${ex.question ? ex.question.substring(0,80) : 'No question'}...</p>
+                        <div class="exercise-meta">
+                            <span><i class="fas fa-signal"></i> ${ex.difficulty}</span>
+                            <span><i class="fas fa-chart-line"></i> Completions: ${ex.completions || 0}</span>
+                        </div>
+                        <button class="delete-btn" onclick="deleteExercise(${ex.id})">Delete</button>
+                    </div>
+                `).join('');
+            }
+        }
+        
+        function loadTeacherSummaries() {
+            const teacherSummaries = summaries.filter(s => s.teacher === currentUser.email);
+            const container = document.getElementById('teacherSummariesGrid');
+            if (!container) return;
+            if (teacherSummaries.length === 0) {
+                container.innerHTML = '<div class="no-data">No summaries created yet. Click "Add Summary" to create one.</div>';
+            } else {
+                container.innerHTML = teacherSummaries.map(sum => `
+                    <div class="summary-card">
+                        <h3>${sum.title}</h3>
+                        <p>${sum.content ? sum.content.substring(0,100) : 'No content'}...</p>
+                        <div class="summary-meta">
+                            <span><i class="fas fa-book"></i> ${sum.subject}</span>
+                            <span><i class="fas fa-download"></i> ${sum.pdfName ? 'Has PDF' : 'No PDF'}</span>
+                        </div>
+                        <button class="delete-summary-btn" onclick="deleteSummary(${sum.id})">Delete</button>
+                    </div>
+                `).join('');
+            }
+        }
+        
+        function loadTeacherStudents() {
+            const students = users.filter(u => u.type === 'student' && u.grade === currentUser.grade);
+            const container = document.getElementById('teacherStudentsGrid');
+            if (!container) return;
+            if (students.length === 0) {
+                container.innerHTML = '<div class="no-data">No students in your grade yet.</div>';
+            } else {
+                container.innerHTML = students.map(s => `
+                    <div class="student-card">
+                        <h3>${s.name}</h3>
+                        <p>${s.email}</p>
+                        <div class="student-bio">${s.bio ? s.bio.substring(0,50) : ''}</div>
+                        <div class="student-stats">Completed: ${s.completedExercises?.length || 0} exercises</div>
+                    </div>
+                `).join('');
+            }
         }
         
         function deleteExercise(exerciseId) {
@@ -4721,7 +4769,7 @@
             if (index !== -1 && exercises[index].teacher === currentUser.email) {
                 exercises.splice(index, 1);
                 saveData();
-                loadTeacherData();
+                loadTeacherExercises();
                 showNotification('Exercise deleted!', 'success');
             } else {
                 showNotification('You can only delete your own exercises!', 'error');
@@ -4733,7 +4781,7 @@
             if (index !== -1 && summaries[index].teacher === currentUser.email) {
                 summaries.splice(index, 1);
                 saveData();
-                loadTeacherData();
+                loadTeacherSummaries();
                 showNotification('Summary deleted!', 'success');
             } else {
                 showNotification('You can only delete your own summaries!', 'error');
@@ -4762,12 +4810,7 @@
             saveData();
             showNotification('Exercise published successfully!', 'success');
             document.getElementById('addExerciseForm').reset();
-            loadTeacherData();
-            // Switch to My Exercises page
-            document.querySelectorAll('#teacherNavMenu .nav-link').forEach(link => link.classList.remove('active'));
-            document.querySelector('#teacherNavMenu .nav-link[data-page="my-exercises"]').classList.add('active');
-            document.getElementById('teacher-add-exercise-page').style.display = 'none';
-            document.getElementById('teacher-my-exercises-page').style.display = 'block';
+            navigateToTeacherPage('my-exercises');
         }
         
         function handleAddSummary(event) {
@@ -4792,12 +4835,7 @@
             currentSummaryPdfName = null;
             document.getElementById('summaryPdfName').style.display = 'none';
             document.getElementById('removeSummaryPdfBtn').style.display = 'none';
-            loadTeacherData();
-            // Switch to My Summaries page
-            document.querySelectorAll('#teacherNavMenu .nav-link').forEach(link => link.classList.remove('active'));
-            document.querySelector('#teacherNavMenu .nav-link[data-page="my-summaries"]').classList.add('active');
-            document.getElementById('teacher-add-summary-page').style.display = 'none';
-            document.getElementById('teacher-my-summaries-page').style.display = 'block';
+            navigateToTeacherPage('my-summaries');
         }
         
         function previewSummaryPdf(input) {
@@ -4828,35 +4866,25 @@
             document.getElementById('summaryPdf').value = '';
         }
         
+        // Keep existing functions for other features
         function loadSchedules() { 
             const container = document.getElementById('schedulesListContainer'); 
             if(!container) return;
-            if (currentUser.subscription !== 'professional' && currentUser.grade !== '0') {
-                container.innerHTML = `<div class="premium-locked">
-                    <i class="fas fa-crown"></i>
-                    <h3>Premium Feature</h3>
-                    <p>Study Schedule is only available for Professional plan subscribers.</p>
-                    <button onclick="navigateToPage('pricing')">Upgrade Now →</button>
-                </div>`;
+            if (currentUser && currentUser.subscription !== 'professional' && currentUser.grade !== '0') {
+                container.innerHTML = `<div class="premium-locked"><i class="fas fa-crown"></i><h3>Premium Feature</h3><p>Study Schedule is only available for Professional plan subscribers.</p><button onclick="navigateToPage('pricing')">Upgrade Now →</button></div>`;
                 return;
             }
+            if (!currentUser) return;
             const schedules = currentUser.schedules || [];
             if (schedules.length === 0) {
                 container.innerHTML = '<div class="no-schedules"><i class="fas fa-calendar-day"></i> No study schedules yet. Add your first schedule!</div>';
                 return;
             }
-            container.innerHTML = schedules.map((s, index) => `
-                <div class="schedule-item">
-                    <div class="schedule-info">
-                        <span class="schedule-time"><i class="fas fa-clock"></i> ${s.time}</span>
-                        <span class="schedule-subject"><i class="fas fa-book-open"></i> ${s.subject}</span>
-                    </div>
-                    <button class="delete-schedule-btn" onclick="deleteSchedule(${index})"><i class="fas fa-trash-alt"></i> Delete</button>
-                </div>
-            `).join('');
+            container.innerHTML = schedules.map((s, index) => `<div class="schedule-item"><div class="schedule-info"><span class="schedule-time"><i class="fas fa-clock"></i> ${s.time}</span><span class="schedule-subject"><i class="fas fa-book-open"></i> ${s.subject}</span></div><button class="delete-schedule-btn" onclick="deleteSchedule(${index})"><i class="fas fa-trash-alt"></i> Delete</button></div>`).join('');
         }
         
         function addSchedule() { 
+            if (!currentUser) return;
             if (currentUser.subscription !== 'professional' && currentUser.grade !== '0') {
                 showNotification('This is a premium feature. Please upgrade to Professional plan.', 'error');
                 navigateToPage('pricing');
@@ -4864,10 +4892,7 @@
             }
             const time = document.getElementById('scheduleTime').value;
             const subject = document.getElementById('scheduleSubject').value;
-            if (!time) {
-                showNotification('Please select a time', 'error');
-                return;
-            }
+            if (!time) { showNotification('Please select a time', 'error'); return; }
             if (!currentUser.schedules) currentUser.schedules = [];
             currentUser.schedules.push({ time, subject });
             const userIndex = users.findIndex(u => u.email === currentUser.email);
@@ -4879,6 +4904,7 @@
         }
         
         function deleteSchedule(index) {
+            if (!currentUser) return;
             currentUser.schedules.splice(index, 1);
             const userIndex = users.findIndex(u => u.email === currentUser.email);
             users[userIndex] = currentUser;
@@ -4887,73 +4913,31 @@
             showNotification('Schedule removed', 'info');
         }
         
-        function processPayment() {
-            showNotification('Processing payment...', 'info');
-            setTimeout(() => {
-                if (selectedPlan && selectedPlan.name === 'professional') {
-                    currentUser.subscription = 'professional';
-                    currentUser.subscriptionExpiry = new Date(Date.now() + 30*24*60*60*1000).toISOString();
-                    const userIndex = users.findIndex(u => u.email === currentUser.email);
-                    users[userIndex] = currentUser;
-                    saveData();
-                    showNotification('Payment successful! You now have Professional access!', 'success');
-                    hidePaymentPage();
-                    if (currentUser.type === 'student') {
-                        loadSchedules();
-                    }
-                } else if (selectedPlan && selectedPlan.name === 'regular') {
-                    currentUser.subscription = 'regular';
-                    currentUser.subscriptionExpiry = new Date(Date.now() + 30*24*60*60*1000).toISOString();
-                    const userIndex = users.findIndex(u => u.email === currentUser.email);
-                    users[userIndex] = currentUser;
-                    saveData();
-                    showNotification('Payment successful! Thank you for subscribing!', 'success');
-                    hidePaymentPage();
-                } else {
-                    showNotification('Payment failed. Please try again.', 'error');
-                }
-            }, 1500);
-        }
-        
         function loadGroups() { 
             const groupsDiv = document.getElementById('groupsList'); 
-            if(!groupsDiv) return;
+            if(!groupsDiv || !currentUser) return;
             const userGroups = groups.filter(g => g.members.includes(currentUser.email));
             if (userGroups.length === 0) {
                 groupsDiv.innerHTML = '<div class="no-data"><i class="fas fa-users"></i> No groups yet. Create your first group!</div>';
                 return;
             }
-            groupsDiv.innerHTML = userGroups.map(g => `
-                <div class="group-item">
-                    <div class="group-name">
-                        <i class="fas fa-layer-group"></i>
-                        <div>
-                            <strong>${g.name}</strong><br>
-                            <small>${g.description || 'No description'}</small>
-                        </div>
-                    </div>
-                    <button class="accept-btn" onclick="viewGroup(${g.id})">View</button>
-                </div>
-            `).join('');
+            groupsDiv.innerHTML = userGroups.map(g => `<div class="group-item"><div class="group-name"><i class="fas fa-layer-group"></i><div><strong>${g.name}</strong><br><small>${g.description || 'No description'}</small></div></div><button class="accept-btn" onclick="viewGroup(${g.id})">View</button></div>`).join('');
         }
         
         function viewGroup(groupId) {
             const group = groups.find(g => g.id === groupId);
-            if (group) {
-                alert(`Group: ${group.name}\nDescription: ${group.description || 'No description'}\nMembers: ${group.members.length}\nOwner: ${group.owner === currentUser.email ? 'You' : group.owner}`);
-            }
+            if (group) { alert(`Group: ${group.name}\nDescription: ${group.description || 'No description'}\nMembers: ${group.members.length}\nOwner: ${group.owner === currentUser.email ? 'You' : group.owner}`); }
         }
         
         function loadFriends() { 
             const friendsDiv = document.getElementById('friendsList'); 
-            if(!friendsDiv) return;
+            if(!friendsDiv || !currentUser) return;
             const friends = currentUser.friends || [];
             if (friends.length === 0) {
                 friendsDiv.innerHTML = '<div class="no-data"><i class="fas fa-user-friends"></i> No friends yet. Search and add friends above!</div>';
                 return;
             }
             friendsDiv.innerHTML = friends.map(f => `<div class="friend-item"><div class="friend-name"><i class="fas fa-user-circle"></i> ${f.name || f.email}</div></div>`).join('');
-            
             const requests = friendRequests.filter(r => r.to === currentUser.email && r.status === 'pending');
             const requestsDiv = document.getElementById('friendRequests');
             if (!requestsDiv) return;
@@ -4962,48 +4946,29 @@
             } else {
                 requestsDiv.innerHTML = requests.map(r => {
                     const fromUser = users.find(u => u.email === r.from);
-                    return `<div class="friend-request-item">
-                        <div class="friend-name"><i class="fas fa-user-plus"></i> ${fromUser ? fromUser.name : r.from}</div>
-                        <div>
-                            <button class="accept-btn" onclick="acceptFriendRequest('${r.from}')"><i class="fas fa-check"></i> Accept</button>
-                            <button class="reject-btn" onclick="rejectFriendRequest('${r.from}')"><i class="fas fa-times"></i> Reject</button>
-                        </div>
-                    </div>`;
+                    return `<div class="friend-request-item"><div class="friend-name"><i class="fas fa-user-plus"></i> ${fromUser ? fromUser.name : r.from}</div><div><button class="accept-btn" onclick="acceptFriendRequest('${r.from}')"><i class="fas fa-check"></i> Accept</button><button class="reject-btn" onclick="rejectFriendRequest('${r.from}')"><i class="fas fa-times"></i> Reject</button></div></div>`;
                 }).join('');
             }
         }
         
         function searchFriends() {
+            if (!currentUser) return;
             const searchTerm = document.getElementById('friendSearchInput').value.toLowerCase();
-            if (!searchTerm) {
-                showNotification('Please enter a name to search', 'warning');
-                return;
-            }
+            if (!searchTerm) { showNotification('Please enter a name to search', 'warning'); return; }
             const results = users.filter(u => u.type === 'student' && u.email !== currentUser.email && (u.name.toLowerCase().includes(searchTerm) || u.accountName.toLowerCase().includes(searchTerm)));
             const resultsDiv = document.getElementById('friendSearchResults');
-            if (results.length === 0) {
-                resultsDiv.innerHTML = '<div class="no-data"><i class="fas fa-search"></i> No users found</div>';
-            } else {
-                resultsDiv.innerHTML = results.map(u => `
-                    <div class="search-result-item">
-                        <span><i class="fas fa-user-circle"></i> ${u.name} (@${u.accountName})</span>
-                        <button class="add-friend-btn" onclick="sendFriendRequest('${u.email}')"><i class="fas fa-user-plus"></i> Add Friend</button>
-                    </div>
-                `).join('');
+            if (results.length === 0) { resultsDiv.innerHTML = '<div class="no-data"><i class="fas fa-search"></i> No users found</div>'; }
+            else {
+                resultsDiv.innerHTML = results.map(u => `<div class="search-result-item"><span><i class="fas fa-user-circle"></i> ${u.name} (@${u.accountName})</span><button class="add-friend-btn" onclick="sendFriendRequest('${u.email}')"><i class="fas fa-user-plus"></i> Add Friend</button></div>`).join('');
             }
         }
         
         function sendFriendRequest(toEmail) {
+            if (!currentUser) return;
             const existing = friendRequests.find(r => r.from === currentUser.email && r.to === toEmail);
-            if (existing) {
-                showNotification('Friend request already sent!', 'warning');
-                return;
-            }
+            if (existing) { showNotification('Friend request already sent!', 'warning'); return; }
             const alreadyFriend = currentUser.friends?.some(f => f.email === toEmail);
-            if (alreadyFriend) {
-                showNotification('Already friends with this user!', 'warning');
-                return;
-            }
+            if (alreadyFriend) { showNotification('Already friends with this user!', 'warning'); return; }
             friendRequests.push({ from: currentUser.email, to: toEmail, status: 'pending' });
             saveData();
             showNotification('Friend request sent!', 'success');
@@ -5012,6 +4977,7 @@
         }
         
         function acceptFriendRequest(fromEmail) {
+            if (!currentUser) return;
             const request = friendRequests.find(r => r.from === fromEmail && r.to === currentUser.email);
             if (request) {
                 request.status = 'accepted';
@@ -5033,6 +4999,7 @@
         }
         
         function rejectFriendRequest(fromEmail) {
+            if (!currentUser) return;
             const index = friendRequests.findIndex(r => r.from === fromEmail && r.to === currentUser.email);
             if (index !== -1) {
                 friendRequests.splice(index, 1);
@@ -5043,17 +5010,11 @@
         }
         
         function createGroup() {
+            if (!currentUser) return;
             const groupName = prompt('Enter group name:');
             if (!groupName) return;
             const description = prompt('Enter group description (optional):');
-            const newGroup = {
-                id: Date.now(),
-                name: groupName,
-                description: description || '',
-                owner: currentUser.email,
-                members: [currentUser.email],
-                createdAt: new Date().toISOString()
-            };
+            const newGroup = { id: Date.now(), name: groupName, description: description || '', owner: currentUser.email, members: [currentUser.email], createdAt: new Date().toISOString() };
             groups.push(newGroup);
             if (!currentUser.groups) currentUser.groups = [];
             currentUser.groups.push(newGroup.id);
@@ -5074,6 +5035,7 @@
             document.getElementById('profileEmail').textContent = currentUser.email; 
             document.getElementById('profileBio').textContent = currentUser.bio || 'No bio yet.'; 
         }
+        
         function goBackFromProfile() { 
             document.getElementById('profilePage').style.display = 'none'; 
             document.getElementById('footer').style.display = 'block'; 
@@ -5082,11 +5044,14 @@
                 loadPageFromHash(window.location.hash.substring(1) || 'home'); 
             } else { 
                 document.getElementById('teacherWebsite').style.display = 'block'; 
+                navigateToTeacherPage('dashboard');
             } 
         }
+        
         function openEditProfile() { document.getElementById('editName').value = currentUser.name; document.getElementById('editBio').value = currentUser.bio || ''; document.getElementById('editProfileModal').classList.add('active'); }
         function closeEditProfile() { document.getElementById('editProfileModal').classList.remove('active'); }
         function saveProfile() { currentUser.name = document.getElementById('editName').value; currentUser.bio = document.getElementById('editBio').value; const idx = users.findIndex(u => u.email === currentUser.email); users[idx] = currentUser; saveData(); closeEditProfile(); showProfile(); showNotification('Profile saved!', 'success'); }
+        
         function showPaymentPage(plan, price) { 
             const planDetails = document.getElementById('planDetails');
             if (plan === 'regular') {
@@ -5103,8 +5068,37 @@
             document.getElementById('footer').style.display = 'none'; 
             document.getElementById('paymentPage').style.display = 'flex'; 
         }
-        function hidePaymentPage() { document.getElementById('paymentPage').style.display = 'none'; document.getElementById('footer').style.display = 'block'; if(currentUser.type === 'student') { document.getElementById('studentWebsite').style.display = 'block'; loadPageFromHash(window.location.hash.substring(1) || 'home'); } else { document.getElementById('teacherWebsite').style.display = 'block'; } }
+        
+        function hidePaymentPage() { document.getElementById('paymentPage').style.display = 'none'; document.getElementById('footer').style.display = 'block'; if(currentUser.type === 'student') { document.getElementById('studentWebsite').style.display = 'block'; loadPageFromHash(window.location.hash.substring(1) || 'home'); } else { document.getElementById('teacherWebsite').style.display = 'block'; navigateToTeacherPage('dashboard'); } }
+        
         function selectPaymentMethod(method) { selectedPaymentMethod = method; document.getElementById('methodCard').classList.toggle('active', method === 'card'); document.getElementById('methodBank').classList.toggle('active', method === 'bank'); document.getElementById('cardPaymentForm').style.display = method === 'card' ? 'block' : 'none'; document.getElementById('bankPaymentForm').style.display = method === 'bank' ? 'block' : 'none'; }
+        
+        function processPayment() {
+            showNotification('Processing payment...', 'info');
+            setTimeout(() => {
+                if (selectedPlan && selectedPlan.name === 'professional') {
+                    currentUser.subscription = 'professional';
+                    currentUser.subscriptionExpiry = new Date(Date.now() + 30*24*60*60*1000).toISOString();
+                    const userIndex = users.findIndex(u => u.email === currentUser.email);
+                    users[userIndex] = currentUser;
+                    saveData();
+                    showNotification('Payment successful! You now have Professional access!', 'success');
+                    hidePaymentPage();
+                    if (currentUser.type === 'student') { loadSchedules(); }
+                } else if (selectedPlan && selectedPlan.name === 'regular') {
+                    currentUser.subscription = 'regular';
+                    currentUser.subscriptionExpiry = new Date(Date.now() + 30*24*60*60*1000).toISOString();
+                    const userIndex = users.findIndex(u => u.email === currentUser.email);
+                    users[userIndex] = currentUser;
+                    saveData();
+                    showNotification('Payment successful! Thank you for subscribing!', 'success');
+                    hidePaymentPage();
+                } else {
+                    showNotification('Payment failed. Please try again.', 'error');
+                }
+            }, 1500);
+        }
+        
         function showForgotPasswordModal() { document.getElementById('forgotPasswordModal').classList.add('active'); }
         function closeForgotPasswordModal() { document.getElementById('forgotPasswordModal').classList.remove('active'); }
         function closeVerificationModal() { document.getElementById('verificationModal').classList.remove('active'); }
@@ -5118,184 +5112,6 @@
         function confirmRoleSelection() { hideRoleSelectionModal(); showNotification('Profile completed!', 'success'); }
         function quitGoogleSignIn() { hideRoleSelectionModal(); tempGoogleUser = null; }
         
-        // ========== FIREBASE GOOGLE SIGN-IN WITH ACCOUNT RECOGNITION ==========
-        window.startGoogleSignIn = function() {
-            auth.signInWithPopup(provider)
-                .then((result) => {
-                    const user = result.user;
-                    const googleEmail = user.email;
-                    const googleName = user.displayName;
-                    
-                    let existingUser = users.find(u => u.email === googleEmail);
-                    if (existingUser) {
-                        currentUser = existingUser;
-                        localStorage.setItem('currentUserEmail', existingUser.email);
-                        localStorage.setItem('currentUserPassword', existingUser.password);
-                        document.getElementById('loginPage').style.display = 'none';
-                        document.getElementById('footer').style.display = 'block';
-                        if (existingUser.type === 'student') {
-                            document.getElementById('studentWebsite').style.display = 'block';
-                            document.getElementById('studentDisplayName').textContent = existingUser.name;
-                            document.getElementById('navStudentName').textContent = existingUser.name;
-                            document.getElementById('studentGradeBadge').textContent = `Grade ${existingUser.grade}`;
-                            document.getElementById('currentStudentGrade').textContent = existingUser.grade;
-                            loadStudentData();
-                            window.location.hash = 'home';
-                            loadPageFromHash('home');
-                        } else {
-                            document.getElementById('teacherWebsite').style.display = 'block';
-                            document.getElementById('navTeacherName').textContent = existingUser.name;
-                            document.getElementById('teacherGradeBadge').textContent = `Grade ${existingUser.grade}`;
-                            document.getElementById('currentTeacherGrade').textContent = existingUser.grade;
-                            loadTeacherData();
-                            window.location.hash = 'dashboard';
-                            loadPageFromHash('dashboard');
-                        }
-                        if (existingUser.isOP) document.getElementById('opPanel').style.display = 'block';
-                        showNotification(`Welcome back, ${existingUser.name}!`, 'success');
-                        return;
-                    }
-                    
-                    tempGoogleUser = { email: googleEmail, name: googleName, fromGoogle: true };
-                    selectedRole = null;
-                    document.getElementById('roleName').value = googleName || '';
-                    document.getElementById('roleGrade').value = '';
-                    document.getElementById('roleTeacherCode').value = '';
-                    document.getElementById('roleTeacherCode').classList.remove('active');
-                    document.getElementById('roleErrorMessage').classList.remove('show');
-                    document.getElementById('roleErrorMessage').innerHTML = '';
-                    document.getElementById('roleStudentBtn').classList.remove('selected');
-                    document.getElementById('roleTeacherBtn').classList.remove('selected');
-                    document.getElementById('roleSelectionModal').classList.add('active');
-                })
-                .catch((error) => {
-                    console.error(error);
-                    if (error.code === 'auth/popup-blocked') {
-                        showNotification('Popup was blocked. Please allow popups for this site.', 'error');
-                    } else if (error.code === 'auth/unauthorized-domain') {
-                        showNotification('Please add this domain to Firebase authorized domains in Firebase Console.', 'error');
-                    } else {
-                        showNotification('Google Sign-In failed: ' + error.message, 'error');
-                    }
-                });
-        };
-
-        window.confirmRoleSelection = function() {
-            const name = document.getElementById('roleName').value.trim();
-            const grade = document.getElementById('roleGrade').value;
-            const role = selectedRole;
-            const teacherCode = document.getElementById('roleTeacherCode').value.trim();
-            const errorDiv = document.getElementById('roleErrorMessage');
-            
-            if (!name) {
-                errorDiv.innerHTML = "Please enter your name.";
-                errorDiv.classList.add('show');
-                return;
-            }
-            if (!role) {
-                errorDiv.innerHTML = "Please select Student or Teacher.";
-                errorDiv.classList.add('show');
-                return;
-            }
-            if (!grade) {
-                errorDiv.innerHTML = "Please select your grade.";
-                errorDiv.classList.add('show');
-                return;
-            }
-            
-            if (role === 'teacher') {
-                if (!teacherCode) {
-                    errorDiv.innerHTML = "Please enter the teacher PIN code.";
-                    errorDiv.classList.add('show');
-                    return;
-                }
-                if (teacherCode !== TEACHER_VERIFICATION_CODE) {
-                    errorDiv.innerHTML = "Invalid teacher PIN code. Access denied.";
-                    errorDiv.classList.add('show');
-                    return;
-                }
-            }
-            
-            const newUser = {
-                name: name,
-                accountName: name.toLowerCase().replace(/\s/g, '') + Math.floor(Math.random() * 1000),
-                nickname: '',
-                email: tempGoogleUser.email,
-                password: 'google-auth-no-password',
-                type: role,
-                grade: grade,
-                bio: '',
-                profileImage: null,
-                completedExercises: [],
-                averageScore: 0,
-                studyHours: 0,
-                attempts: [],
-                joinedRooms: [],
-                subscription: role === 'teacher' ? 'professional' : 'free',
-                friends: [],
-                groups: [],
-                gradeLastChanged: new Date().toISOString(),
-                schedules: [],
-                isOP: false
-            };
-            
-            if (role === 'teacher') {
-                newUser.exercises = [];
-                newUser.summaries = [];
-                newUser.privateRooms = [];
-                newUser.canCreatePremiumRooms = true;
-            }
-            
-            users.push(newUser);
-            saveData();
-            
-            currentUser = newUser;
-            localStorage.setItem('currentUserEmail', newUser.email);
-            localStorage.setItem('currentUserPassword', newUser.password);
-            
-            hideRoleSelectionModal();
-            tempGoogleUser = null;
-            
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('footer').style.display = 'block';
-            
-            if (role === 'student') {
-                document.getElementById('studentWebsite').style.display = 'block';
-                document.getElementById('studentDisplayName').textContent = newUser.name;
-                document.getElementById('navStudentName').textContent = newUser.name;
-                document.getElementById('studentGradeBadge').textContent = `Grade ${newUser.grade}`;
-                document.getElementById('currentStudentGrade').textContent = newUser.grade;
-                loadStudentData();
-                window.location.hash = 'home';
-                loadPageFromHash('home');
-            } else {
-                document.getElementById('teacherWebsite').style.display = 'block';
-                document.getElementById('navTeacherName').textContent = newUser.name;
-                document.getElementById('teacherGradeBadge').textContent = `Grade ${newUser.grade}`;
-                document.getElementById('currentTeacherGrade').textContent = newUser.grade;
-                loadTeacherData();
-                window.location.hash = 'dashboard';
-                loadPageFromHash('dashboard');
-            }
-            
-            showNotification(`Welcome to StudX, ${newUser.name}!`, 'success');
-        };
-
-        window.selectRole = function(role) {
-            selectedRole = role;
-            document.getElementById('roleStudentBtn').classList.remove('selected');
-            document.getElementById('roleTeacherBtn').classList.remove('selected');
-            if (role === 'student') {
-                document.getElementById('roleStudentBtn').classList.add('selected');
-                document.getElementById('roleTeacherCode').classList.remove('active');
-            } else {
-                document.getElementById('roleTeacherBtn').classList.add('selected');
-                document.getElementById('roleTeacherCode').classList.add('active');
-            }
-            document.getElementById('roleErrorMessage').classList.remove('show');
-        };
-        // ========== END OF FIREBASE GOOGLE SIGN-IN ==========
-
         function sendVerificationCode() { showNotification('Verification code sent!', 'info'); }
         function verifyCode() { showNotification('Code verified!', 'success'); }
         function resetPassword() { showNotification('Password reset!', 'success'); }
@@ -5304,6 +5120,7 @@
             if (index !== -1) users.splice(index, 1);
             saveData();
             handleLogout();
+            closeDeleteAccountModal();
             showNotification('Account deleted', 'info');
         }
         
@@ -5340,7 +5157,9 @@
         
         function navigateToPage(pageName) { 
             window.location.hash = pageName; 
-            loadPageFromHash(pageName); 
+            if (currentUser && currentUser.type === 'student') {
+                loadPageFromHash(pageName);
+            }
         }
         
         function loadPageFromHash(pageName) {
@@ -5355,16 +5174,12 @@
                     link.classList.remove('active');
                     if (link.getAttribute('data-page') === pageName) link.classList.add('active');
                 });
-                if (pageName === 'exercises') loadStudentExercises();
-                else if (pageName === 'summaries') loadStudentSummaries();
-                else if (pageName === 'rooms') loadStudentTeachers();
-                else if (pageName === 'groups') { 
+                if (pageName === 'groups') { 
                     loadFriends(); 
                     loadGroups();
                     document.getElementById('friendSearchResults').innerHTML = '';
                     document.getElementById('friendSearchInput').value = '';
                 }
-                else if (pageName === 'progress') updateStudentProgress();
                 else if (pageName === 'schedule') {
                     if (currentUser.subscription !== 'professional') {
                         const scheduleContainer = document.querySelector('#student-schedule-page .schedule-container');
@@ -5373,12 +5188,7 @@
                             const listCard = scheduleContainer.querySelector('.schedules-list');
                             if (addCard) addCard.style.display = 'none';
                             if (listCard) {
-                                listCard.innerHTML = `<div class="premium-locked">
-                                    <i class="fas fa-crown"></i>
-                                    <h3>Premium Feature</h3>
-                                    <p>Study Schedule is only available for Professional plan subscribers.</p>
-                                    <button onclick="navigateToPage('pricing')">Upgrade Now →</button>
-                                </div>`;
+                                listCard.innerHTML = `<div class="premium-locked"><i class="fas fa-crown"></i><h3>Premium Feature</h3><p>Study Schedule is only available for Professional plan subscribers.</p><button onclick="navigateToPage('pricing')">Upgrade Now →</button></div>`;
                             }
                         }
                     } else {
@@ -5392,19 +5202,6 @@
                     }
                 }
                 updateGradeStats();
-            } else if (currentUser.type === 'teacher') {
-                const pages = ['dashboard', 'my-exercises', 'add-exercise', 'my-summaries', 'add-summary', 'teacher-rooms', 'teacher-pricing', 'my-students'];
-                pages.forEach(page => { const el = document.getElementById(`teacher-${page}-page`); if (el) el.style.display = 'none'; });
-                const target = document.getElementById(`teacher-${pageName}-page`);
-                if (target) target.style.display = 'block';
-                else document.getElementById('teacher-dashboard-page').style.display = 'block';
-                document.querySelectorAll('#teacherNavMenu .nav-link').forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('data-page') === pageName) link.classList.add('active');
-                });
-                if (pageName === 'dashboard' || pageName === 'my-students' || pageName === 'my-exercises' || pageName === 'my-summaries') {
-                    loadTeacherData();
-                }
             }
         }
         
@@ -5415,8 +5212,6 @@
             }
             if (hash && currentUser) {
                 if (currentUser.type === 'student') {
-                    loadPageFromHash(hash);
-                } else {
                     loadPageFromHash(hash);
                 }
             }
@@ -5451,6 +5246,123 @@
             });
         }
         
+        // ========== FIREBASE GOOGLE SIGN-IN ==========
+        window.startGoogleSignIn = function() {
+            auth.signInWithPopup(provider).then((result) => {
+                const googleEmail = result.user.email;
+                const googleName = result.user.displayName;
+                let existingUser = users.find(u => u.email === googleEmail);
+                if (existingUser) {
+                    currentUser = existingUser;
+                    localStorage.setItem('currentUserEmail', existingUser.email);
+                    localStorage.setItem('currentUserPassword', existingUser.password);
+                    document.getElementById('loginPage').style.display = 'none';
+                    document.getElementById('footer').style.display = 'block';
+                    if (existingUser.type === 'student') {
+                        document.getElementById('studentWebsite').style.display = 'block';
+                        document.getElementById('studentDisplayName').textContent = existingUser.name;
+                        document.getElementById('navStudentName').textContent = existingUser.name;
+                        document.getElementById('studentGradeBadge').textContent = `Grade ${existingUser.grade}`;
+                        document.getElementById('currentStudentGrade').textContent = existingUser.grade;
+                        loadStudentData();
+                        window.location.hash = 'home';
+                        loadPageFromHash('home');
+                    } else {
+                        document.getElementById('teacherWebsite').style.display = 'block';
+                        document.getElementById('navTeacherName').textContent = existingUser.name;
+                        document.getElementById('teacherGradeBadge').textContent = `Grade ${existingUser.grade}`;
+                        document.getElementById('currentTeacherGrade').textContent = existingUser.grade;
+                        loadTeacherData();
+                        window.location.hash = 'dashboard';
+                        navigateToTeacherPage('dashboard');
+                    }
+                    if (existingUser.isOP) document.getElementById('opPanel').style.display = 'block';
+                    showNotification(`Welcome back, ${existingUser.name}!`, 'success');
+                } else {
+                    tempGoogleUser = { email: googleEmail, name: googleName, fromGoogle: true };
+                    selectedRole = null;
+                    document.getElementById('roleName').value = googleName || '';
+                    document.getElementById('roleGrade').value = '';
+                    document.getElementById('roleTeacherCode').value = '';
+                    document.getElementById('roleTeacherCode').classList.remove('active');
+                    document.getElementById('roleErrorMessage').classList.remove('show');
+                    document.getElementById('roleStudentBtn').classList.remove('selected');
+                    document.getElementById('roleTeacherBtn').classList.remove('selected');
+                    document.getElementById('roleSelectionModal').classList.add('active');
+                }
+            }).catch((error) => {
+                if (error.code === 'auth/popup-blocked') {
+                    showNotification('Popup was blocked. Please allow popups for this site.', 'error');
+                } else {
+                    showNotification('Google Sign-In failed: ' + error.message, 'error');
+                }
+            });
+        };
+        
+        window.confirmRoleSelection = function() {
+            const name = document.getElementById('roleName').value.trim();
+            const grade = document.getElementById('roleGrade').value;
+            const role = selectedRole;
+            const teacherCode = document.getElementById('roleTeacherCode').value.trim();
+            const errorDiv = document.getElementById('roleErrorMessage');
+            if (!name) { errorDiv.innerHTML = "Please enter your name."; errorDiv.classList.add('show'); return; }
+            if (!role) { errorDiv.innerHTML = "Please select Student or Teacher."; errorDiv.classList.add('show'); return; }
+            if (!grade) { errorDiv.innerHTML = "Please select your grade."; errorDiv.classList.add('show'); return; }
+            if (role === 'teacher') {
+                if (!teacherCode) { errorDiv.innerHTML = "Please enter the teacher PIN code."; errorDiv.classList.add('show'); return; }
+                if (teacherCode !== TEACHER_VERIFICATION_CODE) { errorDiv.innerHTML = "Invalid teacher PIN code. Access denied."; errorDiv.classList.add('show'); return; }
+            }
+            const newUser = {
+                name: name, accountName: name.toLowerCase().replace(/\s/g, '') + Math.floor(Math.random() * 1000), nickname: '',
+                email: tempGoogleUser.email, password: 'google-auth-no-password', type: role, grade: grade, bio: '',
+                profileImage: null, completedExercises: [], averageScore: 0, studyHours: 0, attempts: [], joinedRooms: [],
+                subscription: role === 'teacher' ? 'professional' : 'free', friends: [], groups: [], gradeLastChanged: new Date().toISOString(), schedules: [], isOP: false
+            };
+            if (role === 'teacher') { newUser.exercises = []; newUser.summaries = []; newUser.privateRooms = []; newUser.canCreatePremiumRooms = true; }
+            users.push(newUser);
+            saveData();
+            currentUser = newUser;
+            localStorage.setItem('currentUserEmail', newUser.email);
+            localStorage.setItem('currentUserPassword', newUser.password);
+            hideRoleSelectionModal();
+            tempGoogleUser = null;
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('footer').style.display = 'block';
+            if (role === 'student') {
+                document.getElementById('studentWebsite').style.display = 'block';
+                document.getElementById('studentDisplayName').textContent = newUser.name;
+                document.getElementById('navStudentName').textContent = newUser.name;
+                document.getElementById('studentGradeBadge').textContent = `Grade ${newUser.grade}`;
+                document.getElementById('currentStudentGrade').textContent = newUser.grade;
+                loadStudentData();
+                window.location.hash = 'home';
+                loadPageFromHash('home');
+            } else {
+                document.getElementById('teacherWebsite').style.display = 'block';
+                document.getElementById('navTeacherName').textContent = newUser.name;
+                document.getElementById('teacherGradeBadge').textContent = `Grade ${newUser.grade}`;
+                document.getElementById('currentTeacherGrade').textContent = newUser.grade;
+                loadTeacherData();
+                window.location.hash = 'dashboard';
+                navigateToTeacherPage('dashboard');
+            }
+            showNotification(`Welcome to StudX, ${newUser.name}!`, 'success');
+        };
+        
+        window.selectRole = function(role) {
+            selectedRole = role;
+            document.getElementById('roleStudentBtn').classList.remove('selected');
+            document.getElementById('roleTeacherBtn').classList.remove('selected');
+            if (role === 'student') {
+                document.getElementById('roleStudentBtn').classList.add('selected');
+                document.getElementById('roleTeacherCode').classList.remove('active');
+            } else {
+                document.getElementById('roleTeacherBtn').classList.add('selected');
+                document.getElementById('roleTeacherCode').classList.add('active');
+            }
+            document.getElementById('roleErrorMessage').classList.remove('show');
+        };
+        
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => { const anim = document.getElementById('animationContainer'); if (anim) anim.style.display = 'none'; }, 2000);
             window.addEventListener('hashchange', handleHashChange);
@@ -5479,7 +5391,7 @@
                         document.getElementById('currentTeacherGrade').textContent = savedUser.grade === '0' ? 'Admin' : savedUser.grade;
                         loadTeacherData();
                         window.location.hash = 'dashboard';
-                        loadPageFromHash('dashboard');
+                        navigateToTeacherPage('dashboard');
                     }
                     if (savedUser.isOP) document.getElementById('opPanel').style.display = 'block';
                 }
