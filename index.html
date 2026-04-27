@@ -4420,7 +4420,7 @@
         const TEACHER_VERIFICATION_CODE = "TEACHER2026";
         const ADMIN_LOGIN_CODE = "ADMIN2026OMAN";
 
-        // ========== FIRESTORE DATA SYNC FUNCTIONS ==========
+        // ========== FIRESTORE SYNC FUNCTIONS ==========
         async function loadUserFromFirestore(email) {
             try {
                 const doc = await db.collection('users').doc(email).get();
@@ -4437,6 +4437,13 @@
         async function saveUserToFirestore(user) {
             try {
                 await db.collection('users').doc(user.email).set(user);
+                // Also update local array
+                const index = users.findIndex(u => u.email === user.email);
+                if (index !== -1) {
+                    users[index] = user;
+                } else {
+                    users.push(user);
+                }
                 return true;
             } catch (error) {
                 console.error("Error saving user:", error);
@@ -4446,47 +4453,29 @@
 
         async function loadAllDataFromFirestore() {
             try {
-                // Load users
                 const usersSnapshot = await db.collection('users').get();
                 users = [];
-                usersSnapshot.forEach(doc => {
-                    users.push(doc.data());
-                });
+                usersSnapshot.forEach(doc => { users.push(doc.data()); });
                 
-                // Load exercises
                 const exercisesSnapshot = await db.collection('exercises').get();
                 exercises = [];
-                exercisesSnapshot.forEach(doc => {
-                    exercises.push(doc.data());
-                });
+                exercisesSnapshot.forEach(doc => { exercises.push(doc.data()); });
                 
-                // Load summaries
                 const summariesSnapshot = await db.collection('summaries').get();
                 summaries = [];
-                summariesSnapshot.forEach(doc => {
-                    summaries.push(doc.data());
-                });
+                summariesSnapshot.forEach(doc => { summaries.push(doc.data()); });
                 
-                // Load groups
                 const groupsSnapshot = await db.collection('groups').get();
                 groups = [];
-                groupsSnapshot.forEach(doc => {
-                    groups.push(doc.data());
-                });
+                groupsSnapshot.forEach(doc => { groups.push(doc.data()); });
                 
-                // Load friend requests
                 const requestsSnapshot = await db.collection('friendRequests').get();
                 friendRequests = [];
-                requestsSnapshot.forEach(doc => {
-                    friendRequests.push(doc.data());
-                });
+                requestsSnapshot.forEach(doc => { friendRequests.push(doc.data()); });
                 
-                // Load private rooms
                 const roomsSnapshot = await db.collection('privateRooms').get();
                 privateRooms = [];
-                roomsSnapshot.forEach(doc => {
-                    privateRooms.push(doc.data());
-                });
+                roomsSnapshot.forEach(doc => { privateRooms.push(doc.data()); });
                 
                 return true;
             } catch (error) {
@@ -4575,7 +4564,6 @@
                 ];
                 for (const user of defaultUsers) {
                     await saveUserToFirestore(user);
-                    users.push(user);
                 }
             }
             if (groups.length === 0) {
@@ -4636,7 +4624,6 @@
                 return;
             }
             
-            // Check if email exists in Firestore
             const existingUser = await loadUserFromFirestore(email);
             if (existingUser) {
                 showNotification('Email already registered', 'error');
@@ -4700,7 +4687,6 @@
             }
             
             await saveUserToFirestore(newUser);
-            users.push(newUser);
             showNotification('Account created successfully! Please login.', 'success');
             
             document.getElementById('signupName').value = '';
@@ -4722,10 +4708,8 @@
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             
-            // First try to load from Firestore
             let user = await loadUserFromFirestore(email);
             if (!user) {
-                // Check local users as fallback
                 user = users.find(u => u.email === email);
             }
             
@@ -4736,7 +4720,6 @@
                 if (user.email === 'studxacademic@gmail.com') user.isOP = true;
                 currentUser = user;
                 
-                // Save current user to localStorage for session persistence
                 localStorage.setItem('currentUserEmail', user.email);
                 localStorage.setItem('currentUserPassword', user.password);
                 
@@ -5197,8 +5180,6 @@
             currentUser.name = document.getElementById('editName').value; 
             currentUser.bio = document.getElementById('editBio').value; 
             await saveUserToFirestore(currentUser);
-            const idx = users.findIndex(u => u.email === currentUser.email);
-            if (idx !== -1) users[idx] = currentUser;
             closeEditProfile(); 
             showProfile(); 
             showNotification('Profile saved!', 'success'); 
@@ -5300,8 +5281,6 @@
             targetUser.subscription = 'professional';
             targetUser.subscriptionExpiry = expiryDate.toISOString();
             await saveUserToFirestore(targetUser);
-            const userIndex = users.findIndex(u => u.email === email);
-            if (userIndex !== -1) users[userIndex] = targetUser;
             showNotification(`✅ Subscription granted to ${targetUser.name} for ${days} days!`, 'success');
             document.querySelector('.op-panel-modal')?.remove();
         }
@@ -5382,11 +5361,6 @@
             const teachers = users.filter(u => u.type === 'teacher' && u.grade === currentUser.grade);
             document.getElementById('studentGradeTeacherCount').textContent = teachers.length; 
         }
-        function loadFriendRequests() {}
-        function loadFriendsList() {}
-        function loadStudentExercises() {}
-        function loadStudentSummaries() {}
-        function loadStudentTeachers() {}
         
         function switchLanguage(lang) {
             document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
@@ -5471,7 +5445,6 @@
             };
             if (role === 'teacher') { newUser.exercises = []; newUser.summaries = []; newUser.privateRooms = []; newUser.canCreatePremiumRooms = true; }
             await saveUserToFirestore(newUser);
-            users.push(newUser);
             currentUser = newUser;
             localStorage.setItem('currentUserEmail', newUser.email);
             localStorage.setItem('currentUserPassword', newUser.password);
@@ -5514,12 +5487,11 @@
             document.getElementById('roleErrorMessage').classList.remove('show');
         };
         
-        // ========== INITIALIZE APPLICATION ==========
+        // ========== INITIALIZE ==========
         document.addEventListener('DOMContentLoaded', async () => {
             setTimeout(() => { const anim = document.getElementById('animationContainer'); if (anim) anim.style.display = 'none'; }, 2000);
             window.addEventListener('hashchange', handleHashChange);
             
-            // Load all data from Firestore
             await loadAllDataFromFirestore();
             await initializeDefaultData();
             
